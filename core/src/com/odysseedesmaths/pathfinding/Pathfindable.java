@@ -1,4 +1,4 @@
-package pathfinding;
+package com.odysseedesmaths.pathfinding;
 
 import java.util.Set;
 

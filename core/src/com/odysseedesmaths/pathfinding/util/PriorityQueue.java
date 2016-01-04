@@ -1,4 +1,4 @@
-package pathfinding.util;
+package com.odysseedesmaths.pathfinding.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ public class PriorityQueue<E> {
     private Map<E,Integer> queue;
 
     public PriorityQueue() {
-        queue = new HashMap<>();
+        queue = new HashMap<E,Integer>();
     }
 
     public E get() {

@@ -7,27 +7,25 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-/**
- * Created by Allan on 03/01/2016.
- */
 public class ArriveeScreen implements Screen {
     final OdysseeGame game;
 
     private Rectangle heros;
 
     private Texture herosImage;
-    private Texture signe;
-    private Texture chemin;
-    private Texture obstacle;
+    private Texture signeImage;
+    private Texture cheminImage;
+    private Texture obstacleImage;
     private OrthographicCamera camera;
 
     public ArriveeScreen(OdysseeGame game) {
         this.game = game;
 
         // Images
-        herosImage = new Texture(Gdx.files.internal("heros.png"));
-        chemin = new Texture(Gdx.files.internal("chemin.png"));
-        obstacle = new Texture(Gdx.files.internal("arbre.png"));
+        herosImage = new Texture(Gdx.files.internal("heros64.png"));
+        cheminImage = new Texture(Gdx.files.internal("chemin.png"));
+        obstacleImage = new Texture(Gdx.files.internal("arbre.png"));
+        signeImage = new Texture(Gdx.files.internal("signe.png"));
 
         // Sons
 
@@ -55,7 +53,7 @@ public class ArriveeScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(255, 255, 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();

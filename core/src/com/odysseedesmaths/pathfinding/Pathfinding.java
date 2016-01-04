@@ -1,6 +1,6 @@
-package pathfinding;
+package com.odysseedesmaths.pathfinding;
 
-import pathfinding.util.PriorityQueue;
+import com.odysseedesmaths.pathfinding.util.PriorityQueue;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,7 +29,7 @@ public abstract class Pathfinding {
         came_from.put(start, null);
 
         // Liste priorisée des sommets à traiter, initialisée avec le départ
-        PriorityQueue<E> toDo = new PriorityQueue<>();
+        PriorityQueue<E> toDo = new PriorityQueue<E>();
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
@@ -60,8 +60,8 @@ public abstract class Pathfinding {
      * @return          la map des prédécesseurs de chaque sommet sur le chemin pour se rendre au sommet de départ
      */
     public static <E> Map<E, E> dijkstraAllPred(Pathfindable<E> g, E start) {
-        Map<E, Integer> dist = new HashMap<>();
-        Map<E, E> came_from = new HashMap<>();
+        Map<E, Integer> dist = new HashMap<E, Integer>();
+        Map<E, E> came_from = new HashMap<E, E>();
         dijkstraAll(g, start, dist, came_from);
         return came_from;
     }
@@ -75,8 +75,8 @@ public abstract class Pathfinding {
      * @return          la map des distances relatives au sommet de départ
      */
     public static <E> Map<E, Integer> dijkstraAllDist(Pathfindable<E> g, E start) {
-        Map<E, Integer> dist = new HashMap<>();
-        Map<E, E> came_from = new HashMap<>();
+        Map<E, Integer> dist = new HashMap<E, Integer>();
+        Map<E, E> came_from = new HashMap<E, E>();
         dijkstraAll(g, start, dist, came_from);
         return dist;
     }
@@ -95,15 +95,15 @@ public abstract class Pathfinding {
      */
     public static <E> LinkedList<E> dijkstra(Pathfindable<E> g, E start, E goal) {int count=0;
         // Map des distances relatives au départ
-        Map<E, Integer> dist = new HashMap<>();
+        Map<E, Integer> dist = new HashMap<E, Integer>();
         dist.put(start, 0);
 
         // Map des précédents de chacun des sommets (sur le chemin final)
-        Map<E, E> came_from = new HashMap<>();
+        Map<E, E> came_from = new HashMap<E, E>();
         came_from.put(start, null);
 
         // Liste priorisée des sommets à traiter, initialisée avec le départ
-        PriorityQueue<E> toDo = new PriorityQueue<>();
+        PriorityQueue<E> toDo = new PriorityQueue<E>();
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
@@ -151,15 +151,15 @@ public abstract class Pathfinding {
      */
     public static <E> LinkedList<E> astar(Pathfindable<E> g, E start, E goal) {int count=0;
         // Map des distances relatives au départ
-        Map<E, Integer> dist = new HashMap<>();
+        Map<E, Integer> dist = new HashMap<E, Integer>();
         dist.put(start, 0);
 
         // Map des précédents de chacun des sommets (sur le chemin final)
-        Map<E, E> came_from = new HashMap<>();
+        Map<E, E> came_from = new HashMap<E, E>();
         came_from.put(start, null);
 
         // Liste priorisée des sommets à traiter, initialisée avec le départ
-        PriorityQueue<E> toDo = new PriorityQueue<>();
+        PriorityQueue<E> toDo = new PriorityQueue<E>();
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
@@ -204,11 +204,11 @@ public abstract class Pathfinding {
      */
     public static <E> LinkedList<E> greedy(Pathfindable<E> g, E start, E goal) {int count = 0;
         // Map des précédents de chacun des sommets (sur le chemin final)
-        Map<E, E> came_from = new HashMap<>();
+        Map<E, E> came_from = new HashMap<E, E>();
         came_from.put(start, null);
 
         // Liste priorisée des sommets à traiter, initialisée avec le départ
-        PriorityQueue<E> toDo = new PriorityQueue<>();
+        PriorityQueue<E> toDo = new PriorityQueue<E>();
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
@@ -246,7 +246,7 @@ public abstract class Pathfinding {
      * @return              le chemin entre les deux sommets
      */
     public static <E> LinkedList<E> buildPath(Map<E,E> came_from, E s1, E s2) {
-        LinkedList<E> chemin = new LinkedList<>();
+        LinkedList<E> chemin = new LinkedList<E>();
 
         if (came_from.get(s2) != null) {
             E s = s2;
