@@ -1,11 +1,11 @@
-package com.odysseedesmaths.metier;
+package com.odysseedesmaths.arriveeremarquable;
 
 /**
  * Created by Allan on 03/01/2016.
  */
-public class Soust extends Signe {
+public class Div extends Signe {
 
-    public Soust(Case c) {
+    public Div(Case c) {
         super(c);
     }
 

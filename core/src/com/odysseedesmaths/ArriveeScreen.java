@@ -4,33 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.odysseedesmaths.metier.Terrain;
 
 public class ArriveeScreen implements Screen {
-    final OdysseeGame game;
+    private ArriveeGame game;
 
     private Sprite heros;
     private Array<Rectangle> cases;
     private Sprite arrow;
 
-    private Texture herosImage;
-    private Texture signeImage;
-    private Texture arrowImage;
     private OrthographicCamera camera;
 
-    public ArriveeScreen(OdysseeGame game) {
+    public ArriveeScreen(ArriveeGame game) {
         this.game = game;
 
         // Images
-        herosImage = new Texture(Gdx.files.internal("heros64.png"));
-        signeImage = new Texture(Gdx.files.internal("signe64.png"));
-        arrowImage = new Texture(Gdx.files.internal("arrow64.png"));
-        arrow = new Sprite(arrowImage);
 
         // Sons
 
@@ -43,8 +33,8 @@ public class ArriveeScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         // Physiques
-        heros = new Sprite(herosImage);
-        heros.setPosition(800/2 - 64/2, 480/2 - 64/2);
+        heros = new Sprite(game.graphics.get("heros"));
+        heros.setPosition(800 / 2 - 64 / 2, 480 / 2 - 64 / 2);
     }
 
 
@@ -60,13 +50,12 @@ public class ArriveeScreen implements Screen {
 
         camera.update();
 
-        game.getTerrain().renderer.setView(camera);
-        game.getTerrain().renderer.render();
+        game.getTerrain().getRenderer().setView(camera);
+        game.getTerrain().getRenderer().render();
 
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         heros.draw(game.batch);
-        arrow.draw(game.batch); // UTILISER SCENE2D
         game.batch.end();
     }
 
@@ -92,6 +81,6 @@ public class ArriveeScreen implements Screen {
 
     @Override
     public void dispose() {
-        herosImage.dispose();
+
     }
 }

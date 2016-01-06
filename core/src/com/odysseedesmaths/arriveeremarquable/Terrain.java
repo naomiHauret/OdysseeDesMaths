@@ -1,4 +1,4 @@
-package com.odysseedesmaths.metier;
+package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -13,7 +13,7 @@ public class Terrain {
     public static final int LARGEUR = HAUTEUR * 2;
 
     private TiledMap map;
-    public TiledMapRenderer renderer;
+    private TiledMapRenderer renderer;
 
     private Terrain() {
         this.map = new TmxMapLoader().load("map.tmx");

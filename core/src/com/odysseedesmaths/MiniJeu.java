@@ -1,23 +1,46 @@
 package com.odysseedesmaths;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by trilunaire on 04/01/16.
  */
-public abstract class MiniJeu {
-    public HashMap<String,SoundEffect> effetsSonores;
-    public HashMap<String,Texture> graphics;
-    public HashMap<String,String> musiques; //deux musiques ne sont pas jouées en même temps, pas besoin d'instancier deux objet (d'ou le String)
+public abstract class MiniJeu extends Game {
+    public Map<String,SoundEffect> effetsSonores;
+    public Map<String,Texture> graphics;
+    public Map<String,String> musiques; //deux musiques ne sont pas jouées en même temps, pas besoin d'instancier deux objet (d'ou le String)
     //la gestion de la musique se fait via les méthodes statiques de Musique (classe)
     private String regles; //voir si on garde un String
 
+    private Stage hud; // utiliser Scene2D pour l'hud
+
     //TODO: Implémenter un timer
 
-    public MiniJeu(){
+    public SpriteBatch batch;
+    public BitmapFont font;
 
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+
+        effetsSonores = new HashMap<String, SoundEffect>();
+        graphics = new HashMap<String, Texture>();
+        musiques = new HashMap<String, String>();
+
+        hud = new Stage();
+    }
+
+    @Override
+    public void render() {
+        super.render();
     }
 
     /**
@@ -59,5 +82,9 @@ public abstract class MiniJeu {
         }
         Musique.setPath(musiques.get(name));
         Musique.play();
+    }
+
+    public void dispose() {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.odysseedesmaths.metier;
+package com.odysseedesmaths.arriveeremarquable;
 
 /**
  * Created by Allan on 03/01/2016.

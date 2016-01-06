@@ -1,9 +1,9 @@
-package com.odysseedesmaths.metier;
+package com.odysseedesmaths.arriveeremarquable;
 
 public class Heros extends Personnage {
     private int pdv;
 
-    public Heros(Case c, int pdv) {
+    public Heros(com.odysseedesmaths.arriveeremarquable.Case c, int pdv) {
         super(c);
         this.pdv = pdv;
     }
@@ -13,7 +13,7 @@ public class Heros extends Personnage {
     }
 
     @Override
-    public void meet(Entite e) {
+    public void meet(com.odysseedesmaths.arriveeremarquable.Entite e) {
 
     }
 

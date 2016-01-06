@@ -1,11 +1,11 @@
-package com.odysseedesmaths.metier;
+package com.odysseedesmaths.arriveeremarquable;
 
 /**
  * Created by Allan on 03/01/2016.
  */
 public class Add extends Signe {
 
-    public Add(Case c) {
+    public Add(com.odysseedesmaths.arriveeremarquable.Case c) {
         super(c);
     }
 
