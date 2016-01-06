@@ -1,36 +1,35 @@
 package com.odysseedesmaths.metier;
 
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-/**
- * Created by Allan on 03/01/2016.
- */
 public class Terrain {
 
     private static Terrain terrain = null;
 
     public static final int HAUTEUR = 20;
     public static final int LARGEUR = HAUTEUR * 2;
-    private Case[][] cases;
+
+    private TiledMap map;
+    public TiledMapRenderer renderer;
 
     private Terrain() {
-        this.cases = new Case[HAUTEUR][LARGEUR];
+        this.map = new TmxMapLoader().load("map.tmx");
+        this.renderer = new OrthogonalTiledMapRenderer(map);
+    }
+
+    public TiledMap getMap() {
+        return map;
+    }
+
+    public TiledMapRenderer getRenderer() {
+        return renderer;
     }
 
     private static void create() {
         terrain = new Terrain();
-
-        int n = 0;
-        for (int i=0; i<HAUTEUR; i++) {
-            for (int j=0; j<LARGEUR; j++) {
-                terrain.cases[i][j] = new Case(i, j, (n%3 != 0));
-                n++;
-            }
-        }
-    }
-
-    public Case[][] getCases() {
-        return cases;
     }
 
     public static Terrain get() {
@@ -40,7 +39,5 @@ public class Terrain {
         return terrain;
     }
 
-    public Case getDepart() {
-        return cases[10][20];
-    }
+    public void getDepart() {}
 }

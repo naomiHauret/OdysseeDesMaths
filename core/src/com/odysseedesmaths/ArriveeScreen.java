@@ -5,17 +5,22 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.odysseedesmaths.metier.Terrain;
 
 public class ArriveeScreen implements Screen {
     final OdysseeGame game;
 
-    private Rectangle heros;
+    private Sprite heros;
+    private Array<Rectangle> cases;
+    private Sprite arrow;
 
     private Texture herosImage;
     private Texture signeImage;
-    private Texture cheminImage;
-    private Texture obstacleImage;
+    private Texture arrowImage;
     private OrthographicCamera camera;
 
     public ArriveeScreen(OdysseeGame game) {
@@ -23,9 +28,9 @@ public class ArriveeScreen implements Screen {
 
         // Images
         herosImage = new Texture(Gdx.files.internal("heros64.png"));
-        cheminImage = new Texture(Gdx.files.internal("chemin.png"));
-        obstacleImage = new Texture(Gdx.files.internal("arbre.png"));
-        signeImage = new Texture(Gdx.files.internal("signe.png"));
+        signeImage = new Texture(Gdx.files.internal("signe64.png"));
+        arrowImage = new Texture(Gdx.files.internal("arrow64.png"));
+        arrow = new Sprite(arrowImage);
 
         // Sons
 
@@ -38,11 +43,8 @@ public class ArriveeScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         // Physiques
-        heros = new Rectangle();
-        heros.width = 32;
-        heros.height = 32;
-        heros.x = 800/2 - heros.width/2;
-        heros.y = 480/2 - heros.height/2;
+        heros = new Sprite(herosImage);
+        heros.setPosition(800/2 - 64/2, 480/2 - 64/2);
     }
 
 
@@ -53,15 +55,18 @@ public class ArriveeScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(255, 255, 255, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
 
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getTerrain().renderer.setView(camera);
+        game.getTerrain().renderer.render();
 
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(herosImage, heros.x, heros.y);
+        heros.draw(game.batch);
+        arrow.draw(game.batch); // UTILISER SCENE2D
         game.batch.end();
     }
 

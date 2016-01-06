@@ -35,9 +35,9 @@ public class OdysseeGame extends Game {
 	}
 
 	@Override
-	public void create () {
+	public void create() {
 		terrain = Terrain.get();
-		heros = new Heros(terrain.getDepart(), 5);
+	//	heros = new Heros(terrain.getDepart(), 5);
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -45,7 +45,7 @@ public class OdysseeGame extends Game {
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		super.render();
 	}
 
