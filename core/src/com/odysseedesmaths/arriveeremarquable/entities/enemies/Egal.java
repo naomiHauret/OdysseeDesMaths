@@ -1,11 +1,13 @@
-package com.odysseedesmaths.arriveeremarquable;
+package com.odysseedesmaths.arriveeremarquable.entities.enemies;
+
+import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 /**
  * Created by Allan on 03/01/2016.
  */
 public class Egal extends Signe {
 
-    public Egal(com.odysseedesmaths.arriveeremarquable.Case c) {
+    public Egal(Case c) {
         super(c);
     }
 

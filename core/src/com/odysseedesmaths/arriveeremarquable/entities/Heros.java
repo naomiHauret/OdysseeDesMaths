@@ -1,9 +1,11 @@
-package com.odysseedesmaths.arriveeremarquable;
+package com.odysseedesmaths.arriveeremarquable.entities;
+
+import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Heros extends Personnage {
     private int pdv;
 
-    public Heros(com.odysseedesmaths.arriveeremarquable.Case c, int pdv) {
+    public Heros(Case c, int pdv) {
         super(c);
         this.pdv = pdv;
     }
@@ -13,8 +15,9 @@ public class Heros extends Personnage {
     }
 
     @Override
-    public void meet(com.odysseedesmaths.arriveeremarquable.Entite e) {
-
+    public void meet(Entite e) {
+        // TODO : Gérer la rencontre du héros avec une autre entite
+        // instanceof ?
     }
 
     public void increasePDV() {
