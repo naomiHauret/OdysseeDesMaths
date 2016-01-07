@@ -34,7 +34,6 @@ public class ArriveeGame extends MiniJeu {
 	public void create() {
 		super.create();
 		terrain = Terrain.get();
-	//	heros = new Heros(terrain.getDepart(), 5);
 
 		addTexture("heros", new Texture(Gdx.files.internal("heros64.png")));
 		addTexture("signe", new Texture(Gdx.files.internal("signe64.png")));
@@ -44,7 +43,6 @@ public class ArriveeGame extends MiniJeu {
 
 	@Override
 	public void render() {
-        playMusic(musiques.get("musicTest"));
 		super.render();
 	}
 

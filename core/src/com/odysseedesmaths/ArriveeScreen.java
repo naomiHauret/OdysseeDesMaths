@@ -24,9 +24,7 @@ public class ArriveeScreen implements Screen {
 
         // Sons
 
-
         // Musique
-
 
         // Camera
         camera = new OrthographicCamera();
@@ -34,13 +32,12 @@ public class ArriveeScreen implements Screen {
 
         // Physiques
         heros = new Sprite(game.graphics.get("heros"));
-        heros.setPosition(800 / 2 - 64 / 2, 480 / 2 - 64 / 2);
+        heros.setPosition(800/2 - heros.getWidth()/2, 480/2 - heros.getHeight()/2);
     }
-
 
     @Override
     public void show() {
-
+        game.playMusic("musicTest");
     }
 
     @Override

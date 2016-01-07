@@ -21,6 +21,10 @@ public class Musique {
         audio.dispose();
     }
 
+    public static boolean isPlaying() {
+        return (audio != null) && audio.isPlaying();
+    }
+
     public static void setVolume(int volumePercent){
         if(volumePercent>100 || volumePercent<0){
             System.out.println("Valeur invalide");

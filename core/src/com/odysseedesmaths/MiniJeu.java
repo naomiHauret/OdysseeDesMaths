@@ -77,7 +77,7 @@ public abstract class MiniJeu extends Game {
     }
 
     public void playMusic(String name){
-        if(Musique.audio.isPlaying()){
+        if (Musique.isPlaying()) {
             Musique.stop();
         }
         Musique.setPath(musiques.get(name));
