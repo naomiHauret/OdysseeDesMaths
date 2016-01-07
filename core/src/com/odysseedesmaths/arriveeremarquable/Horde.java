@@ -1,8 +1,5 @@
 package com.odysseedesmaths.arriveeremarquable;
 
-/**
- * Created by Allan on 03/01/2016.
- */
 public class Horde {
 
     private int front;

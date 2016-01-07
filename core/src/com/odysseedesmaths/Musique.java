@@ -7,7 +7,7 @@ import com.badlogic.gdx.audio.Music;
  * Created by trilunaire on 04/01/16.
  */
 public class Musique {
-    public static com.badlogic.gdx.audio.Music audio = null;
+    public static Music audio = null;
 
     public static void setPath(String path){
         audio = Gdx.audio.newMusic(Gdx.files.internal(path));

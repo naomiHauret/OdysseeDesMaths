@@ -1,8 +1,7 @@
-package com.odysseedesmaths.arriveeremarquable;
+package com.odysseedesmaths.arriveeremarquable.entities;
 
-/**
- * Created by Allan on 03/01/2016.
- */
+import com.odysseedesmaths.arriveeremarquable.map.Case;
+
 public abstract class Entite {
     private Case maCase;
 
@@ -12,5 +11,9 @@ public abstract class Entite {
 
     public Case getCase() {
         return maCase;
+    }
+
+    public void setCase(Case c) {
+        maCase = c;
     }
 }

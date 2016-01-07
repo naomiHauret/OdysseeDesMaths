@@ -1,12 +1,13 @@
-package com.odysseedesmaths;
+package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import com.odysseedesmaths.arriveeremarquable.Heros;
-import com.odysseedesmaths.arriveeremarquable.Horde;
-import com.odysseedesmaths.arriveeremarquable.Signe;
-import com.odysseedesmaths.arriveeremarquable.Terrain;
+import com.odysseedesmaths.MiniJeu;
+
+import com.odysseedesmaths.arriveeremarquable.map.Terrain;
+import com.odysseedesmaths.arriveeremarquable.entities.Heros;
+import com.odysseedesmaths.arriveeremarquable.entities.enemies.Signe;
 
 public class ArriveeGame extends MiniJeu {
 	private Heros heros;
@@ -34,6 +35,8 @@ public class ArriveeGame extends MiniJeu {
 	public void create() {
 		super.create();
 		terrain = Terrain.get();
+		heros = new Heros(terrain.getDepart(), 5);
+		signes = new Array<Signe>();
 
 		addTexture("heros", new Texture(Gdx.files.internal("heros64.png")));
 		addTexture("signe", new Texture(Gdx.files.internal("signe64.png")));

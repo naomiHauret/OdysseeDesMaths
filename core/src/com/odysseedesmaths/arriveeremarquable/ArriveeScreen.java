@@ -1,38 +1,30 @@
-package com.odysseedesmaths;
+package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 public class ArriveeScreen implements Screen {
     private ArriveeGame game;
 
     private Sprite heros;
-    private Array<Rectangle> cases;
-    private Sprite arrow;
 
     private OrthographicCamera camera;
 
     public ArriveeScreen(ArriveeGame game) {
         this.game = game;
 
-        // Images
+        heros = new Sprite(game.graphics.get("heros"));
 
-        // Sons
-
-        // Musique
+        // TODO : Positionner le héros dans une case et centrer l'écran sur cette case
+        // Voir heros de game
+        heros.setPosition(800/2 - heros.getWidth()/2, 480/2 - heros.getHeight()/2);
 
         // Camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-
-        // Physiques
-        heros = new Sprite(game.graphics.get("heros"));
-        heros.setPosition(800/2 - heros.getWidth()/2, 480/2 - heros.getHeight()/2);
     }
 
     @Override
