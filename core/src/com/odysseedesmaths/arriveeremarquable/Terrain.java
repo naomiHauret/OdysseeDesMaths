@@ -9,8 +9,8 @@ public class Terrain {
 
     private static Terrain terrain = null;
 
-    public static final int HAUTEUR = 20;
-    public static final int LARGEUR = HAUTEUR * 2;
+    public static final int LARGEUR = 20;
+    public static final int LONGEUR = LARGEUR * 2;
 
     private TiledMap map;
     private TiledMapRenderer renderer;

@@ -1,25 +1,24 @@
 package com.odysseedesmaths;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by trilunaire on 04/01/16.
- */
 public abstract class MiniJeu extends Game {
     public Map<String,SoundEffect> effetsSonores;
     public Map<String,Texture> graphics;
     public Map<String,String> musiques; //deux musiques ne sont pas jouées en même temps, pas besoin d'instancier deux objet (d'ou le String)
     //la gestion de la musique se fait via les méthodes statiques de Musique (classe)
     private String regles; //voir si on garde un String
-
-    private Stage hud; // utiliser Scene2D pour l'hud
 
     //TODO: Implémenter un timer
 
@@ -35,12 +34,13 @@ public abstract class MiniJeu extends Game {
         graphics = new HashMap<String, Texture>();
         musiques = new HashMap<String, String>();
 
-        hud = new Stage();
+        UserInterface.create();
     }
 
     @Override
     public void render() {
         super.render();
+        UserInterface.render();
     }
 
     /**
@@ -85,6 +85,6 @@ public abstract class MiniJeu extends Game {
     }
 
     public void dispose() {
-
+        UserInterface.dispose();
     }
 }
