@@ -27,7 +27,7 @@ public class Terrain implements Pathfindable<Case> {
 
         cases = new Case[baseLayer.getHeight()][baseLayer.getWidth()];
         for (int i=0; i < baseLayer.getHeight(); i++) {
-            for (int j=0; i < baseLayer.getWidth(); j++) {
+            for (int j=0; j < baseLayer.getWidth(); j++) {
                 cases[i][j] = new Case(i, j, obstaclesLayer.getCell(i,j) != null);
             }
         }
