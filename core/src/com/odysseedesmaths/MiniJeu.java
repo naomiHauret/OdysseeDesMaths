@@ -111,4 +111,11 @@ public abstract class MiniJeu extends Game {
             //gameOver(); fonction game Over appellée à la fin du compte à rebours
         }
     }
+
+    public void dispose(){
+        //dipose all the texture
+        graphics.clear();
+        effetsSonores.clear();
+        musiques.clear();
+    }
 }
