@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.Timer;
 
 public abstract class MiniJeu extends Game {
     public Map<String,SoundEffect> effetsSonores;
@@ -14,11 +18,13 @@ public abstract class MiniJeu extends Game {
     public Map<String,String> musiques; //deux musiques ne sont pas jouées en même temps, pas besoin d'instancier deux objet (d'ou le String)
     //la gestion de la musique se fait via les méthodes statiques de Musique (classe)
     private String regles; //voir si on garde un String
-
-    //TODO: Implémenter un timer
+    private Timer timer;
 
     public SpriteBatch batch;
     public BitmapFont font;
+
+    protected MiniJeu() {
+    }
 
     @Override
     public void create() {
@@ -44,7 +50,7 @@ public abstract class MiniJeu extends Game {
      * @param path Le chemin de la musique
      */
     public void addPathMusique(String musicName, String path){
-        this.musiques.put(musicName,path);
+        this.musiques.put(musicName, path);
     }
 
     /**
@@ -81,5 +87,28 @@ public abstract class MiniJeu extends Game {
 
     public void dispose() {
         UserInterface.dispose();
+    }
+
+    public void initTimer(int delay){
+        timer = new Timer(delay, new TimeOutListener());
+    }
+
+    public void setDelay(int newDelay){
+        timer.setDelay(newDelay);
+    }
+
+    public void addTimerAction(ActionListener newAL){
+        timer.addActionListener(newAL);
+    }
+
+    public void removeTimerAction(ActionListener oldAL) {
+        timer.removeActionListener(oldAL);
+    }
+
+    private class TimeOutListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            //gameOver(); fonction game Over appellée à la fin du compte à rebours
+        }
     }
 }
