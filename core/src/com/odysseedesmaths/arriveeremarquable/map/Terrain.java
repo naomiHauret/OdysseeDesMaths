@@ -33,8 +33,9 @@ public class Terrain implements Pathfindable<Case> {
         }
     }
 
-    private static void create() {
+    public static Terrain create() {
         terrain = new Terrain();
+        return terrain;
     }
 
     public static Terrain get() {
@@ -46,6 +47,10 @@ public class Terrain implements Pathfindable<Case> {
 
     public TiledMapRenderer getRenderer() {
         return renderer;
+    }
+
+    public Case getCase(int i, int j) {
+        return cases[i][j];
     }
 
     public Case getDepart() {

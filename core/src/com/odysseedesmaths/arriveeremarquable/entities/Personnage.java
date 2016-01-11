@@ -8,8 +8,12 @@ public abstract class Personnage extends Entite {
         super(c);
     }
 
-    public void move(Case c) {
-
+    public void moveTo(Case c) {
+        if (c.getEntite() != null) {
+            meet(c.getEntite());
+        }
+        getCase().setEntite(null);
+        c.setEntite(this);
     }
 
     public abstract void meet(Entite e);

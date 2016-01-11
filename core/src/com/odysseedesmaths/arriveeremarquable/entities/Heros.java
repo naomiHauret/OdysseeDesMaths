@@ -1,5 +1,6 @@
 package com.odysseedesmaths.arriveeremarquable.entities;
 
+import com.odysseedesmaths.arriveeremarquable.entities.enemies.Signe;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Heros extends Personnage {
@@ -14,17 +15,18 @@ public class Heros extends Personnage {
         return pdv;
     }
 
-    @Override
-    public void meet(Entite e) {
-        // TODO : Gérer la rencontre du héros avec une autre entite
-        // instanceof ?
-    }
-
     public void increasePDV() {
         pdv++;
     }
 
     public void decreasePDV() {
         pdv--;
+    }
+
+    @Override
+    public void meet(Entite e) {
+        if (e instanceof Signe) {
+            decreasePDV();
+        }
     }
 }
