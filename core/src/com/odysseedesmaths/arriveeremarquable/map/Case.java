@@ -49,6 +49,8 @@ public class Case {
 
     @Override
     public int hashCode() {
-        return i;
+        int result = i;
+        result = 31 * result + j;
+        return result;
     }
 }

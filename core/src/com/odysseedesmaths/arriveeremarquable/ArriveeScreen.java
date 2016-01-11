@@ -13,18 +13,14 @@ public class ArriveeScreen implements Screen {
 
     private OrthographicCamera camera;
 
-    public ArriveeScreen(ArriveeGame game) {
-        this.game = game;
+    public ArriveeScreen(ArriveeGame g) {
+        game = g;
 
         heros = new Sprite(game.graphics.get("heros"));
 
-        // TODO : Positionner le héros dans une case et centrer l'écran sur cette case
-        // Voir heros de game
-        heros.setPosition(800/2 - heros.getWidth()/2, 480/2 - heros.getHeight()/2);
-
         // Camera
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false);
     }
 
     @Override
@@ -37,15 +33,23 @@ public class ArriveeScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        camera.update();
-
+        // Affichage du terrain
         game.getTerrain().getRenderer().setView(camera);
         game.getTerrain().getRenderer().render();
 
+        // Positionnement des entités
+        heros.setPosition(game.getHeros().getCase().i * 64, game.getHeros().getCase().j * 64);
+
+        // Affichage des entités
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         heros.draw(game.batch);
         game.batch.end();
+
+        // Centrage de la caméra sur le héros
+        camera.position.set(heros.getX() + heros.getWidth()/2, heros.getY() + heros.getHeight()/2, 0);
+
+        camera.update();
     }
 
     @Override
