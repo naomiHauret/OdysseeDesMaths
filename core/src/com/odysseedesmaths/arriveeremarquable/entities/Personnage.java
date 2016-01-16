@@ -14,6 +14,7 @@ public abstract class Personnage extends Entite {
         }
         getCase().free();
         setCase(c);
+        c.setEntite(this);
     }
 
     public abstract void meet(Entite e);

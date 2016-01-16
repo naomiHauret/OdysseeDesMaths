@@ -15,6 +15,5 @@ public abstract class Entite {
 
     public void setCase(Case c) {
         maCase = c;
-        c.setEntite(this);
     }
 }
