@@ -34,4 +34,9 @@ public class Heros extends Personnage {
             ((Item)e).trigger();
         }
     }
+
+    public void move(int di, int dj) {
+        Case cible = ArriveeGame.get().terrain.getCases()[getCase().i + di][getCase().j + dj];
+        if (!cible.isObstacle()) moveTo(cible);
+    }
 }

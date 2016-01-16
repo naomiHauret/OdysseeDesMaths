@@ -5,9 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.odysseedesmaths.UserInterface;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 
 public class ArriveeScreen implements Screen {
+
+    private UserInterface ui;
 
     private Sprite herosSprite;
     private Sprite signeSprite;
@@ -19,6 +26,14 @@ public class ArriveeScreen implements Screen {
         herosSprite = new Sprite(ArriveeGame.get().graphics.get("heros"));
         signeSprite = new Sprite(ArriveeGame.get().graphics.get("signe"));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
+
+        ui = new UserInterface();
+        Gdx.input.setInputProcessor(ui);
+        InputEcouteur listener = new InputEcouteur();
+        ui.padUp.addListener(listener);
+        ui.padRight.addListener(listener);
+        ui.padDown.addListener(listener);
+        ui.padLeft.addListener(listener);
 
         // Camera
         camera = new OrthographicCamera();
@@ -37,9 +52,7 @@ public class ArriveeScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Check des inputs
-
-        // Si le heros a bougé, un tour est joué
-        //ArriveeGame.get().playTurn();
+        ui.render();
 
         // Affichage du terrain
         ArriveeGame.get().terrain.renderer.setView(camera);
@@ -66,7 +79,7 @@ public class ArriveeScreen implements Screen {
 
         // Centrage de la caméra sur le héros
         // S'il y a du blanc c'est normal c'est le hors map
-        camera.position.set(herosSprite.getX() + herosSprite.getWidth()/2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
+        camera.position.set(herosSprite.getX() + herosSprite.getWidth() / 2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
 
         camera.update();
     }
@@ -93,6 +106,27 @@ public class ArriveeScreen implements Screen {
 
     @Override
     public void dispose() {
+        ui.dispose();
+    }
 
+
+    private class InputEcouteur extends InputListener {
+
+        @Override
+        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            Actor source = event.getRelatedActor();
+
+            if (source == ui.padUp) {
+                ArriveeGame.get().heros.move(0,1);
+            } else if (source == ui.padRight) {
+                ArriveeGame.get().heros.move(1,0);
+            } else if (source == ui.padDown) {
+                ArriveeGame.get().heros.move(0,-1);
+            } else if (source == ui.padLeft) {
+                ArriveeGame.get().heros.move(-1,0);
+            }
+
+            return true;
+        }
     }
 }

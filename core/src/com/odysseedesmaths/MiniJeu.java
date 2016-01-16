@@ -34,14 +34,11 @@ public abstract class MiniJeu extends Game {
         effetsSonores = new HashMap<String, SoundEffect>();
         graphics = new HashMap<String, Texture>();
         musiques = new HashMap<String, String>();
-
-        UserInterface.create();
     }
 
     @Override
     public void render() {
         super.render();
-        UserInterface.render();
     }
 
     /**
@@ -85,6 +82,13 @@ public abstract class MiniJeu extends Game {
         Musique.play();
     }
 
+    public void dispose() {
+        //dipose all the texture
+        graphics.clear();
+        effetsSonores.clear();
+        musiques.clear();
+    }
+
     public void initTimer(int delay){
         timer = new Timer(delay, new TimeOutListener());
     }
@@ -106,12 +110,5 @@ public abstract class MiniJeu extends Game {
         public void actionPerformed(ActionEvent actionEvent) {
             //gameOver(); fonction game Over appellée à la fin du compte à rebours
         }
-    }
-
-    public void dispose(){
-        //dipose all the texture
-        graphics.clear();
-        effetsSonores.clear();
-        musiques.clear();
     }
 }
