@@ -1,6 +1,8 @@
 package com.odysseedesmaths.arriveeremarquable.entities;
 
-import com.odysseedesmaths.arriveeremarquable.entities.enemies.Signe;
+import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
+import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Heros extends Personnage {
@@ -26,7 +28,10 @@ public class Heros extends Personnage {
     @Override
     public void meet(Entite e) {
         if (e instanceof Signe) {
-            decreasePDV();
+            if (ArriveeGame.get().activeItems.get("pi") == null) decreasePDV();
+            ArriveeGame.get().destroy((Signe)e);
+        } else if (e instanceof Item) {
+            ((Item)e).trigger();
         }
     }
 }

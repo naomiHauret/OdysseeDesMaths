@@ -1,18 +1,18 @@
-package com.odysseedesmaths.arriveeremarquable.entities.enemies;
+package com.odysseedesmaths.arriveeremarquable.entities.signes;
 
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 /**
  * Created by Allan on 03/01/2016.
  */
-public class Egal extends Signe {
+public class Mult extends Signe {
 
-    public Egal(Case c) {
+    public Mult(Case c) {
         super(c);
     }
 
     @Override
-    public void move() {
+    public void act() {
 
     }
 }

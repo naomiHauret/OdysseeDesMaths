@@ -15,10 +15,6 @@ public class Case {
         this.entite = null;
     }
 
-    public Case(int i, int j) {
-        this(i, j, true);
-    }
-
     public boolean isObstacle() {
         return obstacle;
     }
@@ -29,6 +25,10 @@ public class Case {
 
     public void setEntite(Entite entite) {
         this.entite = entite;
+    }
+
+    public void free() {
+        setEntite(null);
     }
 
     public boolean isTaken() {

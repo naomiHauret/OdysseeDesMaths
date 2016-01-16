@@ -5,21 +5,20 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.odysseedesmaths.arriveeremarquable.entities.enemies.Signe;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 
 public class ArriveeScreen implements Screen {
-    private ArriveeGame game;
 
-    private Sprite heros;
-    private Sprite signe;
+    private Sprite herosSprite;
+    private Sprite signeSprite;
+    private Sprite bouclierSprite;
 
     private OrthographicCamera camera;
 
-    public ArriveeScreen(ArriveeGame g) {
-        game = g;
-
-        heros = new Sprite(game.graphics.get("heros"));
-        signe = new Sprite(game.graphics.get("signe"));
+    public ArriveeScreen() {
+        herosSprite = new Sprite(ArriveeGame.get().graphics.get("heros"));
+        signeSprite = new Sprite(ArriveeGame.get().graphics.get("signe"));
+        bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
         // Camera
         camera = new OrthographicCamera();
@@ -28,7 +27,7 @@ public class ArriveeScreen implements Screen {
 
     @Override
     public void show() {
-        game.playMusic("musicTest");
+        ArriveeGame.get().playMusic("musicTest");
     }
 
     @Override
@@ -37,31 +36,37 @@ public class ArriveeScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Check des input
-        for (Signe s : game.getSignes()) {
-            s.move();
-        }
+        // Check des inputs
+
+        // Si le heros a bougé, un tour est joué
+        //ArriveeGame.get().playTurn();
 
         // Affichage du terrain
-        game.getTerrain().getRenderer().setView(camera);
-        game.getTerrain().getRenderer().render();
-
-        // Positionnement des entités
-        heros.setPosition(game.getHeros().getCase().i * 64, game.getHeros().getCase().j * 64);
+        ArriveeGame.get().terrain.renderer.setView(camera);
+        ArriveeGame.get().terrain.renderer.render();
 
         // Affichage des entités
-        game.batch.setProjectionMatrix(camera.combined);
-        game.batch.begin();
-        heros.draw(game.batch);
-        for (Signe s : game.getSignes()) {
-            signe.setPosition(s.getCase().i * 64, s.getCase().j * 64);
-            signe.draw(game.batch);
+        ArriveeGame.get().batch.setProjectionMatrix(camera.combined);
+        ArriveeGame.get().batch.begin();
+
+        herosSprite.setPosition(ArriveeGame.get().heros.getCase().i * 64, ArriveeGame.get().heros.getCase().j * 64);
+        herosSprite.draw(ArriveeGame.get().batch);
+
+        if (ArriveeGame.get().activeItems.get("pi") != null) {
+            bouclierSprite.setPosition(herosSprite.getX()-64, herosSprite.getY()-64);
+            bouclierSprite.draw(ArriveeGame.get().batch);
         }
-        game.batch.end();
+
+        for (Signe s : ArriveeGame.get().signes) {
+            signeSprite.setPosition(s.getCase().i * 64, s.getCase().j * 64);
+            signeSprite.draw(ArriveeGame.get().batch);
+        }
+
+        ArriveeGame.get().batch.end();
 
         // Centrage de la caméra sur le héros
-        // S'il y a du blanc c'est normal c'est le dehors du terrain
-        camera.position.set(heros.getX() + heros.getWidth()/2, heros.getY() + heros.getHeight()/2, 0);
+        // S'il y a du blanc c'est normal c'est le hors map
+        camera.position.set(herosSprite.getX() + herosSprite.getWidth()/2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
 
         camera.update();
     }

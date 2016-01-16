@@ -2,9 +2,30 @@ package com.odysseedesmaths.arriveeremarquable;
 
 public class Horde {
 
-    private int front;
+    public static final int HARD = 2;
+    public static final int NORMAL = 3;
+    public static final int EASY = 4;
 
-    public Horde(int front) {
-        this.front = front;
+    private int front;
+    private int vitesse;
+    private int count;
+
+    public Horde(int vitesse) {
+        front = 0;
+        this.vitesse = vitesse;
+        count = 0;
+    }
+
+    public int getFront() {
+        return front;
+    }
+
+    public void setFront(int newFront) {
+        front = newFront;
+    }
+
+    public void act() {
+        count++;
+        if (count%vitesse == 0) front++;
     }
 }

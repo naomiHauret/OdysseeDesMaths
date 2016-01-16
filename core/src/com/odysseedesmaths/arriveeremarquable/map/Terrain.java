@@ -13,12 +13,11 @@ import java.util.Set;
 public class Terrain implements Pathfindable<Case> {
 
     private TiledMap map;
-    private TiledMapRenderer renderer;
+    public TiledMapRenderer renderer;
+
     private Case[][] cases;
 
-    private static Terrain terrain = null;
-
-    private Terrain() {
+    public Terrain() {
         this.map = new TmxMapLoader().load("map.tmx");
         this.renderer = new OrthogonalTiledMapRenderer(map);
 
@@ -33,30 +32,16 @@ public class Terrain implements Pathfindable<Case> {
         }
     }
 
-    public static Terrain create() {
-        terrain = new Terrain();
-        return terrain;
-    }
-
-    public static Terrain get() {
-        if (terrain == null) {
-            create();
-        }
-        return terrain;
-    }
-
-    public TiledMapRenderer getRenderer() {
-        return renderer;
-    }
-
-    public Case getCase(int i, int j) {
-        return cases[i][j];
+    public Case[][] getCases() {
+        return cases;
     }
 
     public Case getDepart() {
-        return cases[3][4];
+        return cases[7][4];
     }
 
+
+    // Méthodes permettant le Pathfinding
     @Override
     public Set<Case> getVoisins(Case c) {
         Set<Case> voisins = new HashSet<Case>();

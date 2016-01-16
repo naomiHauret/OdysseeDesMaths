@@ -85,10 +85,6 @@ public abstract class MiniJeu extends Game {
         Musique.play();
     }
 
-    public void dispose() {
-        UserInterface.dispose();
-    }
-
     public void initTimer(int delay){
         timer = new Timer(delay, new TimeOutListener());
     }

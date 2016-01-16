@@ -1,18 +1,19 @@
 package com.odysseedesmaths.arriveeremarquable.entities.items;
 
 import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
-import com.odysseedesmaths.arriveeremarquable.entities.Entite;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
-public abstract class Item extends Entite {
+public class Pi extends Item {
 
-    private int duree;
+    private static final int DUREE = 7;
 
-    public Item(Case c) {
+    public Pi(Case c) {
         super(c);
     }
 
+    @Override
     public void trigger() {
-        ArriveeGame.get().destroy(this);
+        super.trigger();
+        ArriveeGame.get().activeItems.put("pi", DUREE);
     }
 }

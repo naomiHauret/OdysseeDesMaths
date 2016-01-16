@@ -1,5 +1,5 @@
 package com.odysseedesmaths.Menu;
-
+/*
 public class Menu extends Screen {
     private ImageButton musique;
     private ImageButton son;
@@ -13,4 +13,4 @@ public class Menu extends Screen {
         musique = new Button();
         son = new Button();
     }
-}
+}*/

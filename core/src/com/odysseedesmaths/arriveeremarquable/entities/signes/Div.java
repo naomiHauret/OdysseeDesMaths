@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable.entities.enemies;
+package com.odysseedesmaths.arriveeremarquable.entities.signes;
 
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
@@ -12,7 +12,7 @@ public class Div extends Signe {
     }
 
     @Override
-    public void move() {
+    public void act() {
 
     }
 }
