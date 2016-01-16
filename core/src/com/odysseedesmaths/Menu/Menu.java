@@ -1,6 +1,12 @@
 package com.odysseedesmaths.Menu;
 
-public class Menu extends Screen {
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+public class Menu implements Screen {
     private ImageButton musique;
     private ImageButton son;
 
@@ -8,9 +14,44 @@ public class Menu extends Screen {
         //TextureAtlas atlasMusique = new TextureAtlas(Gdx.files.internal(""));
         Skin skinMusique = new Skin();
         skinMusique.add("image", Gdx.files.internal("music64.png"));
-        ImageButtonStyle bsMusique = new ImageButtonStyle();
+        ImageButtonStyle bsMusique = new ImageButton.ImageButtonStyle();
         bsMusique.imageChecked = skinMusique.getDrawable("image");
-        musique = new Button();
-        son = new Button();
+        //musique = new Button();
+        //son = new Button();
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

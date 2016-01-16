@@ -48,13 +48,15 @@ public class ArriveeScreen implements Screen {
 
         // Positionnement des entités
         heros.setPosition(game.getHeros().getCase().i * 64, game.getHeros().getCase().j * 64);
+        for (Signe s : game.getSignes()) {
+            signe.setPosition(s.getCase().i * 64, s.getCase().j * 64);
+        }
 
         // Affichage des entités
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         heros.draw(game.batch);
         for (Signe s : game.getSignes()) {
-            signe.setPosition(s.getCase().i * 64, s.getCase().j * 64);
             signe.draw(game.batch);
         }
         game.batch.end();

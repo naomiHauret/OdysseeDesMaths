@@ -87,6 +87,10 @@ public abstract class MiniJeu extends Game {
 
     public void dispose() {
         UserInterface.dispose();
+        //dipose all the texture
+        graphics.clear();
+        effetsSonores.clear();
+        musiques.clear();
     }
 
     public void initTimer(int delay){
@@ -110,12 +114,5 @@ public abstract class MiniJeu extends Game {
         public void actionPerformed(ActionEvent actionEvent) {
             //gameOver(); fonction game Over appellée à la fin du compte à rebours
         }
-    }
-
-    public void dispose(){
-        //dipose all the texture
-        graphics.clear();
-        effetsSonores.clear();
-        musiques.clear();
     }
 }
