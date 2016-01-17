@@ -116,7 +116,7 @@ public class ArriveeScreen implements Screen {
             Actor source = event.getTarget();
 
             if (source == ui.padUp) {
-                ArriveeGame.get().heros.move(0, 1);
+                ArriveeGame.get().heros.move(0,1);
             } else if (source == ui.padRight) {
                 ArriveeGame.get().heros.move(1,0);
             } else if (source == ui.padDown) {

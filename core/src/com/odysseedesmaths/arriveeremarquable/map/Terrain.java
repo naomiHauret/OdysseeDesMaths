@@ -12,10 +12,12 @@ import java.util.Set;
 
 public class Terrain implements Pathfindable<Case> {
 
-    private TiledMap map;
+    private final TiledMap map;
     public TiledMapRenderer renderer;
 
     private Case[][] cases;
+    private Case depart;
+    private Case fin;
 
     public Terrain() {
         this.map = new TmxMapLoader().load("map.tmx");
@@ -23,11 +25,16 @@ public class Terrain implements Pathfindable<Case> {
 
         TiledMapTileLayer baseLayer = (TiledMapTileLayer)map.getLayers().get("base");
         TiledMapTileLayer obstaclesLayer = (TiledMapTileLayer)map.getLayers().get("obstacles");
+        TiledMapTileLayer pointsLayer = (TiledMapTileLayer)map.getLayers().get("points");
 
         cases = new Case[baseLayer.getHeight()][baseLayer.getWidth()];
         for (int i=0; i < baseLayer.getHeight(); i++) {
             for (int j=0; j < baseLayer.getWidth(); j++) {
                 cases[i][j] = new Case(i, j, obstaclesLayer.getCell(i,j) != null);
+                if (pointsLayer.getCell(i,j) != null) {
+                    if (pointsLayer.getCell(i,j).getTile().getProperties().get("depart") != null) depart = cases[i][j];
+                    if (pointsLayer.getCell(i,j).getTile().getProperties().get("fin") != null) fin = cases[i][j];
+                }
             }
         }
     }
@@ -37,7 +44,10 @@ public class Terrain implements Pathfindable<Case> {
     }
 
     public Case getDepart() {
-        return cases[7][4];
+        return depart;
+    }
+    public Case getFin() {
+        return fin;
     }
 
 

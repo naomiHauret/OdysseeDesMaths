@@ -49,8 +49,8 @@ public class ArriveeGame extends MiniJeu {
 		init();
 
 		// Tests placement de quelques signes autour du héros
-		signes.add(new Add(terrain.getCases()[heros.getCase().i-3][heros.getCase().j-1]));
-		signes.add(new Add(terrain.getCases()[heros.getCase().i-2][heros.getCase().j+2]));
+		//signes.add(new Add(terrain.getCases()[heros.getCase().i-3][heros.getCase().j-1]));
+		//signes.add(new Add(terrain.getCases()[heros.getCase().i-2][heros.getCase().j+2]));
 
 		// Ajout des assets graphiques
 		addTexture("heros", new Texture(Gdx.files.internal("heros64.png")));
@@ -79,7 +79,7 @@ public class ArriveeGame extends MiniJeu {
 			}
 		}
 
-		// Tour de la horde
+		/* Tour de la horde
 		horde.act();
 		for (int i=0; i < terrain.getCases().length; i++) {
 			Entite e = terrain.getCases()[i][horde.getFront()].getEntite();
@@ -90,7 +90,7 @@ public class ArriveeGame extends MiniJeu {
 					destroy((Item)e);
 				}
 			}
-		}
+		}*/
 
 		// Tour des signes
         for (Signe s : signes) {

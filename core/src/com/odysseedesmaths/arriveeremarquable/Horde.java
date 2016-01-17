@@ -26,6 +26,6 @@ public class Horde {
 
     public void act() {
         count++;
-        if (count%vitesse == 0) front++;
+        if ((count%vitesse == 0) && (front < ArriveeGame.get().terrain.getCases()[0].length)) front++;
     }
 }
