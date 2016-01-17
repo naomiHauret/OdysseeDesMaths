@@ -1,61 +1,89 @@
 
 ui.png
-size: 256,256
+size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+coeur
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+coeurVide
+  rotate: false
+  xy: 662, 68
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 flecheBas
   rotate: false
-  xy: 2, 134
+  xy: 2, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flecheBasPleine
+flecheBasTap
   rotate: false
-  xy: 2, 68
+  xy: 68, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 flecheDroite
   rotate: false
-  xy: 68, 134
+  xy: 134, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flecheDroitePleine
+flecheDroiteTap
   rotate: false
-  xy: 2, 2
+  xy: 200, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 flecheGauche
   rotate: false
-  xy: 68, 68
+  xy: 266, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flecheGauchePleine
+flecheGaucheTap
   rotate: false
-  xy: 134, 134
+  xy: 332, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 flecheHaut
   rotate: false
-  xy: 68, 2
+  xy: 398, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-flecheHautPleine
+flecheHautTap
   rotate: false
-  xy: 134, 68
+  xy: 464, 52
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 530, 52
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pauseTap
+  rotate: false
+  xy: 596, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
