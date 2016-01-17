@@ -27,9 +27,9 @@ public class Terrain implements Pathfindable<Case> {
         TiledMapTileLayer obstaclesLayer = (TiledMapTileLayer)map.getLayers().get("obstacles");
         TiledMapTileLayer pointsLayer = (TiledMapTileLayer)map.getLayers().get("points");
 
-        cases = new Case[baseLayer.getHeight()][baseLayer.getWidth()];
-        for (int i=0; i < baseLayer.getHeight(); i++) {
-            for (int j=0; j < baseLayer.getWidth(); j++) {
+        cases = new Case[baseLayer.getWidth()][baseLayer.getHeight()];
+        for (int i=0; i < baseLayer.getWidth(); i++) {
+            for (int j=0; j < baseLayer.getHeight(); j++) {
                 cases[i][j] = new Case(i, j, obstaclesLayer.getCell(i,j) != null);
                 if (pointsLayer.getCell(i,j) != null) {
                     if (pointsLayer.getCell(i,j).getTile().getProperties().get("depart") != null) depart = cases[i][j];
@@ -48,6 +48,14 @@ public class Terrain implements Pathfindable<Case> {
     }
     public Case getFin() {
         return fin;
+    }
+
+    public int getWidth() {
+        return cases.length;
+    }
+
+    public int getHeight() {
+        return cases[0].length;
     }
 
 

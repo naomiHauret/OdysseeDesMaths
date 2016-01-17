@@ -80,7 +80,6 @@ public class ArriveeGame extends MiniJeu {
 
 		/* Tour de la horde
 		horde.act();
-		for (int i=0; i < terrain.getCases().length; i++) {
 			Entite e = terrain.getCases()[i][horde.getFront()].getEntite();
 			if (e != null) {
 				if (e instanceof Heros) {
