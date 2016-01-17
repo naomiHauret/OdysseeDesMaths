@@ -9,10 +9,6 @@ import java.util.LinkedList;
 
 public class Add extends Signe {
 
-    public Add(Case c) {
-        super(c);
-    }
-
     @Override
     public void act() {
         LinkedList<Case> cheminVersObjectif = Pathfinding.astar(ArriveeGame.get().terrain, getCase(), ArriveeGame.get().heros.getCase());

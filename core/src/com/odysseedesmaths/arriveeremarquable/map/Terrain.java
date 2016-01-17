@@ -58,7 +58,6 @@ public class Terrain implements Pathfindable<Case> {
         return cases[0].length;
     }
 
-
     // Méthodes permettant le Pathfinding
     @Override
     public Set<Case> getVoisins(Case c) {

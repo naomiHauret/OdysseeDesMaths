@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.odysseedesmaths.UserInterface;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
+import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class ArriveeScreen implements Screen {
 
@@ -62,7 +63,7 @@ public class ArriveeScreen implements Screen {
         herosSprite.draw(ArriveeGame.get().batch);
 
         if (ArriveeGame.get().activeItems.get("pi") != null) {
-            bouclierSprite.setPosition(herosSprite.getX()-64, herosSprite.getY()-64);
+            bouclierSprite.setPosition(herosSprite.getX() - 32, herosSprite.getY() - 32);
             bouclierSprite.draw(ArriveeGame.get().batch);
         }
 
@@ -108,6 +109,15 @@ public class ArriveeScreen implements Screen {
         ui.dispose();
     }
 
+    public static boolean isVisible(Case c) {
+        boolean resW, resH;
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+        Case cHeros = ArriveeGame.get().heros.getCase();
+        resW = Math.abs(c.i - cHeros.i) * 64 < width/2;
+        resH = Math.abs(c.j - cHeros.j) * 64 < height/2;
+        return resW && resH;
+    }
 
     private class InputEcouteur extends InputListener {
 

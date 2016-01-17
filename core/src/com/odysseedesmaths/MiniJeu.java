@@ -87,6 +87,8 @@ public abstract class MiniJeu extends Game {
         graphics.clear();
         effetsSonores.clear();
         musiques.clear();
+        batch.dispose();
+        font.dispose();
     }
 
     public void initTimer(int delay){

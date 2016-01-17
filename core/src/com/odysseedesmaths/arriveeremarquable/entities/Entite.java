@@ -9,6 +9,10 @@ public abstract class Entite {
         this.maCase = c;
     }
 
+    public Entite() {
+        this(null);
+    }
+
     public Case getCase() {
         return maCase;
     }

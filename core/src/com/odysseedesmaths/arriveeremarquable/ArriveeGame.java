@@ -3,10 +3,13 @@ package com.odysseedesmaths.arriveeremarquable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.Entite;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Add;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.SigneFactory;
+import com.odysseedesmaths.arriveeremarquable.map.Case;
 import com.odysseedesmaths.arriveeremarquable.map.Terrain;
 import com.odysseedesmaths.arriveeremarquable.entities.Heros;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
@@ -44,16 +47,12 @@ public class ArriveeGame extends MiniJeu {
 		super.create();
 		instance = this;
 
-		// Initialisation
+		// Initialisations
 		init();
 
-		// Tests placement de quelques signes autour du héros
-		//signes.add(new Add(terrain.getCases()[heros.getCase().i-3][heros.getCase().j-1]));
-		//signes.add(new Add(terrain.getCases()[heros.getCase().i-2][heros.getCase().j+2]));
-
 		// Ajout des assets graphiques
-		addTexture("heros", new Texture(Gdx.files.internal("heros64.png")));
-		addTexture("signe", new Texture(Gdx.files.internal("signe64.png")));
+		addTexture("heros", new Texture(Gdx.files.internal("heros.png")));
+		addTexture("signe", new Texture(Gdx.files.internal("signe.png")));
 		addTexture("bouclier", new Texture(Gdx.files.internal("bouclier.png")));
 
 		// Ajout des assets sonores
@@ -80,6 +79,7 @@ public class ArriveeGame extends MiniJeu {
 
 		/* Tour de la horde
 		horde.act();
+		for (int i=0; i < terrain.getHeight(); i++) {
 			Entite e = terrain.getCases()[i][horde.getFront()].getEntite();
 			if (e != null) {
 				if (e instanceof Heros) {
@@ -95,7 +95,16 @@ public class ArriveeGame extends MiniJeu {
 			s.act();
 		}
 
-		// Spawn de signes
+		// Spawn de signe
+		if (MathUtils.random() < 0.2) {
+			Signe signe = SigneFactory.makeSigne();
+			Case spawn;
+			do {
+				spawn = terrain.getCases()[MathUtils.random(terrain.getWidth() - 1)][MathUtils.random(terrain.getHeight()-1)];
+			} while (spawn.isObstacle() || ArriveeScreen.isVisible(spawn));
+			signe.setCase(spawn);
+			signes.add(signe);
+		}
 	}
 
 	public void destroy(Item e) {
@@ -107,7 +116,6 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void gameOver() {
-
 	}
 
 	public void dispose() {

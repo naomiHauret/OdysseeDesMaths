@@ -13,6 +13,10 @@ public abstract class Signe extends Personnage {
         super(c);
     }
 
+    public Signe() {
+        this(null);
+    }
+
     @Override
     public void meet(Entite e) {
         if (e instanceof Heros) ArriveeGame.get().heros.meet(this);
