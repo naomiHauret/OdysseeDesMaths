@@ -26,7 +26,7 @@ public class ArriveeScreen implements Screen {
         signeSprite = new Sprite(ArriveeGame.get().graphics.get("signe"));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
-        ui = new UserInterface(ArriveeGame.get().heros.HP_MAX, true, true);
+        ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.padUp.addListener(ecouteur);

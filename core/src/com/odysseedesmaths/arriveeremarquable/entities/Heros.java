@@ -6,13 +6,13 @@ import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Heros extends Personnage {
-    public final int HP_MAX = 5;
+    public final int PDV_MAX = 5;
 
     private int pdv;
 
     public Heros(Case c) {
         super(c);
-        pdv = HP_MAX;
+        pdv = PDV_MAX;
     }
 
     public int getPdv() {
@@ -20,7 +20,7 @@ public class Heros extends Personnage {
     }
 
     public void increasePDV() {
-        pdv++;
+        if (pdv < PDV_MAX) pdv++;
     }
 
     public void decreasePDV() {
