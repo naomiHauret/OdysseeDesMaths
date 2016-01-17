@@ -9,22 +9,34 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.odysseedesmaths.UserInterface;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Add;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Div;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Mult;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Soust;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
-public class ArriveeScreen implements Screen {
+import java.util.HashMap;
+import java.util.Map;
+
+public class ForetScreen implements Screen {
 
     private UserInterface ui;
 
     private Sprite herosSprite;
-    private Sprite signeSprite;
+    private Map<String, Sprite> signesSprite;
     private Sprite bouclierSprite;
 
     private OrthographicCamera camera;
 
-    public ArriveeScreen() {
+    public ForetScreen() {
         herosSprite = new Sprite(ArriveeGame.get().graphics.get("heros"));
-        signeSprite = new Sprite(ArriveeGame.get().graphics.get("signe"));
+        signesSprite = new HashMap<String, Sprite>();
+        signesSprite.put("egal", new Sprite(ArriveeGame.get().graphics.get("signeEgal")));
+        signesSprite.put("add", new Sprite(ArriveeGame.get().graphics.get("signeAdd")));
+        signesSprite.put("soust", new Sprite(ArriveeGame.get().graphics.get("signeSoust")));
+        signesSprite.put("mult", new Sprite(ArriveeGame.get().graphics.get("signeMult")));
+        signesSprite.put("div", new Sprite(ArriveeGame.get().graphics.get("signeDiv")));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
         ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, true, true);
@@ -68,8 +80,14 @@ public class ArriveeScreen implements Screen {
         }
 
         for (Signe s : ArriveeGame.get().signes) {
-            signeSprite.setPosition(s.getCase().i * 64, s.getCase().j * 64);
-            signeSprite.draw(ArriveeGame.get().batch);
+            Sprite signe;
+            if (s instanceof Add) signe = signesSprite.get("add");
+            else if (s instanceof Soust) signe = signesSprite.get("soust");
+            else if (s instanceof Mult) signe = signesSprite.get("mult");
+            else if (s instanceof Div) signe = signesSprite.get("div");
+            else signe = signesSprite.get("egal");
+            signe.setPosition(s.getCase().i * 64, s.getCase().j * 64);
+            signe.draw(ArriveeGame.get().batch);
         }
 
         ArriveeGame.get().batch.end();
@@ -117,6 +135,27 @@ public class ArriveeScreen implements Screen {
         resW = Math.abs(c.i - cHeros.i) * 64 < width/2;
         resH = Math.abs(c.j - cHeros.j) * 64 < height/2;
         return resW && resH;
+    }
+
+    public static boolean isInHeroSight(Case c) {
+        Case cHeros = ArriveeGame.get().heros.getCase();
+        Case[][] cases = ArriveeGame.get().terrain.getCases();
+
+        if (cHeros.i == c.i) {
+            int i = c.i;
+            for (int j = Math.min(cHeros.j, c.j); j < Math.max(cHeros.j, c.j); j++) {
+                if (cases[i][j].isObstacle()) return false;
+            }
+        } else if (cHeros.j == c.j) {
+            int j = c.j;
+            for (int i = Math.min(cHeros.i, c.i); i < Math.max(cHeros.i, c.i); i++) {
+                if (cases[i][j].isObstacle()) return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     private class InputEcouteur extends InputListener {

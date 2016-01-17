@@ -15,6 +15,7 @@ public class Musique {
 
     public static void play(){
         audio.play();
+        audio.setLooping(true);
     }
 
     public static void stop(){

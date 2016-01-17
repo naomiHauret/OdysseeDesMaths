@@ -11,16 +11,21 @@ public class Add extends Signe {
 
     @Override
     public void act() {
-        LinkedList<Case> cheminVersObjectif = Pathfinding.astar(ArriveeGame.get().terrain, getCase(), ArriveeGame.get().heros.getCase());
-        moveTo(cheminVersObjectif.getFirst());
+        Case cHero = ArriveeGame.get().heros.getCase();
+        LinkedList<Case> cheminVersHeros = Pathfinding.greedy(ArriveeGame.get().terrain, getCase(), cHero);
+        moveTo(cheminVersHeros.getFirst());
     }
 
     @Override
-    public void meet(Entite e) {
-        super.meet(e);
+    public boolean meet(Entite e) {
+        boolean alive = super.meet(e);
+
         if (e instanceof Soust) {
             ArriveeGame.get().destroy(this);
-            ArriveeGame.get().destroy((Soust)e);
+            ArriveeGame.get().destroy((Signe) e);
+            alive = false;
         }
+
+        return alive;
     }
 }

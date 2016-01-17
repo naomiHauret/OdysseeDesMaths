@@ -28,13 +28,19 @@ public class Heros extends Personnage {
     }
 
     @Override
-    public void meet(Entite e) {
+    public boolean meet(Entite e) {
+        boolean alive = true;
+
         if (e instanceof Signe) {
             if (ArriveeGame.get().activeItems.get("pi") == null) decreasePDV();
             ArriveeGame.get().destroy((Signe)e);
+            alive = pdv > 0;
         } else if (e instanceof Item) {
             ((Item)e).trigger();
+            alive = true;
         }
+
+        return alive;
     }
 
     private void move(int di, int dj) {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.arriveeremarquable.entities.signes.Egal;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.SigneFactory;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 import com.odysseedesmaths.arriveeremarquable.map.Terrain;
@@ -47,16 +48,21 @@ public class ArriveeGame extends MiniJeu {
 
 		// Initialisations
 		init();
+		Signe.init();
 
 		// Ajout des assets graphiques
 		addTexture("heros", new Texture(Gdx.files.internal("heros.png")));
-		addTexture("signe", new Texture(Gdx.files.internal("signe.png")));
+		addTexture("signeEgal", new Texture(Gdx.files.internal("signeEgal.png")));
+		addTexture("signeAdd", new Texture(Gdx.files.internal("signeAdd.png")));
+		addTexture("signeSoust", new Texture(Gdx.files.internal("signeSoust.png")));
+		addTexture("signeMult", new Texture(Gdx.files.internal("signeMult.png")));
+		addTexture("signeDiv", new Texture(Gdx.files.internal("signeDiv.png")));
 		addTexture("bouclier", new Texture(Gdx.files.internal("bouclier.png")));
 
 		// Ajout des assets sonores
 		addPathMusique("musicTest", "Arcade_Machine.ogg");;
 
-		setScreen(new ArriveeScreen());
+		setScreen(new ForetScreen());
 	}
 
 	@Override
@@ -94,12 +100,12 @@ public class ArriveeGame extends MiniJeu {
 		}
 
 		// Spawn de signe
-		if (MathUtils.random() < 0.2) {
+		if (!Signe.popFull() && MathUtils.random() < 0.2) {
 			Signe signe = SigneFactory.makeSigne();
 			Case spawn;
 			do {
 				spawn = terrain.getCases()[MathUtils.random(terrain.getWidth() - 1)][MathUtils.random(terrain.getHeight()-1)];
-			} while (spawn.isObstacle() || ArriveeScreen.isVisible(spawn));
+			} while (spawn.isObstacle() || ForetScreen.isVisible(spawn));
 			signe.setCase(spawn);
 			signes.add(signe);
 		}
@@ -107,10 +113,13 @@ public class ArriveeGame extends MiniJeu {
 
 	public void destroy(Item e) {
 		items.remove(e);
+		e.getCase().free();
 	}
 
 	public void destroy(Signe s) {
 		signes.remove(s);
+		s.getCase().free();
+		Signe.decreasePop(s);
 	}
 
 	public void gameOver() {
