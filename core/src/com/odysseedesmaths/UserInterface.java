@@ -3,6 +3,7 @@ package com.odysseedesmaths;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
 
 public class UserInterface extends Stage {
 
@@ -81,7 +83,12 @@ public class UserInterface extends Stage {
 
         // Création et ajout des pv
         heroHpGroup = new Table();
-        setHeroHp(heroHpMax);
+        heroHpGroup.addAction(new Action() {
+            public boolean act(float delta) {
+                setHeroHp(ArriveeGame.get().heros.getPdv());
+                return false;
+            }
+        });
 
         // Ajout des pv au tableau principal
         table.add(heroHpGroup).size(heroHpMax * HERO_HP_SIZE + 50, HERO_HP_SIZE).top().left().expand();
