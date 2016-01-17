@@ -26,7 +26,7 @@ public class ArriveeScreen implements Screen {
         signeSprite = new Sprite(ArriveeGame.get().graphics.get("signe"));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
-        ui = new UserInterface();
+        ui = new UserInterface(ArriveeGame.get().heros.HP_MAX, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.padUp.addListener(ecouteur);
@@ -75,7 +75,7 @@ public class ArriveeScreen implements Screen {
 
         // Centrage de la caméra sur le héros
         // S'il y a du blanc c'est normal c'est le hors map
-        camera.position.set(herosSprite.getX() + herosSprite.getWidth() / 2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
+        camera.position.set(herosSprite.getX() + herosSprite.getWidth()/2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
 
         // Interface utilisateur
         ui.render();
@@ -116,13 +116,13 @@ public class ArriveeScreen implements Screen {
             Actor source = event.getTarget();
 
             if (source == ui.padUp) {
-                ArriveeGame.get().heros.move(0,1);
+                ArriveeGame.get().heros.moveUp();
             } else if (source == ui.padRight) {
-                ArriveeGame.get().heros.move(1,0);
+                ArriveeGame.get().heros.moveRight();
             } else if (source == ui.padDown) {
-                ArriveeGame.get().heros.move(0,-1);
+                ArriveeGame.get().heros.moveDown();
             } else if (source == ui.padLeft) {
-                ArriveeGame.get().heros.move(-1,0);
+                ArriveeGame.get().heros.moveLeft();
             }
 
             ArriveeGame.get().playTurn();

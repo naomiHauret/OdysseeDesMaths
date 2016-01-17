@@ -7,7 +7,6 @@ import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.Entite;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Add;
-import com.odysseedesmaths.arriveeremarquable.map.Case;
 import com.odysseedesmaths.arriveeremarquable.map.Terrain;
 import com.odysseedesmaths.arriveeremarquable.entities.Heros;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
@@ -34,7 +33,7 @@ public class ArriveeGame extends MiniJeu {
 	public void init() {
 		terrain = new Terrain();
 		horde = new Horde(Horde.EASY);
-		heros = new Heros(terrain.getDepart(), 5);
+		heros = new Heros(terrain.getDepart());
 		signes = new HashSet<Signe>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<String, Integer>();

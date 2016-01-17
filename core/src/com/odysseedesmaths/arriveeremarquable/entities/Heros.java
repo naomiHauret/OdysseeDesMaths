@@ -6,11 +6,13 @@ import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Heros extends Personnage {
+    public final int HP_MAX = 5;
+
     private int pdv;
 
-    public Heros(Case c, int pdv) {
+    public Heros(Case c) {
         super(c);
-        this.pdv = pdv;
+        pdv = HP_MAX;
     }
 
     public int getPdv() {
@@ -35,8 +37,24 @@ public class Heros extends Personnage {
         }
     }
 
-    public void move(int di, int dj) {
+    private void move(int di, int dj) {
         Case cible = ArriveeGame.get().terrain.getCases()[getCase().i + di][getCase().j + dj];
         if (!cible.isObstacle()) moveTo(cible);
+    }
+
+    public void moveLeft() {
+        move(-1, 0);
+    }
+
+    public void moveRight() {
+        move(1, 0);
+    }
+
+    public void moveUp() {
+        move(0, 1);
+    }
+
+    public void moveDown() {
+        move(0, -1);
     }
 }
