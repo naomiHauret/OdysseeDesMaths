@@ -21,6 +21,8 @@ import java.util.Set;
 public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
+	public final int LIMITE_TEMPS = 15*60;		// en secondes (15 minutes)
+
 	public Heros heros;
 	public Horde horde;
 	public Terrain terrain;
@@ -122,7 +124,9 @@ public class ArriveeGame extends MiniJeu {
 		Signe.decreasePop(s);
 	}
 
+	@Override
 	public void gameOver() {
+
 	}
 
 	public void dispose() {

@@ -107,6 +107,8 @@ public abstract class MiniJeu extends Game {
         timer.removeActionListener(oldAL);
     }
 
+    public abstract void gameOver();
+
     private class TimeOutListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {

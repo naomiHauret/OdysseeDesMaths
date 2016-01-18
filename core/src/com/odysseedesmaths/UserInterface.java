@@ -1,22 +1,25 @@
 package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
 
 public class UserInterface extends Stage {
 
     private final int HERO_HP_SIZE = 48;
+    private final int TIMER_SIZE = 48;
     private final int PAUSE_SIZE = 64;
     private final int PAD_ARROW_SIZE = 64;
 
@@ -24,11 +27,13 @@ public class UserInterface extends Stage {
     private Skin skin;
 
     // Points de vie du héros
+    private int heroHpMax;
     private Table heroHpGroup;
     private Image heroHp;
-    private Drawable heroHpDrawable;
-    private Drawable heroEmptyHpDrawable;
-    private int heroHpMax;
+
+    // Timer
+    public Timer timer;
+    private Label timerLabel;
 
     // Pause
     public Button pause;
@@ -41,23 +46,25 @@ public class UserInterface extends Stage {
     public Button padDown;
 
     // Items
+    private Table itemGroup;
 
-    public UserInterface(int heroHpAmount, boolean usePad, boolean useItems) {
+    public UserInterface(int heroHpAmount, int timerAmount, boolean usePad, boolean useItems) {
         super();
 
+        // Initialisation du tableau principal
         table = new Table();
         table.setFillParent(true);
         addActor(table);
 
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui.atlas"));
+        // Initialisation du skin
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui/ui.atlas"));
         skin = new Skin();
         skin.addRegions(atlas);
 
+        // Ajout des composants
         table.pad(10);
-        if (heroHpAmount > 0) {
-            heroHpMax = heroHpAmount;
-            addHeroHp();
-        }
+        if (heroHpAmount > 0) addHeroHp(heroHpAmount);
+        if (timerAmount > 0) addTimer(timerAmount);
         addPause();
         table.row();
         if (usePad) addPad();
@@ -75,11 +82,12 @@ public class UserInterface extends Stage {
     }
 
     // Ajoute des points de vie pour le héros
-    public void addHeroHp() {
-        TextureRegion hpRegion = skin.getRegion("coeur");
-        TextureRegion emptyHpRegion = skin.getRegion("coeurVide");
-        heroHpDrawable = new TextureRegionDrawable(hpRegion);
-        heroEmptyHpDrawable = new TextureRegionDrawable(emptyHpRegion);
+    private void addHeroHp(int heroHpAmount) {
+        heroHpMax = heroHpAmount;
+
+        // Ajout des ressources nécessaires dans le skin
+        skin.add("heroHp", new TextureRegionDrawable(skin.getRegion("coeur")));
+        skin.add("heroEmptyHp", new TextureRegionDrawable(skin.getRegion("coeurVide")));
 
         // Création et ajout des pv
         heroHpGroup = new Table();
@@ -91,78 +99,93 @@ public class UserInterface extends Stage {
         });
 
         // Ajout des pv au tableau principal
-        table.add(heroHpGroup).size(heroHpMax * HERO_HP_SIZE + 50, HERO_HP_SIZE).top().left().expand();
+        table.add(heroHpGroup).size(heroHpMax * (HERO_HP_SIZE + 10), HERO_HP_SIZE).top().left().expand();
     }
 
     // Met à jour les points de vie du héros
-    public void setHeroHp(int hpAmount) {
+    private void setHeroHp(int hpAmount) {
         // Suppression des anciens pv
         heroHpGroup.clearChildren();
 
         // Création et ajout des pv pleins
         for (int i=0; i < hpAmount; i++) {
-            heroHp = new Image(heroHpDrawable);
+            heroHp = new Image(skin.get("heroHp", TextureRegionDrawable.class));
             heroHpGroup.add(heroHp).padRight(10);
         }
 
         // Création et ajout des pv vides
         for (int i=0; i < heroHpMax - hpAmount; i++) {
-            heroHp = new Image(heroEmptyHpDrawable);
+            heroHp = new Image(skin.get("heroEmptyHp", TextureRegionDrawable.class));
             heroHpGroup.add(heroHp).padRight(10);
         }
     }
 
+    // Ajoute un timer
+    private void addTimer(int timerAmount) {
+        // Initialisation du timer avec la limite de temps du mini-jeu
+        timer = new Timer(timerAmount);
+
+        // Ajout des ressources nécessaires dans le skin
+        skin.add("timer", new LabelStyle(new BitmapFont(Gdx.files.internal("ui/timer.fnt")), Color.WHITE));     // Color ?
+
+        // Création du timer
+        timerLabel = new Label(timer.toString(), skin, "timer");
+        timerLabel.addAction(new Action() {
+            public boolean act(float delta) {
+                timerLabel.setText(timer.toString());
+                return false;
+            }
+        });
+
+        // Ajout du timer au tableau principal
+        table.add(timerLabel).size(125, TIMER_SIZE).top().right().expand();
+    }
+
     // Ajoute un bouton pause
-    public void addPause() {
-        TextureRegion pauseRegion = skin.getRegion("pause");
-        TextureRegion pauseDownRegion = skin.getRegion("pauseTap");
+    private void addPause() {
+        // Ajout des ressources nécessaires dans le skin
+        ButtonStyle pauseStyle = new ButtonStyle();
+        pauseStyle.up = new TextureRegionDrawable(skin.getRegion("pause"));
+        pauseStyle.down = new TextureRegionDrawable(skin.getRegion("pauseTap"));
+        skin.add("pause", pauseStyle);
 
         // Création du bouton pause
-        ButtonStyle style = new ButtonStyle();
-        style.up = new TextureRegionDrawable(pauseRegion);
-        style.down = new TextureRegionDrawable(pauseDownRegion);
-        pause = new Button(style);
+        pause = new Button(skin, "pause");
 
         // Ajout du bouton pause au tableau principal
-        table.add(pause).size(PAUSE_SIZE, PAUSE_SIZE).top().right().expand();
+        table.add(pause).size(PAUSE_SIZE, PAUSE_SIZE).top().right();
     }
 
     // Ajoute un pad directionnel
     private void addPad() {
-        TextureRegion arrowRegion, arrowDownRegion;
-        ButtonStyle style;
+        // Ajout des ressources nécessaires dans le skin
+        ButtonStyle padStyle;
 
-        // Création de la flèche de gauche
-        arrowRegion = skin.getRegion("flecheGauche");
-        arrowDownRegion = skin.getRegion("flecheGaucheTap");
-        style = new ButtonStyle();
-        style.up = new TextureRegionDrawable(arrowRegion);
-        style.down = new TextureRegionDrawable(arrowDownRegion);
-        padLeft = new Button(style);
+        padStyle = new ButtonStyle();
+        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheGauche"));
+        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheGaucheTap"));
+        skin.add("padLeft", padStyle);
 
-        // Création de la flèche de droite
-        arrowRegion = skin.getRegion("flecheDroite");
-        arrowDownRegion = skin.getRegion("flecheDroiteTap");
-        style = new ButtonStyle();
-        style.up = new TextureRegionDrawable(arrowRegion);
-        style.down = new TextureRegionDrawable(arrowDownRegion);
-        padRight = new Button(style);
+        padStyle = new ButtonStyle();
+        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheDroite"));
+        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheDroiteTap"));
+        skin.add("padRight", padStyle);
 
-        // Création de la flèche du haut
-        arrowRegion = skin.getRegion("flecheHaut");
-        arrowDownRegion = skin.getRegion("flecheHautTap");
-        style = new ButtonStyle();
-        style.up = new TextureRegionDrawable(arrowRegion);
-        style.down = new TextureRegionDrawable(arrowDownRegion);
-        padUp = new Button(style);
+        padStyle = new ButtonStyle();
+        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheHaut"));
+        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheHautTap"));
+        skin.add("padUp", padStyle);
 
-        // Création de la flèche du bas
-        arrowRegion = skin.getRegion("flecheBas");
-        arrowDownRegion = skin.getRegion("flecheBasTap");
-        style = new ButtonStyle();
-        style.up = new TextureRegionDrawable(arrowRegion);
-        style.down = new TextureRegionDrawable(arrowDownRegion);
-        padDown = new Button(style);
+        padStyle = new ButtonStyle();
+        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheBas"));
+        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheBasTap"));
+        skin.add("padDown", padStyle);
+
+        // Création des flèches
+        padLeft = new Button(skin, "padLeft");
+        padRight = new Button(skin, "padRight");
+        padUp = new Button(skin, "padUp");
+        padDown = new Button(skin, "padDown");
 
         // Ajout des flèches au pad directionnel
         padGroup = new Table();
@@ -178,7 +201,7 @@ public class UserInterface extends Stage {
     }
 
     // Ajoute des items
-    public void addItems() {
+    private void addItems() {
 
     }
 }
