@@ -4,9 +4,6 @@ import java.util.TimerTask;
 
 public class Timer {
 
-    public static final int MINUTE = 60;
-    public static final int SECOND = 1;
-
     private java.util.Timer timer;
     private int secondsLeft;
 

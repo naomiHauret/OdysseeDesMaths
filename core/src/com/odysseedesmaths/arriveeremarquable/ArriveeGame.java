@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.entities.signes.Egal;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.SigneFactory;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 import com.odysseedesmaths.arriveeremarquable.map.Terrain;
