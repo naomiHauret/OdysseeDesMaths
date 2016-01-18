@@ -12,8 +12,10 @@ import com.odysseedesmaths.arriveeremarquable.map.Terrain;
 import com.odysseedesmaths.arriveeremarquable.entities.Heros;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -72,7 +74,7 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void playTurn() {
-		// Mise à jour des items actifs
+		/* Mise à jour des items actifs
 		for (Map.Entry<String, Integer> entry : activeItems.entrySet()) {
 			int new_value = entry.getValue()-1;
 			if (new_value == 0) {
@@ -80,7 +82,7 @@ public class ArriveeGame extends MiniJeu {
 			} else {
 				entry.setValue(new_value);
 			}
-		}
+		}*/
 
 		/* Tour de la horde
 		horde.act();
@@ -96,8 +98,12 @@ public class ArriveeGame extends MiniJeu {
 		}*/
 
 		// Tour des signes
-        for (Signe s : signes) {
-			s.act();
+		List<Signe> toAct = new ArrayList<Signe>();
+		toAct.addAll(signes);
+		while (!toAct.isEmpty()) {
+			Signe s = toAct.get(0);
+			if (s.isAlive()) s.act();
+			toAct.remove(0);
 		}
 
 		// Spawn de signe
@@ -106,7 +112,7 @@ public class ArriveeGame extends MiniJeu {
 			Case spawn;
 			do {
 				spawn = terrain.getCases()[MathUtils.random(terrain.getWidth() - 1)][MathUtils.random(terrain.getHeight()-1)];
-			} while (spawn.isObstacle() || ForetScreen.isVisible(spawn));
+			} while (spawn.isObstacle() || spawn.isTaken() || ForetScreen.isVisible(spawn));
 			signe.setCase(spawn);
 			signes.add(signe);
 		}

@@ -18,14 +18,14 @@ public class Mult extends Signe {
 
     @Override
     public boolean meet(Entite e) {
-        boolean alive = super.meet(e);
+        boolean continuer = super.meet(e);
 
         if (e instanceof Div) {
             ArriveeGame.get().destroy(this);
             ArriveeGame.get().destroy((Signe) e);
-            alive = false;
+            setAlive(false);
         }
 
-        return alive;
+        return continuer && isAlive();
     }
 }

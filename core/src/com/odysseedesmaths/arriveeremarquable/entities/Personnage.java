@@ -9,11 +9,11 @@ public abstract class Personnage extends Entite {
     }
 
     public void moveTo(Case c) {
-        boolean alive = true;
+        boolean continuer = true;
         if (c.isTaken()) {
-            alive = meet(c.getEntite());
+            continuer = meet(c.getEntite());
         }
-        if (alive) {
+        if (continuer) {
             getCase().free();
             setCase(c);
             c.setEntite(this);

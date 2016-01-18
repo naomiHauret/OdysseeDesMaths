@@ -9,17 +9,28 @@ import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public abstract class Signe extends Personnage {
 
+    private boolean alive;
+
     public Signe(Case c) {
         super(c);
+        alive = true;
     }
 
     public Signe() {
         this(null);
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
     @Override
     public boolean meet(Entite e) {
-        boolean alive = true;
+        boolean continuer = true;
 
         if (e instanceof Heros) {
             if (ArriveeGame.get().activeItems.get("pi") == null) ((Heros) e).decreasePDV();
@@ -27,13 +38,11 @@ public abstract class Signe extends Personnage {
             alive = false;
         } else if (e instanceof Item) {
             ArriveeGame.get().destroy((Item)e);
-            alive = true;
         } else if (e instanceof Signe) {
-            // temp
-            alive = false;
+            continuer = false;
         }
 
-        return alive;
+        return continuer && alive;
     }
 
     public abstract void act();
@@ -59,11 +68,11 @@ public abstract class Signe extends Personnage {
         for (int i=0; i < pop.length; i++) {
             pop[i] = 0;
         }
-        max[EGAL] = 0;
-        max[ADD] = 0;
-        max[SOUST] = 0;
-        max[MULT] = 0;
-        max[DIV] = 0;
+        max[EGAL] = 1;
+        max[ADD] = 1;
+        max[SOUST] = 1;
+        max[MULT] = 1;
+        max[DIV] = 1;
     }
 
     public static boolean popFull(int signeNum) {
