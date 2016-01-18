@@ -59,6 +59,9 @@ public abstract class Signe extends Personnage {
     public static final int SOUST = 4;
     public static final int NB_TYPE = 5;
 
+    public static final int SPAWN_RADIUS = 10;
+    public static final double SPAWN_CHANCE = 0.5;
+
     private static int[] max;
     private static int[] pop;
 
@@ -69,10 +72,10 @@ public abstract class Signe extends Personnage {
             pop[i] = 0;
         }
         max[EGAL] = 1;
-        max[ADD] = 1;
-        max[SOUST] = 1;
-        max[MULT] = 1;
-        max[DIV] = 1;
+        max[ADD] = 2;
+        max[SOUST] = 6;
+        max[MULT] = 2;
+        max[DIV] = 0;
     }
 
     public static boolean popFull(int signeNum) {

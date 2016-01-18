@@ -39,7 +39,7 @@ public class ForetScreen implements Screen {
         signesSprite.put("div", new Sprite(ArriveeGame.get().graphics.get("signeDiv")));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
-        ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, ArriveeGame.get().LIMITE_TEMPS, true, true);
+        ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, ArriveeGame.LIMITE_TEMPS, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.padUp.addListener(ecouteur);
@@ -142,7 +142,7 @@ public class ForetScreen implements Screen {
     public static boolean isInHeroSight(Case c) {
         Case cHeros = ArriveeGame.get().heros.getCase();
         Case[][] cases = ArriveeGame.get().terrain.getCases();
-
+        //TODO: A refaire avec un rectangle
         if (cHeros.i == c.i) {
             int i = c.i;
             for (int j = Math.min(cHeros.j, c.j); j < Math.max(cHeros.j, c.j); j++) {

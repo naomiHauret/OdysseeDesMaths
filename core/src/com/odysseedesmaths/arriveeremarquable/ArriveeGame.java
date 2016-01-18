@@ -22,7 +22,7 @@ import java.util.Set;
 public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
-	public final int LIMITE_TEMPS = 15*60;		// en secondes (15 minutes)
+	public static final int LIMITE_TEMPS = 15*60;		// en secondes (15 minutes)
 
 	public Heros heros;
 	public Horde horde;
@@ -107,12 +107,14 @@ public class ArriveeGame extends MiniJeu {
 		}
 
 		// Spawn de signe
-		if (!Signe.popFull() && MathUtils.random() < 0.2) {
+		if (!Signe.popFull() && MathUtils.random() < Signe.SPAWN_CHANCE) {
 			Signe signe = SigneFactory.makeSigne();
 			Case spawn;
 			do {
-				spawn = terrain.getCases()[MathUtils.random(terrain.getWidth() - 1)][MathUtils.random(terrain.getHeight()-1)];
-			} while (spawn.isObstacle() || spawn.isTaken() || ForetScreen.isVisible(spawn));
+				int i = MathUtils.random(heros.getCase().i, terrain.getWidth() - 1);
+				int j = MathUtils.random(terrain.getHeight() - 1);
+				spawn = terrain.getCases()[i][j];
+			} while (spawn.isObstacle() || spawn.isTaken() || terrain.heuristic(heros.getCase(), spawn) < Signe.SPAWN_RADIUS);
 			signe.setCase(spawn);
 			signes.add(signe);
 		}
