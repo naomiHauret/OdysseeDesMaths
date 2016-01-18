@@ -12,7 +12,21 @@ public class Timer {
     }
 
     public String toString() {
-        return secondsLeft/60 + ":" + secondsLeft%60;
+        int minutes = secondsLeft/60;
+        int seconds = secondsLeft%60;
+        String minutesText, secondsText;
+
+        minutesText = String.valueOf(minutes);
+        if (minutes < 10) {
+            minutesText = "0"+minutesText;
+        }
+
+        secondsText = String.valueOf(seconds);
+        if (seconds < 10) {
+            secondsText = "0"+secondsText;
+        }
+
+        return minutesText+":"+secondsText;
     }
 
     public void start() {
