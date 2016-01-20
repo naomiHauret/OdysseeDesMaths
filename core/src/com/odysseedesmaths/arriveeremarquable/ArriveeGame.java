@@ -22,7 +22,7 @@ import java.util.Set;
 public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
-	public static final int LIMITE_TEMPS = 15*60;		// en secondes (15 minutes)
+	public static final int LIMITE_TEMPS = 10;
 
 	public Heros heros;
 	public Horde horde;

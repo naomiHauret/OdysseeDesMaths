@@ -63,12 +63,20 @@ public class UserInterface extends Stage {
 
         // Ajout des composants
         table.pad(10);
-        if (heroHpAmount > 0) addHeroHp(heroHpAmount);
-        if (timerAmount > 0) addTimer(timerAmount);
+        if (heroHpAmount > 0) {
+            addHeroHp(heroHpAmount);
+        }
+        if (timerAmount > 0) {
+            addTimer(timerAmount);
+        }
         addPause();
         table.row();
-        if (usePad) addPad();
-        if (useItems) addItems();
+        if (usePad) {
+            addPad();
+        }
+        if (useItems) {
+            addItems();
+        }
     }
 
     public void render() {
@@ -93,7 +101,7 @@ public class UserInterface extends Stage {
         heroHpGroup = new Table();
         heroHpGroup.addAction(new Action() {
             public boolean act(float delta) {
-                setHeroHp(ArriveeGame.get().heros.getPdv());
+                setHeroHp(ArriveeGame.get().heros.getPdv());        // A changer (utilise Arrivee)
                 return false;
             }
         });

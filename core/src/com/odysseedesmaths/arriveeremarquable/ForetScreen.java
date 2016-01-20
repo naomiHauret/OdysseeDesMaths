@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.UserInterface;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Add;
 import com.odysseedesmaths.arriveeremarquable.entities.signes.Div;
@@ -39,7 +40,7 @@ public class ForetScreen implements Screen {
         signesSprite.put("div", new Sprite(ArriveeGame.get().graphics.get("signeDiv")));
         bouclierSprite = new Sprite(ArriveeGame.get().graphics.get("bouclier"));
 
-        ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, ArriveeGame.LIMITE_TEMPS, true, true);
+        ui = new UserInterface(ArriveeGame.get().heros.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.padUp.addListener(ecouteur);
@@ -111,7 +112,6 @@ public class ForetScreen implements Screen {
     @Override
     public void pause() {
         ui.timer.stop();
-
     }
 
     @Override
