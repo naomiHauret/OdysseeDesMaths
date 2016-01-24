@@ -2,9 +2,9 @@ package com.odysseedesmaths.arriveeremarquable;
 
 public class Horde {
 
-    public static final int HARD = 2;
+    public static final int FAST = 2;
     public static final int NORMAL = 3;
-    public static final int EASY = 4;
+    public static final int SLOW = 4;
 
     private int front;
     private int vitesse;

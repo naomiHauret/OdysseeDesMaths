@@ -61,7 +61,7 @@ public abstract class Enemy extends Character {
     private static final int LOST = 4;
     private static final int NB_TYPES = 5;
 
-    public static final int SPAWN_MIN_DISTANCE = 10;
+    public static final int SPAWN_MIN_DISTANCE = 7;
     public static final int SPAWN_MAX_DISTANCE = 20;
     public static final double SPAWN_CHANCE = 0.6;
 
@@ -78,7 +78,7 @@ public abstract class Enemy extends Character {
         max[SMART] = 1;
         max[SUPERSMART] = 0;
         max[GREED] = 1;
-        max[LOST] = 10;
+        max[LOST] = 15;
     }
 
     public static boolean popFull(int enemy) {

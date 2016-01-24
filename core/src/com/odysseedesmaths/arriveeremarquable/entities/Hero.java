@@ -7,7 +7,7 @@ import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public class Hero extends Character {
-    public final int PDV_MAX = 5;
+    public static final int PDV_MAX = 5;
 
     private int pdv;
 
@@ -26,6 +26,7 @@ public class Hero extends Character {
 
     public void decreasePDV() {
         pdv--;
+        if (pdv <= 0) ArriveeGame.get().gameOver();
     }
 
     @Override
@@ -35,11 +36,8 @@ public class Hero extends Character {
         if (e instanceof Enemy) {
             if (ArriveeGame.get().activeItems.get(Shield.class) == null) decreasePDV();
             ArriveeGame.get().destroy((Enemy)e);
-            continuer = pdv > 0;
         } else if (e instanceof Item) {
             ((Item)e).trigger();
-            ArriveeGame.get().destroy(((Item)e));
-            continuer = true;
         }
 
         return continuer;

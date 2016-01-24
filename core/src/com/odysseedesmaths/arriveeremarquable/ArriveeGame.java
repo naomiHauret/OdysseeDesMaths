@@ -37,7 +37,7 @@ public class ArriveeGame extends MiniJeu {
 
 	public void init() {
 		terrain = new Terrain();
-		horde = new Horde(Horde.HARD);
+		horde = new Horde(Horde.NORMAL);
 		hero = new Hero(terrain.getDepart());
 		enemies = new HashSet<Enemy>();
 		items = new HashSet<Item>();
@@ -62,7 +62,7 @@ public class ArriveeGame extends MiniJeu {
 		addTexture("signeSoust", new Texture(Gdx.files.internal("signeSoust.png")));
 		addTexture("signeMult", new Texture(Gdx.files.internal("signeMult.png")));
 		addTexture("signeDiv", new Texture(Gdx.files.internal("signeDiv.png")));
-		addTexture("bouclier", new Texture(Gdx.files.internal("bouclier.png")));
+		addTexture("shield", new Texture(Gdx.files.internal("bouclier.png")));
         addTexture("heart", new Texture(Gdx.files.internal("coeur.png")));
 
 		// Ajout des assets sonores
@@ -74,6 +74,7 @@ public class ArriveeGame extends MiniJeu {
 	@Override
 	public void render() {
 		super.render();
+		getScreen().render(60f*Gdx.graphics.getDeltaTime());
 	}
 
 	public void playTurn() {
@@ -97,6 +98,8 @@ public class ArriveeGame extends MiniJeu {
                         gameOver();
                     } else if (e instanceof Item) {
                         destroy((Item) e);
+                    } else if (e instanceof Enemy) {
+                        destroy((Enemy) e);
                     }
                 }
             }

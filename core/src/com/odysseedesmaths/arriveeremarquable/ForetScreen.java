@@ -12,12 +12,13 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.UserInterface;
+import com.odysseedesmaths.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Greed;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.SuperSmart;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Sticky;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Smart;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Lost;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Heart;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
@@ -33,27 +34,23 @@ public class ForetScreen implements Screen {
 
     private UserInterface ui;
 
-    private Sprite herosSprite;
+    private Sprite heroSprite;
+    private Map<Entity, Sprite> entitiesSprites;
+    private Map<Class<? extends Item>, Sprite> buffsSprites;
     private Sprite hordeSprite;
-    private Map<Class<? extends Enemy>, Sprite> enemiesSprite;
-    private Map<Class<? extends Item>, Sprite> itemsSprite;
 
     public ForetScreen() {
-        herosSprite = new Sprite(ArriveeGame.get().graphics.get("hero"));
+        heroSprite = new Sprite(ArriveeGame.get().graphics.get("hero"));
+        heroSprite.setPosition(ArriveeGame.get().hero.getCase().i * CELL_SIZE, ArriveeGame.get().hero.getCase().j * CELL_SIZE);
+
+        entitiesSprites = new HashMap<Entity, Sprite>();
+
+        buffsSprites = new HashMap<Class<? extends Item>, Sprite>();
+        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("shield")));
+
         hordeSprite = new Sprite(ArriveeGame.get().graphics.get("horde"));
 
-        enemiesSprite = new HashMap<Class<? extends Enemy>, Sprite>();
-        enemiesSprite.put(Sticky.class, new Sprite(ArriveeGame.get().graphics.get("signeEgal")));
-        enemiesSprite.put(Greed.class, new Sprite(ArriveeGame.get().graphics.get("signeAdd")));
-        enemiesSprite.put(Lost.class, new Sprite(ArriveeGame.get().graphics.get("signeSoust")));
-        enemiesSprite.put(Smart.class, new Sprite(ArriveeGame.get().graphics.get("signeMult")));
-        enemiesSprite.put(SuperSmart.class, new Sprite(ArriveeGame.get().graphics.get("signeDiv")));
-
-        itemsSprite = new HashMap<Class<? extends Item>, Sprite>();
-        itemsSprite.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("bouclier")));
-        itemsSprite.put(Heart.class, new Sprite(ArriveeGame.get().graphics.get("heart")));
-
-        ui = new UserInterface(ArriveeGame.get().hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
+        ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.padUp.addListener(ecouteur);
@@ -86,24 +83,32 @@ public class ForetScreen implements Screen {
         ArriveeGame.get().batch.setProjectionMatrix(camera.combined);
         ArriveeGame.get().batch.begin();
 
-        herosSprite.setPosition(ArriveeGame.get().hero.getCase().i * 64, ArriveeGame.get().hero.getCase().j * 64);
-        herosSprite.draw(ArriveeGame.get().batch);
+        updatePos(heroSprite, ArriveeGame.get().hero);
+        heroSprite.draw(ArriveeGame.get().batch);
 
         if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
-            itemsSprite.get(Shield.class).setPosition(herosSprite.getX() - 32, herosSprite.getY() - 32);
-            itemsSprite.get(Shield.class).draw(ArriveeGame.get().batch);
+            buffsSprites.get(Shield.class).setPosition(heroSprite.getX() - 32, heroSprite.getY() - 32);
+            buffsSprites.get(Shield.class).draw(ArriveeGame.get().batch);
         }
 
-        for (Enemy e : ArriveeGame.get().enemies) {
-            Sprite enemy = enemiesSprite.get(e.getClass());
-            enemy.setPosition(e.getCase().i * 64, e.getCase().j * 64);
-            enemy.draw(ArriveeGame.get().batch);
+        for (Enemy enemy : ArriveeGame.get().enemies) {
+            Sprite enemySprite = entitiesSprites.get(enemy);
+            if (enemySprite == null) {
+                enemySprite = getNewSpriteFor(enemy);
+                entitiesSprites.put(enemy, enemySprite);
+            }
+            updatePos(enemySprite, enemy);
+            enemySprite.draw(ArriveeGame.get().batch);
         }
 
-        for (Item it : ArriveeGame.get().items) {
-            Sprite item = itemsSprite.get(it.getClass());
-            item.setPosition(it.getCase().i * 64, it.getCase().j * 64);
-            item.draw(ArriveeGame.get().batch);
+        for (Item item : ArriveeGame.get().items) {
+            Sprite itemSprite = entitiesSprites.get(item);
+            if (itemSprite == null) {
+                itemSprite = getNewSpriteFor(item);
+                entitiesSprites.put(item, itemSprite);
+            }
+            updatePos(itemSprite, item);
+            itemSprite.draw(ArriveeGame.get().batch);
         }
 
         // Affichage de la horde
@@ -119,7 +124,7 @@ public class ForetScreen implements Screen {
         ArriveeGame.get().batch.end();
 
         // Centrage de la caméra sur le héros
-        camera.position.set(herosSprite.getX() + herosSprite.getWidth()/2, herosSprite.getY() + herosSprite.getHeight()/2, 0);
+        camera.position.set(heroSprite.getX() + heroSprite.getWidth()/2, heroSprite.getY() + heroSprite.getHeight()/2, 0);
 
         // Interface utilisateur par dessus le reste
         ui.render();
@@ -152,6 +157,42 @@ public class ForetScreen implements Screen {
         ui.dispose();
     }
 
+    private void updatePos(Sprite aSprite, Entity aEntity) {
+        float targetX, targetY, newX, newY;
+
+        targetX = aEntity.getCase().i * CELL_SIZE;
+        if (targetX > aSprite.getX()) newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        else if (targetX < aSprite.getX()) newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        else newX = targetX;
+
+        targetY = aEntity.getCase().j * CELL_SIZE;
+        if (targetY > aSprite.getY()) newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        else if (targetY < aSprite.getY()) newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        else newY = targetY;
+
+        aSprite.setPosition(newX, newY);
+    }
+
+    // Temporaire
+    private Sprite getNewSpriteFor(Entity aEntity) {
+        Sprite sprite;
+
+        if (aEntity instanceof Enemy) {
+            if (aEntity instanceof Sticky) sprite = new Sprite(ArriveeGame.get().graphics.get("signeEgal"));
+            else if (aEntity instanceof Smart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeAdd"));
+            else if (aEntity instanceof Greed) sprite = new Sprite(ArriveeGame.get().graphics.get("signeMult"));
+            else if (aEntity instanceof SuperSmart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeDiv"));
+            else sprite = new Sprite(ArriveeGame.get().graphics.get("signeSoust"));
+        } else {// c'est un item, pas d'appel de cette méthode sur le héros
+            if (aEntity instanceof Shield) sprite = new Sprite(ArriveeGame.get().graphics.get("shield"));
+            else sprite = new Sprite(ArriveeGame.get().graphics.get("heart"));
+        }
+
+        sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
+
+        return sprite;
+    }
+
     private class InputEcouteur extends InputListener {
 
         @Override
@@ -181,6 +222,8 @@ public class ForetScreen implements Screen {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
+    public static final int DELTA = 150;
+    public static final int CELL_SIZE = 64;
 
     public static boolean isVisible(Case c) {
         boolean resW, resH;

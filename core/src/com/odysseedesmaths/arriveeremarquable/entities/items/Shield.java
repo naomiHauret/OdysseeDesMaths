@@ -9,7 +9,7 @@ public class Shield extends Item {
 
     @Override
     public void trigger() {
-        super.trigger();
         ArriveeGame.get().activeItems.put(this.getClass(), DUREE);
+        super.trigger();
     }
 }
