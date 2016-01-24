@@ -101,7 +101,7 @@ public class UserInterface extends Stage {
         heroHpGroup = new Table();
         heroHpGroup.addAction(new Action() {
             public boolean act(float delta) {
-                setHeroHp(ArriveeGame.get().heros.getPdv());        // A changer (utilise Arrivee)
+                setHeroHp(ArriveeGame.get().hero.getPdv());        // A changer (utilise Arrivee)
                 return false;
             }
         });

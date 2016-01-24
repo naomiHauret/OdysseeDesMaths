@@ -93,7 +93,7 @@ public abstract class Pathfinding {
      * @param goal      le sommet destination
      * @return          le chemin
      */
-    public static <E> LinkedList<E> dijkstra(Pathfindable<E> g, E start, E goal) {int count=0;
+    public static <E> LinkedList<E> dijkstra(Pathfindable<E> g, E start, E goal) {
         // Map des distances relatives au départ
         Map<E, Integer> dist = new HashMap<E, Integer>();
         dist.put(start, 0);
@@ -107,7 +107,7 @@ public abstract class Pathfinding {
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
-        while (!toDo.isEmpty()) {count++;
+        while (!toDo.isEmpty()) {
 
             // On traite le sommet le plus prometteur
             E current = toDo.get();
@@ -127,7 +127,6 @@ public abstract class Pathfinding {
             }
         }
 
-        System.out.println("dijkstra : "+count);
         // Le chemin est calculé, il ne reste plus qu'à le reconstruire
         return buildPath(came_from, start, goal);
     }
@@ -149,7 +148,7 @@ public abstract class Pathfinding {
      * @param goal      le sommet destination
      * @return          le chemin
      */
-    public static <E> LinkedList<E> astar(Pathfindable<E> g, E start, E goal) {int count=0;
+    public static <E> LinkedList<E> astar(Pathfindable<E> g, E start, E goal) {
         // Map des distances relatives au départ
         Map<E, Integer> dist = new HashMap<E, Integer>();
         dist.put(start, 0);
@@ -163,7 +162,7 @@ public abstract class Pathfinding {
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
-        while (!toDo.isEmpty()) {count++;
+        while (!toDo.isEmpty()) {
 
             // On traite le sommet le plus prometteur
             E current = toDo.get();
@@ -185,7 +184,6 @@ public abstract class Pathfinding {
         }
 
         // Le chemin est calculé, il ne reste plus qu'à le reconstruire
-        System.out.println("astar : "+count);
         return buildPath(came_from, start, goal);
     }
 
@@ -202,7 +200,7 @@ public abstract class Pathfinding {
      * @param goal      le sommet destination
      * @return          le chemin
      */
-    public static <E> LinkedList<E> greedy(Pathfindable<E> g, E start, E goal) {int count = 0;
+    public static <E> LinkedList<E> greedy(Pathfindable<E> g, E start, E goal) {
         // Map des précédents de chacun des sommets (sur le chemin final)
         Map<E, E> came_from = new HashMap<E, E>();
         came_from.put(start, null);
@@ -212,7 +210,7 @@ public abstract class Pathfinding {
         toDo.put(start,0);
 
         // Calcul du chemin tant qu'il y a des sommets à traiter
-        while (!toDo.isEmpty()) {count++;
+        while (!toDo.isEmpty()) {
 
             // On traite le sommet le plus prometteur
             E current = toDo.get();
@@ -231,7 +229,6 @@ public abstract class Pathfinding {
             }
         }
 
-        System.out.println("greedy : "+count);
         // Le chemin est calculé, il ne reste plus qu'à le reconstruire
         return buildPath(came_from, start, goal);
     }

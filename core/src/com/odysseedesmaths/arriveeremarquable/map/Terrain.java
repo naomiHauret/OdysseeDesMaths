@@ -15,28 +15,37 @@ public class Terrain implements Pathfindable<Case> {
     private final TiledMap map;
     public TiledMapRenderer renderer;
 
-    private Case[][] cases;
-    private Case depart;
-    private Case fin;
+    private final Case[][] cases;
+    private final Case depart;
+    private final Case fin;
 
     public Terrain() {
+        int height, width;
+
+        // Récupération d'une map
         this.map = new TmxMapLoader().load("map.tmx");
         this.renderer = new OrthogonalTiledMapRenderer(map);
 
-        TiledMapTileLayer baseLayer = (TiledMapTileLayer)map.getLayers().get("base");
-        TiledMapTileLayer obstaclesLayer = (TiledMapTileLayer)map.getLayers().get("obstacles");
-        TiledMapTileLayer pointsLayer = (TiledMapTileLayer)map.getLayers().get("points");
+        // Récupération de ses dimensions
+        width = Integer.valueOf((String)map.getProperties().get("width"));
+        height = Integer.valueOf((String)map.getProperties().get("height"));
+        this.cases = new Case[width][height];
 
-        cases = new Case[baseLayer.getWidth()][baseLayer.getHeight()];
-        for (int i=0; i < baseLayer.getWidth(); i++) {
-            for (int j=0; j < baseLayer.getHeight(); j++) {
+        // Récupération des layers nécessaires
+        TiledMapTileLayer obstaclesLayer = (TiledMapTileLayer)map.getLayers().get("obstacles");
+
+        // Création des cases
+        for (int i=0; i < width; i++) {
+            for (int j=0; j < height; j++) {
                 cases[i][j] = new Case(i, j, obstaclesLayer.getCell(i,j) != null);
-                if (pointsLayer.getCell(i,j) != null) {
-                    if (pointsLayer.getCell(i,j).getTile().getProperties().get("depart") != null) depart = cases[i][j];
-                    if (pointsLayer.getCell(i,j).getTile().getProperties().get("fin") != null) fin = cases[i][j];
-                }
             }
         }
+
+        // Récupération des points de départ et d'arrivée
+        String[] mapDepart = ((String)map.getProperties().get("start")).split(",");
+        String[] mapFin = ((String)map.getProperties().get("end")).split(",");
+        this.depart = cases[Integer.valueOf(mapDepart[0])][Integer.valueOf(mapDepart[1])];
+        this.fin = cases[Integer.valueOf(mapFin[0])][Integer.valueOf(mapFin[1])];
     }
 
     public Case[][] getCases() {
@@ -64,9 +73,9 @@ public class Terrain implements Pathfindable<Case> {
         Set<Case> voisins = new HashSet<Case>();
 
         if (c.j+1 < getHeight() && !cases[c.i][c.j+1].isObstacle()) voisins.add(cases[c.i][c.j+1]);
-        if (!cases[c.i][c.j-1].isObstacle()) voisins.add(cases[c.i][c.j-1]);
+        if (c.j-1 >= 0 && !cases[c.i][c.j-1].isObstacle()) voisins.add(cases[c.i][c.j-1]);
         if (c.i+1 < getWidth() && !cases[c.i+1][c.j].isObstacle()) voisins.add(cases[c.i+1][c.j]);
-        if (!cases[c.i-1][c.j].isObstacle()) voisins.add(cases[c.i-1][c.j]);
+        if (c.i-1 >= 0 && !cases[c.i-1][c.j].isObstacle()) voisins.add(cases[c.i-1][c.j]);
 
         return voisins;
     }

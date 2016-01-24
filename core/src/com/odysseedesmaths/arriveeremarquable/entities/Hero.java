@@ -1,16 +1,17 @@
 package com.odysseedesmaths.arriveeremarquable.entities;
 
 import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
+import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
+import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
-public class Heros extends Personnage {
+public class Hero extends Character {
     public final int PDV_MAX = 5;
 
     private int pdv;
 
-    public Heros(Case c) {
+    public Hero(Case c) {
         super(c);
         pdv = PDV_MAX;
     }
@@ -28,15 +29,16 @@ public class Heros extends Personnage {
     }
 
     @Override
-    public boolean meet(Entite e) {
+    public boolean meet(Entity e) {
         boolean continuer = true;
 
-        if (e instanceof Signe) {
-            if (ArriveeGame.get().activeItems.get("pi") == null) decreasePDV();
-            ArriveeGame.get().destroy((Signe)e);
+        if (e instanceof Enemy) {
+            if (ArriveeGame.get().activeItems.get(Shield.class) == null) decreasePDV();
+            ArriveeGame.get().destroy((Enemy)e);
             continuer = pdv > 0;
         } else if (e instanceof Item) {
             ((Item)e).trigger();
+            ArriveeGame.get().destroy(((Item)e));
             continuer = true;
         }
 

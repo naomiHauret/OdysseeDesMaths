@@ -2,14 +2,14 @@ package com.odysseedesmaths.arriveeremarquable.entities;
 
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
-public abstract class Entite {
+public abstract class Entity {
     private Case maCase;
 
-    public Entite(Case c) {
+    public Entity(Case c) {
         this.maCase = c;
     }
 
-    public Entite() {
+    public Entity() {
         this(null);
     }
 
@@ -18,6 +18,8 @@ public abstract class Entite {
     }
 
     public void setCase(Case c) {
+        if (getCase() != null) getCase().free();
         maCase = c;
+        c.setEntity(this);
     }
 }

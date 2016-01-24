@@ -1,38 +1,38 @@
 package com.odysseedesmaths.arriveeremarquable.map;
 
-import com.odysseedesmaths.arriveeremarquable.entities.Entite;
+import com.odysseedesmaths.arriveeremarquable.entities.Entity;
 
 public class Case {
     public final int i;
     public final int j;
     private final boolean obstacle;
-    private Entite entite;
+    private Entity entity;
 
     public Case(int i, int j, boolean obstacle) {
         this.i = i;
         this.j = j;
         this.obstacle = obstacle;
-        this.entite = null;
+        this.entity = null;
     }
 
     public boolean isObstacle() {
         return obstacle;
     }
 
-    public Entite getEntite() {
-        return entite;
+    public Entity getEntity() {
+        return entity;
     }
 
-    public void setEntite(Entite entite) {
-        this.entite = entite;
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
     public void free() {
-        setEntite(null);
+        setEntity(null);
     }
 
     public boolean isTaken() {
-        return (entite != null);
+        return (entity != null);
     }
 
     @Override

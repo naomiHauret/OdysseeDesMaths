@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.MiniJeu;
+import com.odysseedesmaths.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.arriveeremarquable.entities.Hero;
+import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.entities.signes.SigneFactory;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 import com.odysseedesmaths.arriveeremarquable.map.Terrain;
-import com.odysseedesmaths.arriveeremarquable.entities.Heros;
-import com.odysseedesmaths.arriveeremarquable.entities.signes.Signe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,12 +24,12 @@ public class ArriveeGame extends MiniJeu {
 
 	public static final int LIMITE_TEMPS = 10;
 
-	public Heros heros;
+	public Hero hero;
 	public Horde horde;
 	public Terrain terrain;
-	public Set<Signe> signes;
+	public Set<Enemy> enemies;
 	public Set<Item> items;
-	public Map<String,Integer> activeItems;
+	public Map<Class<? extends Item>, Integer> activeItems;
 
 	public static ArriveeGame get() {
 		return instance;
@@ -37,11 +37,11 @@ public class ArriveeGame extends MiniJeu {
 
 	public void init() {
 		terrain = new Terrain();
-		horde = new Horde(Horde.EASY);
-		heros = new Heros(terrain.getDepart());
-		signes = new HashSet<Signe>();
+		horde = new Horde(Horde.HARD);
+		hero = new Hero(terrain.getDepart());
+		enemies = new HashSet<Enemy>();
 		items = new HashSet<Item>();
-		activeItems = new HashMap<String, Integer>();
+		activeItems = new HashMap<Class<? extends Item>, Integer>();
 	}
 
 	@Override
@@ -51,16 +51,19 @@ public class ArriveeGame extends MiniJeu {
 
 		// Initialisations
 		init();
-		Signe.init();
+		Enemy.init();
+        Item.init();
 
 		// Ajout des assets graphiques
-		addTexture("heros", new Texture(Gdx.files.internal("heros.png")));
+		addTexture("hero", new Texture(Gdx.files.internal("heros.png")));
+        addTexture("horde", new Texture(Gdx.files.internal("horde.png")));
 		addTexture("signeEgal", new Texture(Gdx.files.internal("signeEgal.png")));
 		addTexture("signeAdd", new Texture(Gdx.files.internal("signeAdd.png")));
 		addTexture("signeSoust", new Texture(Gdx.files.internal("signeSoust.png")));
 		addTexture("signeMult", new Texture(Gdx.files.internal("signeMult.png")));
 		addTexture("signeDiv", new Texture(Gdx.files.internal("signeDiv.png")));
 		addTexture("bouclier", new Texture(Gdx.files.internal("bouclier.png")));
+        addTexture("heart", new Texture(Gdx.files.internal("coeur.png")));
 
 		// Ajout des assets sonores
 		addPathMusique("musicTest", "Arcade_Machine.ogg");;
@@ -74,61 +77,81 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void playTurn() {
-		/* Mise à jour des items actifs
-		for (Map.Entry<String, Integer> entry : activeItems.entrySet()) {
+		// Mise à jour des items actifs
+		for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
 			int new_value = entry.getValue()-1;
-			if (new_value == 0) {
+			if (new_value <= 0) {
 				activeItems.remove(entry.getKey());
 			} else {
-				entry.setValue(new_value);
+				activeItems.put(entry.getKey(), new_value);
 			}
-		}*/
+		}
 
-		/* Tour de la horde
+		// Tour de la horde
 		horde.act();
-		for (int i=0; i < terrain.getHeight(); i++) {
-			Entite e = terrain.getCases()[i][horde.getFront()].getEntite();
-			if (e != null) {
-				if (e instanceof Heros) {
-					gameOver();
-				} else if (e instanceof Item) {
-					destroy((Item)e);
-				}
-			}
-		}*/
+        if (horde.getFront() >= 0) {
+            for (int j = 0; j < terrain.getHeight(); j++) {
+                Entity e = terrain.getCases()[horde.getFront()][j].getEntity();
+                if (e != null) {
+                    if (e instanceof Hero) {
+                        gameOver();
+                    } else if (e instanceof Item) {
+                        destroy((Item) e);
+                    }
+                }
+            }
+        }
 
-		// Tour des signes
-		List<Signe> toAct = new ArrayList<Signe>();
-		toAct.addAll(signes);
+		// Tour des ennemis
+		List<Enemy> toAct = new ArrayList<Enemy>();
+		toAct.addAll(enemies);
 		while (!toAct.isEmpty()) {
-			Signe s = toAct.get(0);
+			Enemy s = toAct.get(0);
 			if (s.isAlive()) s.act();
 			toAct.remove(0);
 		}
 
-		// Spawn de signe
-		if (!Signe.popFull() && MathUtils.random() < Signe.SPAWN_CHANCE) {
-			Signe signe = SigneFactory.makeSigne();
+        // Spawn d'items
+        if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE) {
+            Item item = Item.make();
+            Case spawn;
+            int distance;
+            do {
+                int i = MathUtils.random(hero.getCase().i, terrain.getWidth() - 1);
+                int j = MathUtils.random(terrain.getHeight() - 1);
+                spawn = terrain.getCases()[i][j];
+                distance = terrain.heuristic(hero.getCase(), spawn);
+            } while (spawn.isObstacle() || spawn.isTaken() || distance < Item.SPAWN_MIN_DISTANCE || distance > Item.SPAWN_MAX_DISTANCE);
+            item.setCase(spawn);
+            items.add(item);
+        }
+
+		// Spawn d'ennemis
+		if (!Enemy.popFull() && MathUtils.random() < Enemy.SPAWN_CHANCE) {
+			Enemy enemy = Enemy.make();
 			Case spawn;
+			int distance;
 			do {
-				int i = MathUtils.random(heros.getCase().i, terrain.getWidth() - 1);
+                int i = MathUtils.random(hero.getCase().i, terrain.getWidth() - 1);
 				int j = MathUtils.random(terrain.getHeight() - 1);
 				spawn = terrain.getCases()[i][j];
-			} while (spawn.isObstacle() || spawn.isTaken() || terrain.heuristic(heros.getCase(), spawn) < Signe.SPAWN_RADIUS);
-			signe.setCase(spawn);
-			signes.add(signe);
+				distance = terrain.heuristic(hero.getCase(), spawn);
+			} while (spawn.isObstacle() || spawn.isTaken() || distance < Enemy.SPAWN_MIN_DISTANCE || distance > Enemy.SPAWN_MAX_DISTANCE);
+			enemy.setCase(spawn);
+			enemies.add(enemy);
 		}
 	}
 
 	public void destroy(Item e) {
-		items.remove(e);
+        items.remove(e);
 		e.getCase().free();
+        Item.decreasePop(e);
 	}
 
-	public void destroy(Signe s) {
-		signes.remove(s);
+	public void destroy(Enemy s) {
+		enemies.remove(s);
 		s.getCase().free();
-		Signe.decreasePop(s);
+		Enemy.decreasePop(s);
 	}
 
 	@Override
