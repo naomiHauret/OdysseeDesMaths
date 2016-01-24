@@ -123,8 +123,19 @@ public class ForetScreen implements Screen {
 
         ArriveeGame.get().batch.end();
 
-        // Centrage de la caméra sur le héros
-        camera.position.set(heroSprite.getX() + heroSprite.getWidth()/2, heroSprite.getY() + heroSprite.getHeight()/2, 0);
+        // Positionnement de la caméra (sur le héros ou sur les bords)
+        float posX, posY, minX, minY, maxX, maxY;
+        posX = heroSprite.getX() + heroSprite.getWidth()/2;
+        posY = heroSprite.getY() + heroSprite.getHeight()/2;
+        minX = WIDTH/2;
+        minY = HEIGHT/2;
+        maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;;
+        maxY = ArriveeGame.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2;
+        if (posX < minX) posX = minX;
+        else if (posX > maxX) posX = maxX;
+        if (posY < minY) posY = minY;
+        else if (posY > maxY) posY = maxY;
+        camera.position.set(posX, posY, 0);
 
         // Interface utilisateur par dessus le reste
         ui.render();
@@ -162,13 +173,11 @@ public class ForetScreen implements Screen {
 
         targetX = aEntity.getCase().i * CELL_SIZE;
         if (targetX > aSprite.getX()) newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
-        else if (targetX < aSprite.getX()) newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
-        else newX = targetX;
+        else newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
 
         targetY = aEntity.getCase().j * CELL_SIZE;
         if (targetY > aSprite.getY()) newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
-        else if (targetY < aSprite.getY()) newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
-        else newY = targetY;
+        else newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
 
         aSprite.setPosition(newX, newY);
     }

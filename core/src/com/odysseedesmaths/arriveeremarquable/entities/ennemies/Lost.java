@@ -13,12 +13,17 @@ import java.util.List;
 
 public class Lost extends Enemy {
 
+    private Case lastHeroPos;
+
     @Override
     public void act() {
         if (ForetScreen.isInHeroSight(getCase())) {
-            Case cHero = ArriveeGame.get().hero.getCase();
-            LinkedList<Case> cheminVersHeros = Pathfinding.greedy(ArriveeGame.get().terrain, getCase(), cHero);
+            LinkedList<Case> cheminVersHeros = Pathfinding.greedy(ArriveeGame.get().terrain, getCase(), ArriveeGame.get().hero.getCase());
             moveTo(cheminVersHeros.getFirst());
+            lastHeroPos = cheminVersHeros.getLast();
+        } else if (lastHeroPos != null) {
+            moveTo(Pathfinding.greedy(ArriveeGame.get().terrain, getCase(), lastHeroPos).getFirst());
+            if (lastHeroPos == getCase()) lastHeroPos = null;
         } else {
             List<Case> voisins = new ArrayList<Case>();
             voisins.addAll(ArriveeGame.get().terrain.getVoisins(getCase()));
@@ -30,9 +35,8 @@ public class Lost extends Enemy {
     public boolean meet(Entity e) {
         boolean continuer = super.meet(e);
 
-        if (e instanceof Greed) {
+        if (e instanceof Elite) {
             ArriveeGame.get().destroy(this);
-            ArriveeGame.get().destroy((Enemy) e);
             setAlive(false);
         }
 

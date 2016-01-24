@@ -24,6 +24,10 @@ public class Horde {
         front = newFront;
     }
 
+    public void setVitesse(int vitesse) {
+        this.vitesse = vitesse;
+    }
+
     public void act() {
         count++;
         if ((count%vitesse == 0) && (front < ArriveeGame.get().terrain.getWidth())) front++;

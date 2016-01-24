@@ -6,7 +6,7 @@ import com.odysseedesmaths.pathfinding.Pathfinding;
 
 import java.util.LinkedList;
 
-public class Sticky extends Enemy {
+public class Sticky extends Elite {
 
     private LinkedList<Case> piste;
 
@@ -23,7 +23,7 @@ public class Sticky extends Enemy {
     public void act() {
         Case cHeros = ArriveeGame.get().hero.getCase();
 
-        if (piste.isEmpty() || ArriveeGame.get().terrain.heuristic(getCase(), cHeros) > 15) {
+        if (piste.isEmpty() || ArriveeGame.get().terrain.heuristic(getCase(), cHeros) > 10) {
             piste = Pathfinding.astar(ArriveeGame.get().terrain, getCase(), cHeros);
         } else {
             piste.addLast(cHeros);

@@ -37,14 +37,12 @@ public abstract class Enemy extends Character {
         if (e instanceof Hero) {
             if (ArriveeGame.get().activeItems.get(Shield.class) == null) ((Hero) e).decreasePDV();
             ArriveeGame.get().destroy(this);
-            alive = false;
+            setAlive(false);
         } else if (e instanceof Item) {
             ArriveeGame.get().destroy((Item)e);
-        } else if (e instanceof Enemy) {
-            continuer = false;
         }
 
-        return continuer && alive;
+        return continuer && isAlive();
     }
 
     public abstract void act();
@@ -78,7 +76,7 @@ public abstract class Enemy extends Character {
         max[SMART] = 1;
         max[SUPERSMART] = 0;
         max[GREED] = 1;
-        max[LOST] = 15;
+        max[LOST] = 10;
     }
 
     public static boolean popFull(int enemy) {

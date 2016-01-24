@@ -22,7 +22,7 @@ import java.util.Set;
 public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
-	public static final int LIMITE_TEMPS = 10;
+	public static final int LIMITE_TEMPS = 5;
 
 	public Hero hero;
 	public Horde horde;
@@ -90,8 +90,8 @@ public class ArriveeGame extends MiniJeu {
 
 		// Tour de la horde
 		horde.act();
-        if (horde.getFront() >= 0) {
-            for (int j = 0; j < terrain.getHeight(); j++) {
+        for (int i=0; i <= horde.getFront(); i++) {
+            for (int j=0; j < terrain.getHeight(); j++) {
                 Entity e = terrain.getCases()[horde.getFront()][j].getEntity();
                 if (e != null) {
                     if (e instanceof Hero) {
@@ -104,6 +104,7 @@ public class ArriveeGame extends MiniJeu {
                 }
             }
         }
+        if (horde.getFront() == terrain.getWidth()/2) horde.setVitesse(Horde.FAST);
 
 		// Tour des ennemis
 		List<Enemy> toAct = new ArrayList<Enemy>();
@@ -114,7 +115,7 @@ public class ArriveeGame extends MiniJeu {
 			toAct.remove(0);
 		}
 
-        // Spawn d'items
+        // Spawn d'un item
         if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE) {
             Item item = Item.make();
             Case spawn;
@@ -129,7 +130,7 @@ public class ArriveeGame extends MiniJeu {
             items.add(item);
         }
 
-		// Spawn d'ennemis
+		// Spawn d'un ennemi
 		if (!Enemy.popFull() && MathUtils.random() < Enemy.SPAWN_CHANCE) {
 			Enemy enemy = Enemy.make();
 			Case spawn;
