@@ -23,6 +23,7 @@ public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
 	public static final int LIMITE_TEMPS = 5;
+	public static final int STOP_SPAWN = 10;
 
 	public Hero hero;
 	public Horde horde;
@@ -108,7 +109,7 @@ public class ArriveeGame extends MiniJeu {
 		}
 
         // Spawn d'un item
-        if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE) {
+        if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE && hero.getCase().i < terrain.getWidth()-STOP_SPAWN) {
             Item item = Item.make();
             Case spawn;
             int distance;
@@ -123,7 +124,7 @@ public class ArriveeGame extends MiniJeu {
         }
 
 		// Spawn d'un ennemi
-		if (!Enemy.popFull() && MathUtils.random() < Enemy.SPAWN_CHANCE) {
+		if (!Enemy.popFull() && MathUtils.random() < Enemy.SPAWN_CHANCE && hero.getCase().i < terrain.getWidth()-STOP_SPAWN) {
 			Enemy enemy = Enemy.make();
 			Case spawn;
 			int distance;
