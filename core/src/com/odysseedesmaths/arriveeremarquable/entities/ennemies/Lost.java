@@ -35,9 +35,12 @@ public class Lost extends Enemy {
     public boolean meet(Entity e) {
         boolean continuer = super.meet(e);
 
-        if (e instanceof Elite) {
-            ArriveeGame.get().destroy(this);
-            setAlive(false);
+        if (e instanceof Enemy) {
+            continuer = false;
+            if (e instanceof Elite) {
+                ArriveeGame.get().destroy(this);
+                setAlive(false);
+            }
         }
 
         return continuer && isAlive();

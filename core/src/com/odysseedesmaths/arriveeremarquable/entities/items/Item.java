@@ -32,7 +32,7 @@ public abstract class Item extends Entity {
     private static final int SUPERFREEZE = 3;
     private static final int NB_TYPES = 4;
 
-    public static final int SPAWN_MIN_DISTANCE = 6;
+    public static final int SPAWN_MIN_DISTANCE = 10;
     public static final int SPAWN_MAX_DISTANCE = 20;
     public static final double SPAWN_CHANCE = 0.5;
 
@@ -45,7 +45,7 @@ public abstract class Item extends Entity {
             pop[i] = 0;
 
         max = new int[NB_TYPES];
-        max[SHIELD] = 0;
+        max[SHIELD] = 2;
         max[HEART] = 2;
         max[FREEZE] = 0;
         max[SUPERFREEZE] = 0;

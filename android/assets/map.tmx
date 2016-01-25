@@ -21,7 +21,7 @@
  </layer>
  <layer name="obstacles" width="60" height="20">
   <data encoding="base64" compression="zlib">
-   eJzll1mKAzEMRHV3u28wBw6BCCqPKtnMbwTB7baWaq3Oqqr1Y7837ZppYf8Evgd6TzTx8cxh2AGL+x6Ha+Nsyb5tOP70/a1jf9bma5xLnh+RUVKZyVaSVb2Mb9K169uXjV39s2Ut2SeabCk+3etK+2rT6Xbxpf9Tnt/k68Izfar4ifeGJr7Wk+qX/nB563Ku4z7hTjZ43s/OH62TeFqv1gd5aXPXN26VO/maeqfamuoz5R/9lnzkZFWG8SUxZo2JObmHNfmasvrO9ZSUH8TqauHBWdJdYU8baa+2Ug9LfeVmNro+pjbZO1XO2XK1R3naaj4Xv1Qf+t71AcbE5T79STxuxjJnKO/8oj1C56jDQf1TzRFveufynL7i9/4Fmzd1PZHLBeppLK42XI9O84x0uvuk+LrcdvXueg3tuBwnPpVNdVXgcX4gdlcnE93ekVIu65nmPmtG52DhTPX89w50qlveHVx8nS7WtuNXfOk+4finHuh8mvLP1dDkL9crpnp1964k53zdOjhvVP5Uz9M8Uj7X//R7050j9e303yTl/y2l2dLk4pv+c0zzjeRmbOq5vfL+Rl0OX8LEfuD67UQuT298d9J9k/8T73R3TDp/7fcColYlpA==
+   eJzll2tqAzEMhHV3ew9Q6IFLoSLTjxnZ5G8Eweu1HrN6Oquq1of9fmnXTAv7J/A90HuiiY9nDsMOWNz3OFwbZ0v2bcPxp+9vHftvbb7GueT5ERkllZlsJVnVy/gmXbv++7Kxq3+2rCX7RJMtxad7XWlfbTrdLr70f8rzm3xdeKZPFT/x3tDE13pS/dIfLm9dznXcJ9zJBs/72fmjdRJP69X6IG/TV738rrhV7uRr6p1qa6rPlH/0W/KRk1UZxpfEmDUm5uQe1uRryuo711NSfhCrq4UHZ0l3hT1tpL3aSj0s9ZWb2ej6mNpk71Q5Z8vVHuVpq/lc/FJ96HvXBxgTl/v0J/G4Gcucobzzi/YInaMOB/VPNUe86Z3Lc/qK3/sdbN7U9UQuF6insbjacD06zTPS6e6T4uty29W76zW043Kc+FQ21VWBx/mB2F2dTHR7R0q5rGea+6wZnYOFM9Xz7h3oVLe8O7j4Ol2sbcev+NJ9wvFPPdD5NOWfq6HJX65XTPXq7l1Jzvm6dXDeqPypnqd5pHyu/+n3pjtH6tvpv0nK/1tKs6XJxTf955jmG8nN2NRze+X9jbocvoSJ/cD124lcnt747qT7Jv8n3unumHR+2u8HFDImNQ==
   </data>
  </layer>
  <layer name="feuilles" width="60" height="20">

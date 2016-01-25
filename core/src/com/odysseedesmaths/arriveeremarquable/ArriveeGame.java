@@ -62,7 +62,8 @@ public class ArriveeGame extends MiniJeu {
 		addTexture("signeSoust", new Texture(Gdx.files.internal("signeSoust.png")));
 		addTexture("signeMult", new Texture(Gdx.files.internal("signeMult.png")));
 		addTexture("signeDiv", new Texture(Gdx.files.internal("signeDiv.png")));
-		addTexture("shield", new Texture(Gdx.files.internal("bouclier.png")));
+		addTexture("shield", new Texture(Gdx.files.internal("itemBouclier.png")));
+		addTexture("buffShield", new Texture(Gdx.files.internal("bouclier.png")));
         addTexture("heart", new Texture(Gdx.files.internal("coeur.png")));
 
 		// Ajout des assets sonores
@@ -78,21 +79,12 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void playTurn() {
-		// Mise à jour des items actifs
-		for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
-			int new_value = entry.getValue()-1;
-			if (new_value <= 0) {
-				activeItems.remove(entry.getKey());
-			} else {
-				activeItems.put(entry.getKey(), new_value);
-			}
-		}
-
 		// Tour de la horde
 		horde.act();
-        for (int i=0; i <= horde.getFront(); i++) {
+        int front = horde.getFront();
+        for (int i = Math.max(front - 2, 0); i <= front; i++) {
             for (int j=0; j < terrain.getHeight(); j++) {
-                Entity e = terrain.getCases()[horde.getFront()][j].getEntity();
+                Entity e = terrain.getCases()[i][j].getEntity();
                 if (e != null) {
                     if (e instanceof Hero) {
                         gameOver();
@@ -104,7 +96,7 @@ public class ArriveeGame extends MiniJeu {
                 }
             }
         }
-        if (horde.getFront() == terrain.getWidth()/2) horde.setVitesse(Horde.FAST);
+        if (front == terrain.getWidth()/2) horde.setVitesse(Horde.FAST);
 
 		// Tour des ennemis
 		List<Enemy> toAct = new ArrayList<Enemy>();
@@ -121,7 +113,7 @@ public class ArriveeGame extends MiniJeu {
             Case spawn;
             int distance;
             do {
-                int i = MathUtils.random(hero.getCase().i, terrain.getWidth() - 1);
+                int i = MathUtils.random(hero.getCase().i - 1, terrain.getWidth() - 2);
                 int j = MathUtils.random(terrain.getHeight() - 1);
                 spawn = terrain.getCases()[i][j];
                 distance = terrain.heuristic(hero.getCase(), spawn);
@@ -136,7 +128,7 @@ public class ArriveeGame extends MiniJeu {
 			Case spawn;
 			int distance;
 			do {
-                int i = MathUtils.random(hero.getCase().i, terrain.getWidth() - 1);
+                int i = MathUtils.random(hero.getCase().i - 1, terrain.getWidth() - 2);
 				int j = MathUtils.random(terrain.getHeight() - 1);
 				spawn = terrain.getCases()[i][j];
 				distance = terrain.heuristic(hero.getCase(), spawn);
@@ -144,6 +136,16 @@ public class ArriveeGame extends MiniJeu {
 			enemy.setCase(spawn);
 			enemies.add(enemy);
 		}
+
+        // Mise à jour des items actifs
+        for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
+            int new_value = entry.getValue()-1;
+            if (new_value <= 0) {
+                activeItems.remove(entry.getKey());
+            } else {
+                activeItems.put(entry.getKey(), new_value);
+            }
+        }
 	}
 
 	public void destroy(Item e) {

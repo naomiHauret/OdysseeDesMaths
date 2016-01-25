@@ -46,7 +46,7 @@ public class ForetScreen implements Screen {
         entitiesSprites = new HashMap<Entity, Sprite>();
 
         buffsSprites = new HashMap<Class<? extends Item>, Sprite>();
-        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("shield")));
+        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("buffShield")));
 
         hordeSprite = new Sprite(ArriveeGame.get().graphics.get("horde"));
 
@@ -87,7 +87,7 @@ public class ForetScreen implements Screen {
         heroSprite.draw(ArriveeGame.get().batch);
 
         if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
-            buffsSprites.get(Shield.class).setPosition(heroSprite.getX() - 32, heroSprite.getY() - 32);
+            buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
             buffsSprites.get(Shield.class).draw(ArriveeGame.get().batch);
         }
 
@@ -115,7 +115,7 @@ public class ForetScreen implements Screen {
         if (ArriveeGame.get().horde.getFront() >= 0) {
             for (int i = 0; i <= ArriveeGame.get().horde.getFront(); i++) {
                 for (int j = 0; j < ArriveeGame.get().terrain.getHeight(); j++) {
-                    hordeSprite.setPosition(i * 64, j * 64);
+                    hordeSprite.setPosition(i * CELL_SIZE, j * CELL_SIZE);
                     hordeSprite.draw(ArriveeGame.get().batch);
                 }
             }
@@ -129,7 +129,7 @@ public class ForetScreen implements Screen {
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
         minX = WIDTH/2;
         minY = HEIGHT/2;
-        maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;;
+        maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;
         maxY = ArriveeGame.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2;
         if (posX < minX) posX = minX;
         else if (posX > maxX) posX = maxX;
@@ -236,11 +236,9 @@ public class ForetScreen implements Screen {
 
     public static boolean isVisible(Case c) {
         boolean resW, resH;
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
         Case cHeros = ArriveeGame.get().hero.getCase();
-        resW = Math.abs(c.i - cHeros.i) * 64 < width/2;
-        resH = Math.abs(c.j - cHeros.j) * 64 < height/2;
+        resW = Math.abs(c.i - cHeros.i) * CELL_SIZE < WIDTH/2;
+        resH = Math.abs(c.j - cHeros.j) * CELL_SIZE < HEIGHT/2;
         return resW && resH;
     }
 

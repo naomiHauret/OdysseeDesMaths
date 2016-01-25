@@ -31,6 +31,11 @@ public abstract class Enemy extends Character {
     }
 
     @Override
+    public void moveTo(Case c) {
+        if (c != ArriveeGame.get().terrain.getFin()) super.moveTo(c);
+    }
+
+    @Override
     public boolean meet(Entity e) {
         boolean continuer = true;
 
@@ -59,9 +64,9 @@ public abstract class Enemy extends Character {
     private static final int LOST = 4;
     private static final int NB_TYPES = 5;
 
-    public static final int SPAWN_MIN_DISTANCE = 7;
+    public static final int SPAWN_MIN_DISTANCE = 15;
     public static final int SPAWN_MAX_DISTANCE = 20;
-    public static final double SPAWN_CHANCE = 0.6;
+    public static final double SPAWN_CHANCE = 0.5;
 
     private static int[] max;
     private static int[] pop;
