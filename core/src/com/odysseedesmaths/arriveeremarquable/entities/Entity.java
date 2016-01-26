@@ -20,6 +20,5 @@ public abstract class Entity {
     public void setCase(Case c) {
         if (getCase() != null) getCase().free();
         maCase = c;
-        c.setEntity(this);
     }
 }

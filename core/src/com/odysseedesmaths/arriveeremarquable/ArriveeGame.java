@@ -29,6 +29,7 @@ public class ArriveeGame extends MiniJeu {
 	public Horde horde;
 	public Terrain terrain;
 	public Set<Enemy> enemies;
+	public Set<Enemy> deadpool;
 	public Set<Item> items;
 	public Map<Class<? extends Item>, Integer> activeItems;
 
@@ -41,6 +42,7 @@ public class ArriveeGame extends MiniJeu {
 		horde = new Horde(Horde.NORMAL);
 		hero = new Hero(terrain.getDepart());
 		enemies = new HashSet<Enemy>();
+        deadpool = new HashSet<Enemy>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
 	}
@@ -76,7 +78,7 @@ public class ArriveeGame extends MiniJeu {
 	@Override
 	public void render() {
 		super.render();
-		getScreen().render(60f*Gdx.graphics.getDeltaTime());
+		getScreen().render(Gdx.graphics.getDeltaTime());
 	}
 
 	public void playTurn() {
@@ -120,6 +122,7 @@ public class ArriveeGame extends MiniJeu {
                 distance = terrain.heuristic(hero.getCase(), spawn);
             } while (spawn.isObstacle() || spawn.isTaken() || distance < Item.SPAWN_MIN_DISTANCE || distance > Item.SPAWN_MAX_DISTANCE);
             item.setCase(spawn);
+            spawn.setEntity(item);
             items.add(item);
         }
 
@@ -135,6 +138,7 @@ public class ArriveeGame extends MiniJeu {
 				distance = terrain.heuristic(hero.getCase(), spawn);
 			} while (spawn.isObstacle() || spawn.isTaken() || distance < Enemy.SPAWN_MIN_DISTANCE || distance > Enemy.SPAWN_MAX_DISTANCE);
 			enemy.setCase(spawn);
+            spawn.setEntity(enemy);
 			enemies.add(enemy);
 		}
 
@@ -149,16 +153,17 @@ public class ArriveeGame extends MiniJeu {
         }
 	}
 
-	public void destroy(Item e) {
-        items.remove(e);
-		e.getCase().free();
-        Item.decreasePop(e);
+	public void destroy(Item aItem) {
+        items.remove(aItem);
+		aItem.getCase().free();
+        Item.decreasePop(aItem);
 	}
 
-	public void destroy(Enemy s) {
-		enemies.remove(s);
-		s.getCase().free();
-		Enemy.decreasePop(s);
+	public void destroy(Enemy aEnemy) {
+		enemies.remove(aEnemy);
+		aEnemy.getCase().free();
+		Enemy.decreasePop(aEnemy);
+        deadpool.add(aEnemy);
 	}
 
 	@Override

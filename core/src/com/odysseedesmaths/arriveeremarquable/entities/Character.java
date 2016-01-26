@@ -15,6 +15,7 @@ public abstract class Character extends Entity {
         }
         if (continuer) {
             setCase(c);
+            c.setEntity(this);
         }
     }
 

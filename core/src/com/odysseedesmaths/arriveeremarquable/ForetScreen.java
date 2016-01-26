@@ -25,6 +25,7 @@ import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ForetScreen implements Screen {
@@ -83,14 +84,6 @@ public class ForetScreen implements Screen {
         ArriveeGame.get().batch.setProjectionMatrix(camera.combined);
         ArriveeGame.get().batch.begin();
 
-        updatePos(heroSprite, ArriveeGame.get().hero);
-        heroSprite.draw(ArriveeGame.get().batch);
-
-        if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
-            buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
-            buffsSprites.get(Shield.class).draw(ArriveeGame.get().batch);
-        }
-
         for (Enemy enemy : ArriveeGame.get().enemies) {
             Sprite enemySprite = entitiesSprites.get(enemy);
             if (enemySprite == null) {
@@ -101,6 +94,17 @@ public class ForetScreen implements Screen {
             enemySprite.draw(ArriveeGame.get().batch);
         }
 
+        Iterator<Enemy> deadIterator = ArriveeGame.get().deadpool.iterator();
+        while (deadIterator.hasNext()) {
+            Enemy deadEnemy = deadIterator.next();
+            Sprite deadSprite = entitiesSprites.get(deadEnemy);
+            if (updatePos(deadSprite, deadEnemy)) {
+                deadIterator.remove();
+                entitiesSprites.remove(deadEnemy);
+            }
+            deadSprite.draw(ArriveeGame.get().batch);
+        }
+
         for (Item item : ArriveeGame.get().items) {
             Sprite itemSprite = entitiesSprites.get(item);
             if (itemSprite == null) {
@@ -109,6 +113,15 @@ public class ForetScreen implements Screen {
             }
             updatePos(itemSprite, item);
             itemSprite.draw(ArriveeGame.get().batch);
+        }
+
+        // Affichage du héros
+        updatePos(heroSprite, ArriveeGame.get().hero);
+        heroSprite.draw(ArriveeGame.get().batch);
+
+        if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
+            buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
+            buffsSprites.get(Shield.class).draw(ArriveeGame.get().batch);
         }
 
         // Affichage de la horde
@@ -168,7 +181,7 @@ public class ForetScreen implements Screen {
         ui.dispose();
     }
 
-    private void updatePos(Sprite aSprite, Entity aEntity) {
+    private boolean updatePos(Sprite aSprite, Entity aEntity) {
         float targetX, targetY, newX, newY;
 
         targetX = aEntity.getCase().i * CELL_SIZE;
@@ -180,6 +193,7 @@ public class ForetScreen implements Screen {
         else newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
 
         aSprite.setPosition(newX, newY);
+        return (newX == targetX) && (newY == targetY);
     }
 
     // Temporaire
@@ -245,7 +259,6 @@ public class ForetScreen implements Screen {
     public static boolean isInHeroSight(Case c) {
         Case cHeros = ArriveeGame.get().hero.getCase();
         Case[][] cases = ArriveeGame.get().terrain.getCases();
-        //TODO: A refaire avec un rectangle (?)
         if (cHeros.i == c.i) {
             int i = c.i;
             for (int j = Math.min(cHeros.j, c.j); j < Math.max(cHeros.j, c.j); j++) {

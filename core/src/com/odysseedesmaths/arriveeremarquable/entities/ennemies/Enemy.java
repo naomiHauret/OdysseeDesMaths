@@ -32,7 +32,8 @@ public abstract class Enemy extends Character {
 
     @Override
     public void moveTo(Case c) {
-        if (c != ArriveeGame.get().terrain.getFin()) super.moveTo(c);
+        super.moveTo(c);
+        if (!isAlive()) setCase(c);
     }
 
     @Override
