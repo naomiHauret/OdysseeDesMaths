@@ -2,14 +2,17 @@ package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.UserInterface;
 import com.odysseedesmaths.arriveeremarquable.entities.Entity;
@@ -32,7 +35,8 @@ public class ForetScreen implements Screen {
 
     private Viewport viewport;
     private OrthographicCamera camera;
-
+    private SpriteBatch batch;
+    
     private UserInterface ui;
 
     private Sprite heroSprite;
@@ -41,7 +45,12 @@ public class ForetScreen implements Screen {
     private Sprite hordeSprite;
 
     public ForetScreen() {
-        heroSprite = new Sprite(ArriveeGame.get().graphics.get("hero"));
+        camera = new OrthographicCamera();
+        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
+        batch = new SpriteBatch();
+        
+        // Sprites
+        heroSprite = new Sprite(Assets.manager.get(Assets.HERO));
         heroSprite.setPosition(ArriveeGame.get().hero.getCase().i * CELL_SIZE, ArriveeGame.get().hero.getCase().j * CELL_SIZE);
 
         entitiesSprites = new HashMap<Entity, Sprite>();
@@ -51,6 +60,7 @@ public class ForetScreen implements Screen {
 
         hordeSprite = new Sprite(ArriveeGame.get().graphics.get("horde"));
 
+        // Interface utilisateur
         ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
@@ -58,10 +68,6 @@ public class ForetScreen implements Screen {
         ui.padRight.addListener(ecouteur);
         ui.padDown.addListener(ecouteur);
         ui.padLeft.addListener(ecouteur);
-
-        // Camera
-        camera = new OrthographicCamera();
-        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
     }
 
     @Override
@@ -81,8 +87,8 @@ public class ForetScreen implements Screen {
         ArriveeGame.get().terrain.renderer.render();
 
         // Affichage des entités
-        ArriveeGame.get().batch.setProjectionMatrix(camera.combined);
-        ArriveeGame.get().batch.begin();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
 
         for (Enemy enemy : ArriveeGame.get().enemies) {
             Sprite enemySprite = entitiesSprites.get(enemy);
@@ -91,7 +97,7 @@ public class ForetScreen implements Screen {
                 entitiesSprites.put(enemy, enemySprite);
             }
             updatePos(enemySprite, enemy);
-            enemySprite.draw(ArriveeGame.get().batch);
+            enemySprite.draw(batch);
         }
 
         Iterator<Enemy> deadIterator = ArriveeGame.get().deadpool.iterator();
@@ -102,7 +108,7 @@ public class ForetScreen implements Screen {
                 deadIterator.remove();
                 entitiesSprites.remove(deadEnemy);
             }
-            deadSprite.draw(ArriveeGame.get().batch);
+            deadSprite.draw(batch);
         }
 
         for (Item item : ArriveeGame.get().items) {
@@ -112,16 +118,16 @@ public class ForetScreen implements Screen {
                 entitiesSprites.put(item, itemSprite);
             }
             updatePos(itemSprite, item);
-            itemSprite.draw(ArriveeGame.get().batch);
+            itemSprite.draw(batch);
         }
 
         // Affichage du héros
         updatePos(heroSprite, ArriveeGame.get().hero);
-        heroSprite.draw(ArriveeGame.get().batch);
+        heroSprite.draw(batch);
 
         if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
             buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
-            buffsSprites.get(Shield.class).draw(ArriveeGame.get().batch);
+            buffsSprites.get(Shield.class).draw(batch);
         }
 
         // Affichage de la horde
@@ -129,12 +135,12 @@ public class ForetScreen implements Screen {
             for (int i = 0; i <= ArriveeGame.get().horde.getFront(); i++) {
                 for (int j = 0; j < ArriveeGame.get().terrain.getHeight(); j++) {
                     hordeSprite.setPosition(i * CELL_SIZE, j * CELL_SIZE);
-                    hordeSprite.draw(ArriveeGame.get().batch);
+                    hordeSprite.draw(batch);
                 }
             }
         }
 
-        ArriveeGame.get().batch.end();
+        batch.end();
 
         // Positionnement de la caméra (sur le héros ou sur les bords)
         float posX, posY, minX, minY, maxX, maxY;
@@ -158,7 +164,7 @@ public class ForetScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, false);
     }
 
     @Override
@@ -179,6 +185,7 @@ public class ForetScreen implements Screen {
     @Override
     public void dispose() {
         ui.dispose();
+        batch.dispose();
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {

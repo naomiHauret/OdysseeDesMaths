@@ -20,17 +20,11 @@ public abstract class MiniJeu extends Game {
     private String regles; //voir si on garde un String
     private Timer timer;
 
-    public SpriteBatch batch;
-    public BitmapFont font;
-
     protected MiniJeu() {
     }
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-
         effetsSonores = new HashMap<String, SoundEffect>();
         graphics = new HashMap<String, Texture>();
         musiques = new HashMap<String, String>();
@@ -87,8 +81,6 @@ public abstract class MiniJeu extends Game {
         graphics.clear();
         effetsSonores.clear();
         musiques.clear();
-        batch.dispose();
-        font.dispose();
     }
 
     public void initTimer(int delay){

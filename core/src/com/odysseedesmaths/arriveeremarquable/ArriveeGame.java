@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.arriveeremarquable.entities.Hero;
@@ -45,7 +46,8 @@ public class ArriveeGame extends MiniJeu {
         deadpool = new HashSet<Enemy>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
-	}
+        Assets.loadArriveeRemarquable();
+    }
 
 	@Override
 	public void create() {
@@ -172,5 +174,6 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void dispose() {
+        Assets.disposeArriveeRemarquable();
 	}
 }
