@@ -19,7 +19,6 @@ import com.odysseedesmaths.arriveeremarquable.entities.ennemies.SuperSmart;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Sticky;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Smart;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Heart;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.arriveeremarquable.map.Case;

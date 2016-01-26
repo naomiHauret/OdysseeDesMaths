@@ -18,28 +18,38 @@ public class Timer {
     /**
      * Crée un nouveau timer avec le temps initial et la vitesse d'écoulement spécifiés.
      *
-     * @param time  Le temps initial
-     * @param speed La vitesse d'écoulement
+     * @param aTime  Le temps initial
+     * @param aSpeed La vitesse d'écoulement
      */
-    public Timer(int time, Speed speed) {
-        init(time);
-        setSpeed(speed);
+    public Timer(int aTime, Speed aSpeed) {
+        init(aTime);
+        setSpeed(aSpeed);
     }
 
     /**
      * Crée un nouveau timer avec le temps initial spécifié.
      * La vitesse d'écoulement est "NORMAL" (x1).
      *
-     * @param time Le temps initial
+     * @param aTime Le temps initial
      */
-    public Timer(int time) {
-        this(time, Speed.NORMAL);
+    public Timer(int aTime) {
+        this(aTime, Speed.NORMAL);
     }
 
+    /**
+     * Retourne le nombre actuel de minutes du timer.
+     *
+     * @return Le nombre de minutes
+     */
     public int getMinutes() {
         return secondsLeft/60;
     }
 
+    /**
+     * Retourne le nombre actuel de secondes du timer.
+     *
+     * @return Le nombre de secondes
+     */
     public int getSeconds() {
         return secondsLeft%60;
     }
@@ -47,10 +57,10 @@ public class Timer {
     /**
      * Règle la vitesse d'écoulement du timer à la vitesse spécifiée.
      *
-     * @param speed La nouvelle vitesse
+     * @param aSpeed La nouvelle vitesse
      */
-    public void setSpeed(Speed speed) {
-        switch (speed) {
+    public void setSpeed(Speed aSpeed) {
+        switch (aSpeed) {
             case VERY_HIGH: // Vitesse x3
                 this.speed = 1000 / 3;
                 break;
@@ -67,12 +77,14 @@ public class Timer {
                 this.speed = 1000 * 3;
                 break;
         }
-        refresh();
+        if (timer != null) {
+            refresh();
+        }
     }
 
     /**
      * Retourne le timer sous la forme d'une chaîne de caractères String.
-     * Format : "minutes:secondes"
+     * Format : "minutes:secondes".
      *
      * @return La chaîne de caractère représentant le timer
      */
@@ -122,44 +134,48 @@ public class Timer {
      * Arrête le timer, réinitialise son temps initial à la valeur spécifiée
      * et le repositionne à cette valeur.
      *
-     * @param time Le nouveau temps initial
+     * @param aTime Le nouveau temps initial
      */
-    public void reset(int time) {
+    public void reset(int aTime) {
         stop();
-        init(time);
+        init(aTime);
     }
 
     /**
      * Incrémente le timer du montant spécifié.
      *
-     * @param time Montant à ajouter
+     * @param aTime Montant à ajouter
      */
-    public void add(int time) {
-        secondsLeft += time;
+    public void add(int aTime) {
+        secondsLeft += aTime;
     }
 
     /**
      * Décrémente le timer du montant spécifié.
      * Si le temps est écoulé, le timer est arrêté.
      *
-     * @param time Montant à enlever
+     * @param aTime Montant à enlever
      */
-    public void remove(int time) {
-        secondsLeft -= time;
+    public void remove(int aTime) {
+        secondsLeft -= aTime;
         if (secondsLeft < 0) {
             secondsLeft = 0;
             stop();
         }
     }
 
+    public enum Speed {
+        VERY_HIGH, HIGH, NORMAL, LOW, VERY_LOW
+    }
+
     /**
      * Initialise le temps initial du timer à la valeur spécifiée
      * et le positionne à cette valeur.
      *
-     * @param time Le temps initial
+     * @param aTime Le temps initial
      */
-    private void init(int time) {
-        initialTime = time;
+    private void init(int aTime) {
+        initialTime = aTime;
         secondsLeft = initialTime;
     }
 
@@ -183,9 +199,5 @@ public class Timer {
                 stop();
             }
         }
-    }
-
-    private enum Speed {
-        VERY_HIGH, HIGH, NORMAL, LOW, VERY_LOW
     }
 }
