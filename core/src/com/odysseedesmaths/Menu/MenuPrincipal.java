@@ -1,4 +1,4 @@
-package com.odysseedesmaths.Menu;
+package com.odysseedesmaths.menu;
 
 public class MenuPrincipal extends Menu {
 

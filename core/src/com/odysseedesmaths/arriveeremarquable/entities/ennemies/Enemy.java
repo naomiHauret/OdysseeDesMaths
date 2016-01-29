@@ -41,7 +41,9 @@ public abstract class Enemy extends Character {
         boolean continuer = true;
 
         if (e instanceof Hero) {
-            if (ArriveeGame.get().activeItems.get(Shield.class) == null) ((Hero) e).decreasePDV();
+            if (ArriveeGame.get().activeItems.get(Shield.class) == null) {
+                ((Hero) e).decreasePDV();
+            }
             ArriveeGame.get().destroy(this);
             setAlive(false);
         } else if (e instanceof Item) {
@@ -74,8 +76,9 @@ public abstract class Enemy extends Character {
 
     public static void init() {
         pop = new int[NB_TYPES];
-        for (int i=0; i < NB_TYPES; i++)
+        for (int i=0; i < NB_TYPES; i++) {
             pop[i] = 0;
+        }
 
         max = new int[NB_TYPES];
         max[STICKY] = 1;
@@ -124,11 +127,21 @@ public abstract class Enemy extends Character {
         } while (popFull(num));
 
         switch (num) {
-        case STICKY: enemy = new Sticky(); break;
-        case SMART: enemy = new Smart(); break;
-        case SUPERSMART: enemy = new SuperSmart(); break;
-        case GREED: enemy = new Greed(); break;
-        default: enemy = new Lost(); break;
+        case STICKY:
+            enemy = new Sticky();
+            break;
+        case SMART:
+            enemy = new Smart();
+            break;
+        case SUPERSMART:
+            enemy = new SuperSmart();
+            break;
+        case GREED:
+            enemy = new Greed();
+            break;
+        default:
+            enemy = new Lost();
+            break;
         }
 
         increasePop(enemy);

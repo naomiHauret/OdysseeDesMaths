@@ -21,7 +21,7 @@ import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
  */
 public class UserInterface extends Stage {
 
-    private final int PAD_ARROW_SIZE = 64;
+    private static final int PAD_ARROW_SIZE = 64;
 
     private Table table;
     private Skin skin;
@@ -32,21 +32,18 @@ public class UserInterface extends Stage {
     private Image heroHp;
 
     // Timer
-    public Timer timer;
+    private Timer timer;
     private Label timerLabel;
 
     // Bouton pause
-    public Button pause;
+    private Button pause;
 
     // Pad directionnel
     private Table padGroup;
-    public Button padLeft;
-    public Button padRight;
-    public Button padUp;
-    public Button padDown;
-
-    // Items
-    private Table itemGroup;
+    private Button padLeft;
+    private Button padRight;
+    private Button padUp;
+    private Button padDown;
 
     /**
      * Initialise une nouvelle interface. Les composants de l'interface dépendent des paramètres
@@ -54,10 +51,9 @@ public class UserInterface extends Stage {
      *
      * @param aHeroHpAmount Le nombre de points de vie du héros à afficher. 0 si aucun affichage.
      * @param aTimerAmount  Le temps initial du timer du mini-jeu à afficher. 0 si aucun timer.
-     * @param usePad    Vrai si l'interface doit afficher un pad directionnel, faux sinon.
-     * @param useItems  Vrai si l'interface doit afficher des items actifs, faux sinon.
+     * @param usePad        Vrai si l'interface doit afficher un pad directionnel, faux sinon.
      */
-    public UserInterface(int aHeroHpAmount, int aTimerAmount, boolean usePad, boolean useItems) {
+    public UserInterface(int aHeroHpAmount, int aTimerAmount, boolean usePad) {
         super();
 
         table = new Table();
@@ -81,9 +77,26 @@ public class UserInterface extends Stage {
         if (usePad) {
             addPad();
         }
-        if (useItems) {
-            addItems();
-        }
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public Button getPadLeft() {
+        return padLeft;
+    }
+
+    public Button getPadRight() {
+        return padRight;
+    }
+
+    public Button getPadUp() {
+        return padUp;
+    }
+
+    public Button getPadDown() {
+        return padDown;
     }
 
     public void render() {
@@ -228,12 +241,5 @@ public class UserInterface extends Stage {
         padGroup.add(padDown).colspan(2);
 
         table.add(padGroup).bottom().left().expand();
-    }
-
-    /**
-     * Ajoute des items à l'interface.
-     */
-    private void addItems() {
-
     }
 }

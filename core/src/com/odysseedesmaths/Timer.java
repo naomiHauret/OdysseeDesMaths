@@ -10,10 +10,10 @@ public class Timer {
     public static final int ONE_MINUTE = 60;
     public static final int ONE_SECOND = 1;
 
-    private java.util.Timer timer;
+    private java.util.Timer taskScheduler;
     private int initialTime;
     private int secondsLeft;
-    private int speed;
+    private int delayForOneSecond;
 
     /**
      * Crée un nouveau timer avec le temps initial et la vitesse d'écoulement spécifiés.
@@ -62,22 +62,26 @@ public class Timer {
     public void setSpeed(Speed aSpeed) {
         switch (aSpeed) {
             case VERY_HIGH: // Vitesse x3
-                this.speed = 1000 / 3;
+                this.delayForOneSecond = 1000 / 3;
                 break;
             case HIGH:      // Vitesse x2
-                this.speed = 1000 / 2;
+                this.delayForOneSecond = 1000 / 2;
                 break;
             case NORMAL:    // Vitesse x1
-                this.speed = 1000;
+                this.delayForOneSecond = 1000;
                 break;
             case LOW:       // Vitesse x0.5
-                this.speed = 1000 * 2;
+                this.delayForOneSecond = 1000 * 2;
                 break;
             case VERY_LOW:  // Vitesse x0.33
-                this.speed = 1000 * 3;
+                this.delayForOneSecond = 1000 * 3;
+                break;
+            default:
+                // Étant donné que le type Speed est une énumération et que tous les cas sont
+                // traités, on ne devrait jamais rentré dans ce default.
                 break;
         }
-        if (timer != null) {
+        if (taskScheduler != null) {
             refresh();
         }
     }
@@ -88,6 +92,7 @@ public class Timer {
      *
      * @return La chaîne de caractère représentant le timer
      */
+    @Override
     public String toString() {
         String minutes = String.format("%02d", getMinutes());
         String seconds = String.format("%02d", getSeconds());
@@ -98,9 +103,9 @@ public class Timer {
      * Met le timer en marche.
      */
     public void start() {
-        if (timer == null) {
-            timer = new java.util.Timer();
-            timer.scheduleAtFixedRate(new UpdateTask(), speed, speed);
+        if (taskScheduler == null) {
+            taskScheduler = new java.util.Timer();
+            taskScheduler.scheduleAtFixedRate(new UpdateTask(), delayForOneSecond, delayForOneSecond);
         }
     }
 
@@ -108,9 +113,9 @@ public class Timer {
      * Met le timer en pause.
      */
     public void stop() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+        if (taskScheduler != null) {
+            taskScheduler.cancel();
+            taskScheduler = null;
         }
     }
 

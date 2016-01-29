@@ -23,7 +23,9 @@ public class Lost extends Enemy {
             lastHeroPos = cheminVersHeros.getLast();
         } else if (lastHeroPos != null) {
             moveTo(Pathfinding.greedy(ArriveeGame.get().terrain, getCase(), lastHeroPos).getFirst());
-            if (lastHeroPos == getCase()) lastHeroPos = null;
+            if (lastHeroPos == getCase()) {
+                lastHeroPos = null;
+            }
         } else {
             List<Case> voisins = new ArrayList<Case>();
             voisins.addAll(ArriveeGame.get().terrain.getVoisins(getCase()));

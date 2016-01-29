@@ -32,13 +32,15 @@ public class Case {
     }
 
     public boolean isTaken() {
-        return (entity != null);
+        return entity != null;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
 
         Case aCase = (Case) o;
 

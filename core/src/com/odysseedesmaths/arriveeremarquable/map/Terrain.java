@@ -72,10 +72,18 @@ public class Terrain implements Pathfindable<Case> {
     public Set<Case> getVoisins(Case c) {
         Set<Case> voisins = new HashSet<Case>();
 
-        if (c.j+1 < getHeight() && !cases[c.i][c.j+1].isObstacle()) voisins.add(cases[c.i][c.j+1]);
-        if (c.j-1 > 0 && !cases[c.i][c.j-1].isObstacle()) voisins.add(cases[c.i][c.j-1]);
-        if (c.i+1 < getWidth() && !cases[c.i+1][c.j].isObstacle()) voisins.add(cases[c.i+1][c.j]);
-        if (c.i-1 > 0 && !cases[c.i-1][c.j].isObstacle()) voisins.add(cases[c.i-1][c.j]);
+        if ((c.j+1 < getHeight()) && !cases[c.i][c.j+1].isObstacle()) {
+            voisins.add(cases[c.i][c.j+1]);
+        }
+        if ((c.j-1 > 0) && !cases[c.i][c.j-1].isObstacle()) {
+            voisins.add(cases[c.i][c.j-1]);
+        }
+        if ((c.i+1 < getWidth()) && !cases[c.i+1][c.j].isObstacle()) {
+            voisins.add(cases[c.i+1][c.j]);
+        }
+        if ((c.i-1 > 0) && !cases[c.i-1][c.j].isObstacle()) {
+            voisins.add(cases[c.i-1][c.j]);
+        }
 
         return voisins;
     }

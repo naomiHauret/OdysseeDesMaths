@@ -3,13 +3,13 @@ package com.odysseedesmaths;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-/**
- * Created by trilunaire on 04/01/16.
- */
+
 public class Musique {
     public static Music audio = null;
 
-    public static void setPath(String path){
+    private Musique() {}
+
+    public static void set(String path){
         audio = Gdx.audio.newMusic(Gdx.files.internal(path));
     }
 

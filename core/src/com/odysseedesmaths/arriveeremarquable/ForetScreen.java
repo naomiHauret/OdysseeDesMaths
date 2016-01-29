@@ -40,23 +40,23 @@ public class ForetScreen implements Screen {
     private Sprite hordeSprite;
 
     public ForetScreen() {
-        heroSprite = new Sprite(ArriveeGame.get().graphics.get("hero"));
+        heroSprite = new Sprite(ArriveeGame.get().getGraphics().get("hero"));
         heroSprite.setPosition(ArriveeGame.get().hero.getCase().i * CELL_SIZE, ArriveeGame.get().hero.getCase().j * CELL_SIZE);
 
         entitiesSprites = new HashMap<Entity, Sprite>();
 
         buffsSprites = new HashMap<Class<? extends Item>, Sprite>();
-        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("buffShield")));
+        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().getGraphics().get("buffShield")));
 
-        hordeSprite = new Sprite(ArriveeGame.get().graphics.get("horde"));
+        hordeSprite = new Sprite(ArriveeGame.get().getGraphics().get("horde"));
 
-        ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
+        ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.TIME_LIMIT * Timer.ONE_MINUTE, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
-        ui.padUp.addListener(ecouteur);
-        ui.padRight.addListener(ecouteur);
-        ui.padDown.addListener(ecouteur);
-        ui.padLeft.addListener(ecouteur);
+        ui.getPadUp().addListener(ecouteur);
+        ui.getPadRight().addListener(ecouteur);
+        ui.getPadDown().addListener(ecouteur);
+        ui.getPadLeft().addListener(ecouteur);
 
         // Camera
         camera = new OrthographicCamera();
@@ -66,7 +66,7 @@ public class ForetScreen implements Screen {
     @Override
     public void show() {
         ArriveeGame.get().playMusic("musicTest");
-        ui.timer.start();
+        ui.getTimer().start();
     }
 
     @Override
@@ -139,8 +139,8 @@ public class ForetScreen implements Screen {
         float posX, posY, minX, minY, maxX, maxY;
         posX = heroSprite.getX() + heroSprite.getWidth()/2;
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
-        minX = WIDTH/2;
-        minY = HEIGHT/2;
+        minX = (float)WIDTH/2;
+        minY = (float)HEIGHT/2;
         maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;
         maxY = ArriveeGame.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2;
         if (posX < minX) posX = minX;
@@ -162,12 +162,12 @@ public class ForetScreen implements Screen {
 
     @Override
     public void pause() {
-        ui.timer.stop();
+        ui.getTimer().stop();
     }
 
     @Override
     public void resume() {
-        ui.timer.start();
+        ui.getTimer().start();
     }
 
     @Override
@@ -184,12 +184,18 @@ public class ForetScreen implements Screen {
         float targetX, targetY, newX, newY;
 
         targetX = aEntity.getCase().i * CELL_SIZE;
-        if (targetX > aSprite.getX()) newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
-        else newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        if (targetX > aSprite.getX()) {
+            newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        } else {
+            newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        }
 
         targetY = aEntity.getCase().j * CELL_SIZE;
-        if (targetY > aSprite.getY()) newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
-        else newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        if (targetY > aSprite.getY()) {
+            newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        } else {
+            newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        }
 
         aSprite.setPosition(newX, newY);
         return (newX == targetX) && (newY == targetY);
@@ -200,14 +206,14 @@ public class ForetScreen implements Screen {
         Sprite sprite;
 
         if (aEntity instanceof Enemy) {
-            if (aEntity instanceof Sticky) sprite = new Sprite(ArriveeGame.get().graphics.get("signeEgal"));
-            else if (aEntity instanceof Smart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeAdd"));
-            else if (aEntity instanceof Greed) sprite = new Sprite(ArriveeGame.get().graphics.get("signeMult"));
-            else if (aEntity instanceof SuperSmart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeDiv"));
-            else sprite = new Sprite(ArriveeGame.get().graphics.get("signeSoust"));
+            if (aEntity instanceof Sticky) sprite = new Sprite(ArriveeGame.get().getGraphics().get("signeEgal"));
+            else if (aEntity instanceof Smart) sprite = new Sprite(ArriveeGame.get().getGraphics().get("signeAdd"));
+            else if (aEntity instanceof Greed) sprite = new Sprite(ArriveeGame.get().getGraphics().get("signeMult"));
+            else if (aEntity instanceof SuperSmart) sprite = new Sprite(ArriveeGame.get().getGraphics().get("signeDiv"));
+            else sprite = new Sprite(ArriveeGame.get().getGraphics().get("signeSoust"));
         } else {// c'est un item, pas d'appel de cette méthode sur le héros
-            if (aEntity instanceof Shield) sprite = new Sprite(ArriveeGame.get().graphics.get("shield"));
-            else sprite = new Sprite(ArriveeGame.get().graphics.get("heart"));
+            if (aEntity instanceof Shield) sprite = new Sprite(ArriveeGame.get().getGraphics().get("shield"));
+            else sprite = new Sprite(ArriveeGame.get().getGraphics().get("heart"));
         }
 
         sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
@@ -221,13 +227,13 @@ public class ForetScreen implements Screen {
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             Actor source = event.getTarget();
 
-            if (source == ui.padUp) {
+            if (source == ui.getPadUp()) {
                 ArriveeGame.get().hero.moveUp();
-            } else if (source == ui.padRight) {
+            } else if (source == ui.getPadRight()) {
                 ArriveeGame.get().hero.moveRight();
-            } else if (source == ui.padDown) {
+            } else if (source == ui.getPadDown()) {
                 ArriveeGame.get().hero.moveDown();
-            } else if (source == ui.padLeft) {
+            } else if (source == ui.getPadLeft()) {
                 ArriveeGame.get().hero.moveLeft();
             }
 

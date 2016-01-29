@@ -30,6 +30,8 @@ public class Horde {
 
     public void act() {
         count++;
-        if ((count%vitesse == 0) && (front < ArriveeGame.get().terrain.getWidth())) front++;
+        if ((count%vitesse == 0) && (front < ArriveeGame.get().terrain.getWidth())) {
+            front++;
+        }
     }
 }

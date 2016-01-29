@@ -1,8 +1,5 @@
-package com.odysseedesmaths.Menu;
+package com.odysseedesmaths.menu;
 
-/**
- * Created by trilunaire on 11/01/16.
- */
 public class ScreenPause extends Menu {
 
 }
