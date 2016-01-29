@@ -6,7 +6,9 @@ public class Musique {
     private static Music currentMusic = null;
     private static String currentFile = null;
 
-    public Music getCurrentMusic() {
+    private Musique() {}
+
+    public static Music getCurrent() {
         return currentMusic;
     }
 
@@ -14,6 +16,11 @@ public class Musique {
         if (currentMusic != null) stop();
 
         currentFile = fileName;
+
+        if (!Assets.getManager().isLoaded(fileName)) {
+            Assets.getManager().load(fileName, Music.class);
+            Assets.getManager().finishLoadingAsset(fileName);
+        }
         currentMusic = Assets.getManager().get(fileName, Music.class);
     }
 

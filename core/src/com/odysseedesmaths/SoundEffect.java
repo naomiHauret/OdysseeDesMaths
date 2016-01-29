@@ -3,9 +3,6 @@ package com.odysseedesmaths;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
-/**
- * Created by trilunaire on 04/01/16.
- */
 public class SoundEffect {
     private Sound sE = null;
     private long idSE = 0;

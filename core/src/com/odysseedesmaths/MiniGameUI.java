@@ -16,12 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
 
-public class UserInterface extends Stage {
+/**
+ * Classe gérant l'interface utilisateur d'un mini-jeu.
+ */
+public class MiniGameUI extends Stage {
 
-    private final int HERO_HP_SIZE = 48;
-    private final int TIMER_SIZE = 48;
-    private final int PAUSE_SIZE = 64;
-    private final int PAD_ARROW_SIZE = 64;
+    private static final int PAD_ARROW_SIZE = 64;
 
     private Table table;
     private Skin skin;
@@ -32,26 +32,30 @@ public class UserInterface extends Stage {
     private Image heroHp;
 
     // Timer
-    public Timer timer;
+    private Timer timer;
     private Label timerLabel;
 
-    // Pause
-    public Button pause;
+    // Bouton pause
+    private Button pause;
 
     // Pad directionnel
     private Table padGroup;
-    public Button padLeft;
-    public Button padRight;
-    public Button padUp;
-    public Button padDown;
+    private Button padLeft;
+    private Button padRight;
+    private Button padUp;
+    private Button padDown;
 
-    // Items
-    private Table itemGroup;
-
-    public UserInterface(int heroHpAmount, int timerAmount, boolean usePad, boolean useItems) {
+    /**
+     * Initialise une nouvelle interface. Les composants de l'interface dépendent des paramètres
+     * spécifiés.
+     *
+     * @param aHeroHpAmount Le nombre de points de vie du héros à afficher. 0 si aucun affichage.
+     * @param aTimerAmount  Le temps initial du timer du mini-jeu à afficher. 0 si aucun timer.
+     * @param usePad        Vrai si l'interface doit afficher un pad directionnel, faux sinon.
+     */
+    public MiniGameUI(int aHeroHpAmount, int aTimerAmount, boolean usePad) {
         super();
 
-        // Initialisation du tableau principal
         table = new Table();
         table.setFillParent(true);
         addActor(table);
@@ -62,20 +66,37 @@ public class UserInterface extends Stage {
 
         // Ajout des composants
         table.pad(10);
-        if (heroHpAmount > 0) {
-            addHeroHp(heroHpAmount);
+        if (aHeroHpAmount > 0) {
+            addHeroHp(aHeroHpAmount);
         }
-        if (timerAmount > 0) {
-            addTimer(timerAmount);
+        if (aTimerAmount > 0) {
+            addTimer(aTimerAmount);
         }
         addPause();
         table.row();
         if (usePad) {
             addPad();
         }
-        if (useItems) {
-            addItems();
-        }
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public Button getPadLeft() {
+        return padLeft;
+    }
+
+    public Button getPadRight() {
+        return padRight;
+    }
+
+    public Button getPadUp() {
+        return padUp;
+    }
+
+    public Button getPadDown() {
+        return padDown;
     }
 
     public void render() {
@@ -88,9 +109,14 @@ public class UserInterface extends Stage {
         skin.dispose();
     }
 
-    // Ajoute des points de vie pour le héros
-    private void addHeroHp(int heroHpAmount) {
-        heroHpMax = heroHpAmount;
+    /**
+     * Ajoute des points de vie pour le héros à l'interface.
+     * Position : En haut à gauche de l'écran.
+     *
+     * @param aHeroHpAmount Le nombre maximum de points de vie
+     */
+    private void addHeroHp(int aHeroHpAmount) {
+        heroHpMax = aHeroHpAmount;
 
         // Ajout des ressources nécessaires dans le skin
         skin.add("heroHp", new TextureRegionDrawable(skin.getRegion("coeur")));
@@ -105,37 +131,43 @@ public class UserInterface extends Stage {
             }
         });
 
-        // Ajout des pv au tableau principal
-        table.add(heroHpGroup).size(heroHpMax * (HERO_HP_SIZE + 10), HERO_HP_SIZE).top().left().expand();
+        table.add(heroHpGroup).top().left().expand();
     }
 
-    // Met à jour les points de vie du héros
-    private void setHeroHp(int hpAmount) {
-        // Suppression des anciens pv
+    /**
+     * Met à jour le nombre de points de vie du héros.
+     *
+     * @param aHpAmount Le nouveau nombre de points de vie
+     */
+    private void setHeroHp(int aHpAmount) {
         heroHpGroup.clearChildren();
 
         // Création et ajout des pv pleins
-        for (int i=0; i < hpAmount; i++) {
+        for (int i = 0; i < aHpAmount; i++) {
             heroHp = new Image(skin.get("heroHp", TextureRegionDrawable.class));
             heroHpGroup.add(heroHp).padRight(10);
         }
 
         // Création et ajout des pv vides
-        for (int i=0; i < heroHpMax - hpAmount; i++) {
+        for (int i = 0; i < heroHpMax - aHpAmount; i++) {
             heroHp = new Image(skin.get("heroEmptyHp", TextureRegionDrawable.class));
             heroHpGroup.add(heroHp).padRight(10);
         }
     }
 
-    // Ajoute un timer
-    private void addTimer(int timerAmount) {
-        // Initialisation du timer avec la limite de temps du mini-jeu
-        timer = new Timer(timerAmount);
+    /**
+     * Ajoute un timer à l'interface, initialisé avec le temps initial spécifié.
+     * Position : En haut à droite de l'écran.
+     *
+     * @param aTimerAmount Le temps initial du timer
+     */
+    private void addTimer(int aTimerAmount) {
+        timer = new Timer(aTimerAmount);
 
         // Ajout des ressources nécessaires dans le skin
-        skin.add("timer", new LabelStyle(new BitmapFont(Gdx.files.internal("ui/timer.fnt")), Color.WHITE));     // Color ?
+        skin.add("timer", new LabelStyle(new BitmapFont(Gdx.files.internal("ui/timer.fnt")), Color.WHITE));
 
-        // Création du timer
+        // Création du timer label
         timerLabel = new Label(timer.toString(), skin, "timer");
         timerLabel.addAction(new Action() {
             public boolean act(float delta) {
@@ -144,11 +176,13 @@ public class UserInterface extends Stage {
             }
         });
 
-        // Ajout du timer au tableau principal
-        table.add(timerLabel).size(125, TIMER_SIZE).top().right().expand();
+        table.add(timerLabel).padTop(10).padRight(25).top().right().expand();
     }
 
-    // Ajoute un bouton pause
+    /**
+     * Ajoute un bouton pause à l'interface.
+     * Position : En haut à droite de l'écran.
+     */
     private void addPause() {
         // Ajout des ressources nécessaires dans le skin
         ButtonStyle pauseStyle = new ButtonStyle();
@@ -159,11 +193,14 @@ public class UserInterface extends Stage {
         // Création du bouton pause
         pause = new Button(skin, "pause");
 
-        // Ajout du bouton pause au tableau principal
-        table.add(pause).size(PAUSE_SIZE, PAUSE_SIZE).top().right();
+        table.add(pause).top().right();
     }
 
-    // Ajoute un pad directionnel
+    /**
+     * Ajoute un pad directionnel à l'interface, composé de 4 boutons (flèches) vers les 4
+     * principales directions : haut, bas, droite et gauche.
+     * Position : En bas à gauche de l'écran.
+     */
     private void addPad() {
         // Ajout des ressources nécessaires dans le skin
         ButtonStyle padStyle;
@@ -203,12 +240,6 @@ public class UserInterface extends Stage {
         padGroup.row();
         padGroup.add(padDown).colspan(2);
 
-        // Ajout du pad au tableau principal
-        table.add(padGroup).size(3*PAD_ARROW_SIZE, 3*PAD_ARROW_SIZE).bottom().left().expand();
-    }
-
-    // Ajoute des items
-    private void addItems() {
-
+        table.add(padGroup).bottom().left().expand();
     }
 }

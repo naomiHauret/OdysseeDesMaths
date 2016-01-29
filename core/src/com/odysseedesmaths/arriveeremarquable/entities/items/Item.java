@@ -7,8 +7,6 @@ import com.odysseedesmaths.arriveeremarquable.map.Case;
 
 public abstract class Item extends Entity {
 
-    private int duree;
-
     public Item(Case c) {
         super(c);
     }
@@ -41,8 +39,9 @@ public abstract class Item extends Entity {
 
     public static void init() {
         pop = new int[NB_TYPES];
-        for (int i=0; i < NB_TYPES; i++)
+        for (int i=0; i < NB_TYPES; i++) {
             pop[i] = 0;
+        }
 
         max = new int[NB_TYPES];
         max[SHIELD] = 2;
@@ -88,10 +87,18 @@ public abstract class Item extends Entity {
         } while (popFull(num));
 
         switch (num) {
-        case SHIELD: item = new Shield(); break;
-        case HEART: item = new Heart(); break;
-        case FREEZE: item = new Freeze(); break;
-        default: item = new SuperFreeze(); break;
+        case SHIELD:
+            item = new Shield();
+            break;
+        case HEART:
+            item = new Heart();
+            break;
+        case FREEZE:
+            item = new Freeze();
+            break;
+        default:
+            item = new SuperFreeze();
+            break;
         }
 
         increasePop(item);

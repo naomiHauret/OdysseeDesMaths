@@ -34,7 +34,9 @@ public class Hero extends Character {
         boolean continuer = true;
 
         if (e instanceof Enemy) {
-            if (ArriveeGame.get().activeItems.get(Shield.class) == null) decreasePDV();
+            if (ArriveeGame.get().activeItems.get(Shield.class) == null) {
+                decreasePDV();
+            }
             ArriveeGame.get().destroy((Enemy)e);
         } else if (e instanceof Item) {
             ((Item)e).trigger();

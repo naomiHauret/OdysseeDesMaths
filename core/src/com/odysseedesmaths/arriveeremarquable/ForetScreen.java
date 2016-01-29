@@ -2,7 +2,6 @@ package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
-import com.odysseedesmaths.UserInterface;
+import com.odysseedesmaths.MiniGameUI;
 import com.odysseedesmaths.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Greed;
@@ -24,7 +23,6 @@ import com.odysseedesmaths.arriveeremarquable.entities.ennemies.SuperSmart;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Sticky;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Smart;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Heart;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.arriveeremarquable.map.Case;
@@ -39,7 +37,7 @@ public class ForetScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     
-    private UserInterface ui;
+    private MiniGameUI ui;
 
     private Sprite heroSprite;
     private Map<Entity, Sprite> entitiesSprites;
@@ -62,21 +60,24 @@ public class ForetScreen implements Screen {
 
         hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
 
-        // Interface utilisateur
-        ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
+        ui = new MiniGameUI(Hero.PDV_MAX, ArriveeGame.TIME_LIMIT * Timer.ONE_MINUTE, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
-        ui.padUp.addListener(ecouteur);
-        ui.padRight.addListener(ecouteur);
-        ui.padDown.addListener(ecouteur);
-        ui.padLeft.addListener(ecouteur);
+        ui.getPadUp().addListener(ecouteur);
+        ui.getPadRight().addListener(ecouteur);
+        ui.getPadDown().addListener(ecouteur);
+        ui.getPadLeft().addListener(ecouteur);
+
+        // Camera
+        camera = new OrthographicCamera();
+        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
     }
 
     @Override
     public void show() {
         //ArriveeGame.get().playMusic("musicTest");
         Assets.getManager().get(Assets.ARCADE, Music.class).play();
-        ui.timer.start();
+        ui.getTimer().start();
     }
 
     @Override
@@ -149,8 +150,8 @@ public class ForetScreen implements Screen {
         float posX, posY, minX, minY, maxX, maxY;
         posX = heroSprite.getX() + heroSprite.getWidth()/2;
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
-        minX = WIDTH/2;
-        minY = HEIGHT/2;
+        minX = (float)WIDTH/2;
+        minY = (float)HEIGHT/2;
         maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;
         maxY = ArriveeGame.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2;
         if (posX < minX) posX = minX;
@@ -172,12 +173,12 @@ public class ForetScreen implements Screen {
 
     @Override
     public void pause() {
-        ui.timer.stop();
+        ui.getTimer().stop();
     }
 
     @Override
     public void resume() {
-        ui.timer.start();
+        ui.getTimer().start();
     }
 
     @Override
@@ -195,29 +196,44 @@ public class ForetScreen implements Screen {
         float targetX, targetY, newX, newY;
 
         targetX = aEntity.getCase().i * CELL_SIZE;
-        if (targetX > aSprite.getX()) newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
-        else newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        if (targetX > aSprite.getX()) {
+            newX = Math.min(aSprite.getX() + DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        } else {
+            newX = Math.max(aSprite.getX() - DELTA * Gdx.graphics.getDeltaTime(), targetX);
+        }
 
         targetY = aEntity.getCase().j * CELL_SIZE;
-        if (targetY > aSprite.getY()) newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
-        else newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        if (targetY > aSprite.getY()) {
+            newY = Math.min(aSprite.getY() + DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        } else {
+            newY = Math.max(aSprite.getY() - DELTA * Gdx.graphics.getDeltaTime(), targetY);
+        }
 
         aSprite.setPosition(newX, newY);
         return (newX == targetX) && (newY == targetY);
     }
 
+    // Temporaire
     private Sprite getNewSpriteFor(Entity aEntity) {
         Sprite sprite;
 
         if (aEntity instanceof Enemy) {
-            if (aEntity instanceof Sticky) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_EGAL, Texture.class));
-            else if (aEntity instanceof Smart) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_ADD, Texture.class));
-            else if (aEntity instanceof Greed) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_MULT, Texture.class));
-            else if (aEntity instanceof SuperSmart) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_DIV, Texture.class));
-            else sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_SOUST, Texture.class));
+            if (aEntity instanceof Sticky)
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_EGAL, Texture.class));
+            else if (aEntity instanceof Smart)
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_ADD, Texture.class));
+            else if (aEntity instanceof Greed)
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_MULT, Texture.class));
+            else if (aEntity instanceof SuperSmart)
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_DIV, Texture.class));
+            else
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_SOUST, Texture.class));
+
         } else {// c'est un item, pas d'appel de cette méthode sur le héros
-            if (aEntity instanceof Shield) sprite = new Sprite(Assets.getManager().get(Assets.ARR_SHIELD, Texture.class));
-            else sprite = new Sprite(Assets.getManager().get(Assets.HEART, Texture.class));
+            if (aEntity instanceof Shield)
+                sprite = new Sprite(Assets.getManager().get(Assets.ARR_SHIELD, Texture.class));
+            else
+                sprite = new Sprite(Assets.getManager().get(Assets.HEART, Texture.class));
         }
 
         sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
@@ -231,13 +247,13 @@ public class ForetScreen implements Screen {
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             Actor source = event.getTarget();
 
-            if (source == ui.padUp) {
+            if (source == ui.getPadUp()) {
                 ArriveeGame.get().hero.moveUp();
-            } else if (source == ui.padRight) {
+            } else if (source == ui.getPadRight()) {
                 ArriveeGame.get().hero.moveRight();
-            } else if (source == ui.padDown) {
+            } else if (source == ui.getPadDown()) {
                 ArriveeGame.get().hero.moveDown();
-            } else if (source == ui.padLeft) {
+            } else if (source == ui.getPadLeft()) {
                 ArriveeGame.get().hero.moveLeft();
             }
 

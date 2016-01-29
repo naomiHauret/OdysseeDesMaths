@@ -21,7 +21,7 @@ import java.util.Set;
 public class ArriveeGame extends MiniJeu {
 	private static ArriveeGame instance = null;
 
-	public static final int LIMITE_TEMPS = 5;
+	public static final int TIME_LIMIT = 5;
 	public static final int STOP_SPAWN = 10;
 
 	public Hero hero;
@@ -83,7 +83,9 @@ public class ArriveeGame extends MiniJeu {
                 }
             }
         }
-        if (front == terrain.getWidth()/2) horde.setVitesse(Horde.FAST);
+        if (front == terrain.getWidth()/2) {
+			horde.setVitesse(Horde.FAST);
+		}
 
 		// Tour des ennemis
 		List<Enemy> toAct = new ArrayList<Enemy>();
@@ -111,7 +113,7 @@ public class ArriveeGame extends MiniJeu {
         }
 
 		// Spawn d'un ennemi
-		if (!Enemy.popFull() && MathUtils.random() < Enemy.SPAWN_CHANCE && hero.getCase().i < terrain.getWidth()-STOP_SPAWN) {
+		if (!Enemy.popFull() && (MathUtils.random() < Enemy.SPAWN_CHANCE) && (hero.getCase().i < terrain.getWidth()-STOP_SPAWN)) {
 			Enemy enemy = Enemy.make();
 			Case spawn;
 			int distance;
@@ -128,11 +130,11 @@ public class ArriveeGame extends MiniJeu {
 
         // Mise à jour des items actifs
         for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
-            int new_value = entry.getValue()-1;
-            if (new_value <= 0) {
+            int newValue = entry.getValue()-1;
+            if (newValue <= 0) {
                 activeItems.remove(entry.getKey());
             } else {
-                activeItems.put(entry.getKey(), new_value);
+                activeItems.put(entry.getKey(), newValue);
             }
         }
 	}
@@ -156,5 +158,6 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void dispose() {
+
 	}
 }
