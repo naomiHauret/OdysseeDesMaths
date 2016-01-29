@@ -1,42 +1,52 @@
 package com.odysseedesmaths;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import net.dermetfan.gdx.assets.AnnotationAssetManager;
+import net.dermetfan.gdx.assets.AnnotationAssetManager.Asset;
 
 public class Assets {
 
-    public static final AssetManager manager = new AssetManager();
+    private static final AnnotationAssetManager manager = new AnnotationAssetManager();
 
-    public static final AssetDescriptor<Texture> HERO = new AssetDescriptor<Texture>("heros.png", Texture.class);
-    public static final AssetDescriptor<TextureAtlas> UI = new AssetDescriptor<TextureAtlas>("ui/ui.atlas", TextureAtlas.class);
-
-    public static void loadMain() {
-        manager.load(HERO);
-        manager.load(UI);
-        manager.finishLoading();
+    public static AnnotationAssetManager getManager() {
+        return manager;
     }
 
-    public static void dispose() {
-        manager.dispose();
-    }
+    @Asset(Texture.class)
+    public static final String
+            HERO = "heros.png",
+            HEART = "coeur.png",
+            ARR_HORDE = "horde.png",
+            ARR_S_EGAL = "signeEgal.png",
+            ARR_S_ADD = "signeAdd.png",
+            ARR_S_SOUST = "signeSoust.png",
+            ARR_S_MULT = "signeMult.png",
+            ARR_S_DIV = "signeDiv.png",
+            ARR_BUFF_SHIELD = "bouclier.png",
+            ARR_SHIELD = "itemBouclier.png";
 
-    public static final AssetDescriptor<Texture> ARR_BUFF_SHIELD = new AssetDescriptor<Texture>("bouclier.png", Texture.class);
-    public static final AssetDescriptor<Texture> ARR_SHIELD = new AssetDescriptor<Texture>("itemBouclier.png", Texture.class);
 
-    public static void loadArriveeRemarquable() {
-        manager.load(ARR_BUFF_SHIELD);
-        manager.load(ARR_SHIELD);
-        manager.finishLoading();
-    }
+    @Asset(TextureAtlas.class)
+    public static final String
+            UI_ATLAS = "ui/ui.atlas";
 
-    public static void disposeArriveeRemarquable() {
-        manager.unload(ARR_BUFF_SHIELD.fileName);
-        manager.unload(ARR_SHIELD.fileName);
-    }
+
+    //TODO: utiliser Assets pour les BitmapFonts
+    //@Asset(BitmapFont.class)
+    //public static final String UI_TIMER_FNT;
+
+
+    @Asset(Music.class)
+    public static final String
+            ARCADE = "Arcade_Machine.ogg";
+
 
     static {
-        loadMain();
+        manager.load(Assets.class);
+        manager.finishLoading();
     }
 }

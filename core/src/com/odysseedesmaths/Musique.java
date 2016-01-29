@@ -1,36 +1,40 @@
 package com.odysseedesmaths;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-/**
- * Created by trilunaire on 04/01/16.
- */
 public class Musique {
-    public static Music audio = null;
+    private static Music currentMusic = null;
+    private static String currentFile = null;
 
-    public static void setPath(String path){
-        audio = Gdx.audio.newMusic(Gdx.files.internal(path));
+    public Music getCurrentMusic() {
+        return currentMusic;
     }
 
-    public static void play(){
-        audio.play();
-        audio.setLooping(true);
+    public static void setCurrent(String fileName) {
+        if (currentMusic != null) stop();
+
+        currentFile = fileName;
+        currentMusic = Assets.getManager().get(fileName, Music.class);
     }
 
-    public static void stop(){
-        audio.dispose();
+    public static void play() {
+        currentMusic.play();
+        currentMusic.setLooping(true);
+    }
+
+    public static void stop() {
+        Assets.getManager().unload(currentFile);
     }
 
     public static boolean isPlaying() {
-        return (audio != null) && audio.isPlaying();
+        return (currentMusic != null) && currentMusic.isPlaying();
     }
 
-    public static void setVolume(int volumePercent){
-        if(volumePercent>100 || volumePercent<0){
-            System.out.println("Valeur invalide");
-        }else {
-            audio.setVolume((float)(volumePercent / 100));
+    public static void setVolume(int volumePercent) {
+        if (volumePercent>100 || volumePercent<0) {
+            throw new IllegalArgumentException("Pourcentage incorrect : " + volumePercent);
+        } else {
+            currentMusic.setVolume(volumePercent / 100f);
         }
     }
 }

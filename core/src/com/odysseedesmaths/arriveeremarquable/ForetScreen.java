@@ -3,8 +3,10 @@ package com.odysseedesmaths.arriveeremarquable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -50,15 +52,15 @@ public class ForetScreen implements Screen {
         batch = new SpriteBatch();
         
         // Sprites
-        heroSprite = new Sprite(Assets.manager.get(Assets.HERO));
+        heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
         heroSprite.setPosition(ArriveeGame.get().hero.getCase().i * CELL_SIZE, ArriveeGame.get().hero.getCase().j * CELL_SIZE);
 
         entitiesSprites = new HashMap<Entity, Sprite>();
 
         buffsSprites = new HashMap<Class<? extends Item>, Sprite>();
-        buffsSprites.put(Shield.class, new Sprite(ArriveeGame.get().graphics.get("buffShield")));
+        buffsSprites.put(Shield.class, new Sprite(Assets.getManager().get(Assets.ARR_BUFF_SHIELD, Texture.class)));
 
-        hordeSprite = new Sprite(ArriveeGame.get().graphics.get("horde"));
+        hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
 
         // Interface utilisateur
         ui = new UserInterface(Hero.PDV_MAX, ArriveeGame.LIMITE_TEMPS * Timer.ONE_MINUTE, true, true);
@@ -72,7 +74,8 @@ public class ForetScreen implements Screen {
 
     @Override
     public void show() {
-        ArriveeGame.get().playMusic("musicTest");
+        //ArriveeGame.get().playMusic("musicTest");
+        Assets.getManager().get(Assets.ARCADE, Music.class).play();
         ui.timer.start();
     }
 
@@ -203,19 +206,18 @@ public class ForetScreen implements Screen {
         return (newX == targetX) && (newY == targetY);
     }
 
-    // Temporaire
     private Sprite getNewSpriteFor(Entity aEntity) {
         Sprite sprite;
 
         if (aEntity instanceof Enemy) {
-            if (aEntity instanceof Sticky) sprite = new Sprite(ArriveeGame.get().graphics.get("signeEgal"));
-            else if (aEntity instanceof Smart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeAdd"));
-            else if (aEntity instanceof Greed) sprite = new Sprite(ArriveeGame.get().graphics.get("signeMult"));
-            else if (aEntity instanceof SuperSmart) sprite = new Sprite(ArriveeGame.get().graphics.get("signeDiv"));
-            else sprite = new Sprite(ArriveeGame.get().graphics.get("signeSoust"));
+            if (aEntity instanceof Sticky) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_EGAL, Texture.class));
+            else if (aEntity instanceof Smart) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_ADD, Texture.class));
+            else if (aEntity instanceof Greed) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_MULT, Texture.class));
+            else if (aEntity instanceof SuperSmart) sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_DIV, Texture.class));
+            else sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_SOUST, Texture.class));
         } else {// c'est un item, pas d'appel de cette méthode sur le héros
-            if (aEntity instanceof Shield) sprite = new Sprite(ArriveeGame.get().graphics.get("shield"));
-            else sprite = new Sprite(ArriveeGame.get().graphics.get("heart"));
+            if (aEntity instanceof Shield) sprite = new Sprite(Assets.getManager().get(Assets.ARR_SHIELD, Texture.class));
+            else sprite = new Sprite(Assets.getManager().get(Assets.HEART, Texture.class));
         }
 
         sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
@@ -282,4 +284,5 @@ public class ForetScreen implements Screen {
 
         return true;
     }
+
 }

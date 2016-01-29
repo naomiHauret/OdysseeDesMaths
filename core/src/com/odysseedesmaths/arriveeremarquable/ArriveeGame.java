@@ -1,10 +1,8 @@
 package com.odysseedesmaths.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.MiniJeu;
 import com.odysseedesmaths.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.arriveeremarquable.entities.Hero;
@@ -46,7 +44,6 @@ public class ArriveeGame extends MiniJeu {
         deadpool = new HashSet<Enemy>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
-        Assets.loadArriveeRemarquable();
     }
 
 	@Override
@@ -58,21 +55,6 @@ public class ArriveeGame extends MiniJeu {
 		init();
 		Enemy.init();
         Item.init();
-
-		// Ajout des assets graphiques
-		addTexture("hero", new Texture(Gdx.files.internal("heros.png")));
-        addTexture("horde", new Texture(Gdx.files.internal("horde.png")));
-		addTexture("signeEgal", new Texture(Gdx.files.internal("signeEgal.png")));
-		addTexture("signeAdd", new Texture(Gdx.files.internal("signeAdd.png")));
-		addTexture("signeSoust", new Texture(Gdx.files.internal("signeSoust.png")));
-		addTexture("signeMult", new Texture(Gdx.files.internal("signeMult.png")));
-		addTexture("signeDiv", new Texture(Gdx.files.internal("signeDiv.png")));
-		addTexture("shield", new Texture(Gdx.files.internal("itemBouclier.png")));
-		addTexture("buffShield", new Texture(Gdx.files.internal("bouclier.png")));
-        addTexture("heart", new Texture(Gdx.files.internal("coeur.png")));
-
-		// Ajout des assets sonores
-		addPathMusique("musicTest", "Arcade_Machine.ogg");;
 
 		setScreen(new ForetScreen());
 	}
@@ -174,6 +156,5 @@ public class ArriveeGame extends MiniJeu {
 	}
 
 	public void dispose() {
-        Assets.disposeArriveeRemarquable();
 	}
 }

@@ -57,9 +57,8 @@ public class UserInterface extends Stage {
         addActor(table);
 
         // Initialisation du skin
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("ui/ui.atlas"));
         skin = new Skin();
-        skin.addRegions(atlas);
+        skin.addRegions(Assets.getManager().get(Assets.UI_ATLAS, TextureAtlas.class));
 
         // Ajout des composants
         table.pad(10);
