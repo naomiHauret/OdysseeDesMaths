@@ -1,6 +1,6 @@
-package com.odysseedesmaths.arriveeremarquable.entities.items;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities.items;
 
-import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 public class Shield extends Item {
 
@@ -8,7 +8,7 @@ public class Shield extends Item {
 
     @Override
     public void trigger() {
-        ArriveeGame.get().activeItems.put(this.getClass(), DUREE);
+        ArriveeRemarquable.get().activeItems.put(this.getClass(), DUREE);
         super.trigger();
     }
 }

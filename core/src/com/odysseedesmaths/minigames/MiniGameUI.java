@@ -1,4 +1,4 @@
-package com.odysseedesmaths;
+package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
+import com.odysseedesmaths.Assets;
+import com.odysseedesmaths.Timer;
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
@@ -126,7 +128,7 @@ public class MiniGameUI extends Stage {
         heroHpGroup = new Table();
         heroHpGroup.addAction(new Action() {
             public boolean act(float delta) {
-                setHeroHp(ArriveeGame.get().hero.getPdv());        // A changer (utilise Arrivee)
+                setHeroHp(ArriveeRemarquable.get().hero.getPdv());        // A changer (utilise Arrivee)
                 return false;
             }
         });

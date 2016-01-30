@@ -1,13 +1,13 @@
-package com.odysseedesmaths.arriveeremarquable.entities.ennemies;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
-import com.odysseedesmaths.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.arriveeremarquable.entities.Hero;
-import com.odysseedesmaths.arriveeremarquable.entities.Character;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
-import com.odysseedesmaths.arriveeremarquable.map.Case;
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Character;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Enemy extends Character {
 
@@ -41,13 +41,13 @@ public abstract class Enemy extends Character {
         boolean continuer = true;
 
         if (e instanceof Hero) {
-            if (ArriveeGame.get().activeItems.get(Shield.class) == null) {
+            if (ArriveeRemarquable.get().activeItems.get(Shield.class) == null) {
                 ((Hero) e).decreasePDV();
             }
-            ArriveeGame.get().destroy(this);
+            ArriveeRemarquable.get().destroy(this);
             setAlive(false);
         } else if (e instanceof Item) {
-            ArriveeGame.get().destroy((Item)e);
+            ArriveeRemarquable.get().destroy((Item)e);
         }
 
         return continuer && isAlive();
@@ -104,17 +104,17 @@ public abstract class Enemy extends Character {
 
     public static void increasePop(Enemy e) {
         if (e instanceof Sticky) pop[STICKY]++;
-        else if (e instanceof Smart) pop[SMART]++;
-        else if (e instanceof SuperSmart) pop[SUPERSMART]++;
-        else if (e instanceof Greed) pop[GREED]++;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart) pop[SMART]++;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart) pop[SUPERSMART]++;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed) pop[GREED]++;
         else pop[LOST]++;
     }
 
     public static void decreasePop(Enemy e) {
         if (e instanceof Sticky) pop[STICKY]--;
-        else if (e instanceof Smart) pop[SMART]--;
-        else if (e instanceof SuperSmart) pop[SUPERSMART]--;
-        else if (e instanceof Greed) pop[GREED]--;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart) pop[SMART]--;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart) pop[SUPERSMART]--;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed) pop[GREED]--;
         else pop[LOST]--;
     }
 
@@ -131,16 +131,16 @@ public abstract class Enemy extends Character {
             enemy = new Sticky();
             break;
         case SMART:
-            enemy = new Smart();
+            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart();
             break;
         case SUPERSMART:
-            enemy = new SuperSmart();
+            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart();
             break;
         case GREED:
-            enemy = new Greed();
+            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed();
             break;
         default:
-            enemy = new Lost();
+            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Lost();
             break;
         }
 

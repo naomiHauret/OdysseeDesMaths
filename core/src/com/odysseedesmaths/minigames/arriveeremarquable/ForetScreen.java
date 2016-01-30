@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable;
+package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,18 +15,19 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
+import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.Timer;
-import com.odysseedesmaths.MiniGameUI;
-import com.odysseedesmaths.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.arriveeremarquable.entities.Hero;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Greed;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.SuperSmart;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Sticky;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Smart;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Shield;
-import com.odysseedesmaths.arriveeremarquable.map.Case;
+import com.odysseedesmaths.minigames.MiniGameUI;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Sticky;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,10 +35,15 @@ import java.util.Map;
 
 public class ForetScreen implements Screen {
 
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
+    public static final int DELTA = 300;
+    public static final int CELL_SIZE = 64;
+
     private Viewport viewport;
     private OrthographicCamera camera;
-    private SpriteBatch batch;
-    
+    private Batch batch;
+
     private MiniGameUI ui;
 
     private Sprite heroSprite;
@@ -48,10 +55,10 @@ public class ForetScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         batch = new SpriteBatch();
-        
+
         // Sprites
         heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
-        heroSprite.setPosition(ArriveeGame.get().hero.getCase().i * CELL_SIZE, ArriveeGame.get().hero.getCase().j * CELL_SIZE);
+        heroSprite.setPosition(ArriveeRemarquable.get().hero.getCase().i * CELL_SIZE, ArriveeRemarquable.get().hero.getCase().j * CELL_SIZE);
 
         entitiesSprites = new HashMap<Entity, Sprite>();
 
@@ -60,7 +67,7 @@ public class ForetScreen implements Screen {
 
         hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
 
-        ui = new MiniGameUI(Hero.PDV_MAX, ArriveeGame.TIME_LIMIT * Timer.ONE_MINUTE, true);
+        ui = new MiniGameUI(Hero.PDV_MAX, ArriveeRemarquable.TIME_LIMIT * Timer.ONE_MINUTE, true);
         Gdx.input.setInputProcessor(ui);
         InputEcouteur ecouteur = new InputEcouteur();
         ui.getPadUp().addListener(ecouteur);
@@ -75,26 +82,30 @@ public class ForetScreen implements Screen {
 
     @Override
     public void show() {
-        //ArriveeGame.get().playMusic("musicTest");
-        Assets.getManager().get(Assets.ARCADE, Music.class).play();
+        Musique.setCurrent(Assets.ARCADE);
+        Musique.play();
         ui.getTimer().start();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
     @Override
     public void render(float delta) {
         // Effaçage du précédent affichage
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Affichage du terrain
-        ArriveeGame.get().terrain.renderer.setView(camera);
-        ArriveeGame.get().terrain.renderer.render();
+        ArriveeRemarquable.get().terrain.renderer.setView(camera);
+        ArriveeRemarquable.get().terrain.renderer.render();
 
         // Affichage des entités
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        for (Enemy enemy : ArriveeGame.get().enemies) {
+        for (Enemy enemy : ArriveeRemarquable.get().enemies) {
             Sprite enemySprite = entitiesSprites.get(enemy);
             if (enemySprite == null) {
                 enemySprite = getNewSpriteFor(enemy);
@@ -104,7 +115,7 @@ public class ForetScreen implements Screen {
             enemySprite.draw(batch);
         }
 
-        Iterator<Enemy> deadIterator = ArriveeGame.get().deadpool.iterator();
+        Iterator<Enemy> deadIterator = ArriveeRemarquable.get().deadpool.iterator();
         while (deadIterator.hasNext()) {
             Enemy deadEnemy = deadIterator.next();
             Sprite deadSprite = entitiesSprites.get(deadEnemy);
@@ -115,7 +126,7 @@ public class ForetScreen implements Screen {
             deadSprite.draw(batch);
         }
 
-        for (Item item : ArriveeGame.get().items) {
+        for (Item item : ArriveeRemarquable.get().items) {
             Sprite itemSprite = entitiesSprites.get(item);
             if (itemSprite == null) {
                 itemSprite = getNewSpriteFor(item);
@@ -126,18 +137,18 @@ public class ForetScreen implements Screen {
         }
 
         // Affichage du héros
-        updatePos(heroSprite, ArriveeGame.get().hero);
+        updatePos(heroSprite, ArriveeRemarquable.get().hero);
         heroSprite.draw(batch);
 
-        if (ArriveeGame.get().activeItems.get(Shield.class) != null) {
+        if (ArriveeRemarquable.get().activeItems.get(Shield.class) != null) {
             buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
             buffsSprites.get(Shield.class).draw(batch);
         }
 
         // Affichage de la horde
-        if (ArriveeGame.get().horde.getFront() >= 0) {
-            for (int i = 0; i <= ArriveeGame.get().horde.getFront(); i++) {
-                for (int j = 0; j < ArriveeGame.get().terrain.getHeight(); j++) {
+        if (ArriveeRemarquable.get().horde.getFront() >= 0) {
+            for (int i = 0; i <= ArriveeRemarquable.get().horde.getFront(); i++) {
+                for (int j = 0; j < ArriveeRemarquable.get().terrain.getHeight(); j++) {
                     hordeSprite.setPosition(i * CELL_SIZE, j * CELL_SIZE);
                     hordeSprite.draw(batch);
                 }
@@ -150,10 +161,10 @@ public class ForetScreen implements Screen {
         float posX, posY, minX, minY, maxX, maxY;
         posX = heroSprite.getX() + heroSprite.getWidth()/2;
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
-        minX = (float)WIDTH/2;
-        minY = (float)HEIGHT/2;
-        maxX = ArriveeGame.get().terrain.getWidth() * CELL_SIZE - WIDTH/2;
-        maxY = ArriveeGame.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2;
+        minX = WIDTH/2f;
+        minY = HEIGHT/2f;
+        maxX = ArriveeRemarquable.get().terrain.getWidth() * CELL_SIZE - WIDTH/2f;
+        maxY = ArriveeRemarquable.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2f;
         if (posX < minX) posX = minX;
         else if (posX > maxX) posX = maxX;
         if (posY < minY) posY = minY;
@@ -164,11 +175,6 @@ public class ForetScreen implements Screen {
         ui.render();
 
         camera.update();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height, false);
     }
 
     @Override
@@ -183,13 +189,12 @@ public class ForetScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Musique.pause();
     }
 
     @Override
     public void dispose() {
         ui.dispose();
-        batch.dispose();
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {
@@ -215,27 +220,20 @@ public class ForetScreen implements Screen {
 
     // Temporaire
     private Sprite getNewSpriteFor(Entity aEntity) {
-        Sprite sprite;
+        String asset;
 
         if (aEntity instanceof Enemy) {
-            if (aEntity instanceof Sticky)
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_EGAL, Texture.class));
-            else if (aEntity instanceof Smart)
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_ADD, Texture.class));
-            else if (aEntity instanceof Greed)
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_MULT, Texture.class));
-            else if (aEntity instanceof SuperSmart)
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_DIV, Texture.class));
-            else
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_S_SOUST, Texture.class));
-
+            if (aEntity instanceof Sticky) asset = Assets.ARR_S_EGAL;
+            else if (aEntity instanceof Smart) asset = Assets.ARR_S_ADD;
+            else if (aEntity instanceof Greed) asset = Assets.ARR_S_MULT;
+            else if (aEntity instanceof SuperSmart) asset = Assets.ARR_S_DIV;
+            else asset = Assets.ARR_S_SOUST;
         } else {// c'est un item, pas d'appel de cette méthode sur le héros
-            if (aEntity instanceof Shield)
-                sprite = new Sprite(Assets.getManager().get(Assets.ARR_SHIELD, Texture.class));
-            else
-                sprite = new Sprite(Assets.getManager().get(Assets.HEART, Texture.class));
+            if (aEntity instanceof Shield) asset = Assets.ARR_SHIELD;
+            else asset = Assets.HEART;
         }
 
+        Sprite sprite = new Sprite(Assets.getManager().get(asset, Texture.class));
         sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
 
         return sprite;
@@ -248,16 +246,16 @@ public class ForetScreen implements Screen {
             Actor source = event.getTarget();
 
             if (source == ui.getPadUp()) {
-                ArriveeGame.get().hero.moveUp();
+                ArriveeRemarquable.get().hero.moveUp();
             } else if (source == ui.getPadRight()) {
-                ArriveeGame.get().hero.moveRight();
+                ArriveeRemarquable.get().hero.moveRight();
             } else if (source == ui.getPadDown()) {
-                ArriveeGame.get().hero.moveDown();
+                ArriveeRemarquable.get().hero.moveDown();
             } else if (source == ui.getPadLeft()) {
-                ArriveeGame.get().hero.moveLeft();
+                ArriveeRemarquable.get().hero.moveLeft();
             }
 
-            ArriveeGame.get().playTurn();
+            ArriveeRemarquable.get().playTurn();
 
             return true;
         }
@@ -268,22 +266,17 @@ public class ForetScreen implements Screen {
      * STATIC *
      **********/
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 480;
-    public static final int DELTA = 150;
-    public static final int CELL_SIZE = 64;
-
     public static boolean isVisible(Case c) {
         boolean resW, resH;
-        Case cHeros = ArriveeGame.get().hero.getCase();
+        Case cHeros = ArriveeRemarquable.get().hero.getCase();
         resW = Math.abs(c.i - cHeros.i) * CELL_SIZE < WIDTH/2;
         resH = Math.abs(c.j - cHeros.j) * CELL_SIZE < HEIGHT/2;
         return resW && resH;
     }
 
     public static boolean isInHeroSight(Case c) {
-        Case cHeros = ArriveeGame.get().hero.getCase();
-        Case[][] cases = ArriveeGame.get().terrain.getCases();
+        Case cHeros = ArriveeRemarquable.get().hero.getCase();
+        Case[][] cases = ArriveeRemarquable.get().terrain.getCases();
         if (cHeros.i == c.i) {
             int i = c.i;
             for (int j = Math.min(cHeros.j, c.j); j < Math.max(cHeros.j, c.j); j++) {

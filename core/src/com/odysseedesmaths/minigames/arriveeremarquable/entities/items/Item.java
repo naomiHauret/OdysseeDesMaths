@@ -1,9 +1,9 @@
-package com.odysseedesmaths.arriveeremarquable.entities.items;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities.items;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.odysseedesmaths.arriveeremarquable.ArriveeGame;
-import com.odysseedesmaths.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.arriveeremarquable.map.Case;
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Item extends Entity {
 
@@ -16,7 +16,7 @@ public abstract class Item extends Entity {
     }
 
     public void trigger() {
-        ArriveeGame.get().destroy(this);
+        ArriveeRemarquable.get().destroy(this);
     }
 
 
@@ -67,14 +67,14 @@ public abstract class Item extends Entity {
     public static void increasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]++;
         else if (e instanceof Heart) pop[HEART]++;
-        else if (e instanceof Freeze) pop[FREEZE]++;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]++;
         else pop[SUPERFREEZE]++;
     }
 
     public static void decreasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]--;
         else if (e instanceof Heart) pop[HEART]--;
-        else if (e instanceof Freeze) pop[FREEZE]--;
+        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]--;
         else pop[SUPERFREEZE]--;
     }
 
@@ -94,7 +94,7 @@ public abstract class Item extends Entity {
             item = new Heart();
             break;
         case FREEZE:
-            item = new Freeze();
+            item = new com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze();
             break;
         default:
             item = new SuperFreeze();

@@ -1,12 +1,10 @@
-package com.odysseedesmaths.arriveeremarquable.map;
-
-import com.odysseedesmaths.arriveeremarquable.entities.Entity;
+package com.odysseedesmaths.minigames.arriveeremarquable.map;
 
 public class Case {
     public final int i;
     public final int j;
     private final boolean obstacle;
-    private Entity entity;
+    private com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity entity;
 
     public Case(int i, int j, boolean obstacle) {
         this.i = i;
@@ -19,11 +17,11 @@ public class Case {
         return obstacle;
     }
 
-    public Entity getEntity() {
+    public com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity getEntity() {
         return entity;
     }
 
-    public void setEntity(Entity entity) {
+    public void setEntity(com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity entity) {
         this.entity = entity;
     }
 

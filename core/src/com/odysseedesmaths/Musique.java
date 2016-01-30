@@ -29,6 +29,10 @@ public class Musique {
         currentMusic.setLooping(true);
     }
 
+    public static void pause() {
+        currentMusic.pause();
+    }
+
     public static void stop() {
         Assets.getManager().unload(currentFile);
     }

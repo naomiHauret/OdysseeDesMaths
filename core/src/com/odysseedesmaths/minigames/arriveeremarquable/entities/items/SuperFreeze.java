@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable.entities.items;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities.items;
 
 public class SuperFreeze extends Item {
 

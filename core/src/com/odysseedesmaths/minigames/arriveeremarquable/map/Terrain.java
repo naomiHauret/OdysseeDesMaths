@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable.map;
+package com.odysseedesmaths.minigames.arriveeremarquable.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;

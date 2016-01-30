@@ -1,6 +1,6 @@
-package com.odysseedesmaths.arriveeremarquable.entities;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities;
 
-import com.odysseedesmaths.arriveeremarquable.map.Case;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Character extends Entity {
 

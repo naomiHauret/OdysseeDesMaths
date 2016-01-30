@@ -57,7 +57,6 @@ public class DialogScreen implements Screen {
     @Override
     public void render(float delta) {
         // Effaçage du précédent affichage
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(Gdx.graphics.getDeltaTime());

@@ -44,9 +44,4 @@ public class Assets {
     public static final String
             ARCADE = "Arcade_Machine.ogg";
 
-
-    static {
-        manager.load(Assets.class);
-        manager.finishLoading();
-    }
 }

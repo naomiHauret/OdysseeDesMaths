@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable.entities.ennemies;
+package com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies;
 
 
 public class SuperSmart extends Elite {

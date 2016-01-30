@@ -1,15 +1,14 @@
-package com.odysseedesmaths.arriveeremarquable;
-
-import com.badlogic.gdx.Gdx;
+package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.odysseedesmaths.MiniJeu;
-import com.odysseedesmaths.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.arriveeremarquable.entities.Hero;
-import com.odysseedesmaths.arriveeremarquable.entities.ennemies.Enemy;
-import com.odysseedesmaths.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.arriveeremarquable.map.Case;
-import com.odysseedesmaths.arriveeremarquable.map.Terrain;
+import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.minigames.MiniGame;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
+import com.odysseedesmaths.minigames.arriveeremarquable.map.Terrain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ArriveeGame extends MiniJeu {
-	private static ArriveeGame instance = null;
+public class ArriveeRemarquable extends MiniGame {
+	private static ArriveeRemarquable instance = null;
 
 	public static final int TIME_LIMIT = 5;
 	public static final int STOP_SPAWN = 10;
@@ -32,7 +31,19 @@ public class ArriveeGame extends MiniJeu {
 	public Set<Item> items;
 	public Map<Class<? extends Item>, Integer> activeItems;
 
-	public static ArriveeGame get() {
+    public ArriveeRemarquable(OdysseeDesMaths game) {
+        super(game);
+        instance = this;
+
+        // Initialisations
+        init();
+        Enemy.init();
+        Item.init();
+
+        setScreen(new ForetScreen());
+    }
+    
+	public static ArriveeRemarquable get() {
 		return instance;
 	}
 
@@ -46,28 +57,16 @@ public class ArriveeGame extends MiniJeu {
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
     }
 
-	@Override
-	public void create() {
-		super.create();
-		instance = this;
-
-		// Initialisations
-		init();
-		Enemy.init();
-        Item.init();
-
-		setScreen(new ForetScreen());
-	}
-
-	@Override
-	public void render() {
-		super.render();
-		getScreen().render(Gdx.graphics.getDeltaTime());
-	}
-
 	public void playTurn() {
-		// Tour de la horde
-		horde.act();
+		playHorde();
+        playEnemies();
+        trySpawnItem();
+        trySpawnEnemy();
+        updateActiveItems();
+	}
+
+    public void playHorde() {
+        horde.act();
         int front = horde.getFront();
         for (int i = Math.max(front - 2, 0); i <= front; i++) {
             for (int j=0; j < terrain.getHeight(); j++) {
@@ -84,19 +83,21 @@ public class ArriveeGame extends MiniJeu {
             }
         }
         if (front == terrain.getWidth()/2) {
-			horde.setVitesse(Horde.FAST);
-		}
+            horde.setVitesse(Horde.FAST);
+        }
+    }
 
-		// Tour des ennemis
-		List<Enemy> toAct = new ArrayList<Enemy>();
-		toAct.addAll(enemies);
-		while (!toAct.isEmpty()) {
-			Enemy s = toAct.get(0);
-			if (s.isAlive()) s.act();
-			toAct.remove(0);
-		}
+    public void playEnemies() {
+        List<Enemy> toAct = new ArrayList<Enemy>();
+        toAct.addAll(enemies);
+        while (!toAct.isEmpty()) {
+            Enemy s = toAct.get(0);
+            if (s.isAlive()) s.act();
+            toAct.remove(0);
+        }
+    }
 
-        // Spawn d'un item
+    public void trySpawnItem() {
         if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE && hero.getCase().i < terrain.getWidth()-STOP_SPAWN) {
             Item item = Item.make();
             Case spawn;
@@ -111,24 +112,26 @@ public class ArriveeGame extends MiniJeu {
             spawn.setEntity(item);
             items.add(item);
         }
+    }
 
-		// Spawn d'un ennemi
-		if (!Enemy.popFull() && (MathUtils.random() < Enemy.SPAWN_CHANCE) && (hero.getCase().i < terrain.getWidth()-STOP_SPAWN)) {
-			Enemy enemy = Enemy.make();
-			Case spawn;
-			int distance;
-			do {
+    public void trySpawnEnemy() {
+        if (!Enemy.popFull() && (MathUtils.random() < Enemy.SPAWN_CHANCE) && (hero.getCase().i < terrain.getWidth()-STOP_SPAWN)) {
+            Enemy enemy = Enemy.make();
+            Case spawn;
+            int distance;
+            do {
                 int i = MathUtils.random(hero.getCase().i - 1, terrain.getWidth() - 2);
-				int j = MathUtils.random(terrain.getHeight() - 1);
-				spawn = terrain.getCases()[i][j];
-				distance = terrain.heuristic(hero.getCase(), spawn);
-			} while (spawn.isObstacle() || spawn.isTaken() || distance < Enemy.SPAWN_MIN_DISTANCE || distance > Enemy.SPAWN_MAX_DISTANCE);
-			enemy.setCase(spawn);
+                int j = MathUtils.random(terrain.getHeight() - 1);
+                spawn = terrain.getCases()[i][j];
+                distance = terrain.heuristic(hero.getCase(), spawn);
+            } while (spawn.isObstacle() || spawn.isTaken() || distance < Enemy.SPAWN_MIN_DISTANCE || distance > Enemy.SPAWN_MAX_DISTANCE);
+            enemy.setCase(spawn);
             spawn.setEntity(enemy);
-			enemies.add(enemy);
-		}
+            enemies.add(enemy);
+        }
+    }
 
-        // Mise à jour des items actifs
+    public void updateActiveItems() {
         for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
             int newValue = entry.getValue()-1;
             if (newValue <= 0) {
@@ -137,7 +140,7 @@ public class ArriveeGame extends MiniJeu {
                 activeItems.put(entry.getKey(), newValue);
             }
         }
-	}
+    }
 
 	public void destroy(Item aItem) {
         items.remove(aItem);
@@ -157,7 +160,4 @@ public class ArriveeGame extends MiniJeu {
 
 	}
 
-	public void dispose() {
-
-	}
 }

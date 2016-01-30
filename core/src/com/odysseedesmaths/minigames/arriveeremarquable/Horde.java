@@ -1,4 +1,4 @@
-package com.odysseedesmaths.arriveeremarquable;
+package com.odysseedesmaths.minigames.arriveeremarquable;
 
 public class Horde {
 
@@ -30,7 +30,7 @@ public class Horde {
 
     public void act() {
         count++;
-        if ((count%vitesse == 0) && (front < ArriveeGame.get().terrain.getWidth())) {
+        if ((count%vitesse == 0) && (front < ArriveeRemarquable.get().terrain.getWidth())) {
             front++;
         }
     }
