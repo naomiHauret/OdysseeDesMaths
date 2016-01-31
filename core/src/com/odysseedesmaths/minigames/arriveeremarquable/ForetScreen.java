@@ -2,7 +2,6 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,10 +15,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
-import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.MiniGameUI;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart;
@@ -67,24 +64,20 @@ public class ForetScreen implements Screen {
 
         hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
 
-        ui = new MiniGameUI(Hero.PDV_MAX, ArriveeRemarquable.TIME_LIMIT * Timer.ONE_MINUTE, true);
+        ui = new MiniGameUI();
+        ui.addHeroHp(ArriveeRemarquable.get().hero);
+        ui.addTimer(ArriveeRemarquable.get().timer);
+        ui.addPad();
+        ui.build();
+        ui.setListener(new InputEcouteur());
         Gdx.input.setInputProcessor(ui);
-        InputEcouteur ecouteur = new InputEcouteur();
-        ui.getPadUp().addListener(ecouteur);
-        ui.getPadRight().addListener(ecouteur);
-        ui.getPadDown().addListener(ecouteur);
-        ui.getPadLeft().addListener(ecouteur);
-
-        // Camera
-        camera = new OrthographicCamera();
-        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
     }
 
     @Override
     public void show() {
         Musique.setCurrent(Assets.ARCADE);
         Musique.play();
-        ui.getTimer().start();
+        ArriveeRemarquable.get().timer.start();
     }
 
     @Override
@@ -163,8 +156,8 @@ public class ForetScreen implements Screen {
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
         minX = WIDTH/2f;
         minY = HEIGHT/2f;
-        maxX = ArriveeRemarquable.get().terrain.getWidth() * CELL_SIZE - WIDTH/2f;
-        maxY = ArriveeRemarquable.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2f;
+        maxX = ArriveeRemarquable.get().terrain.getWidth() * CELL_SIZE - minX;
+        maxY = ArriveeRemarquable.get().terrain.getHeight() * CELL_SIZE - minY;
         if (posX < minX) posX = minX;
         else if (posX > maxX) posX = maxX;
         if (posY < minY) posY = minY;
@@ -174,17 +167,21 @@ public class ForetScreen implements Screen {
         // Interface utilisateur par dessus le reste
         ui.render();
 
+        if (ArriveeRemarquable.get().timer.isFinished()) {
+            ArriveeRemarquable.get().gameOver();
+        }
+
         camera.update();
     }
 
     @Override
     public void pause() {
-        ui.getTimer().stop();
+        ArriveeRemarquable.get().timer.stop();
     }
 
     @Override
     public void resume() {
-        ui.getTimer().start();
+        ArriveeRemarquable.get().timer.start();
     }
 
     @Override
@@ -253,6 +250,8 @@ public class ForetScreen implements Screen {
                 ArriveeRemarquable.get().hero.moveDown();
             } else if (source == ui.getPadLeft()) {
                 ArriveeRemarquable.get().hero.moveLeft();
+            } else if (source == ui.getPause()) {
+                // TODO
             }
 
             ArriveeRemarquable.get().playTurn();

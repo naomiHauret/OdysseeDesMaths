@@ -2,21 +2,24 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
-import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
+
+import java.util.Map;
 
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
@@ -28,61 +31,45 @@ public class MiniGameUI extends Stage {
     private Table table;
     private Skin skin;
 
-    // Points de vie du héros
-    private int heroHpMax;
+    private boolean useHeroHp = false;
+    private boolean useTimer = false;
+    private boolean usePad = false;
+    private boolean useItems = false;
+
     private Table heroHpGroup;
     private Image heroHp;
 
-    // Timer
-    private Timer timer;
-    private Label timerLabel;
+    private Label timer;
 
-    // Bouton pause
     private Button pause;
 
-    // Pad directionnel
     private Table padGroup;
     private Button padLeft;
     private Button padRight;
     private Button padUp;
     private Button padDown;
 
+    private HorizontalGroup itemsGroup;
+    private Image itemImage;
+    private Label itemCounter;
+
     /**
-     * Initialise une nouvelle interface. Les composants de l'interface dépendent des paramètres
-     * spécifiés.
-     *
-     * @param aHeroHpAmount Le nombre de points de vie du héros à afficher. 0 si aucun affichage.
-     * @param aTimerAmount  Le temps initial du timer du mini-jeu à afficher. 0 si aucun timer.
-     * @param usePad        Vrai si l'interface doit afficher un pad directionnel, faux sinon.
+     * Initialise une nouvelle interface avec les ressources nécessaires.
      */
-    public MiniGameUI(int aHeroHpAmount, int aTimerAmount, boolean usePad) {
+    public MiniGameUI() {
         super();
 
         table = new Table();
         table.setFillParent(true);
         addActor(table);
 
-        // Initialisation du skin
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_ATLAS, TextureAtlas.class));
-
-        // Ajout des composants
-        table.pad(10);
-        if (aHeroHpAmount > 0) {
-            addHeroHp(aHeroHpAmount);
-        }
-        if (aTimerAmount > 0) {
-            addTimer(aTimerAmount);
-        }
-        addPause();
-        table.row();
-        if (usePad) {
-            addPad();
-        }
+        skin.add("timer", new LabelStyle(Assets.TIMER, Color.BLACK));
     }
 
-    public Timer getTimer() {
-        return timer;
+    public Button getPause() {
+        return pause;
     }
 
     public Button getPadLeft() {
@@ -106,93 +93,87 @@ public class MiniGameUI extends Stage {
         draw();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
         skin.dispose();
     }
 
     /**
-     * Ajoute des points de vie pour le héros à l'interface.
-     * Position : En haut à gauche de l'écran.
-     *
-     * @param aHeroHpAmount Le nombre maximum de points de vie
+     * Construit l'interface suivant les composants utilisés.
      */
-    private void addHeroHp(int aHeroHpAmount) {
-        heroHpMax = aHeroHpAmount;
+    public void build() {
+        table.pad(10);
+        if (useHeroHp) {
+            table.add(heroHpGroup).top().left().expand();
+        }
+        if (useTimer) {
+            table.add(timer).padTop(10).padRight(25).top().right().expand();
+        }
+        addPause();
+        table.row();
+        if (usePad) {
+            table.add(padGroup).bottom().left();
+        }
+        if (useItems) {
+            table.add(itemsGroup).bottom();
+        }
+    }
 
-        // Ajout des ressources nécessaires dans le skin
-        skin.add("heroHp", new TextureRegionDrawable(skin.getRegion("coeur")));
-        skin.add("heroEmptyHp", new TextureRegionDrawable(skin.getRegion("coeurVide")));
-
-        // Création et ajout des pv
+    /**
+     * Ajoute des points de vie pour le héros à l'interface.
+     *
+     * @param aHero Le Hero dont les points de vie sont à afficher
+     */
+    public void addHeroHp(final Hero aHero) {
+        useHeroHp = true;
         heroHpGroup = new Table();
         heroHpGroup.addAction(new Action() {
+            @Override
             public boolean act(float delta) {
-                setHeroHp(ArriveeRemarquable.get().hero.getPdv());        // A changer (utilise Arrivee)
+                heroHpGroup.clearChildren();
+
+                for (int i = 0; i < aHero.getPdv(); i++) {
+                    heroHp = new Image(skin.getDrawable("coeur"));
+                    heroHpGroup.add(heroHp).padRight(10);
+                }
+
+                for (int i = 0; i < Hero.PDV_MAX - aHero.getPdv(); i++) {
+                    heroHp = new Image(skin.getDrawable("coeurVide"));
+                    heroHpGroup.add(heroHp).padRight(10);
+                }
+
                 return false;
             }
         });
-
-        table.add(heroHpGroup).top().left().expand();
     }
 
     /**
-     * Met à jour le nombre de points de vie du héros.
+     * Ajoute un timer à l'interface.
      *
-     * @param aHpAmount Le nouveau nombre de points de vie
+     * @param aTimer Le Timer à utiliser
      */
-    private void setHeroHp(int aHpAmount) {
-        heroHpGroup.clearChildren();
-
-        // Création et ajout des pv pleins
-        for (int i = 0; i < aHpAmount; i++) {
-            heroHp = new Image(skin.get("heroHp", TextureRegionDrawable.class));
-            heroHpGroup.add(heroHp).padRight(10);
-        }
-
-        // Création et ajout des pv vides
-        for (int i = 0; i < heroHpMax - aHpAmount; i++) {
-            heroHp = new Image(skin.get("heroEmptyHp", TextureRegionDrawable.class));
-            heroHpGroup.add(heroHp).padRight(10);
-        }
-    }
-
-    /**
-     * Ajoute un timer à l'interface, initialisé avec le temps initial spécifié.
-     * Position : En haut à droite de l'écran.
-     *
-     * @param aTimerAmount Le temps initial du timer
-     */
-    private void addTimer(int aTimerAmount) {
-        timer = new Timer(aTimerAmount);
-
-        // Ajout des ressources nécessaires dans le skin
-        skin.add("timer", new LabelStyle(new BitmapFont(Gdx.files.internal("ui/timer.fnt")), Color.WHITE));
-
-        // Création du timer label
-        timerLabel = new Label(timer.toString(), skin, "timer");
-        timerLabel.addAction(new Action() {
+    public void addTimer(final Timer aTimer) {
+        useTimer = true;
+        timer = new Label(aTimer.toString(), skin, "timer");
+        timer.addAction(new Action() {
+            @Override
             public boolean act(float delta) {
-                timerLabel.setText(timer.toString());
+                timer.setText(aTimer.toString());
                 return false;
             }
         });
-
-        table.add(timerLabel).padTop(10).padRight(25).top().right().expand();
     }
 
     /**
      * Ajoute un bouton pause à l'interface.
-     * Position : En haut à droite de l'écran.
      */
     private void addPause() {
-        // Ajout des ressources nécessaires dans le skin
         ButtonStyle pauseStyle = new ButtonStyle();
-        pauseStyle.up = new TextureRegionDrawable(skin.getRegion("pause"));
-        pauseStyle.down = new TextureRegionDrawable(skin.getRegion("pauseTap"));
+        pauseStyle.up = skin.getDrawable("pause");
+        pauseStyle.down = skin.getDrawable("pauseTap");
         skin.add("pause", pauseStyle);
 
-        // Création du bouton pause
         pause = new Button(skin, "pause");
 
         table.add(pause).top().right();
@@ -201,39 +182,36 @@ public class MiniGameUI extends Stage {
     /**
      * Ajoute un pad directionnel à l'interface, composé de 4 boutons (flèches) vers les 4
      * principales directions : haut, bas, droite et gauche.
-     * Position : En bas à gauche de l'écran.
      */
-    private void addPad() {
-        // Ajout des ressources nécessaires dans le skin
+    public void addPad() {
+        usePad = true;
         ButtonStyle padStyle;
 
         padStyle = new ButtonStyle();
-        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheGauche"));
-        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheGaucheTap"));
+        padStyle.up = skin.getDrawable("flecheGauche");
+        padStyle.down = skin.getDrawable("flecheGaucheTap");
         skin.add("padLeft", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheDroite"));
-        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheDroiteTap"));
+        padStyle.up = skin.getDrawable("flecheDroite");
+        padStyle.down = skin.getDrawable("flecheDroiteTap");
         skin.add("padRight", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheHaut"));
-        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheHautTap"));
+        padStyle.up = skin.getDrawable("flecheHaut");
+        padStyle.down = skin.getDrawable("flecheHautTap");
         skin.add("padUp", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = new TextureRegionDrawable(skin.getRegion("flecheBas"));
-        padStyle.down = new TextureRegionDrawable(skin.getRegion("flecheBasTap"));
+        padStyle.up = skin.getDrawable("flecheBas");
+        padStyle.down = skin.getDrawable("flecheBasTap");
         skin.add("padDown", padStyle);
 
-        // Création des flèches
         padLeft = new Button(skin, "padLeft");
         padRight = new Button(skin, "padRight");
         padUp = new Button(skin, "padUp");
         padDown = new Button(skin, "padDown");
 
-        // Ajout des flèches au pad directionnel
         padGroup = new Table();
         padGroup.add(padUp).colspan(2);
         padGroup.row();
@@ -241,7 +219,47 @@ public class MiniGameUI extends Stage {
         padGroup.add(padRight);
         padGroup.row();
         padGroup.add(padDown).colspan(2);
+    }
 
-        table.add(padGroup).bottom().left().expand();
+    /**
+     * Ajoute des items actifs à l'interface.
+     *
+     * @param itemsSprites Les items possibles et leur Sprite.
+     * @param itemsActives Les items actifs et leur durée restante.
+     * @param <T>          Classe utilisée pour gérer les items.
+     */
+    public <T> void addItems(final Map<T, Sprite> itemsSprites, final Map<T, Integer> itemsActives) {
+        useItems = true;
+        itemsGroup = new HorizontalGroup();
+        itemsGroup.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                itemsGroup.clearChildren();
+
+                for (Map.Entry<T, Integer> entry : itemsActives.entrySet()) {
+                    itemImage = new Image(itemsSprites.get(entry.getKey()));
+                    itemsGroup.addActor(itemImage);
+                    itemCounter = new Label(entry.getValue().toString(), skin, "timer");
+                    itemsGroup.addActor(itemCounter);
+                }
+
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Associe l'InputListener spécifié aux composants pouvant recevoir un input.
+     *
+     * @param aListener L'InputListener à associer
+     */
+    public void setListener(InputListener aListener) {
+        if (usePad) {
+            padLeft.addListener(aListener);
+            padRight.addListener(aListener);
+            padUp.addListener(aListener);
+            padDown.addListener(aListener);
+        }
+        pause.addListener(aListener);
     }
 }

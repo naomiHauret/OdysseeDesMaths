@@ -67,14 +67,14 @@ public abstract class Item extends Entity {
     public static void increasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]++;
         else if (e instanceof Heart) pop[HEART]++;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]++;
+        else if (e instanceof Freeze) pop[FREEZE]++;
         else pop[SUPERFREEZE]++;
     }
 
     public static void decreasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]--;
         else if (e instanceof Heart) pop[HEART]--;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]--;
+        else if (e instanceof Freeze) pop[FREEZE]--;
         else pop[SUPERFREEZE]--;
     }
 
@@ -94,7 +94,7 @@ public abstract class Item extends Entity {
             item = new Heart();
             break;
         case FREEZE:
-            item = new com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze();
+            item = new Freeze();
             break;
         default:
             item = new SuperFreeze();

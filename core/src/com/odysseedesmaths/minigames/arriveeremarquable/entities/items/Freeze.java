@@ -4,6 +4,6 @@ public class Freeze extends Item {
 
     @Override
     public void trigger() {
-
+        // TODO
     }
 }

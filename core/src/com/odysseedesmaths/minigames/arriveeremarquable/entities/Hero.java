@@ -1,6 +1,9 @@
 package com.odysseedesmaths.minigames.arriveeremarquable.entities;
 
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
+import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
 import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public class Hero extends Character {
@@ -30,13 +33,13 @@ public class Hero extends Character {
     public boolean meet(Entity e) {
         boolean continuer = true;
 
-        if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy) {
-            if (ArriveeRemarquable.get().activeItems.get(com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield.class) == null) {
+        if (e instanceof Enemy) {
+            if (ArriveeRemarquable.get().activeItems.get(Shield.class) == null) {
                 decreasePDV();
             }
-            ArriveeRemarquable.get().destroy((com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy)e);
-        } else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item) {
-            ((com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item)e).trigger();
+            ArriveeRemarquable.get().destroy((Enemy)e);
+        } else if (e instanceof Item) {
+            ((Item)e).trigger();
         }
 
         return continuer;

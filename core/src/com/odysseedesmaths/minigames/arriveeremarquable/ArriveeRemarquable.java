@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
@@ -30,6 +31,7 @@ public class ArriveeRemarquable extends MiniGame {
 	public Set<Enemy> deadpool;
 	public Set<Item> items;
 	public Map<Class<? extends Item>, Integer> activeItems;
+    public Timer timer;
 
     public ArriveeRemarquable(OdysseeDesMaths game) {
         super(game);
@@ -55,6 +57,7 @@ public class ArriveeRemarquable extends MiniGame {
         deadpool = new HashSet<Enemy>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
+        timer = new Timer(TIME_LIMIT * Timer.ONE_MINUTE);
     }
 
 	public void playTurn() {
@@ -157,7 +160,7 @@ public class ArriveeRemarquable extends MiniGame {
 
 	@Override
 	public void gameOver() {
-
+        // TODO
 	}
 
 }

@@ -4,6 +4,6 @@ public class SuperFreeze extends Item {
 
     @Override
     public void trigger() {
-
+        // TODO
     }
 }
