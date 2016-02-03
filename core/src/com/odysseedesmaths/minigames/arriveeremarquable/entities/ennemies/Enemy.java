@@ -11,15 +11,14 @@ import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Enemy extends Character {
 
-    private boolean alive;
+    private boolean alive = true;
 
-    public Enemy(Case c) {
-        super(c);
-        alive = true;
+    public Enemy(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
     }
 
-    public Enemy() {
-        this(null);
+    public Enemy(ArriveeRemarquable minigame) {
+        super(minigame);
     }
 
     public boolean isAlive() {
@@ -41,13 +40,13 @@ public abstract class Enemy extends Character {
         boolean continuer = true;
 
         if (e instanceof Hero) {
-            if (ArriveeRemarquable.get().activeItems.get(Shield.class) == null) {
+            if (getMinigame().activeItems.get(Shield.class) == null) {
                 ((Hero) e).decreasePDV();
             }
-            ArriveeRemarquable.get().destroy(this);
+            getMinigame().destroy(this);
             setAlive(false);
         } else if (e instanceof Item) {
-            ArriveeRemarquable.get().destroy((Item)e);
+            getMinigame().destroy((Item)e);
         }
 
         return continuer && isAlive();
@@ -104,21 +103,21 @@ public abstract class Enemy extends Character {
 
     public static void increasePop(Enemy e) {
         if (e instanceof Sticky) pop[STICKY]++;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart) pop[SMART]++;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart) pop[SUPERSMART]++;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed) pop[GREED]++;
+        else if (e instanceof Smart) pop[SMART]++;
+        else if (e instanceof SuperSmart) pop[SUPERSMART]++;
+        else if (e instanceof Greed) pop[GREED]++;
         else pop[LOST]++;
     }
 
     public static void decreasePop(Enemy e) {
         if (e instanceof Sticky) pop[STICKY]--;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart) pop[SMART]--;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart) pop[SUPERSMART]--;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed) pop[GREED]--;
+        else if (e instanceof Smart) pop[SMART]--;
+        else if (e instanceof SuperSmart) pop[SUPERSMART]--;
+        else if (e instanceof Greed) pop[GREED]--;
         else pop[LOST]--;
     }
 
-    public static Enemy make() {
+    public static Enemy make(ArriveeRemarquable minigame) {
         Enemy enemy;
         int num;
 
@@ -128,19 +127,19 @@ public abstract class Enemy extends Character {
 
         switch (num) {
         case STICKY:
-            enemy = new Sticky();
+            enemy = new Sticky(minigame);
             break;
         case SMART:
-            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart();
+            enemy = new Smart(minigame);
             break;
         case SUPERSMART:
-            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart();
+            enemy = new SuperSmart(minigame);
             break;
         case GREED:
-            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed();
+            enemy = new Greed(minigame);
             break;
         default:
-            enemy = new com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Lost();
+            enemy = new Lost(minigame);
             break;
         }
 

@@ -8,9 +8,17 @@ import java.util.LinkedList;
 
 public class Greed extends Elite {
 
+    public Greed(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
+    }
+
+    public Greed(ArriveeRemarquable minigame) {
+        super(minigame);
+    }
+
     @Override
     public void act() {
-        LinkedList<Case> cheminVersHeros = Pathfinding.greedy(ArriveeRemarquable.get().terrain, getCase(), ArriveeRemarquable.get().hero.getCase());
+        LinkedList<Case> cheminVersHeros = Pathfinding.greedy(getMinigame().terrain, getCase(), getMinigame().hero.getCase());
         moveTo(cheminVersHeros.getFirst());
     }
 }

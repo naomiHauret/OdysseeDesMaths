@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
  */
+//TODO: Redimensionner l'UI pour toutes les tailles d'écran
 public class MiniGameUI extends Stage {
 
     private static final int PAD_ARROW_SIZE = 64;

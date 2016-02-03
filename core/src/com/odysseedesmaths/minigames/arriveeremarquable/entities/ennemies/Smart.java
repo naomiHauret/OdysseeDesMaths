@@ -8,9 +8,17 @@ import java.util.LinkedList;
 
 public class Smart extends Elite {
 
+    public Smart(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
+    }
+
+    public Smart(ArriveeRemarquable minigame) {
+        super(minigame);
+    }
+
     @Override
     public void act() {
-        LinkedList<Case> cheminVersHeros = Pathfinding.astar(ArriveeRemarquable.get().terrain, getCase(), ArriveeRemarquable.get().hero.getCase());
+        LinkedList<Case> cheminVersHeros = Pathfinding.astar(getMinigame().terrain, getCase(), getMinigame().hero.getCase());
         moveTo(cheminVersHeros.getFirst());
     }
 }

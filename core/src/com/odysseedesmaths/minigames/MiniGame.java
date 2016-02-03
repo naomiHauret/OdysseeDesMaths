@@ -6,6 +6,9 @@ import com.odysseedesmaths.Timer;
 
 public abstract class MiniGame implements Screen {
 
+    public enum State {RUNNING, PAUSED, GAME_OVER}
+    protected State currentState;
+
     protected OdysseeDesMaths game;
     protected Screen currentScreen;
 
@@ -54,6 +57,18 @@ public abstract class MiniGame implements Screen {
     @Override
     public void dispose() {
         currentScreen.dispose();
+    }
+
+    public State getState() {
+        return currentState;
+    }
+
+    public void setState(State newState) {
+        currentState = newState;
+    }
+
+    public OdysseeDesMaths getGame() {
+        return game;
     }
 
     public abstract void gameOver();

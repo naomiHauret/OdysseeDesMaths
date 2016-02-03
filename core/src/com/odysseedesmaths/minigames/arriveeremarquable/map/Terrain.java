@@ -99,4 +99,23 @@ public class Terrain implements Pathfindable<Case> {
         // Tous les déplacements ont le même coût
         return 1;
     }
+
+    // Vision en ligne
+    public boolean seeEachOther(Case c1, Case c2) {
+        if (c2.i == c1.i) {
+            int i = c1.i;
+            for (int j = Math.min(c2.j, c1.j); j < Math.max(c2.j, c1.j); j++) {
+                if (cases[i][j].isObstacle()) return false;
+            }
+        } else if (c2.j == c1.j) {
+            int j = c1.j;
+            for (int i = Math.min(c2.i, c1.i); i < Math.max(c2.i, c1.i); i++) {
+                if (cases[i][j].isObstacle()) return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
 }

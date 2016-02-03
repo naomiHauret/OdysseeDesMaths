@@ -1,16 +1,19 @@
 package com.odysseedesmaths.minigames.arriveeremarquable.entities;
 
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Entity {
+    private ArriveeRemarquable minigame;
     private Case maCase;
 
-    public Entity(Case c) {
+    public Entity(ArriveeRemarquable minigame, Case c) {
+        this.minigame = minigame;
         this.maCase = c;
     }
 
-    public Entity() {
-        this(null);
+    public Entity(ArriveeRemarquable minigame) {
+        this(minigame, null);
     }
 
     public Case getCase() {
@@ -22,5 +25,9 @@ public abstract class Entity {
             getCase().free();
         }
         maCase = c;
+    }
+
+    public ArriveeRemarquable getMinigame() {
+        return minigame;
     }
 }

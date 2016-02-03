@@ -8,23 +8,22 @@ import java.util.LinkedList;
 
 public class Sticky extends Elite {
 
-    private LinkedList<Case> piste;
+    private LinkedList<Case> piste = new LinkedList<Case>();
 
-    public Sticky(Case c) {
-        super(c);
-        piste = new LinkedList<Case>();
+    public Sticky(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
     }
 
-    public Sticky() {
-        this(null);
+    public Sticky(ArriveeRemarquable minigame) {
+        super(minigame);
     }
 
     @Override
     public void act() {
-        Case cHeros = ArriveeRemarquable.get().hero.getCase();
+        Case cHeros = getMinigame().hero.getCase();
 
-        if (piste.isEmpty() || ArriveeRemarquable.get().terrain.heuristic(getCase(), cHeros) > 10) {
-            piste = Pathfinding.astar(ArriveeRemarquable.get().terrain, getCase(), cHeros);
+        if (piste.isEmpty() || getMinigame().terrain.heuristic(getCase(), cHeros) > 10) {
+            piste = Pathfinding.astar(getMinigame().terrain, getCase(), cHeros);
         } else {
             piste.addLast(cHeros);
         }
