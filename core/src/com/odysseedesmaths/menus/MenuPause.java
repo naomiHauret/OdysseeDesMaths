@@ -13,22 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-public class MenuPause extends Stage {
-    private BitmapFont font = null;
-    private FreeTypeFontGenerator ftfg = null;
-    private FreeTypeFontParameter ftfp = null;
-
+public class MenuPause extends Menu {
     private TextButton retourJeu, recommencer,quitter;
     private TextButtonStyle txtButtonStyle=null;
 
     public MenuPause(){
-        ftfp = new FreeTypeFontParameter();
-        font = new BitmapFont();
+        super(10,new Color(255f,255f,255f,1),"fonts/pixel-life.TTF");
         txtButtonStyle = new TextButton.TextButtonStyle();
-        ftfp.size= Gdx.graphics.getHeight()/ 10;
-        ftfp.color=new Color(255,255,255,1);
-        ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
-        font = ftfg.generateFont(ftfp);
 
         txtButtonStyle.font = font;
 
@@ -42,10 +33,10 @@ public class MenuPause extends Stage {
         tableau.add(retourJeu).width(Gdx.graphics.getWidth() / 3).pad(10);
         tableau.getCell(retourJeu).expand();
         tableau.row();
-        tableau.add(recommencer).width(Gdx.graphics.getWidth() / 3).pad(10);;
+        tableau.add(recommencer).width(Gdx.graphics.getWidth() / 3).pad(10);
         tableau.getCell(recommencer).expand();
         tableau.row();
-        tableau.add(quitter).width(Gdx.graphics.getWidth() / 3).pad(10);;
+        tableau.add(quitter).width(Gdx.graphics.getWidth() / 3).pad(10);
         tableau.getCell(quitter).expand();
 
         addActor(tableau);

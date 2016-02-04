@@ -1,54 +1,29 @@
 package com.odysseedesmaths.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class Menu implements Screen {
-    private ImageButton musique;
-    private ImageButton son;
+public class Menu extends Stage {
+    public ImageButton musique;
+    public ImageButton son;
+    public BitmapFont font = null;
+    public FreeTypeFontGenerator ftfg = null;
+    public FreeTypeFontGenerator.FreeTypeFontParameter ftfp = null;
 
-    public Menu() {
-        Skin skinMusique = new Skin();
-        skinMusique.add("image", Gdx.files.internal("music64.png"));
-        ImageButtonStyle bsMusique = new ImageButton.ImageButtonStyle();
-        bsMusique.imageChecked = skinMusique.getDrawable("image");
-    }
-
-    @Override
-    public void show() {
-        // TODO
-    }
-
-    @Override
-    public void render(float delta) {
-        // TODO
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        // TODO
-    }
-
-    @Override
-    public void pause() {
-        // TODO
-    }
-
-    @Override
-    public void resume() {
-        // TODO
-    }
-
-    @Override
-    public void hide() {
-        // TODO
-    }
-
-    @Override
-    public void dispose() {
-        // TODO
+    public Menu(int fontRatio, Color c, String fontPath) {
+        ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        font = new BitmapFont();
+        ftfp.size= Gdx.graphics.getHeight()/ fontRatio; //the size can be change later
+        ftfp.color=c;
+        ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
+        font = ftfg.generateFont(ftfp);
+        //Skin skinMusique = new Skin();
+        //skinMusique.add("image", Gdx.files.internal("music64.png"));
+        //ImageButtonStyle bsMusique = new ImageButton.ImageButtonStyle();
+        //bsMusique.imageChecked = skinMusique.getDrawable("image");
     }
 }

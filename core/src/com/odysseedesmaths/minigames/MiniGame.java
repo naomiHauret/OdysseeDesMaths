@@ -10,7 +10,7 @@ public abstract class MiniGame implements Screen {
     protected State currentState;
 
     protected OdysseeDesMaths game;
-    protected Screen currentScreen;
+    public Screen currentScreen;
 
     protected String regles; //voir si on garde un String
     protected Timer timer;

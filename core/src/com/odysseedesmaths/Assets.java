@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -20,6 +21,10 @@ public class Assets {
     public static AnnotationAssetManager getManager() {
         return manager;
     }
+
+    public static TextureAtlas UI_GRAPHISM;
+
+    public static TextureRegion menuPause;
 
     @Asset(Texture.class)
     public static final String
@@ -50,5 +55,7 @@ public class Assets {
         parameter.size = 48;
         TIMER = generator.generateFont(parameter);
         generator.dispose();
+        UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
+        menuPause = UI_GRAPHISM.findRegion("default");
     }
 }
