@@ -26,4 +26,6 @@ public class Menu extends Stage {
         //ImageButtonStyle bsMusique = new ImageButton.ImageButtonStyle();
         //bsMusique.imageChecked = skinMusique.getDrawable("image");
     }
+
+    public Menu() {}
 }

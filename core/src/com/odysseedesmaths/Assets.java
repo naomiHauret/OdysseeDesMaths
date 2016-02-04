@@ -41,7 +41,8 @@ public class Assets {
 
     @Asset(TextureAtlas.class)
     public static final String
-            UI_ATLAS = "ui/ui.atlas";
+            UI = "ui/ui.atlas",
+            UI_TEST = "test/uiskin.atlas";
 
     @Asset(Music.class)
     public static final String

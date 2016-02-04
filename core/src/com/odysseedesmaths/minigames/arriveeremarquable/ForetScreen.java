@@ -319,12 +319,4 @@ public class ForetScreen implements Screen {
 
         return sprite;
     }
-
-    public boolean isVisible(Case c) {
-        boolean resW, resH;
-        Case cHeros = minigame.hero.getCase();
-        resW = Math.abs(c.i - cHeros.i) * CELL_SIZE < WIDTH/2;
-        resH = Math.abs(c.j - cHeros.j) * CELL_SIZE < HEIGHT/2;
-        return resW && resH;
-    }
 }

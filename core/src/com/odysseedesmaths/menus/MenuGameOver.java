@@ -3,7 +3,6 @@ package com.odysseedesmaths.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.odysseedesmaths.Assets;
 
-public class MenuGameOver extends Stage {
+public class MenuGameOver extends Menu {
 
     private Table table;
     private Skin skin;
@@ -37,7 +36,7 @@ public class MenuGameOver extends Stage {
         retry = new TextButton("Réessayer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
-        table.add(title).colspan(2).padBottom(Gdx.graphics.getWidth() / 5);
+        table.add(title).colspan(2);
         table.row();
         table.add(retry).padRight(Gdx.graphics.getWidth() / 10);
         table.add(returnMainMenu);

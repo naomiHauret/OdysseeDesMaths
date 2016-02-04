@@ -63,7 +63,7 @@ public class MiniGameUI extends Stage {
         addActor(table);
 
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_ATLAS, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
         skin.add("timer", new LabelStyle(Assets.PIXEL, Color.BLACK));
     }
 

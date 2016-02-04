@@ -1,6 +1,5 @@
 package com.odysseedesmaths.minigames.arriveeremarquable;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.Timer;
