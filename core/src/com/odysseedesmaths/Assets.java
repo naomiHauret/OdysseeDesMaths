@@ -47,13 +47,13 @@ public class Assets {
     public static final String
             ARCADE = "Arcade_Machine.ogg";
 
-    public static final BitmapFont TIMER;
+    public static final BitmapFont PIXEL;
 
     static {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 48;
-        TIMER = generator.generateFont(parameter);
+        parameter.size = Gdx.graphics.getHeight() / 10;
+        PIXEL = generator.generateFont(parameter);
         generator.dispose();
         UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
         menuPause = UI_GRAPHISM.findRegion("default");

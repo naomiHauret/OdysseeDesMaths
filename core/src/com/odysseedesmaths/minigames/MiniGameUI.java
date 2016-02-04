@@ -58,15 +58,13 @@ public class MiniGameUI extends Stage {
      * Initialise une nouvelle interface avec les ressources nécessaires.
      */
     public MiniGameUI() {
-        super();
-
         table = new Table();
         table.setFillParent(true);
         addActor(table);
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_ATLAS, TextureAtlas.class));
-        skin.add("timer", new LabelStyle(Assets.TIMER, Color.BLACK));
+        skin.add("timer", new LabelStyle(Assets.PIXEL, Color.BLACK));
     }
 
     public Button getPause() {

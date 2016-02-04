@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
-import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
@@ -48,6 +48,7 @@ public class ForetScreen implements Screen {
 
     private MiniGameUI ui;
     private MenuPause mpause;
+    private MenuGameOver menuGameOver;
 
     private Sprite heroSprite;
     private Map<Entity, Sprite> entitiesSprites;
@@ -92,8 +93,7 @@ public class ForetScreen implements Screen {
                 } else if (source == ui.getPadLeft()) {
                     minigame.hero.moveLeft();
                 } else if (source == ui.getPause()) {
-                    minigame.setState(MiniGame.State.PAUSED);
-                    minigame.timer.stop();
+                    minigame.pauseGame();
                     Gdx.input.setInputProcessor(mpause);
                     return true;
                 }
@@ -111,11 +111,26 @@ public class ForetScreen implements Screen {
                 Actor source = event.getTarget();
 
                 if (source == mpause.getRetourJeu().getLabel()) {
-                    minigame.setState(MiniGame.State.RUNNING);
-                    minigame.timer.start();
+                    minigame.returnToGame();
                     Gdx.input.setInputProcessor(ui);
                 } else if (source == mpause.getRecommencer().getLabel()) {
-                    minigame.getGame().setScreen(new ArriveeRemarquable(minigame.getGame()));
+                    minigame.restartGame();
+                }
+
+                return true;
+            }
+        });
+
+        menuGameOver = new MenuGameOver();
+        menuGameOver.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuGameOver.getRetry().getLabel()) {
+                    minigame.restartGame();
+                } else if (source == menuGameOver.getReturnMainMenu().getLabel()) {
+                    // TODO
                 }
 
                 return true;
@@ -217,12 +232,19 @@ public class ForetScreen implements Screen {
         // Interface utilisateur par dessus le reste
         ui.render();
 
-        if (minigame.getState() == MiniGame.State.PAUSED) {
-            mpause.draw();
-        }
-
-        if (minigame.timer.isFinished()) {
-            minigame.gameOver();
+        switch (minigame.getState()) {
+            case RUNNING:
+                if (minigame.timer.isFinished()) minigame.gameOver();
+                break;
+            case PAUSED:
+                mpause.draw();
+                break;
+            case GAME_OVER:
+                menuGameOver.render();
+                break;
+            default:
+                // Erreur état du jeu
+                break;
         }
 
         camera.update();
@@ -230,12 +252,14 @@ public class ForetScreen implements Screen {
 
     @Override
     public void pause() {
-        minigame.timer.stop();
+        if (minigame.getState() == MiniGame.State.RUNNING) {
+            minigame.pauseGame();
+        }
     }
 
     @Override
     public void resume() {
-        minigame.timer.start();
+        // Le jeu est en pause
     }
 
     @Override
@@ -246,6 +270,12 @@ public class ForetScreen implements Screen {
     @Override
     public void dispose() {
         ui.dispose();
+        mpause.dispose();
+        menuGameOver.dispose();
+    }
+
+    public void gameOver() {
+        Gdx.input.setInputProcessor(menuGameOver);
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {
