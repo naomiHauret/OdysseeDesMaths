@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -24,6 +25,9 @@ public class DialogScreen implements Screen {
     private static final int WIDTH = 560;
     private static final int HEIGHT = 340;
     private Viewport viewport;
+
+    private OdysseeDesMaths game;
+    private SpriteBatch batch;
 
     private Texture backgroundImage;
 
@@ -45,9 +49,13 @@ public class DialogScreen implements Screen {
     private Button back;
     private Button next;
 
-    public DialogScreen() {
+    private boolean afficher;
+
+    public DialogScreen(OdysseeDesMaths game) {
         viewport = new StretchViewport(WIDTH, HEIGHT);
         stage = new Stage(viewport);
+        this.game = game;
+        batch = game.batcher;
 
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
         skin = new Skin();
@@ -95,6 +103,10 @@ public class DialogScreen implements Screen {
     public void render(float delta) {
         // Effaçage du précédent affichage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(backgroundImage, 0, 0);
+        batch.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();

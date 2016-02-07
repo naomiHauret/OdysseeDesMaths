@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,7 +26,7 @@ import java.util.Map;
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
  */
-//TODO: Redimensionner l'UI pour toutes les tailles d'écran
+// TODO: Redimensionner l'UI pour toutes les tailles d'écran
 public class MiniGameUI extends Stage {
 
     private static final int PAD_ARROW_SIZE = 64;
@@ -32,24 +34,26 @@ public class MiniGameUI extends Stage {
     private Table table;
     private Skin skin;
 
-    private boolean useHeroHp = false;
-    private boolean useTimer = false;
     private boolean usePad = false;
-    private boolean useItems = false;
 
+    private Container<Actor> heroHpContainer;
     private Table heroHpGroup;
     private Image heroHp;
 
+    private Container<Actor> timerContainer;
     private Label timer;
 
+    private Container<Actor> pauseContainer;
     private Button pause;
 
+    private Container<Actor> padContainer;
     private Table padGroup;
     private Button padLeft;
     private Button padRight;
     private Button padUp;
     private Button padDown;
 
+    private Container<Actor> itemsContainer;
     private HorizontalGroup itemsGroup;
     private Image itemImage;
     private Label itemCounter;
@@ -61,10 +65,27 @@ public class MiniGameUI extends Stage {
         table = new Table();
         table.setFillParent(true);
         addActor(table);
+        table.setDebug(true);
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
-        skin.add("timer", new LabelStyle(Assets.PIXEL, Color.BLACK));
+        skin.add("pixel", new LabelStyle(Assets.PIXEL, Color.BLACK));
+
+        heroHpContainer = new Container<Actor>();
+        timerContainer = new Container<Actor>();
+        pauseContainer = new Container<Actor>();
+        padContainer = new Container<Actor>();
+        itemsContainer = new Container<Actor>();
+
+        table.pad(10);
+        table.add(heroHpContainer).top().left().expand();
+        table.add(timerContainer).padTop(10).padRight(25).top().right().expand();
+        table.add(pauseContainer).top().right();
+        table.row();
+        table.add(padContainer).bottom().left();
+        table.add(itemsContainer).bottom();
+
+        addPause();
     }
 
     public Button getPause() {
@@ -99,33 +120,11 @@ public class MiniGameUI extends Stage {
     }
 
     /**
-     * Construit l'interface suivant les composants utilisés.
-     */
-    public void build() {
-        table.pad(10);
-        if (useHeroHp) {
-            table.add(heroHpGroup).top().left().expand();
-        }
-        if (useTimer) {
-            table.add(timer).padTop(10).padRight(25).top().right().expand();
-        }
-        addPause();
-        table.row();
-        if (usePad) {
-            table.add(padGroup).bottom().left();
-        }
-        if (useItems) {
-            table.add(itemsGroup).bottom();
-        }
-    }
-
-    /**
      * Ajoute des points de vie pour le héros à l'interface.
      *
      * @param aHero Le Hero dont les points de vie sont à afficher
      */
     public void addHeroHp(final Hero aHero) {
-        useHeroHp = true;
         heroHpGroup = new Table();
         heroHpGroup.addAction(new Action() {
             @Override
@@ -145,6 +144,8 @@ public class MiniGameUI extends Stage {
                 return false;
             }
         });
+
+        heroHpContainer.setActor(heroHpGroup);
     }
 
     /**
@@ -153,8 +154,7 @@ public class MiniGameUI extends Stage {
      * @param aTimer Le Timer à utiliser
      */
     public void addTimer(final Timer aTimer) {
-        useTimer = true;
-        timer = new Label(aTimer.toString(), skin, "timer");
+        timer = new Label(aTimer.toString(), skin, "pixel");
         timer.addAction(new Action() {
             @Override
             public boolean act(float delta) {
@@ -162,6 +162,8 @@ public class MiniGameUI extends Stage {
                 return false;
             }
         });
+
+        timerContainer.setActor(timer);
     }
 
     /**
@@ -175,7 +177,7 @@ public class MiniGameUI extends Stage {
 
         pause = new Button(skin, "pause");
 
-        table.add(pause).top().right();
+        pauseContainer.setActor(pause);
     }
 
     /**
@@ -218,33 +220,34 @@ public class MiniGameUI extends Stage {
         padGroup.add(padRight);
         padGroup.row();
         padGroup.add(padDown).colspan(2);
+
+        padContainer.setActor(padGroup);
     }
 
     /**
      * Ajoute des items actifs à l'interface.
      *
-     * @param itemsSprites Les items possibles et leur Sprite.
-     * @param itemsActives Les items actifs et leur durée restante.
-     * @param <T>          Classe utilisée pour gérer les items.
+     * @param activeItems Map contenant les sprites des items ainsi que leur compteur.
      */
-    public <T> void addItems(final Map<T, Sprite> itemsSprites, final Map<T, Integer> itemsActives) {
-        useItems = true;
+    public void addItems(final Map<Sprite, Integer> activeItems) {
         itemsGroup = new HorizontalGroup();
         itemsGroup.addAction(new Action() {
             @Override
             public boolean act(float delta) {
                 itemsGroup.clearChildren();
 
-                for (Map.Entry<T, Integer> entry : itemsActives.entrySet()) {
-                    itemImage = new Image(itemsSprites.get(entry.getKey()));
+                for (Map.Entry<Sprite, Integer> entry : activeItems.entrySet()) {
+                    itemImage = new Image(entry.getKey());
                     itemsGroup.addActor(itemImage);
-                    itemCounter = new Label(entry.getValue().toString(), skin, "timer");
+                    itemCounter = new Label(entry.getValue().toString(), skin, "pixel");
                     itemsGroup.addActor(itemCounter);
                 }
 
                 return false;
             }
         });
+
+        itemsContainer.setActor(itemsGroup);
     }
 
     /**
