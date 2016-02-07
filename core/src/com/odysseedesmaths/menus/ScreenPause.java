@@ -40,9 +40,9 @@ public class ScreenPause implements ApplicationListener{
         recommencer = new TextButton("Recommencer",txtButtonStyle);
         quitter = new TextButton("Quitter",txtButtonStyle);
 
+        // configuration du tableau
         Table tableau = new Table();
         tableau.setFillParent(true);
-        //tableau.row().height(Gdx.graphics.getHeight() / 3);
         tableau.add(retourJeu).width(Gdx.graphics.getWidth() / 3).pad(10);
         tableau.getCell(retourJeu).expand();
         tableau.row();

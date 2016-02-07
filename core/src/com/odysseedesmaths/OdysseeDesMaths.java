@@ -10,7 +10,7 @@ public class OdysseeDesMaths extends Game {
         Assets.getManager().load(Assets.class);
         Assets.getManager().finishLoading();
 
-        setScreen(new ArriveeRemarquable(this));
+        setScreen(new ModeSceneScreen());
     }
 
 }
