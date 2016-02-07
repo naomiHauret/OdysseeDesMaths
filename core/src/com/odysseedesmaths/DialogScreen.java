@@ -3,6 +3,7 @@ package com.odysseedesmaths;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -59,10 +60,9 @@ public class DialogScreen implements Screen {
         stage.addActor(table);
     }
 
-
     @Override
     public void show() {
-        stage.show();
+
     }
 
     @Override
@@ -70,7 +70,7 @@ public class DialogScreen implements Screen {
         // Effaçage du précédent affichage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        font.draw(batch,consigne,10,200);
+        //font.draw(batch,consigne,10,200);
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -82,16 +82,19 @@ public class DialogScreen implements Screen {
     }
 
     @Override
-    public void pause() {   stage.pause();  }
+    public void pause() {
 
-    @Override
-    public void resume() {
-        stage.resume();
-        skin.resume();
     }
 
     @Override
-    public void hide() {    stage.hide();   }
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
 
     @Override
     public void dispose() {

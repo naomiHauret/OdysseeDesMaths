@@ -1,22 +1,18 @@
 package com.odysseedesmaths;
 
-/*
-	Classe abstraite permettant de faire apparaître les consignes pour les mini-jeux.
-	Le mini-jeu doit être en fond avec une sorte de fenêtre comme pour un type de menu apparaissant par-dessus le jeu avec les consignes.
-	Le mini-jeu ne doit pas encore se lancer. Il se lance une fois que le joueur en a finit avec les consignes.
-*/
-
-/*
-	Chacune des consignes des mini-jeux va hériter des méthodes au sein des différents mini-jeux.
-*/
-
-
-public class Consignes extends DialogScreen {
+/**
+ * Classe abstraite permettant de faire apparaitre les consignes pour les mini-jeux.
+ * Le mini-jeu doit Ãªtre en fond avec une sorte de fenÃªtre comme pour un type de menu apparaissant par-dessus le jeu avec les consignes.
+ * Le mini-jeu ne doit pas encore se lancer. Il se lance une fois que le joueur en a finit avec les consignes.
+ *
+ * Chacune des consignes des mini-jeux va hÃ©riter des mÃ©thodes au sein des diffÃ©rents mini-jeux.
+ */
+public class Consignes {
 
     private String consigne;
 
-    public Consignes(){
-        super();
+    public Consignes() {
+
     }
 
     public void setConsigne(String regle) { this.consigne = regle; }

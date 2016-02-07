@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectModuleManager">
-    <modules />
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/OdysseeDesMaths.iml" filepath="$PROJECT_DIR$/OdysseeDesMaths.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+    </modules>
   </component>
 </project>

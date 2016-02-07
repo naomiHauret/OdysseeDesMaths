@@ -1,22 +1,22 @@
-package com.odysseedesmaths;
+package com.odysseedesmaths.minigames.arriveeremarquable;
 
-// Consignes pour le jeu "Arrivée Remarquable"
+import com.odysseedesmaths.DialogScreen;
 
-public class ConsigneAR extends DialogScreen{
+/**
+ * Consignes pour le jeu "ArrivÃ©e Remarquable"
+ */
+public class ConsigneAR {
 
     public String consigne;
 
-    public ConsigneAR (){
-        super();
-        consigne = "Ah! Je crois que j'étais censé te dire quelque chose... Ah oui! " +
-                "Écoutes moi bien, il faut absolument que ces expressions ne t'attrapent pas! " +
-                "Cours à travers le labyrinthe pour leur échapper. " +
-                "Utilise les flèches pour te déplacer et surtout, ne laisse personne t'approcher! " +
+    public ConsigneAR () {
+        consigne = "Ah! Je crois que j'Ã©tais censÃ© te dire quelque chose... Ah oui! " +
+                "Ã©coutes moi bien, il faut absolument que ces expressions ne t'attrapent pas! " +
+                "Cours Ã  travers le labyrinthe pour leur Ã©chapper. " +
+                "Utilise les flÃ¨ches pour te dÃ©placer et surtout, ne laisse personne t'approcher! " +
                 "Si tu vois un objet par terre, " +
-                "tu peux le prendre mais je garantis pas le résultat... " +
+                "tu peux le prendre mais je garantis pas le rÃ©sultat... " +
                 "Et j'ai entendu dire que les gens par ici ne s'aimaient pas trop, " +
-                "tu pourrais en profiter... Aller je file, on se revoit de l'autre côté!";
+                "tu pourrais en profiter... Aller je file, on se revoit de l'autre cÃ´tÃ©!";
     }
-
-
 }

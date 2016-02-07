@@ -27,7 +27,6 @@ import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Sticky
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
-import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -77,7 +76,6 @@ public class ForetScreen implements Screen {
         ui.addHeroHp(minigame.hero);
         ui.addTimer(minigame.timer);
         ui.addPad();
-        ui.build();
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
             @Override
@@ -254,6 +252,7 @@ public class ForetScreen implements Screen {
     public void pause() {
         if (minigame.getState() == MiniGame.State.RUNNING) {
             minigame.pauseGame();
+            Gdx.input.setInputProcessor(mpause);
         }
     }
 
