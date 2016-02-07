@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -18,9 +19,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class DialogScreen implements Screen {
 
+    private OdysseeDesMaths game;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
     private Viewport viewport;
+
+    private BitmapFont font;
+    private SpriteBatch batch;
 
     private Stage stage;
     private Skin skin;
@@ -36,9 +41,14 @@ public class DialogScreen implements Screen {
     private Button back;
     private Button next;
 
-    public DialogScreen() {
+    private boolean afficher;
+
+    public DialogScreen(OdysseeDesMaths game) {
         viewport = new StretchViewport(WIDTH, HEIGHT);
         stage = new Stage(viewport);
+        batch = new SpriteBatch();
+
+        this.game = game;
 
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
         skin = new Skin();
@@ -49,16 +59,19 @@ public class DialogScreen implements Screen {
         stage.addActor(table);
     }
 
+
     @Override
     public void show() {
-
+        stage.show();
     }
 
     @Override
     public void render(float delta) {
         // Effaçage du précédent affichage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        batch.begin();
+        font.draw(batch,consigne,10,200);
+        batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
@@ -69,19 +82,16 @@ public class DialogScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {   stage.pause();  }
 
     @Override
     public void resume() {
-
+        stage.resume();
+        skin.resume();
     }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {    stage.hide();   }
 
     @Override
     public void dispose() {
