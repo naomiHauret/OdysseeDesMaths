@@ -9,11 +9,14 @@ import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 public class Hero extends Character {
     public static final int PDV_MAX = 5;
 
-    private int pdv;
+    private int pdv = PDV_MAX;
 
-    public Hero(Case c) {
-        super(c);
-        pdv = PDV_MAX;
+    public Hero(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
+    }
+
+    public Hero(ArriveeRemarquable minigame) {
+        super(minigame);
     }
 
     public int getPdv() {
@@ -26,7 +29,7 @@ public class Hero extends Character {
 
     public void decreasePDV() {
         pdv--;
-        if (pdv <= 0) ArriveeRemarquable.get().gameOver();
+        if (pdv <= 0) getMinigame().gameOver();
     }
 
     @Override
@@ -34,10 +37,10 @@ public class Hero extends Character {
         boolean continuer = true;
 
         if (e instanceof Enemy) {
-            if (ArriveeRemarquable.get().activeItems.get(Shield.class) == null) {
+            if (getMinigame().activeItems.get(Shield.class) == null) {
                 decreasePDV();
             }
-            ArriveeRemarquable.get().destroy((Enemy)e);
+            getMinigame().destroy((Enemy)e);
         } else if (e instanceof Item) {
             ((Item)e).trigger();
         }
@@ -46,7 +49,7 @@ public class Hero extends Character {
     }
 
     private void move(int di, int dj) {
-        Case cible = ArriveeRemarquable.get().terrain.getCases()[getCase().i + di][getCase().j + dj];
+        Case cible = getMinigame().terrain.getCases()[getCase().i + di][getCase().j + dj];
         if (!cible.isObstacle()) moveTo(cible);
     }
 

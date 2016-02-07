@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -21,6 +22,10 @@ public class Assets {
         return manager;
     }
 
+    public static TextureAtlas UI_GRAPHISM;
+
+    public static TextureRegion menuPause;
+
     @Asset(Texture.class)
     public static final String
             HERO = "heros.png",
@@ -36,19 +41,22 @@ public class Assets {
 
     @Asset(TextureAtlas.class)
     public static final String
-            UI_ATLAS = "ui/ui.atlas";
+            UI = "ui/ui.atlas",
+            UI_TEST = "test/uiskin.atlas";
 
     @Asset(Music.class)
     public static final String
             ARCADE = "Arcade_Machine.ogg";
 
-    public static final BitmapFont TIMER;
+    public static final BitmapFont PIXEL;
 
     static {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 48;
-        TIMER = generator.generateFont(parameter);
+        parameter.size = Gdx.graphics.getHeight() / 10;
+        PIXEL = generator.generateFont(parameter);
         generator.dispose();
+        UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
+        menuPause = UI_GRAPHISM.findRegion("default");
     }
 }

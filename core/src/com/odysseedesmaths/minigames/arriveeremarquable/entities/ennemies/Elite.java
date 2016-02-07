@@ -5,12 +5,12 @@ import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Elite extends Enemy {
 
-    public Elite(Case c) {
-        super(c);
+    public Elite(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
     }
 
-    public Elite() {
-        this(null);
+    public Elite(ArriveeRemarquable minigame) {
+        super(minigame);
     }
 
     @Override
@@ -18,10 +18,10 @@ public abstract class Elite extends Enemy {
         boolean continuer = super.meet(e);
 
         if (e instanceof Enemy) {
-            ArriveeRemarquable.get().destroy((Enemy) e);
+            getMinigame().destroy((Enemy) e);
             ((Enemy) e).setAlive(false);
             if (e instanceof Elite) {
-                ArriveeRemarquable.get().destroy(this);
+                getMinigame().destroy(this);
                 setAlive(false);
             }
         }

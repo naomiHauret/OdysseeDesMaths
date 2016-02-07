@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class ArriveeRemarquable extends MiniGame {
-	private static ArriveeRemarquable instance = null;
 
 	public static final int TIME_LIMIT = 5;
 	public static final int STOP_SPAWN = 10;
@@ -35,29 +34,22 @@ public class ArriveeRemarquable extends MiniGame {
 
     public ArriveeRemarquable(OdysseeDesMaths game) {
         super(game);
-        instance = this;
-
-        // Initialisations
         init();
-        Enemy.init();
-        Item.init();
-
-        setScreen(new ForetScreen());
+        setScreen(new ForetScreen(this));
     }
-    
-	public static ArriveeRemarquable get() {
-		return instance;
-	}
 
 	public void init() {
 		terrain = new Terrain();
-		horde = new Horde(Horde.NORMAL);
-		hero = new Hero(terrain.getDepart());
+		horde = new Horde(this, Horde.NORMAL);
+		hero = new Hero(this, terrain.getDepart());
 		enemies = new HashSet<Enemy>();
         deadpool = new HashSet<Enemy>();
 		items = new HashSet<Item>();
 		activeItems = new HashMap<Class<? extends Item>, Integer>();
         timer = new Timer(TIME_LIMIT * Timer.ONE_MINUTE);
+        Enemy.init();
+        Item.init();
+        setState(State.RUNNING);
     }
 
 	public void playTurn() {
@@ -68,7 +60,40 @@ public class ArriveeRemarquable extends MiniGame {
         updateActiveItems();
 	}
 
-    public void playHorde() {
+    public void pauseGame() {
+        setState(State.PAUSED);
+        timer.stop();
+    }
+
+    public void returnToGame() {
+        setState(State.RUNNING);
+        timer.start();
+    }
+
+    public void restartGame() {
+        getGame().setScreen(new ArriveeRemarquable(getGame()));
+    }
+
+    public void gameOver() {
+        setState(State.GAME_OVER);
+        timer.stop();
+        ((ForetScreen)currentScreen).gameOver();
+    }
+
+    public void destroy(Item aItem) {
+        items.remove(aItem);
+        aItem.getCase().free();
+        Item.decreasePop(aItem);
+    }
+
+    public void destroy(Enemy aEnemy) {
+        enemies.remove(aEnemy);
+        aEnemy.getCase().free();
+        Enemy.decreasePop(aEnemy);
+        deadpool.add(aEnemy);
+    }
+
+    private void playHorde() {
         horde.act();
         int front = horde.getFront();
         for (int i = Math.max(front - 2, 0); i <= front; i++) {
@@ -90,7 +115,7 @@ public class ArriveeRemarquable extends MiniGame {
         }
     }
 
-    public void playEnemies() {
+    private void playEnemies() {
         List<Enemy> toAct = new ArrayList<Enemy>();
         toAct.addAll(enemies);
         while (!toAct.isEmpty()) {
@@ -100,9 +125,9 @@ public class ArriveeRemarquable extends MiniGame {
         }
     }
 
-    public void trySpawnItem() {
+    private void trySpawnItem() {
         if (!Item.popFull() && MathUtils.random() < Item.SPAWN_CHANCE && hero.getCase().i < terrain.getWidth()-STOP_SPAWN) {
-            Item item = Item.make();
+            Item item = Item.make(this);
             Case spawn;
             int distance;
             do {
@@ -117,9 +142,9 @@ public class ArriveeRemarquable extends MiniGame {
         }
     }
 
-    public void trySpawnEnemy() {
+    private void trySpawnEnemy() {
         if (!Enemy.popFull() && (MathUtils.random() < Enemy.SPAWN_CHANCE) && (hero.getCase().i < terrain.getWidth()-STOP_SPAWN)) {
-            Enemy enemy = Enemy.make();
+            Enemy enemy = Enemy.make(this);
             Case spawn;
             int distance;
             do {
@@ -134,7 +159,7 @@ public class ArriveeRemarquable extends MiniGame {
         }
     }
 
-    public void updateActiveItems() {
+    private void updateActiveItems() {
         for (Map.Entry<Class<? extends Item>, Integer> entry : activeItems.entrySet()) {
             int newValue = entry.getValue()-1;
             if (newValue <= 0) {
@@ -144,23 +169,4 @@ public class ArriveeRemarquable extends MiniGame {
             }
         }
     }
-
-	public void destroy(Item aItem) {
-        items.remove(aItem);
-		aItem.getCase().free();
-        Item.decreasePop(aItem);
-	}
-
-	public void destroy(Enemy aEnemy) {
-		enemies.remove(aEnemy);
-		aEnemy.getCase().free();
-		Enemy.decreasePop(aEnemy);
-        deadpool.add(aEnemy);
-	}
-
-	@Override
-	public void gameOver() {
-        // TODO
-	}
-
 }

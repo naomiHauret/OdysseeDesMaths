@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="coffeePlumbingTexture" tilewidth="64" tileheight="64">
+  <image source="textures/coffeePlumbingTexture.png" trans="ff00ff" width="512" height="128"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztUe0KgCAMNLXINOn9n7ZJG6zlsB/5Jzw4POZuH2pMPyTgDFyAO9MTcKvktWAV3brrWa/sQ3vlj+dzTEdzvdubXho8nglr8X9wLJ6f1hsoL6BeRR3qZUVMgxPaMi/NHLEfj2nwQhfvgTPTydnat/jp3Wt+IuWEepmBgd/hBK9ZAdE=
+  </data>
+ </layer>
+ <layer name="Calque 2" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg6gH2AzKalveSCweCmweAGcgE13D6U/T8KRgE1AADdgAAy
+  </data>
+ </layer>
+</map>

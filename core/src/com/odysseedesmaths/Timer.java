@@ -77,8 +77,7 @@ public class Timer {
                 this.delayForOneSecond = 1000 * 3;
                 break;
             default:
-                // Étant donné que le type Speed est une énumération et que tous les cas sont
-                // traités, on ne devrait jamais rentré dans ce default.
+                // Erreur vitesse
                 break;
         }
         if (taskScheduler != null) {
