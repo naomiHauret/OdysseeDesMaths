@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dialogue>
+	<ecran>
+		<backgroundimg></backgroundimg>
+		<char1></char1>
+		<char2></char2>
+		<middleimg></middleimg>
+		<text></text>
+	</ecran>
+</dialogue>

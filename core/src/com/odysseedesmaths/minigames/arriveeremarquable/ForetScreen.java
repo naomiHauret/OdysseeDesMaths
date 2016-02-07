@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -223,11 +224,7 @@ public class ForetScreen implements Screen {
         minY = HEIGHT/2f;
         maxX = minigame.terrain.getWidth() * CELL_SIZE - minX;
         maxY = minigame.terrain.getHeight() * CELL_SIZE - minY;
-        if (posX < minX) posX = minX;
-        else if (posX > maxX) posX = maxX;
-        if (posY < minY) posY = minY;
-        else if (posY > maxY) posY = maxY;
-        camera.position.set(posX, posY, 0);
+        camera.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
 
         // Interface utilisateur par dessus le reste
         ui.render();

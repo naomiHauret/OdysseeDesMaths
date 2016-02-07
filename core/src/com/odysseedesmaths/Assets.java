@@ -29,15 +29,7 @@ public class Assets {
     @Asset(Texture.class)
     public static final String
             HERO = "heros.png",
-            HEART = "coeur.png",
-            ARR_HORDE = "horde.png",
-            ARR_S_EGAL = "signeEgal.png",
-            ARR_S_ADD = "signeAdd.png",
-            ARR_S_SOUST = "signeSoust.png",
-            ARR_S_MULT = "signeMult.png",
-            ARR_S_DIV = "signeDiv.png",
-            ARR_BUFF_SHIELD = "bouclier.png",
-            ARR_SHIELD = "itemBouclier.png";
+            HEART = "coeur.png";
 
     @Asset(TextureAtlas.class)
     public static final String
@@ -59,4 +51,27 @@ public class Assets {
         UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
         menuPause = UI_GRAPHISM.findRegion("default");
     }
+
+
+    /**********************
+     * ASSETS SPECIFIQUES *
+     **********************/
+
+    // Arrivée remarquable
+    @Asset(Texture.class)
+    public static final String
+            ARR_HORDE = "horde.png",
+            ARR_S_EGAL = "signeEgal.png",
+            ARR_S_ADD = "signeAdd.png",
+            ARR_S_SOUST = "signeSoust.png",
+            ARR_S_MULT = "signeMult.png",
+            ARR_S_DIV = "signeDiv.png",
+            ARR_BUFF_SHIELD = "bouclier.png",
+            ARR_SHIELD = "itemBouclier.png";
+
+    // Plongée au coeur du problème
+    // Accrobranche
+    // Coffee Plumbing
+    // Mauvais tournant
+    // Tower's destruction
 }

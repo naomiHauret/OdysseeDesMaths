@@ -32,7 +32,7 @@ public class Horde {
 
     public void act() {
         count++;
-        if ((count%vitesse == 0) && (front < minigame.terrain.getWidth())) {
+        if ((count%vitesse == 0) && (front < minigame.terrain.getWidth()-1)) {
             front++;
         }
     }
