@@ -1,13 +1,11 @@
 package com.odysseedesmaths.minigames.arriveeremarquable;
 
-import com.odysseedesmaths.DialogScreen;
-
 /**
  * Consignes pour le jeu "Arrivée Remarquable"
  */
 public class ConsigneAR {
 
-    public String consigne;
+    private String consigne;
 
     public ConsigneAR () {
         consigne = "Ah! Je crois que j'étais censé te dire quelque chose... Ah oui! " +

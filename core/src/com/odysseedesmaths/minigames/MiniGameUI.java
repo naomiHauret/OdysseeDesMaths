@@ -34,17 +34,27 @@ public class MiniGameUI extends Stage {
     private Table table;
     private Skin skin;
 
+    private Table north;
+    private Table west;
+    private Container center;
+    private Table east;
+    private Table south;
+
     private boolean usePad = false;
 
     private Container<Actor> heroHpContainer;
     private Table heroHpGroup;
     private Image heroHp;
 
+    private Container<Actor> bossHpContainer;
+
     private Container<Actor> timerContainer;
     private Label timer;
 
     private Container<Actor> pauseContainer;
     private Button pause;
+
+    private Container<Actor> oxygenContainer;
 
     private Container<Actor> padContainer;
     private Table padGroup;
@@ -58,6 +68,8 @@ public class MiniGameUI extends Stage {
     private Image itemImage;
     private Label itemCounter;
 
+    private Container<Actor> actionsContainer;
+
     /**
      * Initialise une nouvelle interface avec les ressources nécessaires.
      */
@@ -65,25 +77,43 @@ public class MiniGameUI extends Stage {
         table = new Table();
         table.setFillParent(true);
         addActor(table);
-        table.setDebug(true);
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
         skin.add("pixel", new LabelStyle(Assets.PIXEL, Color.BLACK));
 
-        heroHpContainer = new Container<Actor>();
-        timerContainer = new Container<Actor>();
-        pauseContainer = new Container<Actor>();
-        padContainer = new Container<Actor>();
-        itemsContainer = new Container<Actor>();
+        north = new Table();
+        west = new Table();
+        center = new Container();
+        east = new Table();
+        south = new Table();
 
         table.pad(10);
-        table.add(heroHpContainer).top().left().expand();
-        table.add(timerContainer).padTop(10).padRight(25).top().right().expand();
-        table.add(pauseContainer).top().right();
+        table.add(north).colspan(3).fill();
         table.row();
-        table.add(padContainer).bottom().left();
-        table.add(itemsContainer).bottom();
+        table.add(west).fill();
+        table.add(center).expand();
+        table.add(east).fill();
+        table.row();
+        table.add(south).colspan(3).fill();
+
+        heroHpContainer = new Container<Actor>();
+        bossHpContainer = new Container<Actor>();
+        timerContainer = new Container<Actor>();
+        pauseContainer = new Container<Actor>();
+        oxygenContainer = new Container<Actor>();
+        padContainer = new Container<Actor>();
+        itemsContainer = new Container<Actor>();
+        actionsContainer = new Container<Actor>();
+
+        north.add(heroHpContainer).top().left();
+        north.add(bossHpContainer).top().expandX();
+        north.add(timerContainer).top().right().padRight(10);
+        north.add(pauseContainer).top();
+        west.add(oxygenContainer).top().left().expandY();
+        south.add(padContainer).bottom().left();
+        south.add(itemsContainer).bottom().expandX();
+        south.add(actionsContainer).bottom().right();
 
         addPause();
     }
@@ -164,20 +194,6 @@ public class MiniGameUI extends Stage {
         });
 
         timerContainer.setActor(timer);
-    }
-
-    /**
-     * Ajoute un bouton pause à l'interface.
-     */
-    private void addPause() {
-        ButtonStyle pauseStyle = new ButtonStyle();
-        pauseStyle.up = skin.getDrawable("pause");
-        pauseStyle.down = skin.getDrawable("pauseTap");
-        skin.add("pause", pauseStyle);
-
-        pause = new Button(skin, "pause");
-
-        pauseContainer.setActor(pause);
     }
 
     /**
@@ -263,5 +279,19 @@ public class MiniGameUI extends Stage {
             padDown.addListener(aListener);
         }
         pause.addListener(aListener);
+    }
+
+    /**
+     * Ajoute un bouton pause à l'interface.
+     */
+    private void addPause() {
+        ButtonStyle pauseStyle = new ButtonStyle();
+        pauseStyle.up = skin.getDrawable("pause");
+        pauseStyle.down = skin.getDrawable("pauseTap");
+        skin.add("pause", pauseStyle);
+
+        pause = new Button(skin, "pause");
+
+        pauseContainer.setActor(pause);
     }
 }

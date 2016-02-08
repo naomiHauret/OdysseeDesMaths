@@ -22,9 +22,8 @@ public class Assets {
         return manager;
     }
 
-    public static TextureAtlas UI_GRAPHISM;
-
-    public static TextureRegion menuPause;
+    public static final TextureAtlas UI_GRAPHISM;
+    public static final TextureRegion menuPause;
 
     @Asset(Texture.class)
     public static final String

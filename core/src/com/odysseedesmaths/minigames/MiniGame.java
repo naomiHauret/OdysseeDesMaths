@@ -2,7 +2,6 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
-import com.odysseedesmaths.Timer;
 
 public abstract class MiniGame implements Screen {
 
@@ -11,8 +10,6 @@ public abstract class MiniGame implements Screen {
 
     protected OdysseeDesMaths game;
     public Screen currentScreen;
-
-    protected String regles; //voir si on garde un String
 
     public MiniGame(OdysseeDesMaths game) {
         this.game = game;
