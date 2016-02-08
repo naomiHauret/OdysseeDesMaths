@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OdysseeDesMaths.iml" filepath="$PROJECT_DIR$/OdysseeDesMaths.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OdysseeDesMaths2.iml" filepath="$PROJECT_DIR$/OdysseeDesMaths2.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
     </modules>
