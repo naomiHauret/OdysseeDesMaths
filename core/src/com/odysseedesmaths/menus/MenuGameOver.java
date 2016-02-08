@@ -2,6 +2,7 @@ package com.odysseedesmaths.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -23,20 +24,26 @@ public class MenuGameOver extends Menu {
     public MenuGameOver() {
         table = new Table();
         table.setFillParent(true);
+        table.setY(Gdx.graphics.getHeight() / 12);
         addActor(table);
 
         skin = new Skin();
-        LabelStyle titleStyle = new LabelStyle(Assets.PIXEL, Color.WHITE);
+        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+
+        LabelStyle titleStyle = new LabelStyle(Assets.GAME_OVER, Color.WHITE);
         skin.add("title", titleStyle);
+
         TextButtonStyle buttonStyle = new TextButtonStyle();
         buttonStyle.font = Assets.PIXEL;
+        buttonStyle.up = skin.getDrawable("default-round");
+        buttonStyle.down = skin.getDrawable("default-round-down");
         skin.add("button", buttonStyle);
 
         title = new Label("GAME OVER", skin, "title");
         retry = new TextButton("Réessayer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
-        table.add(title).colspan(2);
+        table.add(title).colspan(2).padBottom(Gdx.graphics.getHeight() / 20);
         table.row();
         table.add(retry).padRight(Gdx.graphics.getWidth() / 10);
         table.add(returnMainMenu);

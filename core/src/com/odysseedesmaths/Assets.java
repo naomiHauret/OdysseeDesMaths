@@ -40,13 +40,23 @@ public class Assets {
             ARCADE = "Arcade_Machine.ogg";
 
     public static final BitmapFont PIXEL;
+    public static final BitmapFont GAME_OVER;
+    public static final BitmapFont TIMER;
+    public static final BitmapFont ITEM_COUNTER;
 
     static {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+
         parameter.size = Gdx.graphics.getHeight() / 10;
         PIXEL = generator.generateFont(parameter);
+        TIMER = generator.generateFont(parameter);
+        ITEM_COUNTER = generator.generateFont(parameter);
+
+        parameter.size = Gdx.graphics.getHeight() / 5;
+        GAME_OVER = generator.generateFont(parameter);
         generator.dispose();
+
         UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
         menuPause = UI_GRAPHISM.findRegion("default");
     }
