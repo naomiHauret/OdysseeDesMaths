@@ -47,7 +47,7 @@ public class ForetScreen implements Screen {
     private Batch batch;
 
     private MiniGameUI ui;
-    private MenuPause mpause;
+    private MenuPause menuPause;
     private MenuGameOver menuGameOver;
 
     private Sprite heroSprite;
@@ -93,7 +93,7 @@ public class ForetScreen implements Screen {
                     minigame.hero.moveLeft();
                 } else if (source == ui.getPause()) {
                     minigame.pauseGame();
-                    Gdx.input.setInputProcessor(mpause);
+                    Gdx.input.setInputProcessor(menuPause);
                     return true;
                 }
 
@@ -103,16 +103,16 @@ public class ForetScreen implements Screen {
             }
         });
 
-        mpause = new MenuPause();
-        mpause.setListener(new InputListener() {
+        menuPause = new MenuPause();
+        menuPause.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
 
-                if (source == mpause.getRetourJeu().getLabel()) {
+                if (source == menuPause.getRetourJeu().getLabel()) {
                     minigame.returnToGame();
                     Gdx.input.setInputProcessor(ui);
-                } else if (source == mpause.getRecommencer().getLabel()) {
+                } else if (source == menuPause.getRecommencer().getLabel()) {
                     minigame.restartGame();
                 }
 
@@ -232,7 +232,7 @@ public class ForetScreen implements Screen {
                 if (minigame.timer.isFinished()) minigame.gameOver();
                 break;
             case PAUSED:
-                mpause.draw();
+                menuPause.draw();
                 break;
             case GAME_OVER:
                 menuGameOver.render();
@@ -249,7 +249,7 @@ public class ForetScreen implements Screen {
     public void pause() {
         if (minigame.getState() == MiniGame.State.RUNNING) {
             minigame.pauseGame();
-            Gdx.input.setInputProcessor(mpause);
+            Gdx.input.setInputProcessor(menuPause);
         }
     }
 
@@ -266,7 +266,7 @@ public class ForetScreen implements Screen {
     @Override
     public void dispose() {
         ui.dispose();
-        mpause.dispose();
+        menuPause.dispose();
         menuGameOver.dispose();
     }
 
