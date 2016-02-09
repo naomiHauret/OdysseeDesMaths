@@ -2,7 +2,7 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.menus.MenuPrincipal;
 
 public class OdysseeDesMaths extends Game {
     public SpriteBatch batcher;
@@ -11,7 +11,7 @@ public class OdysseeDesMaths extends Game {
         Assets.getManager().load(Assets.class);
         Assets.getManager().finishLoading();
         batcher = new SpriteBatch();
-        setScreen(new ArriveeRemarquable(this));
+        setScreen(new MenuPrincipal(this));
     }
 
 }

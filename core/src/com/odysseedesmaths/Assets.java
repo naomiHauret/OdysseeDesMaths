@@ -28,7 +28,8 @@ public class Assets {
     @Asset(Texture.class)
     public static final String
             HERO = "heros.png",
-            HEART = "coeur.png";
+            HEART = "coeur.png",
+            MAINMENUBACKGROUND = "tower.png";
 
     @Asset(TextureAtlas.class)
     public static final String
@@ -37,7 +38,8 @@ public class Assets {
 
     @Asset(Music.class)
     public static final String
-            ARCADE = "Arcade_Machine.ogg";
+            ARCADE = "Arcade_Machine.ogg",
+            MENUMUSIC = "music/Opening.ogg";
 
     public static final BitmapFont PIXEL;
     public static final BitmapFont GAME_OVER;
