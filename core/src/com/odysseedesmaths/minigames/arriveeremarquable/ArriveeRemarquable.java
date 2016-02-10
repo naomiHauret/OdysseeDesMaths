@@ -3,7 +3,6 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 import com.badlogic.gdx.math.MathUtils;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.Timer;
-import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;

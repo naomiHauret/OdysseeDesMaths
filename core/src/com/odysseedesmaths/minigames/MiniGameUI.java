@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -18,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
@@ -197,33 +194,7 @@ public class MiniGameUI extends Stage {
             }
         });
 
-<<<<<<< HEAD
-        table.add(timerLabel).padTop(10).padRight(25).top().right().expand();
-    }
-
-    /**
-     * Ajoute un bouton pause à l'interface.
-     * Position : En haut à droite de l'écran.
-     */
-    private void addPause() {
-        // Ajout des ressources nécessaires dans le skin
-        ButtonStyle pauseStyle = new ButtonStyle();
-        pauseStyle.up = new TextureRegionDrawable(skin.getRegion("pause"));
-        pauseStyle.down = new TextureRegionDrawable(skin.getRegion("pauseTap"));
-        skin.add("pause", pauseStyle);
-
-        // Création du bouton pause
-        pause = new Button(skin, "pause");
-        pause.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y){
-                
-            }
-        });
-
-        table.add(pause).top().right();
-=======
         timerContainer.setActor(timer);
->>>>>>> 4ff1a32049e1cf6f95a3013de275c479eb51df5e
     }
 
     /**

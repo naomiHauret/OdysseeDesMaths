@@ -1,6 +1,5 @@
 package com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies;
 
-
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
