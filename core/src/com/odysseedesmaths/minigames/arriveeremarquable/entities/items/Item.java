@@ -7,16 +7,16 @@ import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 public abstract class Item extends Entity {
 
-    public Item(Case c) {
-        super(c);
+    public Item(ArriveeRemarquable minigame, Case c) {
+        super(minigame, c);
     }
 
-    public Item() {
-        this(null);
+    public Item(ArriveeRemarquable minigame) {
+        super(minigame);
     }
 
     public void trigger() {
-        ArriveeRemarquable.get().destroy(this);
+        getMinigame().destroy(this);
     }
 
 
@@ -67,18 +67,18 @@ public abstract class Item extends Entity {
     public static void increasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]++;
         else if (e instanceof Heart) pop[HEART]++;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]++;
+        else if (e instanceof Freeze) pop[FREEZE]++;
         else pop[SUPERFREEZE]++;
     }
 
     public static void decreasePop(Item e) {
         if (e instanceof Shield) pop[SHIELD]--;
         else if (e instanceof Heart) pop[HEART]--;
-        else if (e instanceof com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze) pop[FREEZE]--;
+        else if (e instanceof Freeze) pop[FREEZE]--;
         else pop[SUPERFREEZE]--;
     }
 
-    public static Item make() {
+    public static Item make(ArriveeRemarquable minigame) {
         Item item;
         int num;
 
@@ -88,16 +88,16 @@ public abstract class Item extends Entity {
 
         switch (num) {
         case SHIELD:
-            item = new Shield();
+            item = new Shield(minigame);
             break;
         case HEART:
-            item = new Heart();
+            item = new Heart(minigame);
             break;
         case FREEZE:
-            item = new com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Freeze();
+            item = new Freeze(minigame);
             break;
         default:
-            item = new SuperFreeze();
+            item = new SuperFreeze(minigame);
             break;
         }
 

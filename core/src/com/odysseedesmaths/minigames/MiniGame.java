@@ -2,15 +2,14 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
-import com.odysseedesmaths.Timer;
 
 public abstract class MiniGame implements Screen {
 
-    protected OdysseeDesMaths game;
-    protected Screen currentScreen;
+    public enum State {RUNNING, PAUSED, GAME_OVER}
+    protected State currentState;
 
-    protected String regles; //voir si on garde un String
-    protected Timer timer;
+    protected OdysseeDesMaths game;
+    public Screen currentScreen;
 
     public MiniGame(OdysseeDesMaths game) {
         this.game = game;
@@ -19,6 +18,18 @@ public abstract class MiniGame implements Screen {
     public void setScreen(Screen screen) {
         if (currentScreen != null) currentScreen.dispose();
         currentScreen = screen;
+    }
+
+    public State getState() {
+        return currentState;
+    }
+
+    public void setState(State newState) {
+        currentState = newState;
+    }
+
+    public OdysseeDesMaths getGame() {
+        return game;
     }
 
     @Override
@@ -55,6 +66,4 @@ public abstract class MiniGame implements Screen {
     public void dispose() {
         currentScreen.dispose();
     }
-
-    public abstract void gameOver();
 }

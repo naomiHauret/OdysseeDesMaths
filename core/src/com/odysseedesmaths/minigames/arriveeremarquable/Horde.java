@@ -6,14 +6,16 @@ public class Horde {
     public static final int NORMAL = 3;
     public static final int SLOW = 4;
 
+    private final ArriveeRemarquable minigame;
     private int front;
     private int vitesse;
     private int count;
 
-    public Horde(int vitesse) {
-        front = -1;
+    public Horde(ArriveeRemarquable minigame, int vitesse) {
+        this.minigame = minigame;
+        this.front = -1;
         this.vitesse = vitesse;
-        count = 0;
+        this.count = 0;
     }
 
     public int getFront() {
@@ -30,7 +32,7 @@ public class Horde {
 
     public void act() {
         count++;
-        if ((count%vitesse == 0) && (front < ArriveeRemarquable.get().terrain.getWidth())) {
+        if ((count%vitesse == 0) && (front < minigame.terrain.getWidth()-1)) {
             front++;
         }
     }

@@ -77,8 +77,7 @@ public class Timer {
                 this.delayForOneSecond = 1000 * 3;
                 break;
             default:
-                // Étant donné que le type Speed est une énumération et que tous les cas sont
-                // traités, on ne devrait jamais rentré dans ce default.
+                // Erreur vitesse
                 break;
         }
         if (taskScheduler != null) {
@@ -96,14 +95,14 @@ public class Timer {
     public String toString() {
         String minutes = String.format("%02d", getMinutes());
         String seconds = String.format("%02d", getSeconds());
-        return minutes+":"+seconds;
+        return minutes+" "+seconds;
     }
 
     /**
      * Met le timer en marche.
      */
     public void start() {
-        if (taskScheduler == null) {
+        if (taskScheduler == null && !isFinished()) {
             taskScheduler = new java.util.Timer();
             taskScheduler.scheduleAtFixedRate(new UpdateTask(), delayForOneSecond, delayForOneSecond);
         }

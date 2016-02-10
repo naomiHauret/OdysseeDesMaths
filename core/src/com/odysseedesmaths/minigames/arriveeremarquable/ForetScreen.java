@@ -2,13 +2,13 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -16,10 +16,11 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
-import com.odysseedesmaths.Timer;
+import com.odysseedesmaths.menus.MenuGameOver;
+import com.odysseedesmaths.menus.MenuPause;
+import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Greed;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Smart;
@@ -27,7 +28,6 @@ import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Sticky
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.SuperSmart;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
-import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,25 +40,31 @@ public class ForetScreen implements Screen {
     public static final int DELTA = 300;
     public static final int CELL_SIZE = 64;
 
+    private final ArriveeRemarquable minigame;
+    
     private Viewport viewport;
     private OrthographicCamera camera;
     private Batch batch;
 
     private MiniGameUI ui;
+    private MenuPause menuPause;
+    private MenuGameOver menuGameOver;
 
     private Sprite heroSprite;
     private Map<Entity, Sprite> entitiesSprites;
     private Map<Class<? extends Item>, Sprite> buffsSprites;
     private Sprite hordeSprite;
 
-    public ForetScreen() {
+    public ForetScreen(final ArriveeRemarquable minigame) {
+        this.minigame = minigame;
+        
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         batch = new SpriteBatch();
 
         // Sprites
         heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
-        heroSprite.setPosition(ArriveeRemarquable.get().hero.getCase().i * CELL_SIZE, ArriveeRemarquable.get().hero.getCase().j * CELL_SIZE);
+        heroSprite.setPosition(minigame.hero.getCase().i * CELL_SIZE, minigame.hero.getCase().j * CELL_SIZE);
 
         entitiesSprites = new HashMap<Entity, Sprite>();
 
@@ -67,24 +73,75 @@ public class ForetScreen implements Screen {
 
         hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
 
-        ui = new MiniGameUI(Hero.PDV_MAX, ArriveeRemarquable.TIME_LIMIT * Timer.ONE_MINUTE, true);
+        ui = new MiniGameUI();
+        ui.addHeroHp(minigame.hero);
+        ui.addTimer(minigame.timer);
+        ui.addPad();
         Gdx.input.setInputProcessor(ui);
-        InputEcouteur ecouteur = new InputEcouteur();
-        ui.getPadUp().addListener(ecouteur);
-        ui.getPadRight().addListener(ecouteur);
-        ui.getPadDown().addListener(ecouteur);
-        ui.getPadLeft().addListener(ecouteur);
+        ui.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
 
-        // Camera
-        camera = new OrthographicCamera();
-        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
+                if (source == ui.getPadUp()) {
+                    minigame.hero.moveUp();
+                } else if (source == ui.getPadRight()) {
+                    minigame.hero.moveRight();
+                } else if (source == ui.getPadDown()) {
+                    minigame.hero.moveDown();
+                } else if (source == ui.getPadLeft()) {
+                    minigame.hero.moveLeft();
+                } else if (source == ui.getPause()) {
+                    minigame.pauseGame();
+                    Gdx.input.setInputProcessor(menuPause);
+                    return true;
+                }
+
+                minigame.playTurn();
+
+                return true;
+            }
+        });
+
+        menuPause = new MenuPause();
+        menuPause.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuPause.getRetourJeu().getLabel()) {
+                    minigame.returnToGame();
+                    Gdx.input.setInputProcessor(ui);
+                } else if (source == menuPause.getRecommencer().getLabel()) {
+                    minigame.restartGame();
+                }
+
+                return true;
+            }
+        });
+
+        menuGameOver = new MenuGameOver();
+        menuGameOver.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuGameOver.getRetry().getLabel()) {
+                    minigame.restartGame();
+                } else if (source == menuGameOver.getReturnMainMenu().getLabel()) {
+                    // TODO
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
     public void show() {
         Musique.setCurrent(Assets.ARCADE);
         Musique.play();
-        ui.getTimer().start();
+        minigame.timer.start();
     }
 
     @Override
@@ -98,14 +155,14 @@ public class ForetScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Affichage du terrain
-        ArriveeRemarquable.get().terrain.renderer.setView(camera);
-        ArriveeRemarquable.get().terrain.renderer.render();
+        minigame.terrain.renderer.setView(camera);
+        minigame.terrain.renderer.render();
 
         // Affichage des entités
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        for (Enemy enemy : ArriveeRemarquable.get().enemies) {
+        for (Enemy enemy : minigame.enemies) {
             Sprite enemySprite = entitiesSprites.get(enemy);
             if (enemySprite == null) {
                 enemySprite = getNewSpriteFor(enemy);
@@ -115,7 +172,7 @@ public class ForetScreen implements Screen {
             enemySprite.draw(batch);
         }
 
-        Iterator<Enemy> deadIterator = ArriveeRemarquable.get().deadpool.iterator();
+        Iterator<Enemy> deadIterator = minigame.deadpool.iterator();
         while (deadIterator.hasNext()) {
             Enemy deadEnemy = deadIterator.next();
             Sprite deadSprite = entitiesSprites.get(deadEnemy);
@@ -126,7 +183,7 @@ public class ForetScreen implements Screen {
             deadSprite.draw(batch);
         }
 
-        for (Item item : ArriveeRemarquable.get().items) {
+        for (Item item : minigame.items) {
             Sprite itemSprite = entitiesSprites.get(item);
             if (itemSprite == null) {
                 itemSprite = getNewSpriteFor(item);
@@ -137,18 +194,18 @@ public class ForetScreen implements Screen {
         }
 
         // Affichage du héros
-        updatePos(heroSprite, ArriveeRemarquable.get().hero);
+        updatePos(heroSprite, minigame.hero);
         heroSprite.draw(batch);
 
-        if (ArriveeRemarquable.get().activeItems.get(Shield.class) != null) {
+        if (minigame.activeItems.get(Shield.class) != null) {
             buffsSprites.get(Shield.class).setPosition(heroSprite.getX(), heroSprite.getY());
             buffsSprites.get(Shield.class).draw(batch);
         }
 
         // Affichage de la horde
-        if (ArriveeRemarquable.get().horde.getFront() >= 0) {
-            for (int i = 0; i <= ArriveeRemarquable.get().horde.getFront(); i++) {
-                for (int j = 0; j < ArriveeRemarquable.get().terrain.getHeight(); j++) {
+        if (minigame.horde.getFront() >= 0) {
+            for (int i = 0; i <= minigame.horde.getFront(); i++) {
+                for (int j = 0; j < minigame.terrain.getHeight(); j++) {
                     hordeSprite.setPosition(i * CELL_SIZE, j * CELL_SIZE);
                     hordeSprite.draw(batch);
                 }
@@ -163,28 +220,42 @@ public class ForetScreen implements Screen {
         posY = heroSprite.getY() + heroSprite.getHeight()/2;
         minX = WIDTH/2f;
         minY = HEIGHT/2f;
-        maxX = ArriveeRemarquable.get().terrain.getWidth() * CELL_SIZE - WIDTH/2f;
-        maxY = ArriveeRemarquable.get().terrain.getHeight() * CELL_SIZE - HEIGHT/2f;
-        if (posX < minX) posX = minX;
-        else if (posX > maxX) posX = maxX;
-        if (posY < minY) posY = minY;
-        else if (posY > maxY) posY = maxY;
-        camera.position.set(posX, posY, 0);
+        maxX = minigame.terrain.getWidth() * CELL_SIZE - minX;
+        maxY = minigame.terrain.getHeight() * CELL_SIZE - minY;
+        camera.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
 
         // Interface utilisateur par dessus le reste
         ui.render();
+
+        switch (minigame.getState()) {
+            case RUNNING:
+                if (minigame.timer.isFinished()) minigame.gameOver();
+                break;
+            case PAUSED:
+                menuPause.draw();
+                break;
+            case GAME_OVER:
+                menuGameOver.render();
+                break;
+            default:
+                // Erreur état du jeu
+                break;
+        }
 
         camera.update();
     }
 
     @Override
     public void pause() {
-        ui.getTimer().stop();
+        if (minigame.getState() == MiniGame.State.RUNNING) {
+            minigame.pauseGame();
+            Gdx.input.setInputProcessor(menuPause);
+        }
     }
 
     @Override
     public void resume() {
-        ui.getTimer().start();
+        // Le jeu est en pause
     }
 
     @Override
@@ -195,6 +266,12 @@ public class ForetScreen implements Screen {
     @Override
     public void dispose() {
         ui.dispose();
+        menuPause.dispose();
+        menuGameOver.dispose();
+    }
+
+    public void gameOver() {
+        Gdx.input.setInputProcessor(menuGameOver);
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {
@@ -238,60 +315,4 @@ public class ForetScreen implements Screen {
 
         return sprite;
     }
-
-    private class InputEcouteur extends InputListener {
-
-        @Override
-        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            Actor source = event.getTarget();
-
-            if (source == ui.getPadUp()) {
-                ArriveeRemarquable.get().hero.moveUp();
-            } else if (source == ui.getPadRight()) {
-                ArriveeRemarquable.get().hero.moveRight();
-            } else if (source == ui.getPadDown()) {
-                ArriveeRemarquable.get().hero.moveDown();
-            } else if (source == ui.getPadLeft()) {
-                ArriveeRemarquable.get().hero.moveLeft();
-            }
-
-            ArriveeRemarquable.get().playTurn();
-
-            return true;
-        }
-    }
-
-
-    /**********
-     * STATIC *
-     **********/
-
-    public static boolean isVisible(Case c) {
-        boolean resW, resH;
-        Case cHeros = ArriveeRemarquable.get().hero.getCase();
-        resW = Math.abs(c.i - cHeros.i) * CELL_SIZE < WIDTH/2;
-        resH = Math.abs(c.j - cHeros.j) * CELL_SIZE < HEIGHT/2;
-        return resW && resH;
-    }
-
-    public static boolean isInHeroSight(Case c) {
-        Case cHeros = ArriveeRemarquable.get().hero.getCase();
-        Case[][] cases = ArriveeRemarquable.get().terrain.getCases();
-        if (cHeros.i == c.i) {
-            int i = c.i;
-            for (int j = Math.min(cHeros.j, c.j); j < Math.max(cHeros.j, c.j); j++) {
-                if (cases[i][j].isObstacle()) return false;
-            }
-        } else if (cHeros.j == c.j) {
-            int j = c.j;
-            for (int i = Math.min(cHeros.i, c.i); i < Math.max(cHeros.i, c.i); i++) {
-                if (cases[i][j].isObstacle()) return false;
-            }
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
 }
