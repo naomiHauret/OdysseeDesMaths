@@ -110,7 +110,7 @@ public class MiniGameUI extends Stage {
 
         north.add(heroHpContainer).top().left();
         north.add(bossHpContainer).top().expandX();
-        north.add(timerContainer).top().right().padRight(10);
+        north.add(timerContainer).top().right().padTop(Gdx.graphics.getHeight() / 50).padRight(Gdx.graphics.getHeight() / 50);
         north.add(pauseContainer).top();
         west.add(oxygenContainer).top().left().expandY();
         south.add(padContainer).bottom().left();
@@ -186,7 +186,7 @@ public class MiniGameUI extends Stage {
      * @param aTimer Le Timer à utiliser
      */
     public void addTimer(final Timer aTimer) {
-        skin.add("timer", new LabelStyle(Assets.TIMER, Color.BLACK));
+        skin.add("timer", new LabelStyle(Assets.TIMER, Color.WHITE));
 
         timer = new Label(aTimer.toString(), skin, "timer");
         timer.addAction(new Action() {

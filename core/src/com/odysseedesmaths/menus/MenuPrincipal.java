@@ -74,7 +74,7 @@ public class MenuPrincipal implements Screen {
 
         //table disposition
         tableau.setFillParent(true);
-        tableau.background(new SpriteDrawable(new Sprite(Assets.getManager().get(Assets.MAINMENUBACKGROUND, Texture.class))));
+        tableau.background(new SpriteDrawable(new Sprite(Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class))));
 
         //le titre prends un tiers
         tableau.add(text).height(Gdx.graphics.getWidth() / 3).pad(10);
@@ -132,7 +132,7 @@ public class MenuPrincipal implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage); //pour faire en sorte que les listener marchent (pourquoi?? j'en sais foutrement rien)
 
-        Musique.setCurrent(Assets.MENUMUSIC);
+        Musique.setCurrent(Assets.MENU_MUSIC);
         Musique.play();
     }
 

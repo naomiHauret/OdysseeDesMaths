@@ -34,13 +34,13 @@ public class MenuGameOver extends Menu {
         skin.add("title", titleStyle);
 
         TextButtonStyle buttonStyle = new TextButtonStyle();
-        buttonStyle.font = Assets.PIXEL;
+        buttonStyle.font = Assets.BUTTON;
         buttonStyle.up = skin.getDrawable("default-round");
         buttonStyle.down = skin.getDrawable("default-round-down");
         skin.add("button", buttonStyle);
 
         title = new Label("GAME OVER", skin, "title");
-        retry = new TextButton("Réessayer", skin, "button");
+        retry = new TextButton("Reessayer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
         table.add(title).colspan(2).padBottom(Gdx.graphics.getHeight() / 20);

@@ -18,6 +18,7 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
+import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
@@ -81,7 +82,13 @@ public class ForetScreen implements Screen {
         ui.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
+                boolean isTurnPassed = true;
 
                 if (source == ui.getPadUp()) {
                     minigame.hero.moveUp();
@@ -94,12 +101,10 @@ public class ForetScreen implements Screen {
                 } else if (source == ui.getPause()) {
                     minigame.pauseGame();
                     Gdx.input.setInputProcessor(menuPause);
-                    return true;
+                    isTurnPassed = false;
                 }
 
-                minigame.playTurn();
-
-                return true;
+                if (isTurnPassed) minigame.playTurn();
             }
         });
 
@@ -107,6 +112,11 @@ public class ForetScreen implements Screen {
         menuPause.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
 
                 if (source == menuPause.getRetourJeu().getLabel()) {
@@ -114,9 +124,9 @@ public class ForetScreen implements Screen {
                     Gdx.input.setInputProcessor(ui);
                 } else if (source == menuPause.getRecommencer().getLabel()) {
                     minigame.restartGame();
+                } else if(source == menuPause.getQuitter().getLabel()) {
+                    minigame.returnToMainMenu();
                 }
-
-                return true;
             }
         });
 
@@ -124,15 +134,18 @@ public class ForetScreen implements Screen {
         menuGameOver.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
 
                 if (source == menuGameOver.getRetry().getLabel()) {
                     minigame.restartGame();
                 } else if (source == menuGameOver.getReturnMainMenu().getLabel()) {
-                    // TODO
+                    minigame.returnToMainMenu();
                 }
-
-                return true;
             }
         });
     }
