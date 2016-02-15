@@ -80,7 +80,6 @@ public class MiniGameUI extends Stage {
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
-        skin.add("pixel", new LabelStyle(Assets.PIXEL, Color.BLACK));
 
         north = new Table();
         west = new Table();
@@ -108,7 +107,7 @@ public class MiniGameUI extends Stage {
 
         north.add(heroHpContainer).top().left();
         north.add(bossHpContainer).top().expandX();
-        north.add(timerContainer).top().right().padRight(10);
+        north.add(timerContainer).top().right().padTop(Gdx.graphics.getHeight() / 50).padRight(Gdx.graphics.getHeight() / 50);
         north.add(pauseContainer).top();
         west.add(oxygenContainer).top().left().expandY();
         south.add(padContainer).bottom().left();
@@ -184,7 +183,9 @@ public class MiniGameUI extends Stage {
      * @param aTimer Le Timer à utiliser
      */
     public void addTimer(final Timer aTimer) {
-        timer = new Label(aTimer.toString(), skin, "pixel");
+        skin.add("timer", new LabelStyle(Assets.TIMER, Color.WHITE));
+
+        timer = new Label(aTimer.toString(), skin, "timer");
         timer.addAction(new Action() {
             @Override
             public boolean act(float delta) {
@@ -246,6 +247,8 @@ public class MiniGameUI extends Stage {
      * @param activeItems Map contenant les sprites des items ainsi que leur compteur.
      */
     public void addItems(final Map<Sprite, Integer> activeItems) {
+        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, Color.BLACK));
+
         itemsGroup = new HorizontalGroup();
         itemsGroup.addAction(new Action() {
             @Override
@@ -255,7 +258,7 @@ public class MiniGameUI extends Stage {
                 for (Map.Entry<Sprite, Integer> entry : activeItems.entrySet()) {
                     itemImage = new Image(entry.getKey());
                     itemsGroup.addActor(itemImage);
-                    itemCounter = new Label(entry.getValue().toString(), skin, "pixel");
+                    itemCounter = new Label(entry.getValue().toString(), skin, "itemCounter");
                     itemsGroup.addActor(itemCounter);
                 }
 

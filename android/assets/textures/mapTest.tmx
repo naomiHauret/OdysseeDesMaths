@@ -5,12 +5,12 @@
  </tileset>
  <layer name="Calque de Tile 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJztUe0KgCAMNLXINOn9n7ZJG6zlsB/5Jzw4POZuH2pMPyTgDFyAO9MTcKvktWAV3brrWa/sQ3vlj+dzTEdzvdubXho8nglr8X9wLJ6f1hsoL6BeRR3qZUVMgxPaMi/NHLEfj2nwQhfvgTPTydnat/jp3Wt+IuWEepmBgd/hBK9ZAdE=
+   eJxjYBi5gAeIGZEwKxCzkWgGG5J+Pqq6joGBCYmN7lZGCs3jBmJeKpqHjU8qYCbCPFLsYKFALzYACjPk8BKg0LxRMAqGOgAAYyYAjw==
   </data>
  </layer>
  <layer name="Calque 2" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYBg6gH2AzKalveSCweCmweAGcgE13D6U/T8KRgE1AADdgAAy
+   eJxjYBgFIMCOxGaEYl4g5qKiHUxQTAlAdicfieaxE5AXAGIOIGYl1VF4AKX+RQeE/ECqXkrdx4iGOSk0bxSMgqEEACN6AH8=
   </data>
  </layer>
 </map>

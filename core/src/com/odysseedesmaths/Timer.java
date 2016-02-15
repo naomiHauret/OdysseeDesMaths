@@ -95,7 +95,7 @@ public class Timer {
     public String toString() {
         String minutes = String.format("%02d", getMinutes());
         String seconds = String.format("%02d", getSeconds());
-        return minutes+" "+seconds;
+        return minutes+":"+seconds;
     }
 
     /**

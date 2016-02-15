@@ -10,9 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,6 +22,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Squelette de test... à modifier sans modération !
  */
 public class DialogScreen implements Screen {
+
+    private DialogReader dialogReader;
 
     private static final int WIDTH = 560;
     private static final int HEIGHT = 340;
@@ -33,6 +36,7 @@ public class DialogScreen implements Screen {
 
     private Stage stage;
     private Skin skin;
+    private Table table;
 
     private VerticalGroup mainGroup;
 
@@ -43,7 +47,7 @@ public class DialogScreen implements Screen {
 
     private Stack dialogGroup;
     private Image dialogBackground;
-    private Label dialogText;
+    private TextArea dialogText;
 
     private HorizontalGroup buttonGroup;
     private Button back;

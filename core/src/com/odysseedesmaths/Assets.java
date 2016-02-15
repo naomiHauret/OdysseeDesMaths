@@ -2,10 +2,10 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -22,33 +22,62 @@ public class Assets {
         return manager;
     }
 
-    public static final TextureAtlas UI_GRAPHISM;
-    public static final TextureRegion menuPause;
-
     @Asset(Texture.class)
     public static final String
             HERO = "heros.png",
-            HEART = "coeur.png";
+            HEART = "coeur.png",
+            MAIN_MENU_BACKGROUND = "tower.png";
+
 
     @Asset(TextureAtlas.class)
     public static final String
             UI = "ui/ui.atlas",
             UI_TEST = "test/uiskin.atlas";
 
+
     @Asset(Music.class)
     public static final String
-            ARCADE = "Arcade_Machine.ogg";
+            ARCADE = "music/Arcade_Machine.ogg",
+            MENU_MUSIC = "music/Opening.ogg";
 
-    public static final BitmapFont PIXEL;
+
+    // Ces polices sont chargées à l'aide d'un FreeTypeFontGenerator
+    public static final BitmapFont
+            BUTTON,
+            GAME_OVER,
+            TIMER,
+            ITEM_COUNTER;
 
     static {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
-        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        FreeTypeFontGenerator generator;
+        FreeTypeFontParameter parameter;
+
+        /* Font : Press Start 2P */
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+
+        parameter = new FreeTypeFontParameter();
+        parameter.size = Gdx.graphics.getHeight() / 17;
+        parameter.shadowOffsetX = 2;
+        parameter.shadowOffsetY = 2;
+        parameter.shadowColor = Color.BLACK;
+        TIMER = generator.generateFont(parameter);
+
+        parameter = new FreeTypeFontParameter();
+        parameter.size = Gdx.graphics.getHeight() / 17;
+        ITEM_COUNTER = generator.generateFont(parameter);
+
+        parameter = new FreeTypeFontParameter();
+        parameter.size = Gdx.graphics.getHeight() / 9;
+        GAME_OVER = generator.generateFont(parameter);
+
+        /* Font : Pixel Life */
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
+
+        parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 10;
-        PIXEL = generator.generateFont(parameter);
+        BUTTON = generator.generateFont(parameter);
+
         generator.dispose();
-        UI_GRAPHISM = new TextureAtlas(Gdx.files.internal("test/uiskin.atlas"));
-        menuPause = UI_GRAPHISM.findRegion("default");
     }
 
 
