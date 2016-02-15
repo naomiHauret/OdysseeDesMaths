@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -99,8 +100,17 @@ public class DialogScreen implements Screen {
     }
 
     @Override
-    public void show() {
+    public void show(Batch batch, float parent) {
+        // Visualisation des personnages et de l'image entre eux
 
+        // Visualisation du dialogue
+
+        // Visualisation des boutons
+        if(back.isDisable()){
+            back.getStyle().disabledFontColor = Color.lightGray;
+        } else if (next.isDisable()){
+            next.getStyle().disabledFontColor = Color.lightGray;
+        }
     }
 
     @Override
