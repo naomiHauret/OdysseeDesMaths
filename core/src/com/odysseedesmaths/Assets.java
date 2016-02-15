@@ -68,6 +68,8 @@ public class Assets {
 
         parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 9;
+        parameter.borderWidth = 3;
+        parameter.borderColor = Color.FIREBRICK;
         GAME_OVER = generator.generateFont(parameter);
 
         /* Font : Pixel Life */

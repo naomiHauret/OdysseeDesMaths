@@ -1,11 +1,12 @@
 package com.odysseedesmaths;
 
+import java.util.Observable;
 import java.util.TimerTask;
 
 /**
  * Implémentation d'un timer avec minutes et secondes décroissant.
  */
-public class Timer {
+public class Timer extends Observable {
 
     public static final int ONE_MINUTE = 60;
     public static final int ONE_SECOND = 1;
@@ -52,6 +53,15 @@ public class Timer {
      */
     public int getSeconds() {
         return secondsLeft%60;
+    }
+
+    /**
+     * Retourne le nombre total de secondes restantes au timer.
+     *
+     * @return Le nombre de secondes
+     */
+    public int getSecondsLeft() {
+        return secondsLeft;
     }
 
     /**
@@ -199,9 +209,9 @@ public class Timer {
         @Override
         public void run() {
             secondsLeft--;
-            if (secondsLeft == 0) {
-                stop();
-            }
+            setChanged();
+            notifyObservers(secondsLeft);
+            if (secondsLeft == 0) stop();
         }
     }
 }

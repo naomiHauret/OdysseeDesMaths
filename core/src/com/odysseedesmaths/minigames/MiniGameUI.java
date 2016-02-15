@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -22,12 +23,14 @@ import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
  */
 // TODO: Redimensionner l'UI pour toutes les tailles d'écran
-public class MiniGameUI extends Stage {
+public class MiniGameUI extends Stage implements Observer {
 
     private static final int PAD_ARROW_SIZE = 64;
 
@@ -50,6 +53,7 @@ public class MiniGameUI extends Stage {
 
     private Container<Actor> timerContainer;
     private Label timer;
+    private ColorAction timerColorAction;
 
     private Container<Actor> pauseContainer;
     private Button pause;
@@ -185,6 +189,11 @@ public class MiniGameUI extends Stage {
     public void addTimer(final Timer aTimer) {
         skin.add("timer", new LabelStyle(Assets.TIMER, Color.WHITE));
 
+        aTimer.addObserver(this);
+        timerColorAction = new ColorAction();
+        timerColorAction.setEndColor(Color.WHITE);
+        timerColorAction.setDuration(0.5f);
+
         timer = new Label(aTimer.toString(), skin, "timer");
         timer.addAction(new Action() {
             @Override
@@ -296,5 +305,18 @@ public class MiniGameUI extends Stage {
         pause = new Button(skin, "pause");
 
         pauseContainer.setActor(pause);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Integer secondsLeft = (Integer)arg;
+
+        if (secondsLeft <= 20) {
+            timer.setColor(Color.RED);
+            if (secondsLeft > 0) {
+                timerColorAction.reset();
+                timer.addAction(timerColorAction);
+            }
+        }
     }
 }
