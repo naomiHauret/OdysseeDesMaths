@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.odysseedesmaths.Assets;
+import com.odysseedesmaths.Musique;
 
 public class MenuGameOver extends Menu {
 
@@ -60,6 +61,11 @@ public class MenuGameOver extends Menu {
     public void render() {
         act(Gdx.graphics.getDeltaTime());
         draw();
+    }
+
+    public void playMusic(){
+        Musique.setCurrent(Assets.GAME_OVER_MUSIC);
+        Musique.play();
     }
 
     @Override

@@ -38,7 +38,8 @@ public class Assets {
     @Asset(Music.class)
     public static final String
             ARCADE = "music/Arcade_Machine.ogg",
-            MENU_MUSIC = "music/Opening.ogg";
+            MENU_MUSIC = "music/Opening.ogg",
+            GAME_OVER_MUSIC = "music/Game Over.ogg";
 
 
     // Ces polices sont chargées à l'aide d'un FreeTypeFontGenerator

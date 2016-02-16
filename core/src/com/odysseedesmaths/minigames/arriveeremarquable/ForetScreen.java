@@ -284,6 +284,7 @@ public class ForetScreen implements Screen {
 
     public void gameOver() {
         Gdx.input.setInputProcessor(menuGameOver);
+        menuGameOver.playMusic();
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {

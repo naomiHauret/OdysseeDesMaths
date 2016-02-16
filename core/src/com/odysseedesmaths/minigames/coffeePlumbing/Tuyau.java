@@ -1,6 +1,7 @@
 package com.odysseedesmaths.minigames.coffeePlumbing;
 
-import java.util.Vector;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Created by trilunaire on 08/02/16.
@@ -12,13 +13,13 @@ public class Tuyau {
     /**
      * Le vecteur de tuyaux contient seulement les voisins les plus proches
      */
-    private Vector<Tuyau> tuyauxSuivants;
+    private HashSet<Tuyau> tuyauxSuivants;
 
     public Tuyau(int capacite){
         this.ouvert= false; //fermé par defaut
         this.capacite = capacite;
         this.fluxCourant = 0; //si fermé rien dedans
-        this.tuyauxSuivants = new Vector<Tuyau>();
+        this.tuyauxSuivants = new HashSet<Tuyau>();
     }
 
     public void augmenterFlux(){
@@ -30,17 +31,21 @@ public class Tuyau {
             this.fluxCourant--;
     }
 
-    public Vector<Tuyau> getAllSuccessor(){
-        Vector<Tuyau> allTuyaux = this.tuyauxSuivants; //de base on met nos successeurs
+    public HashSet<Tuyau> getAllSuccessor(){
+        //FIXME: Fonction lorsqu'un tuyau à un successeur direct, mais donne une exception lorsqu'il en a plusieurs
+        HashSet<Tuyau> allTuyaux = this.tuyauxSuivants; //de base on met nos successeurs
         //pour chacuns des tuyaux:
         if(!this.tuyauxSuivants.isEmpty()){
-            Vector<Tuyau> newTuyaux;
-            //pour tous les tuyaux suivant (déja présents dans tuyauxSuivants)
-            for (int i = 0; i < tuyauxSuivants.size(); i++) {
-                //on prends pour chacuns des tuyaux suivant leurs successeurs
-                newTuyaux= tuyauxSuivants.get(i).getAllSuccessor();
-                for(int j = 0; j<newTuyaux.size();j++){
-                    allTuyaux.add(newTuyaux.get(j));
+            HashSet<Tuyau> newTuyaux;
+            Iterator<Tuyau> it,itbis;
+
+            it = tuyauxSuivants.iterator();
+            while(it.hasNext()){
+                newTuyaux= ((Tuyau)it.next()).getAllSuccessor(); //on prends pour chacuns des tuyaux suivant leurs successeurs
+                System.out.print(this.toString());
+                itbis = newTuyaux.iterator(); //pour tous les tuyaux qu'on a trouvé
+                while(itbis.hasNext()){//on ajoute dans notre tableau contenant tous les tuyaux
+                    allTuyaux.add(itbis.next());
                 }
             }
         }
