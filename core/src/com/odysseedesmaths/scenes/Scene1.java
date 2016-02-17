@@ -20,6 +20,6 @@ public class Scene1 extends Scene {
 
     @Override
     public void aventure() {
-        //getMss().getJeu().setScreen(new ArriveeRemarquable(getMss().getJeu()));
+        getMss().getJeu().setScreen(new ArriveeRemarquable(getMss().getJeu()));
     }
 }
