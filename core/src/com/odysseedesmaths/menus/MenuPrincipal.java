@@ -115,7 +115,7 @@ public class MenuPrincipal implements Screen {
 
     //crée une nouvelle partie
     public void newGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(new ModeSceneScreen(this.jeu));
+        this.jeu.setScreen(new ArriveeRemarquable(this.jeu));
     }
     //lance la partie en cours
     public  void launchGame(OdysseeDesMaths jeu){
@@ -124,7 +124,7 @@ public class MenuPrincipal implements Screen {
 
     //quitte le jeu
     public void quitter(){
-
+        this.jeu.dispose();
     }
 
 
@@ -177,11 +177,11 @@ public class MenuPrincipal implements Screen {
             System.out.println("Salut c'est moi, le listener qui veut enfin marcher!!"); //debug
 
             if (source == nouveauJeu.getLabel()) {
-                jeu.setScreen(new ArriveeRemarquable(jeu));
+                newGame(jeu);
             } else if (source == continuer.getLabel()) {
                 //nothing yet
             } else if (source == quitter.getLabel()) {
-                //nothing yet here
+                quitter();
             }
 
             return true;
