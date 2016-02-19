@@ -3,12 +3,21 @@
  <tileset firstgid="1" name="coffeePlumbingTexture" tilewidth="64" tileheight="64">
   <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture.png" trans="ff00ff" width="512" height="128"/>
  </tileset>
- <layer name="Calque de Tile 1" width="10" height="5">
+ <layer name="extremités" width="10" height="5">
+  <properties>
+   <property name="debut" value="3,1"/>
+   <property name="fin" value="1,10"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYEAAHiBmBGIuJDYIszKgAmYozQTE3EjqQPrYkNgsUHXcUDPYoOJMSGYhm4FsLyeaOmQzOLHwAVHIAOw=
+   eJxjYCAMWIlQAwNsJKilJgAABswADA==
   </data>
  </layer>
- <layer name="Calque 2" width="10" height="5">
+ <layer name="tuyaux" width="10" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAAHiBmBGIuJDYjAyZghtJMQMyNpI4LKg5js0D5IDWsQMwGFWdCMgvZDGR7OdHUIZvBiYUPAEvEAOE=
+  </data>
+ </layer>
+ <layer name="Vannes" width="10" height="5">
   <data encoding="base64" compression="zlib">
    eJxjYEAF7AyUA3LMYMfCJsUcAA1cACQ=
   </data>

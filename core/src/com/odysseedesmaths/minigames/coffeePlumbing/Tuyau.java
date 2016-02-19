@@ -33,23 +33,24 @@ public class Tuyau {
 
     public HashSet<Tuyau> getAllSuccessor(){
         //FIXME: Fonction lorsqu'un tuyau à un successeur direct, mais donne une exception lorsqu'il en a plusieurs
-        HashSet<Tuyau> allTuyaux = this.tuyauxSuivants; //de base on met nos successeurs
+        HashSet<Tuyau> allSuccessors = (HashSet<Tuyau>) this.tuyauxSuivants.clone(); //de base on met nos successeurs (clone de l'objet (sinon problème au niveau de l'itérateur))
         //pour chacuns des tuyaux:
         if(!this.tuyauxSuivants.isEmpty()){
-            HashSet<Tuyau> newTuyaux;
+            HashSet<Tuyau> succ;
             Iterator<Tuyau> it,itbis;
 
             it = tuyauxSuivants.iterator();
             while(it.hasNext()){
-                newTuyaux= ((Tuyau)it.next()).getAllSuccessor(); //on prends pour chacuns des tuyaux suivant leurs successeurs
-                System.out.print(this.toString());
-                itbis = newTuyaux.iterator(); //pour tous les tuyaux qu'on a trouvé
+                succ= ((Tuyau)it.next()).getAllSuccessor(); //on prend pour chacuns des tuyaux suivant leurs successeurs
+                itbis = succ.iterator(); //pour tous les tuyaux qu'on a trouvé
                 while(itbis.hasNext()){//on ajoute dans notre tableau contenant tous les tuyaux
-                    allTuyaux.add(itbis.next());
+                    allSuccessors.add(itbis.next());
                 }
+                succ.clear();
+                itbis=null;
             }
         }
-        return allTuyaux;
+        return allSuccessors;
     }
 
     public void addJunction(Tuyau jonction){
