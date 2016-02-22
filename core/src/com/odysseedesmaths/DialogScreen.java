@@ -56,6 +56,7 @@ public class DialogScreen implements Screen {
     private Button next;
 
     private boolean afficher;
+    private boolean conversationActive = false;
 
     public DialogScreen(OdysseeDesMaths game) {
         viewport = new StretchViewport(WIDTH, HEIGHT);
@@ -78,6 +79,7 @@ public class DialogScreen implements Screen {
     }
 
     public void buildGUI() {
+        conversationActive = true;
         mainGroup.pad(10);
         mainGroup.center();
 
@@ -108,9 +110,11 @@ public class DialogScreen implements Screen {
 
         // Visualisation des boutons
         if(back.isDisabled()){
-            //back.getStyle().disabled = Color.lightGray;
+            back.getStyle().disabled = Color.lightGray;
+                // Le bouton se grisaille s'il n'est pas disponible
         } else if (next.isDisabled()){
-            //next.getStyle().disabledFontColor = Color.lightGray;
+            next.getStyle().disabledFontColor = Color.lightGray;
+                // Idem
         }
     }*/
 
@@ -154,7 +158,9 @@ public class DialogScreen implements Screen {
 
     @Override
     public void dispose() {
+        conversationActive = false;
         stage.dispose();
         skin.dispose();
+        // this.clear();
     }
 }
