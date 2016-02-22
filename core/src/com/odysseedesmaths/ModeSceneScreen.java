@@ -8,12 +8,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.odysseedesmaths.menus.MenuPauseScene;
+import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.scenes.Scene;
 import com.odysseedesmaths.scenes.Scene0;
 import com.odysseedesmaths.scenes.Scene1;
@@ -22,6 +26,9 @@ import com.odysseedesmaths.scenes.Scene2;
 public class ModeSceneScreen implements Screen {
 
     private OdysseeDesMaths jeu;
+
+    public enum State {RUNNING, PAUSED}
+    protected State currentState;
 
     private Scene sceneActive;
     private Scene0 scene0 = null;
@@ -35,12 +42,15 @@ public class ModeSceneScreen implements Screen {
 
     private Container<Actor> pauseContainer;
     private Button pause;
+    private MenuPauseScene menuPause;
 
     public ModeSceneScreen(OdysseeDesMaths game) {
         jeu = game;
         Scene.updateMss(this);
         sceneActive = getScene1(); // selectionner la bonne plus tard dans le fichier de sauvegarde
 
+
+        setState(State.RUNNING);
         createUI();
 
     }
@@ -59,12 +69,47 @@ public class ModeSceneScreen implements Screen {
 
         pause = new Button(skin, "pause");
 
+        pause.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Je me met en pause\n");
+                pauseScene();
+            }
+        });
+
+        menuPause = new MenuPauseScene();
+        menuPause.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuPause.getRetourJeu().getLabel()) {
+                    returnToScene();
+                } else if (source == menuPause.getInventaire().getLabel()) {
+
+                } else if (source == menuPause.getQuitter().getLabel()) {
+                    jeu.setScreen(jeu.getMenuPrincipal());
+                }
+            }
+        });
+
         // Création de la table
         table.setFillParent(true);
         table.background(new SpriteDrawable(new Sprite(sceneActive.getBackground())));
         table.add(pause).expand().right().top();
 
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -76,6 +121,17 @@ public class ModeSceneScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
+
+        switch (getState()) {
+            case RUNNING:
+                break;
+            case PAUSED:
+                menuPause.draw();
+                break;
+            default:
+                // Erreur état du jeu
+                break;
+        }
     }
 
     @Override
@@ -101,6 +157,16 @@ public class ModeSceneScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void returnToScene() {
+        Gdx.input.setInputProcessor(stage);
+        setState(State.RUNNING);
+    }
+
+    public void pauseScene() {
+        Gdx.input.setInputProcessor(menuPause);
+        setState(State.PAUSED);
     }
 
     public void switchScene(Scene s) {
@@ -131,4 +197,10 @@ public class ModeSceneScreen implements Screen {
     public OdysseeDesMaths getJeu() {
         return jeu;
     }
+
+    public State getState() {
+        return currentState;
+    }
+
+    public void setState(State newState) { currentState = newState; }
 }

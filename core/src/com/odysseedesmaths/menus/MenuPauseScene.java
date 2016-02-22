@@ -49,7 +49,7 @@ public class MenuPauseScene extends Menu {
         return retourJeu;
     }
 
-    public TextButton getRecommencer() {
+    public TextButton getInventaire() {
         return inventaire;
     }
 

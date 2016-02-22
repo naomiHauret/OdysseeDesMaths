@@ -77,6 +77,7 @@ public class ForetScreen implements Screen {
         ui.addHeroHp(minigame.hero);
         ui.addTimer(minigame.timer);
         ui.addPad();
+        ui.addItems();
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
             @Override
@@ -228,15 +229,19 @@ public class ForetScreen implements Screen {
 
         // Positionnement de la caméra (sur le héros ou sur les bords)
         float posX, posY, minX, minY, maxX, maxY;
-        posX = heroSprite.getX() + heroSprite.getWidth()/2;
-        posY = heroSprite.getY() + heroSprite.getHeight()/2;
-        minX = WIDTH/2f;
-        minY = HEIGHT/2f;
+        posX = heroSprite.getX() + heroSprite.getWidth() / 2f;
+        posY = heroSprite.getY() + heroSprite.getHeight() / 2f;
+        minX = WIDTH / 2f;
+        minY = HEIGHT / 2f;
         maxX = minigame.terrain.getWidth() * CELL_SIZE - minX;
         maxY = minigame.terrain.getHeight() * CELL_SIZE - minY;
         camera.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
 
         // Interface utilisateur par dessus le reste
+        ui.resetActiveItems();
+        for (Map.Entry<Class<? extends Item>, Integer> entry : minigame.activeItems.entrySet()) {
+            ui.addActiveItem(buffsSprites.get(entry.getKey()), entry.getValue());
+        }
         ui.render();
 
         switch (minigame.getState()) {
