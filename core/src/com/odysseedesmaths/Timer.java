@@ -210,7 +210,7 @@ public class Timer extends Observable {
         public void run() {
             secondsLeft--;
             setChanged();
-            notifyObservers(secondsLeft);
+            notifyObservers();
             if (secondsLeft == 0) stop();
         }
     }

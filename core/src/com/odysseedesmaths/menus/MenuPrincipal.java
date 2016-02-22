@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.odysseedesmaths.Assets;
-import com.odysseedesmaths.ModeSceneScreen;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
@@ -37,7 +36,7 @@ public class MenuPrincipal implements Screen {
 
 
     public MenuPrincipal(OdysseeDesMaths jeu) {
-        this.jeu=jeu;
+        this.jeu = jeu;
         this.stage = new Stage();
         this.tableau = new Table();
 
@@ -54,14 +53,14 @@ public class MenuPrincipal implements Screen {
 
     public void createUI(){
         //font parameter
-        ftfp.size= Gdx.graphics.getHeight()/ 15; //the size can be change later
-        ftfp.color=new Color(255f,255f,255f,1);
+        ftfp.size = Gdx.graphics.getHeight()/ 15; //the size can be changed later
+        ftfp.color = new Color(255f,255f,255f,1);
         ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         menuFont = ftfg.generateFont(ftfp);
         ftfp.size = Gdx.graphics.getHeight()/ 20;
         fontButton =  ftfg.generateFont(ftfp);
 
-        //button styke
+        //button style
         txtButtonStyle.font = fontButton;
         textStyle.font = menuFont;
 
@@ -107,7 +106,6 @@ public class MenuPrincipal implements Screen {
     }
 
     public void setListener(EventListener listener) {
-        System.out.println("Spartaaaaaaaaaaa!!"); //debug
         nouveauJeu.addListener(listener);
         continuer.addListener(listener);
         quitter.addListener(listener);
@@ -117,20 +115,15 @@ public class MenuPrincipal implements Screen {
     public void newGame(OdysseeDesMaths jeu){
         this.jeu.setScreen(new ArriveeRemarquable(this.jeu));
     }
+
     //lance la partie en cours
-    public  void launchGame(OdysseeDesMaths jeu){
+    public void launchGame(OdysseeDesMaths jeu){
 
     }
-
-    //quitte le jeu
-    public void quitter(){
-        this.jeu.dispose();
-    }
-
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage); //pour faire en sorte que les listener marchent (pourquoi?? j'en sais foutrement rien)
+        Gdx.input.setInputProcessor(stage);
 
         Musique.setCurrent(Assets.MENU_MUSIC);
         Musique.play();
@@ -174,14 +167,13 @@ public class MenuPrincipal implements Screen {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             Actor source = event.getTarget();
-            System.out.println("Salut c'est moi, le listener qui veut enfin marcher!!"); //debug
 
             if (source == nouveauJeu.getLabel()) {
                 newGame(jeu);
             } else if (source == continuer.getLabel()) {
                 //nothing yet
             } else if (source == quitter.getLabel()) {
-                quitter();
+                Gdx.app.exit();
             }
 
             return true;

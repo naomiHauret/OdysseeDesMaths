@@ -58,13 +58,9 @@ public class Assets {
 
         parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 17;
-        parameter.shadowOffsetX = 2;
-        parameter.shadowOffsetY = 2;
-        parameter.shadowColor = Color.BLACK;
+        parameter.borderWidth = 3;
+        parameter.borderColor = Color.BLACK;
         TIMER = generator.generateFont(parameter);
-
-        parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 17;
         ITEM_COUNTER = generator.generateFont(parameter);
 
         parameter = new FreeTypeFontParameter();

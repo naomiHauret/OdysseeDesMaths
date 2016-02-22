@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -22,6 +21,7 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -52,7 +52,7 @@ public class MiniGameUI extends Stage implements Observer {
     private Container<Actor> bossHpContainer;
 
     private Container<Actor> timerContainer;
-    private Label timer;
+    private Label timerLabel;
     private ColorAction timerColorAction;
 
     private Container<Actor> pauseContainer;
@@ -68,11 +68,12 @@ public class MiniGameUI extends Stage implements Observer {
     private Button padDown;
 
     private Container<Actor> itemsContainer;
-    private HorizontalGroup itemsGroup;
+    private Table itemsGroup;
     private Image itemImage;
     private Label itemCounter;
 
     private Container<Actor> actionsContainer;
+    private Map<Sprite, Integer> activeItems;
 
     /**
      * Initialise une nouvelle interface avec les ressources nécessaires.
@@ -182,7 +183,7 @@ public class MiniGameUI extends Stage implements Observer {
     }
 
     /**
-     * Ajoute un timer à l'interface.
+     * Ajoute un timerLabel à l'interface.
      *
      * @param aTimer Le Timer à utiliser
      */
@@ -193,17 +194,9 @@ public class MiniGameUI extends Stage implements Observer {
         timerColorAction = new ColorAction();
         timerColorAction.setEndColor(Color.WHITE);
         timerColorAction.setDuration(0.5f);
+        timerLabel = new Label(aTimer.toString(), skin, "timer");
 
-        timer = new Label(aTimer.toString(), skin, "timer");
-        timer.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
-                timer.setText(aTimer.toString());
-                return false;
-            }
-        });
-
-        timerContainer.setActor(timer);
+        timerContainer.setActor(timerLabel);
     }
 
     /**
@@ -252,13 +245,12 @@ public class MiniGameUI extends Stage implements Observer {
 
     /**
      * Ajoute des items actifs à l'interface.
-     *
-     * @param activeItems Map contenant les sprites des items ainsi que leur compteur.
      */
-    public void addItems(final Map<Sprite, Integer> activeItems) {
-        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, Color.BLACK));
+    public void addItems() {
+        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, Color.WHITE));
 
-        itemsGroup = new HorizontalGroup();
+        activeItems = new HashMap<Sprite, Integer>();
+        itemsGroup = new Table();
         itemsGroup.addAction(new Action() {
             @Override
             public boolean act(float delta) {
@@ -266,9 +258,9 @@ public class MiniGameUI extends Stage implements Observer {
 
                 for (Map.Entry<Sprite, Integer> entry : activeItems.entrySet()) {
                     itemImage = new Image(entry.getKey());
-                    itemsGroup.addActor(itemImage);
+                    itemsGroup.add(itemImage).padRight(Gdx.graphics.getWidth() / 50);
                     itemCounter = new Label(entry.getValue().toString(), skin, "itemCounter");
-                    itemsGroup.addActor(itemCounter);
+                    itemsGroup.add(itemCounter).padRight(Gdx.graphics.getWidth() / 15);
                 }
 
                 return false;
@@ -276,6 +268,23 @@ public class MiniGameUI extends Stage implements Observer {
         });
 
         itemsContainer.setActor(itemsGroup);
+    }
+
+    /**
+     * Ajoute ou met à jour un item actif.
+     *
+     * @param itemSprite    Le sprite correspondant
+     * @param itemCounter   La durée restante
+     */
+    public void addActiveItem(Sprite itemSprite, Integer itemCounter) {
+        activeItems.put(itemSprite, itemCounter);
+    }
+
+    /**
+     * Vide la liste des items actifs.
+     */
+    public void resetActiveItems() {
+        activeItems.clear();
     }
 
     /**
@@ -309,13 +318,14 @@ public class MiniGameUI extends Stage implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Integer secondsLeft = (Integer)arg;
+        Timer timer = (Timer)o;
 
-        if (secondsLeft <= 20) {
-            timer.setColor(Color.RED);
-            if (secondsLeft > 0) {
+        timerLabel.setText(timer.toString());
+        if (timer.getSecondsLeft() <= 20) {
+            timerLabel.setColor(Color.RED);
+            if (timer.getSecondsLeft() > 0) {
                 timerColorAction.reset();
-                timer.addAction(timerColorAction);
+                timerLabel.addAction(timerColorAction);
             }
         }
     }
