@@ -21,7 +21,7 @@ import java.util.Set;
 // TODO: Bugfix: Héros invincible si ne bouge pas au début
 public class ArriveeRemarquable extends MiniGame {
 
-	public static final int TIME_LIMIT = 5;
+	public static final int TIME_LIMIT = 3;
 	public static final int STOP_SPAWN = 10;
 
 	public Hero hero;
