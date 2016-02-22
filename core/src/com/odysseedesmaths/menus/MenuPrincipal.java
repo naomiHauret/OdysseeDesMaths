@@ -111,6 +111,8 @@ public class MenuPrincipal implements Screen {
         nouveauJeu.addListener(listener);
         continuer.addListener(listener);
         quitter.addListener(listener);
+
+        Gdx.input.setInputProcessor(stage); //pour faire en sorte que les listener marchent (pourquoi?? j'en sais foutrement rien)
     }
 
     //crée une nouvelle partie
@@ -130,7 +132,6 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage); //pour faire en sorte que les listener marchent (pourquoi?? j'en sais foutrement rien)
 
         Musique.setCurrent(Assets.MENU_MUSIC);
         Musique.play();

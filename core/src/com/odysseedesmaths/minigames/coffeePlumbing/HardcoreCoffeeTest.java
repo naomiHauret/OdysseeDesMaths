@@ -4,35 +4,24 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 
-/**
- * Created by trilunaire on 16/02/16.
- */
-public class HardcoreCoffeeTest extends ApplicationAdapter{
-    //TODO: Faire en sorte que la fucking canalisation affiché en plus grand
-    TiledMap map;
+public class HardcoreCoffeeTest extends ApplicationAdapter {
+    CoffeeLevel level;
     OrthographicCamera camera;
-    TiledMapRenderer mapRenderer;
     Viewport viewport;
-    int mapWidth,mapHeight,width,height;
+    int width;
+    int height;
 
     @Override
     public void create() {
-        width = Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight();
+        width = Gdx.graphics.getWidth()/2;
+        height = Gdx.graphics.getHeight()/2;
         camera = new OrthographicCamera();
-        viewport = new StretchViewport(width/2,height/2,camera);
-        map = new TmxMapLoader().load("maps/CoffeePlumbing/firstMapCoffeePlumbing.tmx");
-        mapRenderer=new OrthogonalTiledMapRenderer(map);
-        // Récupération de ses dimensions
-        mapWidth=((Integer)map.getProperties().get("width")).intValue();
-        mapHeight=((Integer)map.getProperties().get("height")).intValue();
+        viewport = new StretchViewport(width,height,camera);
+        level = new CoffeeLevel("maps/CoffeePlumbing/firstMapCoffeePlumbing.tmx");
     }
 
     @Override
@@ -43,19 +32,19 @@ public class HardcoreCoffeeTest extends ApplicationAdapter{
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mapRenderer.setView(camera);
-        mapRenderer.render();
+        level.get_mapRenderer().setView(camera);
+        level.get_mapRenderer().render();
 
         reglerCamera();
         camera.update();
     }
 
     public void reglerCamera(){
-        float posX, posY, minX, minY, maxX, maxY;
+        float minX, minY, maxX, maxY;
         minX=width/2; //la caméra restera toujours, au minimum, au milieu de l'écran (pas d'affichage en dehors de l'écran)
         minY=height/2;
-        maxX = mapWidth * 64 - minX; //et au maximum, elle ne dépassera pas l'affichage de la fin de la map
-        maxY = mapHeight * 64 - minY;
+        maxX = level.get_mapWidth() - minX; //et au maximum, elle ne dépassera pas l'affichage de la fin de la map
+        maxY = level.get_mapHeight() - minY;
         camera.position.set(Math.max(minX,maxX),Math.max(minY,maxY),0);
     }
 
