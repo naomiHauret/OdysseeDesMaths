@@ -31,6 +31,7 @@ public class OdysseeDesMaths extends Game {
         if (modeScene == null) {
             this.modeScene = new ModeSceneScreen(this);
         }
+        modeScene.returnToScene(); // Pour ne pas retourner sur le menu
         return modeScene;
     }
 

@@ -115,7 +115,7 @@ public class MenuPrincipal implements Screen {
 
     //crée une nouvelle partie
     public void newGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(new ArriveeRemarquable(this.jeu));
+        this.jeu.setScreen(jeu.getModeScene());
     }
     //lance la partie en cours
     public  void launchGame(OdysseeDesMaths jeu){
