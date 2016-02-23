@@ -32,7 +32,6 @@ public class Tuyau {
     }
 
     public HashSet<Tuyau> getAllSuccessor(){
-        //FIXME: Fonction lorsqu'un tuyau à un successeur direct, mais donne une exception lorsqu'il en a plusieurs
         HashSet<Tuyau> allSuccessors = (HashSet<Tuyau>) this.tuyauxSuivants.clone(); //de base on met nos successeurs (clone de l'objet (sinon problème au niveau de l'itérateur))
         //pour chacuns des tuyaux:
         if(!this.tuyauxSuivants.isEmpty()){

@@ -2,19 +2,20 @@ package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
  * Created by trilunaire on 20/02/16.
  */
-/*TODO:
-* - Faire une fonction permettant de prendre tous les tuyaux (voir les layers de la carte, et les propriétés des objets)
-* - Faire une fonction permettant de trouver les vannes
+/*TODO: - Faire une fonction permettant de prendre tous les tuyaux (voir les layers de la carte, et les propriétés des objets) - Faire une fonction permettant de trouver les vannes
 */
-public class Level {
+public class CoffeeLevel {
   private TiledMap map;
   private TiledMapRenderer mapRenderer;
+  private TiledMapTileLayer vannes;
+  private TiledMapTileLayer tuyaux;
   /**
   * Représente la largeur en pixel de la map
   */
@@ -26,15 +27,23 @@ public class Level {
   private int tileWidth;
   private int tileHeight;
 
-  public Level(String mapPath){
+  public CoffeeLevel(String mapPath){
     this.map = new TmxMapLoader().load(mapPath);
     this.mapRenderer = new OrthogonalTiledMapRenderer(map);
 
+    //configuration des variables de tailles
     this.tileWidth = ((Integer)this.map.getProperties().get("tilewidth"));
     this.tileHeight = ((Integer)this.map.getProperties().get("tileheight"));
 
     this.mapWidth =  (Integer)this.map.getProperties().get("width") * tileWidth;
     this.mapHeight = ((Integer)this.map.getProperties().get("height"))*tileHeight;
+
+    System.out.println(tileWidth+"+"+tileHeight+"+"+mapWidth+"+"+mapHeight);
+
+    //configuration des layers
+    this.vannes = (TiledMapTileLayer)map.getLayers().get("vannes");
+    this.tuyaux = (TiledMapTileLayer)map.getLayers().get("tuyaux");
+    System.out.println("Sparttaaaaaaaa");
   }
 
   /**
@@ -131,5 +140,41 @@ public class Level {
   */
   public void set_tileWidth(int new_tileWidth){
     this.tileWidth = new_tileWidth;
+  }
+
+  /**
+  * Getter of vannes
+  * @return the value of vannes
+  */
+  public TiledMapTileLayer get_vannes(){
+    return this.vannes;
+  }
+
+  /**
+  * Setter of vannes
+  * @param new_vannes: the new value of vannes
+  */
+  public void set_vannes(TiledMapTileLayer new_vannes){
+    this.vannes = new_vannes;
+  }
+
+  /**
+  * Getter of tuyaux
+  * @return the value of tuyaux
+  */
+  public TiledMapTileLayer get_tuyaux(){
+    return this.tuyaux;
+  }
+
+  /**
+  * Setter of tuyaux
+  * @param new_tuyaux: the new value of tuyaux
+  */
+  public void set_tuyaux(TiledMapTileLayer new_tuyaux){
+    this.tuyaux = new_tuyaux;
+  }
+
+  public void dispose(){
+    map.dispose();
   }
 }
