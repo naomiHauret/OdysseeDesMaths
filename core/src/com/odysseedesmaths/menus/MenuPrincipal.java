@@ -125,10 +125,7 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void show() {
-<<<<<<< HEAD
-=======
         Gdx.input.setInputProcessor(stage);
->>>>>>> 3ae67157e27743ca52f5fad3819e618233043b12
 
         Musique.setCurrent(Assets.MENU_MUSIC);
         Musique.play();

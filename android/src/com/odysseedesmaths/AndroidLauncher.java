@@ -12,6 +12,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		System.out.print("This is ");
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new HardcoreCoffeeTest(), config);
+		initialize(new OdysseeDesMaths(), config);
 	}
 }
