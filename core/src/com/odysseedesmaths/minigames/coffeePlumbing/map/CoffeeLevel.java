@@ -1,5 +1,6 @@
 package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -30,6 +31,8 @@ public class CoffeeLevel {
     private int tileWidth;
     private int tileHeight;
     private Case[][] cases;
+    private Sprite[][] sprites;
+
 
     public CoffeeLevel(String mapPath) {
         this.map = new TmxMapLoader().load(mapPath);
@@ -51,6 +54,7 @@ public class CoffeeLevel {
         this.koffeeMeters = (TiledMapTileLayer) map.getLayers().get("koffeeMeters");
 
         this.cases=new Case[mapWidthTiled][mapHeightTiled];
+        this.sprites=new Sprite[mapWidthTiled][mapHeightTiled];
     }
 
     public void createGUI() {
@@ -61,11 +65,23 @@ public class CoffeeLevel {
         boolean[][] posVannes = getItemsPosition(this.vannes);
         boolean[][] posKoffeeMeter = getItemsPosition(this.koffeeMeters);
 
+        /* On prends les obstacles & sprites*/
         for(int i=0; i<mapWidthTiled;i++){
-            for(int j=0; j<mapHeightTiled){
-                cases[i][j] = new Case(i,j,!posTuyaux[i][j]);
+            for(int j=0; j<mapHeightTiled; j++){
+                if(!posTuyaux[i][j]){ //si on a un obstacle
+                    cases[i][j] = new Case(i,j,!posTuyaux[i][j]);
+                    //La ou on a un obstacles (pas tuyau), on n'as pas de sprite
+                    sprites[i][j] = null;
+                }
+                else if(posVannes[i][j] || posKoffeeMeter[i][j]){ //si on a un sprite
+                   // sprites[i][j] = new Sprite(i,j);
+                    cases[i][j] = null;
+                }
             }
         }
+
+
+        
     }
 
     /**
@@ -279,6 +295,22 @@ public class CoffeeLevel {
      */
     public void set_mapHeightTiled(int new_mapHeightTiled) {
         this.mapHeightTiled = new_mapHeightTiled;
+    }
+
+    /**
+    * Getter of sprite
+    * @return the value of sprite
+    */
+    public Sprite[][] get_sprites(){
+      return this.sprites;
+    }
+
+    /**
+    * Setter of sprite
+    * @param new_sprite: the new value of sprite
+    */
+    public void set_sprites(Sprite[][] new_sprites){
+      this.sprites = new_sprites;
     }
 
     public void dispose() {

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="5" tilewidth="64" tileheight="64">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
   <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
  </tileset>
- <layer name="background" width="10" height="5">
+ <layer name="background" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJzjYGBg4BgGGACgKAGR
+   eJzjYGBg4BjFGBgAN8cCMQ==
   </data>
  </layer>
- <layer name="liaison" width="10" height="5">
+ <layer name="liaison" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOWIGYDYccCDATqYcFjxm4AC678bkJABQMADQ=
+   eJxjYMAOWIGYDYccCDATqYcFjxm4AC67CbmJmgAAJEwANA==
   </data>
  </layer>
- <layer name="tuyaux" width="10" height="5">
+ <layer name="tuyaux" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYEAFvEDMiMTnZiAO8CCxGaGYkF6YXVxQ/TB96HbzoIkzomGQfgAr6AB/
+   eJxjYEAFvEDMiMTnZiAO8CCxGaGYkF6YXVxQ/TB96HbzoIkzomEuIt1ICgAAU5gAfw==
   </data>
  </layer>
- <layer name="vannes" width="10" height="5">
+ <layer name="vannes" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYEAFQgT4xABy9JCiF5saACcIAFs=
+   eJxjYEAFQgT4xABy9JCilxLziQUAQ3gAWw==
   </data>
  </layer>
- <layer name="koffeeMeters" width="10" height="5">
+ <layer name="koffeeMeters" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYMAEnFjECAF0PdQwgxS1ABI4AC4=
+   eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
   </data>
  </layer>
 </map>

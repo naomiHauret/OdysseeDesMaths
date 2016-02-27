@@ -120,6 +120,7 @@ public class MenuPrincipal implements Screen {
 
     //lance la partie en cours
     public void launchGame(OdysseeDesMaths jeu){
+        this.jeu.setScreen(new ArriveeRemarquable(jeu));
 
     }
 
@@ -173,7 +174,8 @@ public class MenuPrincipal implements Screen {
             if (source == nouveauJeu.getLabel()) {
                 newGame(jeu);
             } else if (source == continuer.getLabel()) {
-                //nothing yet
+                System.out.println("Continuer");
+                launchGame(jeu);
             } else if (source == quitter.getLabel()) {
                 Gdx.app.exit();
             }

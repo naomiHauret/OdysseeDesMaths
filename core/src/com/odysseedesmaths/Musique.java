@@ -25,8 +25,8 @@ public class Musique {
     }
 
     public static void play() {
-        currentMusic.play();
         currentMusic.setLooping(true);
+        currentMusic.play();
     }
 
     public static void pause() {
@@ -35,6 +35,7 @@ public class Musique {
 
     public static void stop() {
         Assets.getManager().unload(currentFile);
+        currentMusic.dispose();
     }
 
     public static boolean isPlaying() {

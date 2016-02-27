@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 
+//Classe pour les test ...en bazard
 public class HardcoreCoffeeTest extends ApplicationAdapter {
     CoffeeLevel level;
     OrthographicCamera camera;
