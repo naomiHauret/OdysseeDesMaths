@@ -3,13 +3,16 @@ package com.odysseedesmaths;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.odysseedesmaths.menus.MenuPrincipal;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.odysseedesmaths.menus.NewSave;
+import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 public class OdysseeDesMaths extends Game {
     public SpriteBatch batcher;
 
     private MenuPrincipal menuPrincipal = null;
     private ModeSceneScreen modeScene = null;
+
+    private SavesManager savesManager;
 
     @Override
     public void create() {
@@ -35,9 +38,24 @@ public class OdysseeDesMaths extends Game {
         return modeScene;
     }
 
+    public SavesManager getSavesManager() {
+        if (savesManager == null) {
+            this.savesManager = new SavesManager();
+        }
+        return savesManager;
+    }
+
     /* Ces méthodes permettent d'éviter d'instancier plusieurs fois des écrans
     toujours identiques.
     On peut faire de même pour chaque jeu, où vérifier qu'ils sont détruits lorsqu'on les
     quitte.
      */
+
+    public void startGame() {
+        if (savesManager.getCurrentSave().isEmpty()) {
+            setScreen(new NewSave(this));
+        } else {
+            setScreen(new ArriveeRemarquable(this));
+        }
+    }
 }

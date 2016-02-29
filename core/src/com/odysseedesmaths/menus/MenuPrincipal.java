@@ -76,46 +76,32 @@ public class MenuPrincipal implements Screen {
         tableau.background(new SpriteDrawable(new Sprite(Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class))));
 
         //le titre prends un tiers
-        tableau.add(text).height(Gdx.graphics.getWidth() / 3).pad(10);
+        tableau.add(text).pad(10);
         tableau.getCell(text).expand();
 
         //le reste pour les trois autres boutons
         tableau.row();
-        tableau.add(continuer).height(2 * Gdx.graphics.getWidth() / 6).pad(10);
+        tableau.add(continuer);
         tableau.getCell(continuer).expand();
         tableau.row();
-        tableau.add(nouveauJeu).height(2 * Gdx.graphics.getWidth() / 6).pad(10);
+        tableau.add(nouveauJeu);
         tableau.getCell(nouveauJeu).expand();
         tableau.row();
-        tableau.add(quitter).height(2 * Gdx.graphics.getWidth() / 6).pad(10);
+        tableau.add(quitter);
         tableau.getCell(quitter).expand();
 
         stage.addActor(tableau);
-    }
-
-    public TextButton getNouveauJeu() {
-        return nouveauJeu;
-    }
-
-    public TextButton getContinuer() {
-        return continuer;
-    }
-
-    public TextButton getQuitter() {
-        return quitter;
     }
 
     public void setListener(EventListener listener) {
         nouveauJeu.addListener(listener);
         continuer.addListener(listener);
         quitter.addListener(listener);
-
-        Gdx.input.setInputProcessor(stage); //pour faire en sorte que les listener marchent (pourquoi?? j'en sais foutrement rien)
     }
 
     //crée une nouvelle partie
     public void newGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(jeu.getModeScene());
+        this.jeu.setScreen(new SaveSelection(jeu));
     }
 
     //lance la partie en cours
@@ -125,11 +111,7 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void show() {
-<<<<<<< HEAD
-=======
         Gdx.input.setInputProcessor(stage);
->>>>>>> 3ae67157e27743ca52f5fad3819e618233043b12
-
         Musique.setCurrent(Assets.MENU_MUSIC);
         Musique.play();
     }
@@ -176,7 +158,7 @@ public class MenuPrincipal implements Screen {
             if (source == nouveauJeu.getLabel()) {
                 newGame(jeu);
             } else if (source == continuer.getLabel()) {
-                //nothing yet
+                jeu.setScreen(new ArriveeRemarquable(jeu));
             } else if (source == quitter.getLabel()) {
                 Gdx.app.exit();
             }

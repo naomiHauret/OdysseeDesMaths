@@ -32,7 +32,7 @@ import java.util.Observer;
 // TODO: Redimensionner l'UI pour toutes les tailles d'écran
 public class MiniGameUI extends Stage implements Observer {
 
-    private static final int PAD_ARROW_SIZE = 64;
+    private static final int PAD_SPACE = 64;
 
     private Table table;
     private Skin skin;
@@ -188,7 +188,7 @@ public class MiniGameUI extends Stage implements Observer {
      * @param aTimer Le Timer à utiliser
      */
     public void addTimer(final Timer aTimer) {
-        skin.add("timer", new LabelStyle(Assets.TIMER, Color.WHITE));
+        skin.add("timer", new LabelStyle(Assets.TIMER, null));
 
         aTimer.addObserver(this);
         timerColorAction = new ColorAction();
@@ -235,7 +235,7 @@ public class MiniGameUI extends Stage implements Observer {
         padGroup = new Table();
         padGroup.add(padUp).colspan(2);
         padGroup.row();
-        padGroup.add(padLeft).padRight(PAD_ARROW_SIZE);     // padRight (padding) : espace au centre du pad
+        padGroup.add(padLeft).padRight(PAD_SPACE);
         padGroup.add(padRight);
         padGroup.row();
         padGroup.add(padDown).colspan(2);
@@ -247,7 +247,7 @@ public class MiniGameUI extends Stage implements Observer {
      * Ajoute des items actifs à l'interface.
      */
     public void addItems() {
-        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, Color.WHITE));
+        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, null));
 
         activeItems = new HashMap<Sprite, Integer>();
         itemsGroup = new Table();

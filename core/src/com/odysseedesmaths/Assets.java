@@ -26,7 +26,9 @@ public class Assets {
     public static final String
             HERO = "heros.png",
             HEART = "coeur.png",
-            MAIN_MENU_BACKGROUND = "tower.png";
+            MAIN_MENU_BACKGROUND = "tower.png",
+            CROSS = "cross.png",
+            PLUS = "plus.png";
 
 
     @Asset(TextureAtlas.class)
@@ -58,6 +60,7 @@ public class Assets {
 
         parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 17;
+        parameter.color = Color.WHITE;
         parameter.borderWidth = 3;
         parameter.borderColor = Color.BLACK;
         TIMER = generator.generateFont(parameter);
@@ -65,8 +68,9 @@ public class Assets {
 
         parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 9;
-        parameter.borderWidth = 3;
-        parameter.borderColor = Color.FIREBRICK;
+        parameter.color = Color.RED;
+        parameter.borderWidth = 5;
+        parameter.borderColor = Color.WHITE;
         GAME_OVER = generator.generateFont(parameter);
 
         /* Font : Pixel Life */
@@ -74,6 +78,7 @@ public class Assets {
 
         parameter = new FreeTypeFontParameter();
         parameter.size = Gdx.graphics.getHeight() / 10;
+        parameter.color = Color.WHITE;
         BUTTON = generator.generateFont(parameter);
 
         generator.dispose();

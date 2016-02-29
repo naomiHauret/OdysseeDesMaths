@@ -1,7 +1,6 @@
 package com.odysseedesmaths.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -31,7 +30,7 @@ public class MenuGameOver extends Menu {
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
 
-        LabelStyle titleStyle = new LabelStyle(Assets.GAME_OVER, Color.WHITE);
+        LabelStyle titleStyle = new LabelStyle(Assets.GAME_OVER, null);
         skin.add("title", titleStyle);
 
         TextButtonStyle buttonStyle = new TextButtonStyle();
@@ -41,7 +40,7 @@ public class MenuGameOver extends Menu {
         skin.add("button", buttonStyle);
 
         title = new Label("GAME OVER", skin, "title");
-        retry = new TextButton("Reessayer", skin, "button");
+        retry = new TextButton("Recommencer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
         table.add(title).colspan(2).padBottom(Gdx.graphics.getHeight() / 20);
