@@ -50,7 +50,7 @@ public class CoffeeLevel {
 
         //configuration des layers
         this.vannes = (TiledMapTileLayer) map.getLayers().get("vannes");
-        this.tuyaux = (TiledMapTileLayer) map.getLayers().get("tuyaux");
+            this.tuyaux = (TiledMapTileLayer) map.getLayers().get("tuyaux");
         this.koffeeMeters = (TiledMapTileLayer) map.getLayers().get("koffeeMeters");
 
         this.cases=new Case[mapWidthTiled][mapHeightTiled];
@@ -63,7 +63,14 @@ public class CoffeeLevel {
     */
         boolean[][] posTuyaux = getItemsPosition(this.tuyaux);
         boolean[][] posVannes = getItemsPosition(this.vannes);
+        boolean[][] posLiaison = getItemsPosition((TiledMapTileLayer)this.map.getLayers().get("liaison"));
         boolean[][] posKoffeeMeter = getItemsPosition(this.koffeeMeters);
+        boolean[][] cellAlreadyTest = new boolean[mapWidthTiled][mapHeightTiled];
+        boolean morceauTuyau = false;
+        int[] coordonneesPrecedentes = new int[2];
+        int[] coordonneesCourantes=new int[2];
+        int[] coordonneesOrigines=new int[2];
+
 
         /* On prends les obstacles & sprites*/
         for(int i=0; i<mapWidthTiled;i++){
@@ -80,8 +87,131 @@ public class CoffeeLevel {
             }
         }
 
+        //on construit les différents tuyaux de la map
+        for(int i=0; i<mapWidthTiled; i++){
+            for(int j=0; j<mapHeightTiled; j++){
+                if(posTuyaux[i][j] && !cellAlreadyTest[i][j]){//si c'est un tuyau et qu'on n'est pas déjà passé
+                    //on se place à une extrémité d'un tuyau
+                    coordonneesCourantes[0]=i;
+                    coordonneesCourantes[1]=j;
+                    coordonneesPrecedentes=coordonneesCourantes;
+                    do{
+                        switch((String)tuyaux.getCell(coordonneesCourantes[0],coordonneesCourantes[1]).getTile().getProperties().get("name")){
+                            case "horizontal":
+                                coordonneesPrecedentes = coordonneesCourantes;
+                                coordonneesCourantes[0]++; //on reste sur la même ligne, on regarde juste le morceau d'après
+                                break;
+                            case "vertical":
+                                coordonneesPrecedentes = coordonneesCourantes;
+                                coordonneesCourantes[1]++;
+                                break;
+                            case "left_top":
+                                if(coordonneesPrecedentes[0]+1==coordonneesCourantes[0]){ //si on viens de la gauche
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]++; //on monte
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]--; //pour aller à gauche
+                                }
+                                break;
+                            case "left_bottom":
+                                if(coordonneesPrecedentes[0]+1==coordonneesCourantes[0]){ //si on viens de la gauche
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]--; //on descends
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]--; //pour aller à gauche
+                                }
+                                break;
+                            case "top_right":
+                                if(coordonneesPrecedentes[0]-1==coordonneesCourantes[0]){ //si on viens de la droite
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]++; //on monte
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]++; //pour aller à droite
+                                }
+                                break;
+                            case "bottom_right":
+                                if(coordonneesPrecedentes[0]-1==coordonneesCourantes[0]){ //si on viens de la droite
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]--; //on descends
+                                }
+                                else{//sinon on viens du bas
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]++; //pour aller à droite
+                                }
+                                break;
+                            default:
+                                System.out.println("Je connais pas");
+                                break;
+                        }
+                    }while(!posLiaison[coordonneesCourantes[0]][coordonneesCourantes[1]]);
 
-        
+
+                    
+                    //quand c'est fait on peut prendre notre tuyau
+                    do{
+                        switch((String)tuyaux.getCell(coordonneesCourantes[0],coordonneesCourantes[1]).getTile().getProperties().get("name")){
+                            case "horizontal":
+                                coordonneesPrecedentes = coordonneesCourantes;
+                                coordonneesCourantes[0]++; //on reste sur la même ligne, on regarde juste le morceau d'après
+                                break;
+                            case "vertical":
+                                coordonneesPrecedentes = coordonneesCourantes;
+                                coordonneesCourantes[1]++;
+                                break;
+                            case "left_top":
+                                if(coordonneesPrecedentes[0]+1==coordonneesCourantes[0]){ //si on viens de la gauche
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]++; //on monte
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]--; //pour aller à gauche
+                                }
+                                break;
+                            case "left_bottom":
+                                if(coordonneesPrecedentes[0]+1==coordonneesCourantes[0]){ //si on viens de la gauche
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]--; //on descends
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]--; //pour aller à gauche
+                                }
+                                break;
+                            case "top_right":
+                                if(coordonneesPrecedentes[0]-1==coordonneesCourantes[0]){ //si on viens de la droite
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]++; //on monte
+                                }
+                                else{//sinon on viens du haut
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]++; //pour aller à droite
+                                }
+                                break;
+                            case "bottom_right":
+                                if(coordonneesPrecedentes[0]-1==coordonneesCourantes[0]){ //si on viens de la droite
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[1]--; //on descends
+                                }
+                                else{//sinon on viens du bas
+                                    coordonneesPrecedentes=coordonneesCourantes;
+                                    coordonneesCourantes[0]++; //pour aller à droite
+                                }
+                                break;
+                            default:
+                                System.out.println("Je connais pas");
+                                break;
+                        }
+                    }while(morceauTuyau);
+                }
+            }
+        }
     }
 
     /**
@@ -307,7 +437,7 @@ public class CoffeeLevel {
 
     /**
     * Setter of sprite
-    * @param new_sprite: the new value of sprite
+    * @param new_sprites: the new value of sprite
     */
     public void set_sprites(Sprite[][] new_sprites){
       this.sprites = new_sprites;

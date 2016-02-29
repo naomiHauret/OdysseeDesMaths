@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.SortedSet;
 
 /**
  * Created by trilunaire on 08/02/16.
@@ -14,6 +15,7 @@ public class Tuyau {
      * Le vecteur de tuyaux contient seulement les voisins les plus proches
      */
     private HashSet<Tuyau> tuyauxSuivants;
+    private HashSet<int[]> cases;
 
     public Tuyau(int capacite){
         this.ouvert= false; //fermé par defaut
@@ -68,4 +70,19 @@ public class Tuyau {
         return "Flux courant: "+this.fluxCourant+"||Capacité: "+this.capacite+"||État: "+this.ouvert+"\n";
     }
 
+    /**
+    * Getter of cases
+    * @return the value of cases
+    */
+    public HashSet<int[]> get_cases(){
+      return this.cases;
+    }
+
+    /**
+    * Setter of cases
+    * @param new_cases: the new value of cases
+    */
+    public void set_cases(HashSet<int[]> new_cases){
+      this.cases = new_cases;
+    }
 }
