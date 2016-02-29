@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 
+//Classe pour les test ...en bazard
 public class HardcoreCoffeeTest extends ApplicationAdapter {
     CoffeeLevel level;
     OrthographicCamera camera;
@@ -21,7 +22,7 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         height = Gdx.graphics.getHeight()/2;
         camera = new OrthographicCamera();
         viewport = new StretchViewport(width,height,camera);
-        level = new CoffeeLevel("maps/CoffeePlumbing/firstMapCoffeePlumbing.tmx");
+        level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
     }
 
     @Override
@@ -43,8 +44,8 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         float minX, minY, maxX, maxY;
         minX=width/2; //la caméra restera toujours, au minimum, au milieu de l'écran (pas d'affichage en dehors de l'écran)
         minY=height/2;
-        maxX = level.get_mapWidth() - minX; //et au maximum, elle ne dépassera pas l'affichage de la fin de la map
-        maxY = level.get_mapHeight() - minY;
+        maxX = level.get_mapWidthPixel() - minX; //et au maximum, elle ne dépassera pas l'affichage de la fin de la map
+        maxY = level.get_mapHeightPixel() - minY;
         camera.position.set(Math.max(minX,maxX),Math.max(minY,maxY),0);
     }
 

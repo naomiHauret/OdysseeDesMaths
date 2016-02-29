@@ -1,4 +1,4 @@
-package com.odysseedesmaths.minigames.coffeePlumbing;
+package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
 import java.util.HashSet;
 import java.util.Iterator;
