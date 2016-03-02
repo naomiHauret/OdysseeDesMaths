@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.menus.MenuPrincipal;
 
 public abstract class MiniGame implements Screen {
 
@@ -68,6 +69,6 @@ public abstract class MiniGame implements Screen {
     }
 
     public void returnToMainMenu() {
-        game.setScreen(game.getMenuPrincipal());
+        game.setScreen(new MenuPrincipal(game));
     }
 }

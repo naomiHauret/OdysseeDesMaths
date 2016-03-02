@@ -26,15 +26,14 @@ public class Assets {
     public static final String
             HERO = "heros.png",
             HEART = "coeur.png",
-            MAIN_MENU_BACKGROUND = "tower.png",
-            CROSS = "cross.png",
-            PLUS = "plus.png";
+            MAIN_MENU_BACKGROUND = "tower.png";
 
 
     @Asset(TextureAtlas.class)
     public static final String
-            UI = "ui/ui.atlas",
-            UI_TEST = "test/uiskin.atlas";
+            UI_MAIN = "ui/main.atlas",
+            UI_RED = "ui/red.atlas",
+            UI_GREY = "ui/grey.atlas";
 
 
     @Asset(Music.class)
@@ -52,17 +51,12 @@ public class Assets {
             ITEM_COUNTER;
 
     static {
-        FreeTypeFontGenerator generator;
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontParameter parameter;
 
-        /* Font : Press Start 2P */
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
-
         parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 17;
+        parameter.size = Gdx.graphics.getHeight() / 20;
         parameter.color = Color.WHITE;
-        parameter.borderWidth = 3;
-        parameter.borderColor = Color.BLACK;
         TIMER = generator.generateFont(parameter);
         ITEM_COUNTER = generator.generateFont(parameter);
 
@@ -73,11 +67,8 @@ public class Assets {
         parameter.borderColor = Color.WHITE;
         GAME_OVER = generator.generateFont(parameter);
 
-        /* Font : Pixel Life */
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel-life.TTF"));
-
         parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 10;
+        parameter.size = Gdx.graphics.getHeight() / 22;
         parameter.color = Color.WHITE;
         BUTTON = generator.generateFont(parameter);
 

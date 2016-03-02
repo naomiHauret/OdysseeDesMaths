@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,7 +34,7 @@ import java.util.Observer;
 // TODO: Redimensionner l'UI pour toutes les tailles d'écran
 public class MiniGameUI extends Stage implements Observer {
 
-    private static final int PAD_SPACE = 64;
+    private static final int PAD_SPACE = 48;
 
     private Table table;
     private Skin skin;
@@ -56,7 +58,7 @@ public class MiniGameUI extends Stage implements Observer {
     private ColorAction timerColorAction;
 
     private Container<Actor> pauseContainer;
-    private Button pause;
+    private ImageButton pause;
 
     private Container<Actor> oxygenContainer;
 
@@ -84,7 +86,8 @@ public class MiniGameUI extends Stage implements Observer {
         addActor(table);
 
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
 
         north = new Table();
         west = new Table();
@@ -112,7 +115,7 @@ public class MiniGameUI extends Stage implements Observer {
 
         north.add(heroHpContainer).top().left();
         north.add(bossHpContainer).top().expandX();
-        north.add(timerContainer).top().right().padTop(Gdx.graphics.getHeight() / 50).padRight(Gdx.graphics.getHeight() / 50);
+        north.add(timerContainer).right();
         north.add(pauseContainer).top();
         west.add(oxygenContainer).top().left().expandY();
         south.add(padContainer).bottom().left();
@@ -160,19 +163,20 @@ public class MiniGameUI extends Stage implements Observer {
      */
     public void addHeroHp(final Hero aHero) {
         heroHpGroup = new Table();
+        heroHpGroup.defaults().space(10);
         heroHpGroup.addAction(new Action() {
             @Override
             public boolean act(float delta) {
                 heroHpGroup.clearChildren();
 
                 for (int i = 0; i < aHero.getPdv(); i++) {
-                    heroHp = new Image(skin.getDrawable("coeur"));
-                    heroHpGroup.add(heroHp).padRight(10);
+                    heroHp = new Image(skin.getDrawable("heart_full"));
+                    heroHpGroup.add(heroHp);
                 }
 
                 for (int i = 0; i < Hero.PDV_MAX - aHero.getPdv(); i++) {
-                    heroHp = new Image(skin.getDrawable("coeurVide"));
-                    heroHpGroup.add(heroHp).padRight(10);
+                    heroHp = new Image(skin.getDrawable("heart_empty"));
+                    heroHpGroup.add(heroHp);
                 }
 
                 return false;
@@ -188,7 +192,10 @@ public class MiniGameUI extends Stage implements Observer {
      * @param aTimer Le Timer à utiliser
      */
     public void addTimer(final Timer aTimer) {
-        skin.add("timer", new LabelStyle(Assets.TIMER, null));
+        LabelStyle timerStyle = new LabelStyle();
+        timerStyle.font = Assets.TIMER;
+        timerStyle.background = skin.getDrawable("frame_left");
+        skin.add("timer", timerStyle);
 
         aTimer.addObserver(this);
         timerColorAction = new ColorAction();
@@ -208,23 +215,23 @@ public class MiniGameUI extends Stage implements Observer {
         ButtonStyle padStyle;
 
         padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("flecheGauche");
-        padStyle.down = skin.getDrawable("flecheGaucheTap");
+        padStyle.up = skin.getDrawable("arrow_left");
+        padStyle.down = skin.getDrawable("arrow_left_pressed");
         skin.add("padLeft", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("flecheDroite");
-        padStyle.down = skin.getDrawable("flecheDroiteTap");
+        padStyle.up = skin.getDrawable("arrow_right");
+        padStyle.down = skin.getDrawable("arrow_right_pressed");
         skin.add("padRight", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("flecheHaut");
-        padStyle.down = skin.getDrawable("flecheHautTap");
+        padStyle.up = skin.getDrawable("arrow_up");
+        padStyle.down = skin.getDrawable("arrow_up_pressed");
         skin.add("padUp", padStyle);
 
         padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("flecheBas");
-        padStyle.down = skin.getDrawable("flecheBasTap");
+        padStyle.up = skin.getDrawable("arrow_down");
+        padStyle.down = skin.getDrawable("arrow_down_pressed");
         skin.add("padDown", padStyle);
 
         padLeft = new Button(skin, "padLeft");
@@ -233,9 +240,10 @@ public class MiniGameUI extends Stage implements Observer {
         padDown = new Button(skin, "padDown");
 
         padGroup = new Table();
+        padGroup.defaults().space(10);
         padGroup.add(padUp).colspan(2);
         padGroup.row();
-        padGroup.add(padLeft).padRight(PAD_SPACE);
+        padGroup.add(padLeft).padRight(PAD_SPACE + 20);
         padGroup.add(padRight);
         padGroup.row();
         padGroup.add(padDown).colspan(2);
@@ -306,12 +314,13 @@ public class MiniGameUI extends Stage implements Observer {
      * Ajoute un bouton pause à l'interface.
      */
     private void addPause() {
-        ButtonStyle pauseStyle = new ButtonStyle();
-        pauseStyle.up = skin.getDrawable("pause");
-        pauseStyle.down = skin.getDrawable("pauseTap");
+        ImageButtonStyle pauseStyle = new ImageButtonStyle();
+        pauseStyle.up = skin.getDrawable("button");
+        pauseStyle.imageUp = skin.getDrawable("pause");
+        pauseStyle.down = skin.getDrawable("button_pressed");
         skin.add("pause", pauseStyle);
 
-        pause = new Button(skin, "pause");
+        pause = new ImageButton(skin, "pause");
 
         pauseContainer.setActor(pause);
     }
@@ -323,10 +332,8 @@ public class MiniGameUI extends Stage implements Observer {
         timerLabel.setText(timer.toString());
         if (timer.getSecondsLeft() <= 20) {
             timerLabel.setColor(Color.RED);
-            if (timer.getSecondsLeft() > 0) {
-                timerColorAction.reset();
-                timerLabel.addAction(timerColorAction);
-            }
+            timerColorAction.reset();
+            timerLabel.addAction(timerColorAction);
         }
     }
 }

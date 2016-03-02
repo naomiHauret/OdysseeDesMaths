@@ -6,108 +6,126 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.OdysseeDesMaths;
-import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 public class MenuPrincipal implements Screen {
-    private TextButton nouveauJeu, continuer, quitter;
-    private TextButton.TextButtonStyle txtButtonStyle=null;
-    private Label text;
-    private Table tableau;
-    private Stage stage = null;
-    private Label.LabelStyle textStyle;
     private OdysseeDesMaths jeu;
+
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 480;
+    private Viewport viewport;
+
+    private Stage stage;
+    private Table tableau;
+    private Skin skin;
+
+    private TextButton play;
+    private TextButtonStyle playButtonStyle;
+
+    private Button music;
+    private ButtonStyle musicButtonStyle;
+    private Button sounds;
+    private ButtonStyle soundsButtonStyle;
+
+    private Label gameTitle;
+    private LabelStyle gameTitleStyle;
+
     private BitmapFont menuFont = null, fontButton = null;
     private FreeTypeFontGenerator ftfg = null;
-    private FreeTypeFontGenerator.FreeTypeFontParameter ftfp = null;
-
+    private FreeTypeFontParameter ftfp = null;
 
     public MenuPrincipal(OdysseeDesMaths jeu) {
         this.jeu = jeu;
-        this.stage = new Stage();
+
+        this.viewport = new StretchViewport(WIDTH, HEIGHT);
+        this.stage = new Stage(viewport);
         this.tableau = new Table();
+        this.skin = new Skin();
+        this.skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        this.skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
+        this.skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
 
         //propriétés relatives à la police
-        this.ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this.ftfp = new FreeTypeFontParameter();
         this.menuFont = new BitmapFont();
         this.fontButton = new BitmapFont();
 
-        this.txtButtonStyle = new TextButton.TextButtonStyle();
-        this.textStyle = new Label.LabelStyle();
+        this.playButtonStyle = new TextButtonStyle();
+        this.gameTitleStyle = new LabelStyle();
+        this.musicButtonStyle = new ButtonStyle();
+        this.soundsButtonStyle = new ButtonStyle();
 
         this.createUI();
     }
 
-    public void createUI(){
+    public void createUI() {
         //font parameter
-        ftfp.size = Gdx.graphics.getHeight()/ 15; //the size can be changed later
+        ftfp.size = HEIGHT / 9; //the size can be changed later
+        ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
+        menuFont = ftfg.generateFont(ftfp);
+
+        ftfp.size = HEIGHT / 15;
         ftfp.color = new Color(255f,255f,255f,1);
         ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
-        menuFont = ftfg.generateFont(ftfp);
-        ftfp.size = Gdx.graphics.getHeight()/ 20;
         fontButton =  ftfg.generateFont(ftfp);
 
-        //button style
-        txtButtonStyle.font = fontButton;
-        textStyle.font = menuFont;
+        //buttons styles
+        playButtonStyle.font = fontButton;
+        playButtonStyle.up = skin.getDrawable("button");
+        playButtonStyle.down = skin.getDrawable("button_pressed");
+        gameTitleStyle.font = menuFont;
+        musicButtonStyle.up = skin.getDrawable("music_on");
+        soundsButtonStyle.up = skin.getDrawable("sounds_on");
 
         //texts and buttons
-        text = new Label("L'Odyssée des Maths",textStyle);
-        nouveauJeu = new TextButton("Nouvelle partie",txtButtonStyle);
-        continuer = new TextButton("Reprendre",txtButtonStyle);
-        quitter = new TextButton("Quitter",txtButtonStyle);
+        gameTitle = new Label("L'Odyssée des Maths", gameTitleStyle);
+        play = new TextButton("JOUER", playButtonStyle);
+        music = new Button(musicButtonStyle);
+        sounds = new Button(soundsButtonStyle);
         setListener(new MenuListener());
 
         //table disposition
         tableau.setFillParent(true);
-        tableau.background(new SpriteDrawable(new Sprite(Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class))));
+        tableau.setBackground(skin.getDrawable("background"));
 
-        //le titre prends un tiers
-        tableau.add(text).pad(10);
-        tableau.getCell(text).expand();
-
-        //le reste pour les trois autres boutons
+        tableau.padTop(HEIGHT / 3);
+        tableau.add(gameTitle).colspan(2).bottom().padBottom(HEIGHT / 12);
         tableau.row();
-        tableau.add(continuer);
-        tableau.getCell(continuer).expand();
+        tableau.add(play).colspan(2).top().expand();
         tableau.row();
-        tableau.add(nouveauJeu);
-        tableau.getCell(nouveauJeu).expand();
-        tableau.row();
-        tableau.add(quitter);
-        tableau.getCell(quitter).expand();
+        tableau.add(music);
+        tableau.add(sounds).left().expandX();
 
         stage.addActor(tableau);
     }
 
     public void setListener(EventListener listener) {
-        nouveauJeu.addListener(listener);
-        continuer.addListener(listener);
-        quitter.addListener(listener);
-    }
-
-    //crée une nouvelle partie
-    public void newGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(new SaveSelection(jeu));
-    }
-
-    //lance la partie en cours
-    public void launchGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(new ArriveeRemarquable(jeu));
-
+        play.addListener(listener);
+        music.addListener(listener);
+        sounds.addListener(listener);
     }
 
     @Override
@@ -120,7 +138,12 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void render(float delta) {
+        if (gameTitle.getY() == HEIGHT * 12/13 - gameTitle.getHeight()) {
+            this.jeu.setScreen(new SaveSelection(jeu));
+        }
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(delta);
         stage.draw();
     }
 
@@ -152,17 +175,42 @@ public class MenuPrincipal implements Screen {
         menuFont.dispose();
     }
 
-    public class MenuListener extends InputListener{
+    private void play(){
+        AlphaAction alphaAction = new AlphaAction();
+        alphaAction.setAlpha(0);
+        alphaAction.setDuration(0.5f);
+        play.addAction(alphaAction);
+        play.setTouchable(Touchable.disabled);
+
+        MoveToAction moveToAction = new MoveToAction();
+        moveToAction.setPosition(gameTitle.getX(), HEIGHT * 12 / 13 - gameTitle.getHeight());
+        moveToAction.setDuration(2);
+        gameTitle.addAction(moveToAction);
+    }
+
+    private class MenuListener extends InputListener{
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             Actor source = event.getTarget();
 
-            if (source == nouveauJeu.getLabel()) {
-                newGame(jeu);
-            } else if (source == continuer.getLabel()) {
-                launchGame(jeu);
-            } else if (source == quitter.getLabel()) {
-                Gdx.app.exit();
+            if ((source == play) || (source == play.getLabel())) {
+                play();
+            } else if (source == music) {
+                if (Musique.isPlaying()) {
+                    Musique.pause();
+                    musicButtonStyle.up = skin.getDrawable("music_off");
+                } else {
+                    Musique.play();
+                    musicButtonStyle.up = skin.getDrawable("music_on");
+                }
+            } else if (source == sounds) {
+                if (Musique.isPlaying()) {
+                    Musique.pause();
+                    soundsButtonStyle.up = skin.getDrawable("sounds_off");
+                } else {
+                    Musique.play();
+                    soundsButtonStyle.up = skin.getDrawable("sounds_on");
+                }
             }
 
             return true;
