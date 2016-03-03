@@ -6,56 +6,56 @@ filter: Nearest,Nearest
 repeat: none
 arrow_down
   rotate: false
-  xy: 68, 68
+  xy: 2, 2
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 arrow_down_pressed
   rotate: false
-  xy: 68, 10
+  xy: 134, 68
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 arrow_left
   rotate: false
-  xy: 118, 76
+  xy: 52, 10
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_left_pressed
   rotate: false
-  xy: 118, 26
+  xy: 184, 76
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_right
   rotate: false
-  xy: 176, 76
+  xy: 242, 76
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_right_pressed
   rotate: false
-  xy: 176, 26
+  xy: 300, 76
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_up
   rotate: false
-  xy: 234, 68
+  xy: 358, 68
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 arrow_up_pressed
   rotate: false
-  xy: 284, 68
+  xy: 408, 68
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
@@ -71,16 +71,16 @@ button
   index: -1
 button_pressed
   rotate: false
-  xy: 2, 2
-  size: 64, 56
-  split: 12, 12, 12, 12
-  pad: 16, 16, 16, 16
-  orig: 64, 56
+  xy: 68, 60
+  size: 64, 64
+  split: 12, 12, 20, 12
+  pad: 16, 16, 24, 16
+  orig: 64, 64
   offset: 0, 0
   index: -1
 frame_left
   rotate: false
-  xy: 334, 82
+  xy: 458, 82
   size: 48, 42
   split: 16, 7, 16, 16
   pad: 16, 7, 20, 16

@@ -32,12 +32,13 @@ import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.OdysseeDesMaths;
 
 public class MenuPrincipal implements Screen {
-    private OdysseeDesMaths jeu;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
-    private Viewport viewport;
 
+    private OdysseeDesMaths jeu;
+
+    private Viewport viewport;
     private Stage stage;
     private Table tableau;
     private Skin skin;
@@ -149,7 +150,7 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override

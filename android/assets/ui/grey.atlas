@@ -1,12 +1,12 @@
 
 grey.png
-size: 128,128
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 button
   rotate: false
-  xy: 2, 60
+  xy: 2, 52
   size: 64, 64
   split: 12, 12, 12, 20
   pad: 16, 16, 16, 24
@@ -15,16 +15,16 @@ button
   index: -1
 button_pressed
   rotate: false
-  xy: 2, 2
-  size: 64, 56
-  split: 12, 12, 12, 12
-  pad: 16, 16, 16, 16
-  orig: 64, 56
+  xy: 68, 52
+  size: 64, 64
+  split: 12, 12, 20, 12
+  pad: 16, 16, 24, 16
+  orig: 64, 64
   offset: 0, 0
   index: -1
 field
   rotate: false
-  xy: 68, 76
+  xy: 2, 2
   size: 42, 48
   split: 10, 7, 7, 7
   orig: 42, 48

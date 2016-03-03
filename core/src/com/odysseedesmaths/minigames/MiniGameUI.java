@@ -187,7 +187,7 @@ public class MiniGameUI extends Stage implements Observer {
     }
 
     /**
-     * Ajoute un timerLabel à l'interface.
+     * Ajoute un timer à l'interface.
      *
      * @param aTimer Le Timer à utiliser
      */
