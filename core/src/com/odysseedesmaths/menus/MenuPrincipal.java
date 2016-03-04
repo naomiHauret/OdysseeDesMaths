@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 public class MenuPrincipal implements Screen {
@@ -106,7 +107,7 @@ public class MenuPrincipal implements Screen {
 
     //lance la partie en cours
     public void launchGame(OdysseeDesMaths jeu){
-        this.jeu.setScreen(new ArriveeRemarquable(jeu));
+        this.jeu.setScreen(new Accrobranche(jeu));
 
     }
 
