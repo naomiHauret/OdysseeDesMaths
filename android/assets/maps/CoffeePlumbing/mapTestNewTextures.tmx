@@ -14,22 +14,22 @@
   </tile>
   <tile id="2">
    <properties>
-    <property name="name" value="extrémité"/>
+    <property name="name" value="extrémité_verticale"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="name" value="extrémité"/>
+    <property name="name" value="extrémité verticale"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="name" value="extrémité"/>
+    <property name="name" value="extrémité_horizontale"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
-    <property name="name" value="extrémité"/>
+    <property name="name" value="extrémité_horizontale"/>
    </properties>
   </tile>
   <tile id="6">
@@ -78,14 +78,19 @@
    </properties>
   </tile>
  </tileset>
- <layer name="background" width="10" height="7">
+ <layer name="background" width="10" height="7" opacity="0.9">
   <data encoding="base64" compression="zlib">
    eJzjYGBg4BjFGBgAN8cCMQ==
   </data>
  </layer>
+ <layer name="liaisons" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOWIGYDYccCDDjkUMGLESqI8ZuQm6iJgAAG6AAKQ==
+  </data>
+ </layer>
  <layer name="tuyaux" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYEAFvEDMCMSsQMwGxNwM2AEzGp8HSQ8jFIP0suDQj2wXF1Q/TB+63Txo4oxomAuPHeQCAHbMALI=
+   eJxjYEAFvEDMiMTnZiAO8CCxGaGYkF6YXVxQ/TB96HbzoIkzomEuIt1ICgAAU5gAfw==
   </data>
  </layer>
  <layer name="vannes" width="10" height="7">
@@ -96,6 +101,11 @@
  <layer name="koffeeMeters" width="10" height="7">
   <data encoding="base64" compression="zlib">
    eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
+  </data>
+ </layer>
+ <layer name="extremites" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAeYAViNiqaN5AAAAnEAAw=
   </data>
  </layer>
 </map>

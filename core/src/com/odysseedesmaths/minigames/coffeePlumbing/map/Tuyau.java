@@ -22,6 +22,7 @@ public class Tuyau {
         this.capacite = capacite;
         this.fluxCourant = 0; //si fermé rien dedans
         this.tuyauxSuivants = new HashSet<Tuyau>();
+        this.cases = new HashSet<int[]>();
     }
 
     public void augmenterFlux(){
@@ -67,7 +68,16 @@ public class Tuyau {
     }
 
     public String toString(){
-        return "Flux courant: "+this.fluxCourant+"||Capacité: "+this.capacite+"||État: "+this.ouvert+"\n";
+        String posCases = "";
+        Iterator<int[]> it = cases.iterator();
+        int[] posTmp = new int[2];
+
+        while(it.hasNext()){
+            posTmp = it.next();
+            posCases+="x="+posTmp[0]+"|| y="+posTmp[1]+"\n";
+        }
+
+        return posCases+"Flux courant: "+this.fluxCourant+"||Capacité: "+this.capacite+"||État: "+this.ouvert+"\n";
     }
 
     /**
@@ -84,5 +94,13 @@ public class Tuyau {
     */
     public void set_cases(HashSet<int[]> new_cases){
       this.cases = new_cases;
+    }
+
+    public void addCase(int[] new_case){
+        this.cases.add(new_case);
+    }
+
+    public void removeCase(int[] old_case){
+        this.cases.remove(old_case);
     }
 }
