@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -42,7 +42,6 @@ public class NewSave implements Screen {
     private Label gameTitle;
     private Label saveNameLabel;
     private TextField saveNameField;
-    private Image hero;
     private TextButton submit;
 
     public NewSave(OdysseeDesMaths game) {
@@ -57,41 +56,40 @@ public class NewSave implements Screen {
         stage.addActor(table);
 
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
         skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
         skin.add("title", new Label.LabelStyle(TITLE, null));
         skin.add("text", new Label.LabelStyle(TEXT, null));
-        skin.add("hero", Assets.getManager().get(Assets.HERO, Texture.class));
 
         TextButtonStyle textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = TEXT;
+        textButtonStyle.up = skin.getDrawable("button");
+        textButtonStyle.down = skin.getDrawable("button_pressed");
         skin.add("textButton", textButtonStyle);
 
         TextFieldStyle textFieldStyle = new TextFieldStyle();
         textFieldStyle.font = TEXT;
         textFieldStyle.fontColor = Color.WHITE;
-        textFieldStyle.background = skin.getDrawable("default-round");
+        textFieldStyle.background = skin.getDrawable("field");
         skin.add("textField", textFieldStyle);
 
         gameTitle = new Label("L'Odyssée des Maths", skin, "title");
         saveNameLabel = new Label("Nom:", skin, "text");
         saveNameField = new TextField("", skin, "textField");
-        saveNameField.setMaxLength(8);
-        hero = new Image(skin.getDrawable("hero"));
+        saveNameField.setMaxLength(7);
         submit = new TextButton("C'est parti !", skin, "textButton");
 
         table.setBackground(skin.getDrawable("background"));
-        table.padTop(HEIGHT / 10);
+        table.padTop(HEIGHT / 13);
         table.add(gameTitle).top().colspan(2).padBottom(HEIGHT / 7);
         table.row().padBottom(HEIGHT / 10);
         table.add(saveNameLabel).right().padRight(10);
         table.add(saveNameField).left().width(WIDTH / 4).height(HEIGHT / 10);
         table.row();
-        table.add(hero).padBottom(HEIGHT / 7).colspan(2);
-        table.row();
         table.add(submit).top().colspan(2).expandY();
 
-        InputEcouteur listener = new InputEcouteur();
+        NewSaveListener listener = new NewSaveListener();
         submit.addListener(listener);
     }
 
@@ -132,7 +130,7 @@ public class NewSave implements Screen {
         skin.dispose();
     }
 
-    private class InputEcouteur extends InputListener {
+    private class NewSaveListener extends InputListener {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             return true;
@@ -155,16 +153,17 @@ public class NewSave implements Screen {
 
     static {
         FreeTypeFontGenerator generator;
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+        FreeTypeFontParameter parameter;
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
+
+        parameter = new FreeTypeFontParameter();
+        parameter.size = HEIGHT / 9;
+        TITLE = generator.generateFont(parameter);
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
 
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = HEIGHT / 15;
-        parameter.color = Color.WHITE;
-        TITLE = generator.generateFont(parameter);
-
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 20;
         parameter.color = Color.WHITE;
         TEXT = generator.generateFont(parameter);

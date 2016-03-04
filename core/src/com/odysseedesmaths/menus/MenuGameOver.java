@@ -14,6 +14,8 @@ import com.odysseedesmaths.Musique;
 
 public class MenuGameOver extends Menu {
 
+    private static final int SPACE_BETWEEN_BUTTONS = Gdx.graphics.getHeight() / 15;
+
     private Table table;
     private Skin skin;
 
@@ -24,29 +26,31 @@ public class MenuGameOver extends Menu {
     public MenuGameOver() {
         table = new Table();
         table.setFillParent(true);
-        table.setY(Gdx.graphics.getHeight() / 12);
+        table.setY(Gdx.graphics.getHeight() / 35);
         addActor(table);
 
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
 
         LabelStyle titleStyle = new LabelStyle(Assets.GAME_OVER, null);
         skin.add("title", titleStyle);
 
         TextButtonStyle buttonStyle = new TextButtonStyle();
         buttonStyle.font = Assets.BUTTON;
-        buttonStyle.up = skin.getDrawable("default-round");
-        buttonStyle.down = skin.getDrawable("default-round-down");
+        buttonStyle.up = skin.getDrawable("button");
+        buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("button", buttonStyle);
 
         title = new Label("GAME OVER", skin, "title");
         retry = new TextButton("Recommencer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
-        table.add(title).colspan(2).padBottom(Gdx.graphics.getHeight() / 20);
+        table.add(title).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
-        table.add(retry).padRight(Gdx.graphics.getWidth() / 10);
-        table.add(returnMainMenu);
+        table.add(retry).padBottom(SPACE_BETWEEN_BUTTONS);
+        table.row();
+        table.add(returnMainMenu).width(retry.getWidth());
     }
 
     public TextButton getRetry() {

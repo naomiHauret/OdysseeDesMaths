@@ -9,12 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.odysseedesmaths.menus.MenuPauseScene;
+import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.scenes.Scene;
 import com.odysseedesmaths.scenes.Scene0;
 import com.odysseedesmaths.scenes.Scene1;
@@ -38,7 +40,7 @@ public class ModeSceneScreen implements Screen {
     private Skin skin;
 
     private Container<Actor> pauseContainer;
-    private Button pause;
+    private ImageButton pause;
     private MenuPauseScene menuPause;
 
     public ModeSceneScreen(OdysseeDesMaths game) {
@@ -56,15 +58,17 @@ public class ModeSceneScreen implements Screen {
         stage = new Stage();
         table = new Table();
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
 
         // Creation du bouton de pause
-        Button.ButtonStyle pauseStyle = new Button.ButtonStyle();
+        ImageButtonStyle pauseStyle = new ImageButtonStyle();
         pauseStyle.up = skin.getDrawable("pause");
-        pauseStyle.down = skin.getDrawable("pauseTap");
+        pauseStyle.imageUp = skin.getDrawable("button");
+        pauseStyle.imageDown = skin.getDrawable("button_pressed");
         skin.add("pause", pauseStyle);
 
-        pause = new Button(skin, "pause");
+        pause = new ImageButton(skin, "pause");
 
         pause.addListener(new InputListener() {
             @Override
@@ -74,7 +78,6 @@ public class ModeSceneScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Je me met en pause\n");
                 pauseScene();
             }
         });
@@ -93,9 +96,9 @@ public class ModeSceneScreen implements Screen {
                 if (source == menuPause.getRetourJeu().getLabel()) {
                     returnToScene();
                 } else if (source == menuPause.getInventaire().getLabel()) {
-
+                    // TODO
                 } else if (source == menuPause.getQuitter().getLabel()) {
-                    jeu.setScreen(jeu.getMenuPrincipal());
+                    jeu.setScreen(new MenuPrincipal(jeu));
                 }
             }
         });

@@ -9,9 +9,7 @@ import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 public class OdysseeDesMaths extends Game {
     public SpriteBatch batcher;
 
-    private MenuPrincipal menuPrincipal = null;
     private ModeSceneScreen modeScene = null;
-
     private SavesManager savesManager;
 
     @Override
@@ -20,14 +18,7 @@ public class OdysseeDesMaths extends Game {
         Assets.getManager().finishLoading();
 
         batcher = new SpriteBatch();
-        setScreen(getMenuPrincipal());
-    }
-
-    public MenuPrincipal getMenuPrincipal() {
-        if (menuPrincipal == null) {
-            this.menuPrincipal = new MenuPrincipal(this);
-        }
-        return menuPrincipal;
+        setScreen(new MenuPrincipal(this));
     }
 
     public ModeSceneScreen getModeScene() {

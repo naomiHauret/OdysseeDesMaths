@@ -11,20 +11,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.odysseedesmaths.Assets;
 
 public class MenuPause extends Menu {
-    private TextButton retourJeu, recommencer,quitter;
+
+    private static final int SPACE_BETWEEN_BUTTONS = Gdx.graphics.getHeight() / 15;
+
+    private TextButton retourJeu, recommencer, quitter;
     private TextButtonStyle txtButtonStyle=null;
 
     public MenuPause(){
-        super(10, new Color(255f, 255f, 255f, 1), "fonts/pixel-life.TTF");
+        super(22, new Color(255f, 255f, 255f, 1), "fonts/PressStart2P.ttf");
 
         Skin skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
 
         txtButtonStyle = new TextButton.TextButtonStyle();
 
         txtButtonStyle.font = font;
-        txtButtonStyle.up = skin.getDrawable("default-round");
-        txtButtonStyle.down = skin.getDrawable("default-round-down");
+        txtButtonStyle.up = skin.getDrawable("button");
+        txtButtonStyle.down = skin.getDrawable("button_pressed");
 
         retourJeu = new TextButton("Retour",txtButtonStyle);
         recommencer = new TextButton("Recommencer",txtButtonStyle);
@@ -32,15 +36,11 @@ public class MenuPause extends Menu {
 
         Table tableau = new Table();
         tableau.setFillParent(true);
-        //tableau.row().height(Gdx.graphics.getHeight() / 3);
-        tableau.add(retourJeu).width(Gdx.graphics.getWidth() / 3).pad(10);
-        tableau.getCell(retourJeu).expand();
+        tableau.add(retourJeu).padBottom(SPACE_BETWEEN_BUTTONS).width(recommencer.getWidth());
         tableau.row();
-        tableau.add(recommencer).width(Gdx.graphics.getWidth() / 3).pad(10);
-        tableau.getCell(recommencer).expand();
+        tableau.add(recommencer).padBottom(SPACE_BETWEEN_BUTTONS);
         tableau.row();
-        tableau.add(quitter).width(Gdx.graphics.getWidth() / 3).pad(10);
-        tableau.getCell(quitter).expand();
+        tableau.add(quitter).width(recommencer.getWidth());
 
         addActor(tableau);
     }

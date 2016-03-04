@@ -18,13 +18,14 @@ public class MenuPauseScene extends Menu {
         super(10, new Color(255f, 255f, 255f, 1), "fonts/pixel-life.TTF");
 
         Skin skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
 
         txtButtonStyle = new TextButton.TextButtonStyle();
 
         txtButtonStyle.font = font;
-        txtButtonStyle.up = skin.getDrawable("default-round");
-        txtButtonStyle.down = skin.getDrawable("default-round-down");
+        txtButtonStyle.up = skin.getDrawable("button");
+        txtButtonStyle.down = skin.getDrawable("button_pressed");
 
         retourJeu = new TextButton("Retour",txtButtonStyle);
         inventaire = new TextButton("Recommencer",txtButtonStyle);

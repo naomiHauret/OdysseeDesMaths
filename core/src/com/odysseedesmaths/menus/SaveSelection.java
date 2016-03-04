@@ -34,7 +34,6 @@ public class SaveSelection implements Screen {
     private Viewport viewport;
 
     private static final int SPACE_BETWEEN_SAVES = 20;
-    private static final int SAVE_PAD = 10;
 
     private static final BitmapFont TITLE;
     private static final BitmapFont TEXT;
@@ -64,17 +63,16 @@ public class SaveSelection implements Screen {
         stage.addActor(table);
 
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.UI_TEST, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
         skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
         skin.add("title", new LabelStyle(TITLE, null));
         skin.add("text", new LabelStyle(TEXT, null));
         skin.add("hero", Assets.getManager().get(Assets.HERO, Texture.class));
-        skin.add("cross", Assets.getManager().get(Assets.CROSS), Texture.class);
-        skin.add("plus", Assets.getManager().get(Assets.PLUS), Texture.class);
 
         ButtonStyle buttonStyle = new ButtonStyle();
-        buttonStyle.up = skin.getDrawable("default-round");
-        buttonStyle.down = skin.getDrawable("default-round-down");
+        buttonStyle.up = skin.getDrawable("button");
+        buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("saveButton", buttonStyle);
 
         buttonStyle = new ButtonStyle();
@@ -89,7 +87,6 @@ public class SaveSelection implements Screen {
         Image newGamePlus;
 
         save1 = new Button(skin, "saveButton");
-        save1.pad(SAVE_PAD);
         if (game.getSavesManager().getSave1().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save1.add(newGamePlus);
@@ -105,7 +102,6 @@ public class SaveSelection implements Screen {
         }
 
         save2 = new Button(skin, "saveButton");
-        save2.pad(SAVE_PAD);
         if (game.getSavesManager().getSave2().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save2.add(newGamePlus);
@@ -121,7 +117,6 @@ public class SaveSelection implements Screen {
         }
 
         save3 = new Button(skin, "saveButton");
-        save3.pad(SAVE_PAD);
         if (game.getSavesManager().getSave3().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save3.add(newGamePlus);
@@ -141,7 +136,7 @@ public class SaveSelection implements Screen {
         deleteSave3 = new Button(skin, "deleteButton");
 
         table.setBackground(skin.getDrawable("background"));
-        table.padTop(HEIGHT / 10);
+        table.padTop(HEIGHT / 13);
         table.add(gameTitle).top().colspan(3).padBottom(HEIGHT / 7);
         table.row().width(WIDTH / 4).height(HEIGHT * 2 / 5);
         table.add(save1).fill();
@@ -156,7 +151,7 @@ public class SaveSelection implements Screen {
         deleteSave2.setVisible(!game.getSavesManager().getSave2().isEmpty());
         deleteSave3.setVisible(!game.getSavesManager().getSave3().isEmpty());
 
-        InputEcouteur listener = new InputEcouteur();
+        SaveSelectionListener listener = new SaveSelectionListener();
         save1.addListener(listener);
         save2.addListener(listener);
         save3.addListener(listener);
@@ -202,7 +197,7 @@ public class SaveSelection implements Screen {
         skin.dispose();
     }
 
-    private class InputEcouteur extends InputListener {
+    private class SaveSelectionListener extends InputListener {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             return true;
@@ -238,12 +233,13 @@ public class SaveSelection implements Screen {
         FreeTypeFontGenerator generator;
         FreeTypeFontParameter parameter;
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
 
         parameter = new FreeTypeFontParameter();
-        parameter.size = HEIGHT / 15;
-        parameter.color = Color.WHITE;
+        parameter.size = HEIGHT / 9;
         TITLE = generator.generateFont(parameter);
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
 
         parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 20;
