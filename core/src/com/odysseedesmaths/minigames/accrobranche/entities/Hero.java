@@ -1,22 +1,17 @@
 package com.odysseedesmaths.minigames.accrobranche.entities;
 
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
-import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.*;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
-import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Shield;
-import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 
-public class Hero {
+public class Hero extends Character {
     public static final int PDV_MAX = 5;
+
+    private Accrobranche jeu;
 
     private int pdv = PDV_MAX;
 
-    public Hero(Accrobranche minigame) {}
-
-    public Hero(ArriveeRemarquable minigame) {
+    public Hero(Accrobranche minigame) {
         super(minigame);
+        jeu = minigame;
     }
 
     public int getPdv() {
@@ -36,21 +31,14 @@ public class Hero {
     public boolean meet(Entity e) {
         boolean continuer = true;
 
-        if (e instanceof Enemy) {
-            if (getMinigame().activeItems.get(Shield.class) == null) {
-                decreasePDV();
-            }
-            getMinigame().destroy((Enemy)e);
-        } else if (e instanceof Item) {
-            ((Item)e).trigger();
+        if (e instanceof Gland) {
+
         }
 
         return continuer;
     }
 
     private void move(int di, int dj) {
-        Case cible = getMinigame().terrain.getCases()[getCase().i + di][getCase().j + dj];
-        if (!cible.isObstacle()) moveTo(cible);
     }
 
     public void moveLeft() {
@@ -67,5 +55,9 @@ public class Hero {
 
     public void moveDown() {
         move(0, -1);
+    }
+
+    public Accrobranche getMinigame() {
+        return jeu;
     }
 }

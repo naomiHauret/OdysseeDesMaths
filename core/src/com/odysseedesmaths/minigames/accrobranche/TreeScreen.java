@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -17,6 +20,7 @@ import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
+import com.odysseedesmaths.minigames.accrobranche.entities.Entity;
 
 public class TreeScreen implements Screen {
 
@@ -35,12 +39,19 @@ public class TreeScreen implements Screen {
     private MenuPause menuPause;
     private MenuGameOver menuGameOver;
 
+    private Sprite heroSprite;
+
     public TreeScreen(final Accrobranche minigame) {
         this.minigame = minigame;
 
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         batch = new SpriteBatch();
+
+        // Sprites
+        heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
+        heroSprite.setPosition(0,0);
+
         ui = new MiniGameUI();
 
         // UI
@@ -136,6 +147,30 @@ public class TreeScreen implements Screen {
         // Effaçage du précédent affichage
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // Affichage du terrain
+        minigame.terrain.renderer.setView(camera);
+        minigame.terrain.renderer.render();
+
+        // Affichage des entités
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+
+        // Affichage du héros
+        updatePos(heroSprite, minigame.hero);
+        heroSprite.draw(batch);
+
+        batch.end();
+
+        // Positionnement de la caméra (sur le héros ou sur les bords)
+        float posX, posY, minX, minY, maxX, maxY;
+        posX = heroSprite.getX() + heroSprite.getWidth() / 2f;
+        posY = heroSprite.getY() + heroSprite.getHeight() / 2f;
+        minX = WIDTH / 2f;
+        minY = HEIGHT / 2f;
+        maxX = 2*minX;
+        maxY = 2*minY;
+        camera.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
+
         // Interface utilisateur par dessus le reste
         ui.render();
 
@@ -185,5 +220,9 @@ public class TreeScreen implements Screen {
     public void gameOver() {
         Gdx.input.setInputProcessor(menuGameOver);
         menuGameOver.playMusic();
+    }
+
+    private boolean updatePos(Sprite aSprite, Entity aEntity) {
+        return true;
     }
 }

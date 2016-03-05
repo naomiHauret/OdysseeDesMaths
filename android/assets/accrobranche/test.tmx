@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
-  <image source="../../../../../../../../Program Files/Tiled/examples/tmw_desert_spacing.png" width="265" height="199"/>
+  <properties>
+   <property name="start" value=""/>
+  </properties>
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
   <terraintypes>
    <terrain name="Cobblestone" tile="-1"/>
    <terrain name="Sand" tile="-1"/>
   </terraintypes>
-  <tile id="0" terrain="1,1,1,0"/>
+  <tile id="0" terrain="1,1,1,0">
+   <properties>
+    <property name="end" value="14,6"/>
+    <property name="start" value="1,7"/>
+   </properties>
+  </tile>
   <tile id="1" terrain="1,1,0,0"/>
   <tile id="2" terrain="1,1,0,1"/>
   <tile id="3" terrain=",,,1"/>
@@ -33,7 +41,7 @@
   <tile id="28" terrain="1,0,0,0"/>
   <tile id="29" terrain="1,1,1,1"/>
  </tileset>
- <layer name="platform" width="20" height="10">
+ <layer name="platformes" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2DgABMUMyOJMSKJE8LI+kCAC4q5kcQ4kcQJYWR9IAAALRgAtw==
   </data>
