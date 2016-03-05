@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
+import com.odysseedesmaths.minigames.coffeePlumbing.map.Tuyau;
+
+import java.util.HashSet;
+import java.util.Iterator;
 
 //Classe pour les test ...en bazard
 public class HardcoreCoffeeTest extends ApplicationAdapter {
@@ -23,6 +27,11 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(width,height,camera);
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
+        HashSet<Tuyau> cana= level.get_canalisation();
+        Iterator<Tuyau> test = cana.iterator();
+        while(test.hasNext()){
+            System.out.print(test.next().toString());
+        }
     }
 
     @Override
