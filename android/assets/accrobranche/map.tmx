@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="200" tilewidth="16" tileheight="16" nextobjectid="5">
+ <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
+  <image source="tileset_gutter.png" width="594" height="504"/>
+ </tileset>
+ <layer name="background" width="40" height="200">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6Dx/oXWbg+iYC+pqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq6h/l/dUL
+  </data>
+ </layer>
+ <layer name="graphics" width="40" height="200">
+  <data encoding="base64" compression="zlib">
+   eJzt0TEKwCAQRcHdMh7F3P9+sRUUElNEwgz8cuHBRgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPSOjCj5dcVcbW2nvltGv9ypb9Ty9758sNW7N7sAfm0CsQ==
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="1" x="0" y="3184" width="176" height="16"/>
+  <object id="2" x="224" y="3184" width="416" height="16"/>
+ </objectgroup>
+ <objectgroup name="pipes">
+  <object id="3" x="304" y="3136" width="32" height="48"/>
+  <object id="4" x="384" y="3088" width="32" height="96"/>
+ </objectgroup>
+</map>
