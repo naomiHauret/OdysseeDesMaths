@@ -1,0 +1,29 @@
+
+scroll.png
+size: 128,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+scroll_background
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  split: 21, 23, 20, 26
+  pad: 4, 4, 4, 4
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+scroll_radio
+  rotate: false
+  xy: 52, 36
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+scroll_radio_checked
+  rotate: false
+  xy: 52, 20
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1

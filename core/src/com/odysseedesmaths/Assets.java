@@ -22,18 +22,37 @@ public class Assets {
         return manager;
     }
 
+    // Raccourcis pratiques
+    private static final String
+            ICONS_PATH = "textures/common/char_icons/";
+
     @Asset(Texture.class)
     public static final String
             HERO = "heros.png",
             HEART = "coeur.png",
-            MAIN_MENU_BACKGROUND = "tower.png";
-
+            MAIN_MENU_BACKGROUND = "tower.png",
+            // Icones des personnages
+            ICON_HERO = ICONS_PATH+"hero.png",
+            ICON_PYLES = ICONS_PATH+"pyles.png",
+            ICON_AUDIB = ICONS_PATH+"audib.png",
+            ICON_GWENDOUILLE = ICONS_PATH+"gwendouille.png",
+            ICON_DIJKSTRA = ICONS_PATH+"dijkstra.png",
+            ICON_EDDYMALOU = ICONS_PATH+"eddymalou.png",
+            ICON_MARKOV = ICONS_PATH+"markov.png",
+            ICON_NICHOLAS = ICONS_PATH+"nicholasSaunderson.png",
+            ICON_PYTHAGORE = ICONS_PATH+"pythagore.png",
+            ICON_ROBERT = ICONS_PATH+"robertSmithn.png",
+            ICON_TARTAGLIA = ICONS_PATH+"tartaglia.png",
+            ICON_THALES = ICONS_PATH+"thales.png",
+            ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
+            ICON_VIKTOR = ICONS_PATH+"viktor.png";
 
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
             UI_RED = "ui/red.atlas",
-            UI_GREY = "ui/grey.atlas";
+            UI_GREY = "ui/grey.atlas",
+            UI_SCROLL = "ui/scroll.atlas";
 
 
     @Asset(Music.class)
