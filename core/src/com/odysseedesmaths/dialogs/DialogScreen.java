@@ -81,7 +81,7 @@ public abstract class DialogScreen implements Screen {
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_SCROLL, TextureAtlas.class));
-        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
 
         mainTable = new Table();
         mainTable.setFillParent(true);

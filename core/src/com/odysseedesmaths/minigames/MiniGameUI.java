@@ -2,8 +2,11 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -19,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Timer;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
@@ -31,10 +35,13 @@ import java.util.Observer;
 /**
  * Classe gérant l'interface utilisateur d'un mini-jeu.
  */
-// TODO: Redimensionner l'UI pour toutes les tailles d'écran
 public class MiniGameUI extends Stage implements Observer {
 
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 480;
     private static final int PAD_SPACE = 48;
+    private static final BitmapFont TIMER;
+    private static final BitmapFont ITEM_COUNTER;
 
     private Table table;
     private Skin skin;
@@ -81,13 +88,17 @@ public class MiniGameUI extends Stage implements Observer {
      * Initialise une nouvelle interface avec les ressources nécessaires.
      */
     public MiniGameUI() {
+        super(new StretchViewport(WIDTH, HEIGHT));
+
         table = new Table();
         table.setFillParent(true);
         addActor(table);
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
-        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
+        skin.add("timer", TIMER);
+        skin.add("itemCounter", ITEM_COUNTER);
 
         north = new Table();
         west = new Table();
@@ -193,7 +204,7 @@ public class MiniGameUI extends Stage implements Observer {
      */
     public void addTimer(final Timer aTimer) {
         LabelStyle timerStyle = new LabelStyle();
-        timerStyle.font = Assets.TIMER;
+        timerStyle.font = skin.getFont("timer");
         timerStyle.background = skin.getDrawable("frame_left");
         skin.add("timer", timerStyle);
 
@@ -204,6 +215,7 @@ public class MiniGameUI extends Stage implements Observer {
         timerLabel = new Label(aTimer.toString(), skin, "timer");
 
         timerContainer.setActor(timerLabel);
+        timerContainer.height(48);
     }
 
     /**
@@ -255,7 +267,7 @@ public class MiniGameUI extends Stage implements Observer {
      * Ajoute des items actifs à l'interface.
      */
     public void addItems() {
-        skin.add("itemCounter", new LabelStyle(Assets.ITEM_COUNTER, null));
+        skin.add("itemCounter", new LabelStyle(skin.getFont("itemCounter"), null));
 
         activeItems = new HashMap<Sprite, Integer>();
         itemsGroup = new Table();
@@ -323,6 +335,7 @@ public class MiniGameUI extends Stage implements Observer {
         pause = new ImageButton(skin, "pause");
 
         pauseContainer.setActor(pause);
+        pauseContainer.size(64, 64);
     }
 
     @Override
@@ -335,5 +348,14 @@ public class MiniGameUI extends Stage implements Observer {
             timerColorAction.reset();
             timerLabel.addAction(timerColorAction);
         }
+    }
+
+    static {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = HEIGHT / 20;
+        parameter.color = Color.WHITE;
+        TIMER = generator.generateFont(parameter);
+        ITEM_COUNTER = generator.generateFont(parameter);
     }
 }

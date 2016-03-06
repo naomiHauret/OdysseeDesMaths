@@ -160,6 +160,12 @@ public class ForetScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        ui.getViewport().update(width, height, true);
+        if (minigame.getState() == MiniGame.State.PAUSED) {
+            menuPause.getViewport().update(width, height, true);
+        } else if (minigame.getState() == MiniGame.State.GAME_OVER) {
+            menuGameOver.getViewport().update(width, height, true);
+        }
     }
 
     @Override

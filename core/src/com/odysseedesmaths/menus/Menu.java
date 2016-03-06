@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Menu extends Stage {
     public ImageButton musique;
@@ -14,10 +15,11 @@ public class Menu extends Stage {
     public FreeTypeFontGenerator ftfg = null;
     public FreeTypeFontGenerator.FreeTypeFontParameter ftfp = null;
 
-    public Menu(int fontRatio, Color c, String fontPath) {
+    public Menu(int fontRatio, Color c, String fontPath, Viewport viewport) {
+        super(viewport);
         ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         font = new BitmapFont();
-        ftfp.size= Gdx.graphics.getHeight()/ fontRatio; //the size can be change later
+        ftfp.size = (int)viewport.getWorldHeight() / fontRatio; //the size can be change later
         ftfp.color=c;
         ftfg = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         font = ftfg.generateFont(ftfp);
@@ -26,6 +28,4 @@ public class Menu extends Stage {
         //ImageButtonStyle bsMusique = new ImageButton.ImageButtonStyle();
         //bsMusique.imageChecked = skinMusique.getDrawable("image");
     }
-
-    public Menu() {}
 }
