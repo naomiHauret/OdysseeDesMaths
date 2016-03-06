@@ -2,12 +2,9 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import net.dermetfan.gdx.assets.AnnotationAssetManager;
 import net.dermetfan.gdx.assets.AnnotationAssetManager.Asset;
@@ -32,8 +29,7 @@ public class Assets {
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
-            UI_RED = "ui/red.atlas",
-            UI_GREY = "ui/grey.atlas";
+            UI_ORANGE = "ui/orange.atlas";
 
 
     @Asset(Music.class)
@@ -43,37 +39,9 @@ public class Assets {
             GAME_OVER_MUSIC = "music/Game Over.ogg";
 
 
-    // Ces polices sont chargées à l'aide d'un FreeTypeFontGenerator
-    public static final BitmapFont
-            BUTTON,
-            GAME_OVER,
-            TIMER,
-            ITEM_COUNTER;
-
-    static {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
-        FreeTypeFontParameter parameter;
-
-        parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 20;
-        parameter.color = Color.WHITE;
-        TIMER = generator.generateFont(parameter);
-        ITEM_COUNTER = generator.generateFont(parameter);
-
-        parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 9;
-        parameter.color = Color.RED;
-        parameter.borderWidth = 5;
-        parameter.borderColor = Color.WHITE;
-        GAME_OVER = generator.generateFont(parameter);
-
-        parameter = new FreeTypeFontParameter();
-        parameter.size = Gdx.graphics.getHeight() / 22;
-        parameter.color = Color.WHITE;
-        BUTTON = generator.generateFont(parameter);
-
-        generator.dispose();
-    }
+    public static final FileHandle
+            PRESS_START_2P = Gdx.files.internal("fonts/PressStart2P.ttf"),
+            KENPIXEL_BLOCKS = Gdx.files.internal("fonts/kenpixel_blocks.ttf");
 
 
     /**********************

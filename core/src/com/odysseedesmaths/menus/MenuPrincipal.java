@@ -25,18 +25,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.OdysseeDesMaths;
 
+import java.lang.Character;
+
 public class MenuPrincipal implements Screen {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
+    private static final double ENCRYPTION_CHANCE = 0.1;
+    private static final float ENCRYPTION_DURATION = 0.25f;
+    private enum State {NORMAL, TRANSITION}
 
     private OdysseeDesMaths jeu;
+    private State currentState;
 
     private Viewport viewport;
     private Stage stage;
@@ -61,12 +68,13 @@ public class MenuPrincipal implements Screen {
     public MenuPrincipal(OdysseeDesMaths jeu) {
         this.jeu = jeu;
 
+        this.currentState = State.NORMAL;
         this.viewport = new StretchViewport(WIDTH, HEIGHT);
         this.stage = new Stage(viewport);
         this.tableau = new Table();
         this.skin = new Skin();
         this.skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
-        this.skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
+        this.skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
         this.skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
 
         //propriétés relatives à la police
@@ -85,12 +93,12 @@ public class MenuPrincipal implements Screen {
     public void createUI() {
         //font parameter
         ftfp.size = HEIGHT / 9; //the size can be changed later
-        ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
+        ftfg = new FreeTypeFontGenerator(Assets.KENPIXEL_BLOCKS);
         menuFont = ftfg.generateFont(ftfp);
 
         ftfp.size = HEIGHT / 15;
         ftfp.color = new Color(255f,255f,255f,1);
-        ftfg = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        ftfg = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
         fontButton =  ftfg.generateFont(ftfp);
 
         //buttons styles
@@ -115,7 +123,7 @@ public class MenuPrincipal implements Screen {
         tableau.padTop(HEIGHT / 3);
         tableau.add(gameTitle).colspan(2).bottom().padBottom(HEIGHT / 12);
         tableau.row();
-        tableau.add(play).colspan(2).top().expand();
+        tableau.add(play).size(200, 64).colspan(2).top().expand();
         tableau.row();
         tableau.add(music);
         tableau.add(sounds).left().expandX();
@@ -139,8 +147,18 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void render(float delta) {
-        if (gameTitle.getY() == HEIGHT * 12/13 - gameTitle.getHeight()) {
-            this.jeu.setScreen(new SaveSelection(jeu));
+        switch (currentState) {
+            case NORMAL:
+                if (Math.random() < ENCRYPTION_CHANCE) encryptGameTitle();
+                break;
+            case TRANSITION:
+                if (gameTitle.getY() == HEIGHT * 12/13 - gameTitle.getHeight()) {
+                    this.jeu.setScreen(new SaveSelection(jeu));
+                }
+                break;
+            default:
+                // Erreur état du jeu
+                break;
         }
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -187,9 +205,35 @@ public class MenuPrincipal implements Screen {
         moveToAction.setPosition(gameTitle.getX(), HEIGHT * 12 / 13 - gameTitle.getHeight());
         moveToAction.setDuration(2);
         gameTitle.addAction(moveToAction);
+
+        Timer.instance().clear();
+        gameTitle.setText("L'Odyssée des Maths");
+        currentState = State.TRANSITION;
     }
 
-    private class MenuListener extends InputListener{
+    private void encryptGameTitle() {
+        char oldCharTmp;
+        int indexTmp;
+        int number = (int)(Math.random() * 10);
+
+        do {
+            indexTmp = (int)(Math.random() * gameTitle.getText().length());
+            oldCharTmp = gameTitle.getText().charAt(indexTmp);
+        } while (!Character.isLetter(oldCharTmp) || oldCharTmp == 'M');
+
+        final char oldChar = oldCharTmp;
+        final int index = indexTmp;
+
+        gameTitle.setText(gameTitle.getText().substring(0, index) + number + gameTitle.getText().substring(index + 1));
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                gameTitle.setText(gameTitle.getText().substring(0, index) + oldChar + gameTitle.getText().substring(index + 1));
+            }
+        }, ENCRYPTION_DURATION);
+    }
+
+    private class MenuListener extends InputListener {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             Actor source = event.getTarget();

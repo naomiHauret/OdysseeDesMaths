@@ -27,17 +27,16 @@ import com.odysseedesmaths.OdysseeDesMaths;
 
 public class SaveSelection implements Screen {
 
-    private OdysseeDesMaths game;
-
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
-    private Viewport viewport;
-
     private static final int SPACE_BETWEEN_SAVES = 20;
-
+    private static final int BUTTON_PAD = 20;
     private static final BitmapFont TITLE;
     private static final BitmapFont TEXT;
 
+    private OdysseeDesMaths game;
+
+    private Viewport viewport;
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -64,7 +63,7 @@ public class SaveSelection implements Screen {
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
-        skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
         skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
         skin.add("title", new LabelStyle(TITLE, null));
         skin.add("text", new LabelStyle(TEXT, null));
@@ -87,6 +86,7 @@ public class SaveSelection implements Screen {
         Image newGamePlus;
 
         save1 = new Button(skin, "saveButton");
+        save1.pad(BUTTON_PAD);
         if (game.getSavesManager().getSave1().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save1.add(newGamePlus);
@@ -102,6 +102,7 @@ public class SaveSelection implements Screen {
         }
 
         save2 = new Button(skin, "saveButton");
+        save2.pad(BUTTON_PAD);
         if (game.getSavesManager().getSave2().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save2.add(newGamePlus);
@@ -117,6 +118,7 @@ public class SaveSelection implements Screen {
         }
 
         save3 = new Button(skin, "saveButton");
+        save3.pad(BUTTON_PAD);
         if (game.getSavesManager().getSave3().isEmpty()) {
             newGamePlus = new Image(skin.getDrawable("plus"));
             save3.add(newGamePlus);
@@ -230,17 +232,12 @@ public class SaveSelection implements Screen {
     }
 
     static {
-        FreeTypeFontGenerator generator;
-        FreeTypeFontParameter parameter;
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
-
-        parameter = new FreeTypeFontParameter();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.KENPIXEL_BLOCKS);
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 9;
         TITLE = generator.generateFont(parameter);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
-
+        generator = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
         parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 20;
         parameter.color = Color.WHITE;
