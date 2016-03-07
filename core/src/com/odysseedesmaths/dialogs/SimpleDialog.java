@@ -113,7 +113,7 @@ public class SimpleDialog extends DialogScreen {
                             setMiddleImage(getAssetFor(element.getTextContent()));
                             break;
                         case CHAR_NODE:
-                            String perso = element.getAttribute("nom");
+                            String perso = element.getAttribute("name");
                             int position = Integer.valueOf(element.getAttribute("pos"));
                             setChar(getAssetForChar(perso), position);
                             if (perso.equals("hero")) {
@@ -134,17 +134,18 @@ public class SimpleDialog extends DialogScreen {
 
         @Override
         public void next() {
-            System.out.println("NEXT !");
             Node nextNode = goToNextSibling(currentNode, TEXT_NODE, true);
 
             if (nextNode == null) {
                 // Le personnage a fini de parler, on passe au personnage suivant
-                nextNode = goToNextSibling(currentNode.getParentNode(), CHAR_NODE, true);
-                currentNode = goToFirstChild(nextNode, TEXT_NODE, true);
-            } else {
-                // On passe simplement au texte suivant
-                currentNode = nextNode;
+                Node charNode =  currentNode.getParentNode();;
+                do {
+                    charNode = goToNextSibling(charNode, CHAR_NODE, true);
+                    nextNode = goToFirstChild(charNode, TEXT_NODE, true);
+                } while (nextNode == null);
             }
+
+            currentNode = nextNode;
         }
 
         @Override
