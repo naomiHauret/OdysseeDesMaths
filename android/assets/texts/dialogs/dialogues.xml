@@ -22,7 +22,7 @@
     <text> Nom de Zeus ! Les légions d'expressions mathémaéfiques de Viktor ! </text>
   </personnage>
   <personnage name="ennemi">
-    <text> Ecrasez-le !</text>
+    <text> Ecrasez-le ! </text>
   </personnage>
 </dialogue>
 <dialogue name="Plongee">
