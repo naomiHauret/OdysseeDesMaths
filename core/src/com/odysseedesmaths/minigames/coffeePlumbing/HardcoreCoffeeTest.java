@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.Tuyau;
 
@@ -32,6 +33,9 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         while(test.hasNext()){
             System.out.print(test.next().toString());
         }
+
+        Musique.setCurrent("music/CoffeePlumbing/ambiant.ogg");
+        Musique.play();
     }
 
     @Override

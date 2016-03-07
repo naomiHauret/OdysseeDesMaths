@@ -62,7 +62,7 @@ public class MenuWin extends Stage {
 
         table.add(title).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
-        table.add(retry).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
+        //table.add(retry).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
         table.add(returnMainMenu).size(256, 64);
     }
@@ -81,7 +81,7 @@ public class MenuWin extends Stage {
     }
 
     public void playMusic(){
-        Musique.setCurrent(Assets.WIN_MUSIC);
+       // Musique.setCurrent(Assets.WIN_MUSIC);
         Musique.play();
     }
 
@@ -92,7 +92,7 @@ public class MenuWin extends Stage {
     }
 
     public void setListener(InputListener listener) {
-        retry.addListener(listener);
+        //retry.addListener(listener);
         returnMainMenu.addListener(listener);
     }
 

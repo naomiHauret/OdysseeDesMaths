@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="64" tileheight="64">
+ <properties>
+  <property name="end" value="9,5"/>
+  <property name="start" value="1,4"/>
+ </properties>
  <tileset firstgid="1" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
   <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
   <tile id="0">
@@ -85,7 +89,7 @@
  </layer>
  <layer name="liaisons" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOWIGYDYccCDDjkUMGLESqI8ZuQm6iJgAAG6AAKQ==
+   eJxjYMAOWIGYDYccCDATqYcFjxm4AC67CbmJmgAAJEwANA==
   </data>
  </layer>
  <layer name="tuyaux" width="10" height="7">
@@ -101,11 +105,6 @@
  <layer name="koffeeMeters" width="10" height="7">
   <data encoding="base64" compression="zlib">
    eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
-  </data>
- </layer>
- <layer name="extremites" width="10" height="7">
-  <data encoding="base64" compression="zlib">
-   eJxjYKAeYAViNiqaN5AAAAnEAAw=
   </data>
  </layer>
 </map>
