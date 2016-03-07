@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,15 +27,15 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 
 public class NewSave implements Screen {
-    private OdysseeDesMaths game;
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
-    private Viewport viewport;
-
     private static final BitmapFont TITLE;
     private static final BitmapFont TEXT;
 
+    private OdysseeDesMaths game;
+
+    private Viewport viewport;
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -57,10 +58,10 @@ public class NewSave implements Screen {
 
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
-        skin.addRegions(Assets.getManager().get(Assets.UI_GREY, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
         skin.add("background", Assets.getManager().get(Assets.MAIN_MENU_BACKGROUND, Texture.class));
-        skin.add("title", new Label.LabelStyle(TITLE, null));
-        skin.add("text", new Label.LabelStyle(TEXT, null));
+        skin.add("title", new LabelStyle(TITLE, null));
+        skin.add("text", new LabelStyle(TEXT, null));
 
         TextButtonStyle textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = TEXT;
@@ -70,8 +71,9 @@ public class NewSave implements Screen {
 
         TextFieldStyle textFieldStyle = new TextFieldStyle();
         textFieldStyle.font = TEXT;
-        textFieldStyle.fontColor = Color.WHITE;
+        textFieldStyle.fontColor = Color.BLACK;
         textFieldStyle.background = skin.getDrawable("field");
+        textFieldStyle.focusedBackground = skin.getDrawable("field_focused");
         skin.add("textField", textFieldStyle);
 
         gameTitle = new Label("L'Odyssée des Maths", skin, "title");
@@ -85,9 +87,9 @@ public class NewSave implements Screen {
         table.add(gameTitle).top().colspan(2).padBottom(HEIGHT / 7);
         table.row().padBottom(HEIGHT / 10);
         table.add(saveNameLabel).right().padRight(10);
-        table.add(saveNameField).left().width(WIDTH / 4).height(HEIGHT / 10);
+        table.add(saveNameField).size(200, 48).left();
         table.row();
-        table.add(submit).top().colspan(2).expandY();
+        table.add(submit).size(350, 64).top().colspan(2).expandY();
 
         NewSaveListener listener = new NewSaveListener();
         submit.addListener(listener);
@@ -152,17 +154,12 @@ public class NewSave implements Screen {
     }
 
     static {
-        FreeTypeFontGenerator generator;
-        FreeTypeFontParameter parameter;
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/kenpixel_blocks.ttf"));
-
-        parameter = new FreeTypeFontParameter();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.KENPIXEL_BLOCKS);
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 9;
         TITLE = generator.generateFont(parameter);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
-
+        generator = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
         parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 20;
         parameter.color = Color.WHITE;

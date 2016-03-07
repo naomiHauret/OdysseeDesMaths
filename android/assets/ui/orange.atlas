@@ -1,6 +1,6 @@
 
-red.png
-size: 512,128
+orange.png
+size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -13,77 +13,91 @@ arrow_down
   index: -1
 arrow_down_pressed
   rotate: false
-  xy: 134, 68
+  xy: 52, 2
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 arrow_left
   rotate: false
-  xy: 52, 10
+  xy: 102, 10
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_left_pressed
   rotate: false
-  xy: 184, 76
+  xy: 160, 10
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_right
   rotate: false
-  xy: 242, 76
+  xy: 218, 10
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_right_pressed
   rotate: false
-  xy: 300, 76
+  xy: 276, 10
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 arrow_up
   rotate: false
-  xy: 358, 68
+  xy: 334, 2
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 arrow_up_pressed
   rotate: false
-  xy: 408, 68
+  xy: 384, 2
   size: 48, 56
   orig: 48, 56
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 2, 60
-  size: 64, 64
-  split: 12, 12, 12, 20
-  pad: 16, 16, 16, 24
-  orig: 64, 64
+  xy: 434, 26
+  size: 32, 32
+  split: 6, 6, 6, 10
+  orig: 32, 32
   offset: 0, 0
   index: -1
 button_pressed
   rotate: false
-  xy: 68, 60
-  size: 64, 64
-  split: 12, 12, 20, 12
-  pad: 16, 16, 24, 16
-  orig: 64, 64
+  xy: 468, 26
+  size: 32, 32
+  split: 6, 6, 10, 6
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+field
+  rotate: false
+  xy: 502, 26
+  size: 32, 32
+  split: 10, 10, 10, 10
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+field_focused
+  rotate: false
+  xy: 536, 26
+  size: 32, 32
+  split: 10, 10, 10, 10
+  orig: 32, 32
   offset: 0, 0
   index: -1
 frame_left
   rotate: false
-  xy: 458, 82
-  size: 48, 42
-  split: 16, 7, 16, 16
-  pad: 16, 7, 20, 16
-  orig: 48, 42
+  xy: 570, 30
+  size: 32, 28
+  split: 10, 4, 10, 10
+  pad: 10, 4, 14, 10
+  orig: 32, 28
   offset: 0, 0
   index: -1

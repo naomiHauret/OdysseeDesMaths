@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.dialogs.QuestionnaireDialog;
 import com.odysseedesmaths.menus.MenuPrincipal;
 
 public abstract class MiniGame implements Screen {

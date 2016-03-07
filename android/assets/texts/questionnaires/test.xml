@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "questionnaire.dtd"> -->
+<root>
+    <background-image>menu principal</background-image>
+    <question intitule="Ceci est l'intitule de la question, quelle est la réponse ?">
+        <reponse valide="false">Réponse A</reponse>
+        <reponse valide="false">Réponse B</reponse>
+        <reponse valide="true">Réponse C</reponse>
+        <reponse valide="false">Réponse D</reponse>
+        <explication>En effet, blabb blba lbablbal  ala b bla llabl  lbalab lbblalb</explication>
+    </question>
+    <question intitule="Ceci est l'intitule de la question n°2, quelle est la réponse ?">
+        <reponse valide="true">Réponse A</reponse>
+        <reponse valide="false">Réponse B</reponse>
+        <reponse valide="false">Réponse C</reponse>
+        <explication>Etant donné patati patata blabb blba lbablbal  ala b bla llabl  lbalab lbblalb omgom gomg o ggo m ogmg...</explication>
+    </question>
+</root>

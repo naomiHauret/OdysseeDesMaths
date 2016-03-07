@@ -59,7 +59,7 @@ public class ModeSceneScreen implements Screen {
         table = new Table();
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
-        skin.addRegions(Assets.getManager().get(Assets.UI_RED, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
 
         // Creation du bouton de pause
         ImageButtonStyle pauseStyle = new ImageButtonStyle();
