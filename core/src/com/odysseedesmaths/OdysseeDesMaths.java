@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.menus.NewSave;
+import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
 
 public class OdysseeDesMaths extends Game {
@@ -46,7 +47,7 @@ public class OdysseeDesMaths extends Game {
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
         } else {
-            setScreen(new ArriveeRemarquable(this));
+            setScreen(new Accrobranche(this));
         }
     }
 }
