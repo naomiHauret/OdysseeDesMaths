@@ -19,8 +19,14 @@
     <consigne name="Accrobranche"> // A ajouter
       <text>  </text>
     </consigne>
-    <consigne name="CoffeePlumbing"> // A ajouter
-      <text>  </text>
+    <consigne name="CoffeePlumbing">
+      <text> Bon alors pour avoir nos informations, va falloir donner du café à ces deux drogués. </text>
+      <text> Sauf que manque de chance pour toi, la machine est tombée en panne. </text>
+      <text>  Ne t'inquiètes pas, tout ce que tu dois faire, c'est amener le café du début de la canalisation à la fin, à travers ces tuyaux. </text>
+      <text> Mais attention ! Si tu en amènes trop dans un tuyau, ça explooooose ! </text>
+      <text> Pour savoir la pression de café sur un tuyau, regarde la petite aiguille, elle t'indique aussi la pression maximale que supporte un tuyau... </text>
+      <text> J'allais oublier ! Les vannes, si tu les ouvres, elle font passer plus de café, et si tu les fermes ... bref tu m'as compris ! </text>
+      <text> Je te laisse... et au passage, fais moi un cappuccino, veux-tu ! </text>
     </consigne>
     <consigne name="Bateau">
       <text> Viktor a lancé une tempête sur le lac pour faire chavirer ton bâteau ! </text>
