@@ -16,7 +16,7 @@
         <text> Les sbires de Viktor n'attendent que ça pour t'attaquer et dans l'eau, tu ne peux rien faire ! </text>
         <text> Bon courage ! </text>
     </consigne>
-    <consigne name="Accrobranche"> // A ajouter
+    <consigne name="Accrobranche"> <!--à ajouter -->
       <text>  </text>
     </consigne>
     <consigne name="CoffeePlumbing">
@@ -32,15 +32,22 @@
       <text> Viktor a lancé une tempête sur le lac pour faire chavirer ton bâteau ! </text>
       <text> Maintiens-le à flot ! </text>
     </consigne>
-    <consigne name="QCM1">
+    <consigne name="QCM">
       <text> Je vais te poser une série de questions. </text>
       <text> Si tes réponses sont correctes, tu auras accumulé assez de logique pour conjurer la fonction x². </text>
       <text> Sinon... Bah je te garantis pas le résultat ! </text>
     </consigne>
-    <consigne name="MauvaisTournant"> // A ajouter
+    <consigne name="MauvaisTournant"> <!--à ajouter -->
       <text>  </text>
     </consigne>
-    <consigne name="TowersDestruction"> // A ajouter
-      <text>  </text>
+    <consigne name="TowersDestruction">
+      <text> Il est temps de mettre fin à tout cela... Tout ce qui te reste à faire, c'est de détruire la tour. </text>
+      <text> T'inquiètes pas, c'est simple. Tu vas devoir viser la tour pour l'affaiblir. </text>
+      <text> Tu peux observer l'avancée avec la barre de vie de la Tour. Et oui, elle a une barre de vie ! Elle est vivante elle aussi ! </text>
+      <text> Comme les fleurs ! Elles sont vivantes aussi ! .... </text>
+      <text> Hum !... Enfin, bref... </text>
+      <text> Fais bien attention de ne pas rater la cible ! Ce serait dommage de ne plus avoir de munitions. </text>
+      <text> Oh et prends garde au chrono, à la fin du temps imparti, les renforts vont arriver ! </text>
+      <text> La fin est proche mon ami ! </text>
     </consigne>
 </personnage>
