@@ -27,6 +27,7 @@ public class Tuyau {
 
     public void augmenterFlux(){
         this.fluxCourant++;
+        System.out.println("Flux courant"+this.fluxCourant);
     }
 
     public void diminuerFlux(){

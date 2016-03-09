@@ -27,7 +27,8 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(width,height,camera);
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
-        Iterator<Tuyau> test = level.get_canalisation().iterator();
+        level.buildLevel();
+        Iterator<Tuyau> test = level.get_canalisation().get_allPipes().iterator();
         Tuyau tuyauDebug = test.next();
         System.out.print(tuyauDebug.toString());
         Iterator<Tuyau> successor = tuyauDebug.getAllSuccessor().iterator() ;

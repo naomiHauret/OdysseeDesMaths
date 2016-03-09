@@ -23,10 +23,6 @@ import static java.lang.Thread.sleep;
 public class CoffeeLevel {
     private TiledMap map;
     private TiledMapRenderer mapRenderer;
-    private TiledMapTileLayer vannes;
-    private TiledMapTileLayer tuyaux;
-    private TiledMapTileLayer koffeeMeters;
-    private TiledMapTileLayer liaisons;
     /**
      * Représente la largeur en pixel de la map
      */
@@ -39,15 +35,7 @@ public class CoffeeLevel {
     private int mapHeightTiled;
     private int tileWidth;
     private int tileHeight;
-    private int[] mapStart;
-    private int[] mapEnd;
-    private Sprite[][] sprites;
-    private HashSet<Tuyau> canalisation;
-    /**
-    * Tableau qui permet de gérer les sens de passage au niveau des flux
-    */
-    private boolean[][] securiteTuyau;
-
+    private Canalisation canalisation;
 
     public CoffeeLevel(String mapPath) {
         this.map = new TmxMapLoader().load(mapPath);
@@ -63,389 +51,17 @@ public class CoffeeLevel {
         this.mapWidthPixel = mapWidthTiled * tileWidth;
         this.mapHeightPixel = mapHeightTiled * tileHeight;
 
-        //points de départ et de fin des niveaux
-        String[] sStart = ((String)this.map.getProperties().get("start")).split(",");
-        String[] sEnd = ((String)this.map.getProperties().get("end")).split(",");
-
-        this.mapStart = new int[2];
-        this.mapEnd = new int[2];
-
-        this.mapStart[0] = Integer.valueOf(sStart[0]);
-        this.mapStart[1] = Integer.valueOf(sStart[1]);
-        this.mapEnd[0] = Integer.valueOf(sEnd[0]);
-        this.mapEnd[1] = Integer.valueOf(sEnd[1]);
+        this.canalisation = new Canalisation(map,mapWidthTiled,mapHeightTiled);
 
 
-        //configuration des layers
-        this.vannes = (TiledMapTileLayer) map.getLayers().get("vannes");
-        this.tuyaux = (TiledMapTileLayer) map.getLayers().get("tuyaux");
-        this.koffeeMeters = (TiledMapTileLayer) map.getLayers().get("koffeeMeters");
-        this.liaisons = (TiledMapTileLayer) map.getLayers().get("liaisons");
-
-        this.sprites=new Sprite[mapWidthTiled][mapHeightTiled];
-
-        this.canalisation = new HashSet<Tuyau>();
-
-        this.createGUI();
     }
 
-    public void createGUI() {
-    /*
-    * TODO: prendre les tuyaux, leurs capacités, et les vannes
-    */
-        this.buildSecurity();
-        this.buildCanalisation(mapStart);
-    }
-
-    /**
-    * Fonction de parcours recursif de canalisation
-    * @param posOrigine: la position à partir de laquelle on va parcourir la canalisation (toujours une liaison)
-    * @return les tuyaux directs qu'il a trouvé
-    */
-    public Tuyau buildCanalisation(int[] posOrigine){
-        int[] posCourante = new int[2];
-        int[] posPrec = new int[2];
-
-        //System.out.println("x: "+posOrigine[0]+" y: "+posOrigine[1]);
-
-        if(posOrigine[0]!=mapEnd[0] || posOrigine[1]!=mapEnd[1]){
-            String typeLiaison = (String)liaisons.getCell(posOrigine[0],posOrigine[1]).getTile().getProperties().get("name");
-            //System.out.println(typeLiaison);
-
-            posCourante[0]=posOrigine[0];
-            posCourante[1]=posOrigine[1];
-
-            //on prends le début de notre tuyau
-            if(typeLiaison.equals("extrémité_horizontale")){ //si c'est horizontal, on teste à droite et à gauche si on trouve un morceau de tuyau
-                if(tuyaux.getCell(posCourante[0]+1,posCourante[1])!=null){//on teste à droite
-                    posCourante[0]++;
-                }
-                else{
-                    posCourante[0]--;
-                }
-                posPrec[0]=posOrigine[0];//et on mémorise pour pas repasser dessus
-                posPrec[1]=posOrigine[1];
-            }
-            else{ //sinon c'est vertical
-                if(tuyaux.getCell(posCourante[0],posCourante[1]+1)!=null){ //on teste en haut
-                    posCourante[1]++;
-                }
-                else{
-                    posCourante[1]--;
-                }
-                posPrec[0]=posOrigine[0];//et on mémorise pour pas repasser dessus
-                posPrec[1]=posOrigine[1];
-            }
-            System.out.println("x: "+posCourante[0]+" y: "+posCourante[1]);
-
-            if(!securiteTuyau[posCourante[0]][posCourante[1]]){
-                Tuyau tuyauTmp = new Tuyau(0);
-                do{//une fois qu'on a le tuyau, on le parcours
-                    String s = (String) tuyaux.getCell(posCourante[0],posCourante[1]).getTile().getProperties().get("name");
-                    if(vannes.getCell(posCourante[0],posCourante[1])!=null){
-                        new Vanne(posCourante[0],posCourante[1],tuyauTmp);
-                    }
-
-                    if (s.equals("horizontal")) {
-                        if((posPrec[0]+1)==posCourante[0]){//si on était à gauche
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]++; //on va à droite
-                        }
-                        else{ //sinon on va à gauche
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]--;
-                        }
-                        System.out.println("Horizontal");
-
-                    } else if (s.equals("vertical")) {
-                        if((posPrec[1]+1)==posCourante[0]){//si on était en bas
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]++;
-                        }
-                        else{ //sinon on va en bas
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]--;
-                        }
-                        System.out.println("Vertical");
-
-                    } else if (s.equals("left_top")) {
-                        if ((posPrec[0] + 1) == posCourante[0]) { //si on viens de la droite
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]++; //on monte
-                        } else {//sinon on viens du haut
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]--; //pour aller à gauche
-                        }
-                        System.out.println("Courbe gauche_haut");
-
-                    } else if (s.equals("left_bottom")) {
-                        if ((posPrec[0] + 1) == posCourante[0]) { //si on viens de la gauche
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]--; //on descends
-                        } else {//sinon on viens du haut
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]--; //pour aller à gauche
-                        }
-                        System.out.println("Courbe gauche_bas");
-
-                    } else if (s.equals("top_right")) {
-                        if ((posPrec[0] - 1) == posCourante[0]) { //si on viens de la droite
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]++; //on monte
-                        } else {//sinon on viens du haut
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]++; //pour aller à droite
-                        }
-                        System.out.println("Courbe gauche_haut");
-
-                    } else if (s.equals("bottom_right")) {
-                        if ((posPrec[0] - 1) == posCourante[0]) { //si on vient de la droite
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[1]--; //on descends
-                        } else {//sinon on viens du bas
-                            posPrec[0]=posCourante[0];
-                            posPrec[1]=posCourante[1];
-                            posCourante[0]++; //pour aller à droite
-                        }
-                        System.out.println("Courbe bas_droite");
-
-                    } else {
-                        System.out.println("Je connais pas");
-                    }
-                    tuyauTmp.addCase(posPrec);
-                }while(liaisons.getCell(posCourante[0],posCourante[1])==null);//tant qu'on ne trouve pas de liaison
-
-                //ensuite on une extremité de tuyau, on veut toutes les extremités successives
-                HashSet<int[]> extremitesSucc = parcoursLiaison(posCourante,posPrec);
-                Iterator it = extremitesSucc.iterator();
-
-                while(it.hasNext()){
-                    Tuyau tmp = this.buildCanalisation((int[])it.next());
-                    if(tmp!=null){
-                        tuyauTmp.addJunction(tmp);
-                    }
-                }
-                this.canalisation.add(tuyauTmp);
-
-                return tuyauTmp;
-            }
-            else{ //si on a pas le droit de parcourir, on retourne rien du tout
-                return null;
-            }
-        }
-        else{
-            return null;//pas de successeurs si on est à la fin
-        }
-    }
-
-
-    public HashSet<int[]> parcoursLiaison(int[] posOrigine, int[] posPrec){
-        //une fois qu'on a fini notre tuyau, il faut trouver les autres extrémités
-        HashSet<int[]> extremites = new HashSet();
-        if(liaisons.getCell(posOrigine[0],posOrigine[1])!=null){//si on est sur une liaison
-            String typeLiaison = (String)liaisons.getCell(posOrigine[0],posOrigine[1]).getTile().getProperties().get("name");
-            System.out.println(typeLiaison);
-            int[] posSuivanteGauche = new int[2];
-            int[] posSuivanteBas = new int[2];
-            int[] posSuivanteDroite = new int[2];
-            int[] posSuivanteHaut = new int[2];
-
-            posSuivanteGauche[0] = posOrigine[0]-1;
-            posSuivanteGauche[1] = posOrigine[1];
-            posSuivanteDroite[0] = posOrigine[0]+1;
-            posSuivanteDroite[1] = posOrigine[1];
-            posSuivanteBas[0] = posOrigine[0];
-            posSuivanteBas[1] = posOrigine[1]-1;
-            posSuivanteHaut[0] = posOrigine[0];
-            posSuivanteHaut[1] = posOrigine[1]+1;
-
-            switch(typeLiaison){
-                case "extrémité_verticale":
-                    if((posPrec[1]-1)==posOrigine[1]){//si on était en haut, on descends
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        posOrigine = posSuivanteBas;
-                    }else{
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        posOrigine = posSuivanteHaut;
-                    }
-                    extremites = parcoursLiaison(posOrigine,posPrec);
-                    break;
-                case "extrémité_horizontale":
-                    if((posPrec[0]-1)==posOrigine[0]){//si on était à droite
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        posOrigine = posSuivanteGauche;
-                    }else{
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        posOrigine = posSuivanteDroite;
-                    }
-                    extremites = parcoursLiaison(posOrigine,posPrec);
-                    break;
-                case "3way_bottom":
-                    if((posPrec[0]-1)==posOrigine[0]){//si on était à droite
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        //aller à gauche et en bas
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                    }else if((posPrec[1]+1)==posOrigine[1]){//si on était en bas
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        //aller à droite et à gauche
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                    }else{
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        //aller en bas et à droite
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }
-                    break;
-                case "3way_top":
-                    if((posPrec[0]-1)==posOrigine[0]){//si on viens de la droite
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                    }else if((posPrec[0]+1)==posOrigine[0]){//si on viens de la gauche
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }else{//sinon on viens du haut
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }
-                    break;
-                case "3way_left":
-                    if((posPrec[0]+1)==posOrigine[0]){//si on viens de la gauche
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }else if((posPrec[1]-1)==posOrigine[1]){//si on viens du haut
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                    }
-                    else{//on viens du bas
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }
-                    break;
-                case "3way_right":
-                    if((posPrec[0]-1)==posOrigine[0]){//si on viens de la droite
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                    }else if((posPrec[1]-1)==posOrigine[1]){//si on viens du haut
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }
-                    else{//on viens du bas
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }
-                    break;
-                case "4way":
-                    if((posPrec[0]-1)==posOrigine[0]){//si on viens de la droite
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                    }else if((posPrec[0]+1)==posOrigine[0]){//si on viens de la gauche
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                    }else if((posPrec[1]-1)==posOrigine[1]){//si on viens du haut
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteBas,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                    }
-                    else{//on viens du bas
-                        posPrec[0]=posOrigine[0];
-                        posPrec[1]=posOrigine[1];
-                        extremites.addAll(parcoursLiaison(posSuivanteDroite,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteHaut,posPrec));
-                        extremites.addAll(parcoursLiaison(posSuivanteGauche,posPrec));
-                    }
-                    break;
-            }
-        }
-        else{//si on arrive à la fin de la liaison
-            extremites.add(posPrec);
-        }
-        return extremites;
-    }
-
-
-    public void buildSecurity(){
-        this.securiteTuyau = new boolean[mapWidthTiled][mapHeightTiled];
-        for(int i = 0; i<mapWidthTiled; i++){
-            for(int j = 0; j<mapHeightTiled; j++){
-                securiteTuyau[i][j] = false;
-            }
-        }
-        System.out.println((String)this.tuyaux.getProperties().get("bloque"));
-        String[] tmp = ((String)this.tuyaux.getProperties().get("bloque")).split(" ");
-        int x,y;
-        for(int i=0; i<tmp.length; i++){
-            String[] tmpBis = tmp[i].split(",");
-            System.out.println(tmp[i]);
-            x = Integer.parseInt(tmpBis[0]);
-            y = Integer.parseInt(tmpBis[1]);
-            this.securiteTuyau[x][y] = true;
-        }
-    }
-
-    /**
-     * Return a boolean tab that symbolise the presence of items in the layer
-     * @param tiMaTileLayer
-     * @return a two dimention boolean tab
-     */
-    public boolean[][] getItemsPosition(TiledMapTileLayer tiMaTileLayer) {
-        boolean[][] pos = new boolean[this.mapWidthTiled][this.mapHeightTiled];
-        for (int i = 0; i < this.mapWidthTiled; i++) {
-            for (int j = 0; j < this.mapHeightTiled; j++) {
-                pos[i][j] = (tiMaTileLayer.getCell(i, (mapHeightTiled-1)-j) != null); //le (mapHeightTiled-1)-j est pour prendre d'abord les lignes du haut, le (0,0) de la map étant en bas à gauche, on a ainsi un tableau dans le sens de lecture
-            }
-        }
-        return pos;
+    public void buildLevel(){
+        canalisation.createCanalisation();
     }
 
     /**
      * Getter of mapHeightPixel
-     *
      * @return the value of mapHeightPixel
      */
     public int get_mapHeightPixel() {
@@ -454,7 +70,6 @@ public class CoffeeLevel {
 
     /**
      * Setter of mapHeightPixel
-     *
      * @param new_mapHeightPixel: new value of mapHeightPixel
      */
     public void set_mapHeightPixel(int new_mapHeightPixel) {
@@ -463,7 +78,6 @@ public class CoffeeLevel {
 
     /**
      * Getter of mapWidthPixel
-     *
      * @return the value of mapWidthPixel
      */
     public int get_mapWidthPixel() {
@@ -472,7 +86,6 @@ public class CoffeeLevel {
 
     /**
      * Setter of mapWidthPixel
-     *
      * @param new_mapWidthPixel: new value of mapWidthPixel
      */
     public void set_mapWidthPixel(int new_mapWidthPixel) {
@@ -481,7 +94,6 @@ public class CoffeeLevel {
 
     /**
      * Getter of mapRenderer
-     *
      * @return the value of mapRenderer
      */
     public TiledMapRenderer get_mapRenderer() {
@@ -490,7 +102,6 @@ public class CoffeeLevel {
 
     /**
      * Setter of mapRenderer
-     *
      * @param new_mapRenderer: new value of mapRenderer
      */
     public void set_mapRenderer(TiledMapRenderer new_mapRenderer) {
@@ -499,7 +110,6 @@ public class CoffeeLevel {
 
     /**
      * Getter of map
-     *
      * @return the value of map
      */
     public TiledMap get_map() {
@@ -552,116 +162,10 @@ public class CoffeeLevel {
     }
 
     /**
-     * Getter of vannes
-     *
-     * @return the value of vannes
-     */
-    public TiledMapTileLayer get_vannes() {
-        return this.vannes;
-    }
-
-    /**
-     * Setter of vannes
-     *
-     * @param new_vannes: the new value of vannes
-     */
-    public void set_vannes(TiledMapTileLayer new_vannes) {
-        this.vannes = new_vannes;
-    }
-
-    /**
-     * Getter of tuyaux
-     *
-     * @return the value of tuyaux
-     */
-    public TiledMapTileLayer get_tuyaux() {
-        return this.tuyaux;
-    }
-
-    /**
-     * Setter of tuyaux
-     *
-     * @param new_tuyaux: the new value of tuyaux
-     */
-    public void set_tuyaux(TiledMapTileLayer new_tuyaux) {
-        this.tuyaux = new_tuyaux;
-    }
-
-    /**
-     * Getter of koffeeMeters
-     *
-     * @return the value of koffeeMeters
-     */
-    public TiledMapTileLayer get_koffeeMeters() {
-        return this.koffeeMeters;
-    }
-
-    /**
-     * Setter of koffeeMeters
-     *
-     * @param new_koffeeMeters: the new value of koffeeMeters
-     */
-    public void set_koffeeMeters(TiledMapTileLayer new_koffeeMeters) {
-        this.koffeeMeters = new_koffeeMeters;
-    }
-
-    /**
-     * Getter of mapWidthTiled
-     *
-     * @return the value of mapWidthTiled
-     */
-    public int get_mapWidthTiled() {
-        return this.mapWidthTiled;
-    }
-
-    /**
-     * Setter of mapWidthTiled
-     *
-     * @param new_mapWidthTiled: the new value of mapWidthTiled
-     */
-    public void set_mapWidthTiled(int new_mapWidthTiled) {
-        this.mapWidthTiled = new_mapWidthTiled;
-    }
-
-    /**
-     * Getter ofmapHeightTiled
-     *
-     * @return the value ofmapHeightTiled
-     */
-    public int get_mapHeightTiled() {
-        return this.mapHeightTiled;
-    }
-
-    /**
-     * Setter ofmapHeightTiled
-     *
-     * @param new_mapHeightTiled: the new value ofmapHeightTiled
-     */
-    public void set_mapHeightTiled(int new_mapHeightTiled) {
-        this.mapHeightTiled = new_mapHeightTiled;
-    }
-
-    /**
-    * Getter of sprite
-    * @return the value of sprite
-    */
-    public Sprite[][] get_sprites(){
-      return this.sprites;
-    }
-
-    /**
-    * Setter of sprite
-    * @param new_sprites: the new value of sprite
-    */
-    public void set_sprites(Sprite[][] new_sprites){
-      this.sprites = new_sprites;
-    }
-
-    /**
     * Getter of canalisation
     * @return the value of canalisation
     */
-    public HashSet<Tuyau> get_canalisation(){
+    public Canalisation get_canalisation(){
       return this.canalisation;
     }
 
@@ -669,84 +173,8 @@ public class CoffeeLevel {
     * Setter of canalisation
     * @param new_canalisation: the new value of canalisation
     */
-    public void set_canalisation(HashSet<Tuyau> new_canalisation){
+    public void set_canalisation(Canalisation new_canalisation){
       this.canalisation = new_canalisation;
-    }
-
-    /**
-    * Getter of liaisons
-    * @return the value of liaisons
-    */
-    public TiledMapTileLayer get_liaisons(){
-      return this.liaisons;
-    }
-
-    /**
-    * Setter of liaisons
-    * @param new_liaisons: the new value of liaisons
-    */
-    public void set_liaisons(TiledMapTileLayer new_liaisons){
-      this.liaisons = new_liaisons;
-    }
-
-    /**
-    * Getter of mapEnd
-    * @return the value of mapEnd
-    */
-    public int[] get_mapEnd(){
-      return this.mapEnd;
-    }
-
-    /**
-    * Setter of mapEnd
-    * @param new_mapEnd: the new value of mapEnd
-    */
-    public void set_mapEnd(int[] new_mapEnd){
-      this.mapEnd = new_mapEnd;
-    }
-
-    /**
-    * Getter of mapStart
-    * @return the value of mapStart
-    */
-    public int[] get_mapStart(){
-      return this.mapStart;
-    }
-
-    /**
-    * Setter of mapStart
-    * @param new_mapStart: the new value of mapStart
-    */
-    public void set_mapStart(int[] new_mapStart){
-      this.mapStart = new_mapStart;
-    }
-
-    /**
-    * Fonction utilisée pour faire les débugs des tableaux de booléens
-    */
-    public void displayTab(boolean[][] tab){
-        for(int j=0;j<mapHeightTiled;j++){//on prends une ligne (un étage)
-            for(int i=0;i<mapWidthTiled; i++){//On affiche toutes les colonnes de cette ligne
-                System.out.print("|"+tab[i][j]+"|");
-            }
-            System.out.print("\n");
-        }
-    }
-
-    /**
-    * Getter of securiteTuyau
-    * @return the value of securiteTuyau
-    */
-    public boolean[][] get_securiteTuyau(){
-      return this.securiteTuyau;
-    }
-
-    /**
-    * Setter of securiteTuyau
-    * @param new_securiteTuyau: the new value of securiteTuyau
-    */
-    public void set_securiteTuyau(boolean[][] new_securiteTuyau){
-      this.securiteTuyau = new_securiteTuyau;
     }
 
     public void dispose() {
