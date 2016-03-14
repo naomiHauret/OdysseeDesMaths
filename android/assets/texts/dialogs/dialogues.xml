@@ -1,30 +1,5 @@
 <diag>
 
-<dialogue name="Arrivee">
-  <personnage name="hero">
-    <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... Eh ! Il y a quelqu'un ? </text>
-    <text> Qu'est-ce qui se passe ici... Aïe !</text>
-    <text> Qu'est-ce que je fous avec cette m... </text>
-  </personnage>
-  <personnage name="genie">
-    <text> Eh bah, t'en as mis du temps à me sortir de là ! </text>
-  </personnage>
-  <personnage name="hero">
-    <text> Mais qui êtes-vous ?! Et qu'est-ce que je fais là ? Et on est où d'abord ? </text>
-  </personnage>
-  <personnage name="genie">
-    <text> Hola, hola ! Doucement, une question à la fois. Je suis Pylès, le génie des mathématiques. Et ici, nous sommes à - </text>
-  </personnage>
-  <personnage name="hero">
-    <text> Qu'est-ce qui se passe ?! </text>
-  </personnage>
-  <personnage name="genie">
-    <text> Nom de Zeus ! Les légions d'expressions mathémaéfiques de Viktor ! </text>
-  </personnage>
-  <personnage name="ennemi">
-    <text> Ecrasez-le !</text>
-  </personnage>
-</dialogue>
 <dialogue name="Plongee">
   <personnage name="hero">
     <text> Pfiou, j'ai eu chaud ! Heureusement que - Aïe aïe aïe ! </text>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<dialogue>
+    <background-image>menu principal</background-image>
+    <personnage name="hero" pos="0">
+        <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... </text>
+        <text> Eh ! Il y a quelqu'un ?</text>
+        <text> Qu'est-ce qui se passe ici... Aïe !</text>
+        <text> Qu'est-ce que je fous avec cette m... </text>
+    </personnage>
+    <background-image>menu principal</background-image>
+    <personnage name="pyles" pos="3">
+        <text> Eh bah, t'en as mis du temps à me sortir de là, %h ! </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text> Mais qui êtes-vous ?! Et qu'est-ce que je fais là ? Et on est où d'abord ? </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Hola, hola ! Doucement, une question à la fois. Je suis Pylès, le génie des mathématiques. Et ici, nous sommes à - </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text> Qu'est-ce qui se passe ?! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Nom de Zeus ! Les légions d'expressions mathémaléfiques de Viktor ! </text>
+    </personnage>
+    <personnage name="ennemis" noimage="">
+        <text> Ecrasez-le !!</text>
+    </personnage>
+</dialogue>
