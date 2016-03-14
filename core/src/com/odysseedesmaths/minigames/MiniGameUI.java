@@ -39,9 +39,10 @@ public class MiniGameUI extends Stage implements Observer {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
-    private static final int PAD_SPACE = 48;
+    private static final int PAD_CENTER = 64;
     private static final BitmapFont TIMER;
     private static final BitmapFont ITEM_COUNTER;
+    public enum PAD_TYPE {FULL, HORIZONTAL};
 
     private Table table;
     private Skin skin;
@@ -52,11 +53,12 @@ public class MiniGameUI extends Stage implements Observer {
     private Table east;
     private Table south;
 
-    private boolean usePad = false;
+    private boolean useButtonA = false;
+    private boolean useButtonB = false;
 
     private Container<Actor> heroHpContainer;
     private Table heroHpGroup;
-    private Image heroHp;
+    private Image[] heroHps;
 
     private Container<Actor> bossHpContainer;
 
@@ -75,14 +77,18 @@ public class MiniGameUI extends Stage implements Observer {
     private Button padRight;
     private Button padUp;
     private Button padDown;
+    private PAD_TYPE padType;
 
     private Container<Actor> itemsContainer;
     private Table itemsGroup;
     private Image itemImage;
     private Label itemCounter;
-
-    private Container<Actor> actionsContainer;
     private Map<Sprite, Integer> activeItems;
+
+    private Container<Actor> buttonAContainer;
+    private Button buttonA;
+    private Container<Actor> buttonBContainer;
+    private Button buttonB;
 
     /**
      * Initialise une nouvelle interface avec les ressources nécessaires.
@@ -115,14 +121,15 @@ public class MiniGameUI extends Stage implements Observer {
         table.row();
         table.add(south).colspan(3).fill();
 
-        heroHpContainer = new Container<Actor>();
-        bossHpContainer = new Container<Actor>();
-        timerContainer = new Container<Actor>();
-        pauseContainer = new Container<Actor>();
-        oxygenContainer = new Container<Actor>();
-        padContainer = new Container<Actor>();
-        itemsContainer = new Container<Actor>();
-        actionsContainer = new Container<Actor>();
+        heroHpContainer = new Container<>();
+        bossHpContainer = new Container<>();
+        timerContainer = new Container<>();
+        pauseContainer = new Container<>();
+        oxygenContainer = new Container<>();
+        padContainer = new Container<>();
+        itemsContainer = new Container<>();
+        buttonAContainer = new Container<>();
+        buttonBContainer = new Container<>();
 
         north.add(heroHpContainer).top().left();
         north.add(bossHpContainer).top().expandX();
@@ -131,7 +138,8 @@ public class MiniGameUI extends Stage implements Observer {
         west.add(oxygenContainer).top().left().expandY();
         south.add(padContainer).bottom().left();
         south.add(itemsContainer).bottom().expandX();
-        south.add(actionsContainer).bottom().right();
+        south.add(buttonAContainer).bottom().right();
+        south.add(buttonBContainer).bottom().right();
 
         addPause();
     }
@@ -161,6 +169,27 @@ public class MiniGameUI extends Stage implements Observer {
         draw();
     }
 
+    public void tint(Color color) {
+        if (heroHpContainer.hasChildren()) {
+            for (Image hp : heroHps) {
+                hp.setColor(color);
+            }
+        }
+        if (timerContainer.hasChildren()) timerLabel.setColor(color);
+        if (padContainer.hasChildren()) {
+            padLeft.setColor(color);
+            padRight.setColor(color);
+            if (padType == PAD_TYPE.FULL) {
+                padUp.setColor(color);
+                padDown.setColor(color);
+            }
+        }
+        if (buttonAContainer.hasChildren()) buttonA.setColor(color);
+        if (buttonBContainer.hasChildren()) buttonB.setColor(color);
+        pause.setColor(color);
+        pause.getImage().setColor(color);
+    }
+
     @Override
     public void dispose() {
         super.dispose();
@@ -173,21 +202,23 @@ public class MiniGameUI extends Stage implements Observer {
      * @param aHero Le Hero dont les points de vie sont à afficher
      */
     public void addHeroHp(final Hero aHero) {
+        heroHps = new Image[Hero.PDV_MAX];
+        for (int i = 0; i < heroHps.length; i++) {
+            heroHps[i] = new Image(skin.getDrawable("heart_full"));
+        }
+
         heroHpGroup = new Table();
         heroHpGroup.defaults().space(10);
         heroHpGroup.addAction(new Action() {
             @Override
             public boolean act(float delta) {
                 heroHpGroup.clearChildren();
+                String sprite;
 
-                for (int i = 0; i < aHero.getPdv(); i++) {
-                    heroHp = new Image(skin.getDrawable("heart_full"));
-                    heroHpGroup.add(heroHp);
-                }
-
-                for (int i = 0; i < Hero.PDV_MAX - aHero.getPdv(); i++) {
-                    heroHp = new Image(skin.getDrawable("heart_empty"));
-                    heroHpGroup.add(heroHp);
+                for (int i = 0; i < heroHps.length; i++) {
+                    sprite = i < aHero.getPdv() ? "heart_full" : "heart_empty";
+                    heroHps[i].setDrawable(skin.getDrawable(sprite));
+                    heroHpGroup.add(heroHps[i]);
                 }
 
                 return false;
@@ -222,8 +253,8 @@ public class MiniGameUI extends Stage implements Observer {
      * Ajoute un pad directionnel à l'interface, composé de 4 boutons (flèches) vers les 4
      * principales directions : haut, bas, droite et gauche.
      */
-    public void addPad() {
-        usePad = true;
+    public void addPad(PAD_TYPE type) {
+        padType = type;
         ButtonStyle padStyle;
 
         padStyle = new ButtonStyle();
@@ -236,29 +267,36 @@ public class MiniGameUI extends Stage implements Observer {
         padStyle.down = skin.getDrawable("arrow_right_pressed");
         skin.add("padRight", padStyle);
 
-        padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("arrow_up");
-        padStyle.down = skin.getDrawable("arrow_up_pressed");
-        skin.add("padUp", padStyle);
-
-        padStyle = new ButtonStyle();
-        padStyle.up = skin.getDrawable("arrow_down");
-        padStyle.down = skin.getDrawable("arrow_down_pressed");
-        skin.add("padDown", padStyle);
-
         padLeft = new Button(skin, "padLeft");
         padRight = new Button(skin, "padRight");
-        padUp = new Button(skin, "padUp");
-        padDown = new Button(skin, "padDown");
+
+        if (padType == PAD_TYPE.FULL) {
+            padStyle = new ButtonStyle();
+            padStyle.up = skin.getDrawable("arrow_up");
+            padStyle.down = skin.getDrawable("arrow_up_pressed");
+            skin.add("padUp", padStyle);
+
+            padStyle = new ButtonStyle();
+            padStyle.up = skin.getDrawable("arrow_down");
+            padStyle.down = skin.getDrawable("arrow_down_pressed");
+            skin.add("padDown", padStyle);
+
+            padUp = new Button(skin, "padUp");
+            padDown = new Button(skin, "padDown");
+        }
 
         padGroup = new Table();
-        padGroup.defaults().space(10);
-        padGroup.add(padUp).colspan(2);
-        padGroup.row();
-        padGroup.add(padLeft).padRight(PAD_SPACE + 20);
-        padGroup.add(padRight);
-        padGroup.row();
-        padGroup.add(padDown).colspan(2);
+        if (padType == PAD_TYPE.FULL) {
+            padGroup.add(padUp).colspan(2);
+            padGroup.row();
+            padGroup.add(padLeft).padRight(PAD_CENTER);
+            padGroup.add(padRight);
+            padGroup.row();
+            padGroup.add(padDown).colspan(2);
+        } else {
+            padGroup.add(padLeft).padRight(PAD_CENTER / 2);
+            padGroup.add(padRight);
+        }
 
         padContainer.setActor(padGroup);
     }
@@ -308,17 +346,54 @@ public class MiniGameUI extends Stage implements Observer {
     }
 
     /**
+     * Ajoute un bouton d'action "A" à l'interface.
+     */
+    public void addButtonA() {
+        useButtonA = true;
+        ButtonStyle buttonStyle = new ButtonStyle();
+        buttonStyle.up = skin.getDrawable("button");
+        buttonStyle.down = skin.getDrawable("button_pressed");
+        skin.add("buttonA", buttonStyle);
+
+        buttonA = new Button(skin, "buttonA");
+
+        buttonAContainer.setActor(buttonA);
+        buttonAContainer.size(64, 64);
+    }
+
+    /**
+     * Ajoute un bouton d'action "B" à l'interface.
+     */
+    public void addButtonB() {
+        useButtonB = true;
+
+        ButtonStyle buttonStyle = new ButtonStyle();
+        buttonStyle.up = skin.getDrawable("button");
+        buttonStyle.down = skin.getDrawable("button_pressed");
+        skin.add("buttonB", buttonStyle);
+
+        buttonB = new Button(skin, "buttonB");
+
+        buttonBContainer.setActor(buttonB);
+        buttonBContainer.size(64, 64).padLeft(20);
+    }
+
+    /**
      * Associe l'InputListener spécifié aux composants pouvant recevoir un input.
      *
      * @param aListener L'InputListener à associer
      */
     public void setListener(InputListener aListener) {
-        if (usePad) {
+        if (padContainer.hasChildren()) {
             padLeft.addListener(aListener);
             padRight.addListener(aListener);
-            padUp.addListener(aListener);
-            padDown.addListener(aListener);
+            if (padType == PAD_TYPE.FULL) {
+                padUp.addListener(aListener);
+                padDown.addListener(aListener);
+            }
         }
+        if (useButtonA) buttonA.addListener(aListener);
+        if (useButtonB) buttonB.addListener(aListener);
         pause.addListener(aListener);
     }
 

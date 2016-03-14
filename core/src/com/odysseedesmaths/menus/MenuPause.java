@@ -18,6 +18,7 @@ public class MenuPause extends Menu {
 
     private TextButton retourJeu, recommencer, quitter;
     private TextButtonStyle txtButtonStyle = null;
+    private AudioButtons audioButtons;
 
     public MenuPause(){
         super(22, new Color(255f, 255f, 255f, 1), "fonts/PressStart2P.ttf", new StretchViewport(WIDTH, HEIGHT));
@@ -34,15 +35,18 @@ public class MenuPause extends Menu {
         retourJeu = new TextButton("Retour",txtButtonStyle);
         recommencer = new TextButton("Recommencer",txtButtonStyle);
         quitter = new TextButton("Quitter",txtButtonStyle);
+        audioButtons = new AudioButtons();
 
         Table tableau = new Table();
         tableau.setFillParent(true);
-        tableau.defaults().size(256, 64);
-        tableau.add(retourJeu).padBottom(SPACE_BETWEEN_BUTTONS);
+        tableau.pad(10);
+        tableau.add(retourJeu).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS).bottom().expand();
         tableau.row();
-        tableau.add(recommencer).padBottom(SPACE_BETWEEN_BUTTONS);
+        tableau.add(recommencer).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
         tableau.row();
-        tableau.add(quitter);
+        tableau.add(quitter).size(256, 64);
+        tableau.row();
+        tableau.add(audioButtons).bottom().left().expand();
 
         addActor(tableau);
     }

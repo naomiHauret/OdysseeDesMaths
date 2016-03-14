@@ -1,68 +1,68 @@
 
 orange.png
-size: 1024,64
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 arrow_down
   rotate: false
-  xy: 2, 2
-  size: 48, 56
-  orig: 48, 56
+  xy: 2, 36
+  size: 55, 64
+  orig: 55, 64
   offset: 0, 0
   index: -1
 arrow_down_pressed
   rotate: false
-  xy: 52, 2
-  size: 48, 56
-  orig: 48, 56
+  xy: 2, 36
+  size: 55, 64
+  orig: 55, 64
   offset: 0, 0
   index: -1
 arrow_left
   rotate: false
-  xy: 102, 10
-  size: 56, 48
-  orig: 56, 48
+  xy: 59, 45
+  size: 64, 55
+  orig: 64, 55
   offset: 0, 0
   index: -1
 arrow_left_pressed
   rotate: false
-  xy: 160, 10
-  size: 56, 48
-  orig: 56, 48
+  xy: 59, 45
+  size: 64, 55
+  orig: 64, 55
   offset: 0, 0
   index: -1
 arrow_right
   rotate: false
-  xy: 218, 10
-  size: 56, 48
-  orig: 56, 48
+  xy: 125, 45
+  size: 64, 55
+  orig: 64, 55
   offset: 0, 0
   index: -1
 arrow_right_pressed
   rotate: false
-  xy: 276, 10
-  size: 56, 48
-  orig: 56, 48
+  xy: 125, 45
+  size: 64, 55
+  orig: 64, 55
   offset: 0, 0
   index: -1
 arrow_up
   rotate: false
-  xy: 334, 2
-  size: 48, 56
-  orig: 48, 56
+  xy: 191, 36
+  size: 55, 64
+  orig: 55, 64
   offset: 0, 0
   index: -1
 arrow_up_pressed
   rotate: false
-  xy: 384, 2
-  size: 48, 56
-  orig: 48, 56
+  xy: 191, 36
+  size: 55, 64
+  orig: 55, 64
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 434, 26
+  xy: 2, 2
   size: 32, 32
   split: 6, 6, 6, 10
   orig: 32, 32
@@ -70,7 +70,7 @@ button
   index: -1
 button_pressed
   rotate: false
-  xy: 468, 26
+  xy: 36, 2
   size: 32, 32
   split: 6, 6, 10, 6
   orig: 32, 32
@@ -78,7 +78,7 @@ button_pressed
   index: -1
 field
   rotate: false
-  xy: 502, 26
+  xy: 70, 11
   size: 32, 32
   split: 10, 10, 10, 10
   orig: 32, 32
@@ -86,7 +86,7 @@ field
   index: -1
 field_focused
   rotate: false
-  xy: 536, 26
+  xy: 104, 11
   size: 32, 32
   split: 10, 10, 10, 10
   orig: 32, 32
@@ -94,7 +94,7 @@ field_focused
   index: -1
 frame_left
   rotate: false
-  xy: 570, 30
+  xy: 138, 15
   size: 32, 28
   split: 10, 4, 10, 10
   pad: 10, 4, 14, 10

@@ -17,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -50,16 +48,13 @@ public class MenuPrincipal implements Screen {
     private Table tableau;
     private Skin skin;
 
+    private Label gameTitle;
+    private LabelStyle gameTitleStyle;
+
     private TextButton play;
     private TextButtonStyle playButtonStyle;
 
-    private Button music;
-    private ButtonStyle musicButtonStyle;
-    private Button sounds;
-    private ButtonStyle soundsButtonStyle;
-
-    private Label gameTitle;
-    private LabelStyle gameTitleStyle;
+    private AudioButtons audioButtons;
 
     private BitmapFont menuFont = null, fontButton = null;
     private FreeTypeFontGenerator ftfg = null;
@@ -84,8 +79,7 @@ public class MenuPrincipal implements Screen {
 
         this.playButtonStyle = new TextButtonStyle();
         this.gameTitleStyle = new LabelStyle();
-        this.musicButtonStyle = new ButtonStyle();
-        this.soundsButtonStyle = new ButtonStyle();
+        this.audioButtons = new AudioButtons();
 
         this.createUI();
     }
@@ -106,14 +100,10 @@ public class MenuPrincipal implements Screen {
         playButtonStyle.up = skin.getDrawable("button");
         playButtonStyle.down = skin.getDrawable("button_pressed");
         gameTitleStyle.font = menuFont;
-        musicButtonStyle.up = skin.getDrawable("music_on");
-        soundsButtonStyle.up = skin.getDrawable("sounds_on");
 
         //texts and buttons
         gameTitle = new Label("L'Odyssée des Maths", gameTitleStyle);
         play = new TextButton("JOUER", playButtonStyle);
-        music = new Button(musicButtonStyle);
-        sounds = new Button(soundsButtonStyle);
         setListener(new MenuListener());
 
         //table disposition
@@ -125,16 +115,13 @@ public class MenuPrincipal implements Screen {
         tableau.row();
         tableau.add(play).size(200, 64).colspan(2).top().expand();
         tableau.row();
-        tableau.add(music);
-        tableau.add(sounds).left().expandX();
+        tableau.add(audioButtons).left();
 
         stage.addActor(tableau);
     }
 
     public void setListener(EventListener listener) {
         play.addListener(listener);
-        music.addListener(listener);
-        sounds.addListener(listener);
     }
 
     @Override
@@ -240,22 +227,6 @@ public class MenuPrincipal implements Screen {
 
             if ((source == play) || (source == play.getLabel())) {
                 play();
-            } else if (source == music) {
-                if (Musique.isPlaying()) {
-                    Musique.pause();
-                    musicButtonStyle.up = skin.getDrawable("music_off");
-                } else {
-                    Musique.play();
-                    musicButtonStyle.up = skin.getDrawable("music_on");
-                }
-            } else if (source == sounds) {
-                if (Musique.isPlaying()) {
-                    Musique.pause();
-                    soundsButtonStyle.up = skin.getDrawable("sounds_off");
-                } else {
-                    Musique.play();
-                    soundsButtonStyle.up = skin.getDrawable("sounds_on");
-                }
             }
 
             return true;

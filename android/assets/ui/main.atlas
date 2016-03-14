@@ -1,6 +1,6 @@
 
 main.png
-size: 256,128
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -13,14 +13,14 @@ cross
   index: -1
 heart_empty
   rotate: false
-  xy: 106, 25
+  xy: 328, 77
   size: 48, 41
   orig: 48, 41
   offset: 0, 0
   index: -1
 heart_full
   rotate: false
-  xy: 156, 25
+  xy: 378, 77
   size: 48, 41
   orig: 48, 41
   offset: 0, 0
@@ -41,7 +41,7 @@ music_on
   index: -1
 pause
   rotate: false
-  xy: 224, 93
+  xy: 428, 93
   size: 30, 25
   orig: 30, 25
   offset: 0, 0
@@ -53,16 +53,23 @@ plus
   orig: 64, 64
   offset: 0, 0
   index: -1
-sounds_off
+return
   rotate: false
   xy: 172, 68
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
+sounds_off
+  rotate: false
+  xy: 224, 68
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
 sounds_on
   rotate: false
-  xy: 54, 2
+  xy: 276, 68
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
