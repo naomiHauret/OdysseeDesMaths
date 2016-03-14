@@ -43,10 +43,10 @@ public class ArriveeRemarquable extends MiniGame {
 		terrain = new Terrain();
 		horde = new Horde(this, Horde.NORMAL);
 		hero = new Hero(this, terrain.getDepart());
-		enemies = new HashSet<Enemy>();
-        deadpool = new HashSet<Enemy>();
-		items = new HashSet<Item>();
-		activeItems = new HashMap<Class<? extends Item>, Integer>();
+		enemies = new HashSet<>();
+        deadpool = new HashSet<>();
+		items = new HashSet<>();
+		activeItems = new HashMap<>();
         timer = new Timer(TIME_LIMIT * Timer.ONE_MINUTE);
         Enemy.init();
         Item.init();

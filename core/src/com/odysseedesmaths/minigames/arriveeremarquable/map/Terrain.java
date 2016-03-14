@@ -1,9 +1,9 @@
 package com.odysseedesmaths.minigames.arriveeremarquable.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.odysseedesmaths.pathfinding.Pathfindable;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 public class Terrain implements Pathfindable<Case> {
 
     private final TiledMap map;
-    public TiledMapRenderer renderer;
+    public BatchTiledMapRenderer renderer;
 
     private final Case[][] cases;
     private final Case depart;
@@ -55,6 +55,7 @@ public class Terrain implements Pathfindable<Case> {
     public Case getDepart() {
         return depart;
     }
+
     public Case getFin() {
         return fin;
     }

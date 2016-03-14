@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.util.DisplayTextAction;
 
 public abstract class DialogScreen implements Screen {
 
@@ -32,7 +33,9 @@ public abstract class DialogScreen implements Screen {
     protected static final int WIDTH = 560;
     protected static final int HEIGHT = 340;
     private static final int DIALOG_HEIGHT = 125;
+    private static final int BUTTON_HEIGHT = 50;
 
+    protected static final BitmapFont FONT_16;
     protected static final BitmapFont FONT_15;
     protected static final BitmapFont FONT_14;
     protected static final BitmapFont FONT_13;
@@ -41,6 +44,8 @@ public abstract class DialogScreen implements Screen {
     static {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 16;
+        FONT_16 = generator.generateFont(parameter);
         parameter.size = 15;
         FONT_15 = generator.generateFont(parameter);
         parameter.size = 14;
@@ -71,7 +76,12 @@ public abstract class DialogScreen implements Screen {
     protected Table dialogTable;
 
     protected HorizontalGroup buttonsGroup;
+    protected TextButton.TextButtonStyle buttonStyle;
 
+    protected DisplayTextAction displayAction;
+    protected static final int DISPLAY_SPEED = 14;
+
+    //TODO: ajouter les SFX
     public DialogScreen(OdysseeDesMaths game) {
         this.game = game;
 
@@ -108,7 +118,15 @@ public abstract class DialogScreen implements Screen {
         buttonsGroup = new HorizontalGroup();
         buttonsGroup.space(10);
 
+        buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.up = skin.getDrawable("button");
+        buttonStyle.down = skin.getDrawable("button_pressed");
+        buttonStyle.font = FONT_11;
+        buttonStyle.fontColor = Color.BLACK;
+
         buildGUI();
+
+        displayAction = new DisplayTextAction();
 
         //stage.setDebugAll(true);
     }
@@ -128,14 +146,7 @@ public abstract class DialogScreen implements Screen {
         mainTable.row();
 
         // Ajout des boutons
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.up = skin.getDrawable("button");
-        style.down = skin.getDrawable("button_pressed");
-        style.font = FONT_11;
-        style.fontColor = Color.BLACK;
-        buttonsGroup.addActor(new TextButton("Tu peux répéter ?", style));
-        buttonsGroup.addActor(new TextButton("J'ai compris !", style));
-        mainTable.add(buttonsGroup).colspan(4).padTop(10);
+        mainTable.add(buttonsGroup).colspan(4).padTop(10).height(BUTTON_HEIGHT);
     }
 
     @Override
@@ -209,6 +220,9 @@ public abstract class DialogScreen implements Screen {
         switch (charName) {
             case "hero": asset = Assets.ICON_HERO; break;
             case "pyles": asset = Assets.ICON_PYLES; break;
+            case "audib": asset = Assets.ICON_AUDIB; break;
+            case "viktor": asset = Assets.ICON_VIKTOR; break;
+            case "phythagore": asset = Assets.ICON_PYTHAGORE; break;
         }
         return asset;
     }

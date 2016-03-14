@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -44,6 +46,8 @@ public class NewSave implements Screen {
     private Label saveNameLabel;
     private TextField saveNameField;
     private TextButton submit;
+    private AudioButtons audioButtons;
+    private Button returnButton;
 
     public NewSave(OdysseeDesMaths game) {
         this.game = game;
@@ -76,23 +80,33 @@ public class NewSave implements Screen {
         textFieldStyle.focusedBackground = skin.getDrawable("field_focused");
         skin.add("textField", textFieldStyle);
 
+        ButtonStyle returnButtonStyle = new ButtonStyle();
+        returnButtonStyle.up = skin.getDrawable("return");
+        skin.add("returnButton", returnButtonStyle);
+
         gameTitle = new Label("L'Odyssée des Maths", skin, "title");
         saveNameLabel = new Label("Nom:", skin, "text");
         saveNameField = new TextField("", skin, "textField");
         saveNameField.setMaxLength(7);
         submit = new TextButton("C'est parti !", skin, "textButton");
+        audioButtons = new AudioButtons();
+        returnButton = new Button(skin, "returnButton");
 
         table.setBackground(skin.getDrawable("background"));
         table.padTop(HEIGHT / 13);
-        table.add(gameTitle).top().colspan(2).padBottom(HEIGHT / 7);
+        table.add(gameTitle).top().colspan(2).padBottom(HEIGHT / 9).expandX();
         table.row().padBottom(HEIGHT / 10);
         table.add(saveNameLabel).right().padRight(10);
         table.add(saveNameField).size(200, 48).left();
         table.row();
         table.add(submit).size(350, 64).top().colspan(2).expandY();
+        table.row();
+        table.add(audioButtons).left();
+        table.add(returnButton).right();
 
         NewSaveListener listener = new NewSaveListener();
         submit.addListener(listener);
+        returnButton.addListener(listener);
     }
 
     @Override
@@ -149,6 +163,8 @@ public class NewSave implements Screen {
                     game.getSavesManager().getCurrentSave().setName(saveNameField.getText());
                     game.startGame();
                 }
+            } else if (source == returnButton) {
+                game.setScreen(new SaveSelection(game));
             }
         }
     }
