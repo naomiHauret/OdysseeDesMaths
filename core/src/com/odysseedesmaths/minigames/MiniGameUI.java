@@ -298,6 +298,7 @@ public class MiniGameUI extends Stage implements Observer {
             padGroup.add(padRight);
         }
 
+
         padContainer.setActor(padGroup);
     }
 

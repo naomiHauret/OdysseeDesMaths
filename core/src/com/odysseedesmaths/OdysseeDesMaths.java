@@ -47,7 +47,7 @@ public class OdysseeDesMaths extends Game {
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
         } else {
-            setScreen(new ArriveeRemarquable(this));
+            setScreen(new Accrobranche(this));
         }
     }
 }
