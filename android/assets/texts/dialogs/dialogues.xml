@@ -248,21 +248,15 @@
     <text> ... </text>
   </personnage>
 </dialogue>
-<dialogue name="plateforme">
+<dialogue name="nuage">
   <personnage name="hero">
     <text> Gloups... Je crois que j'ai le vertige... </text>
   </personnage>
   <personnage name="genie">
-    <text> Moi, je me demande bien quand est-ce que la plateforme va s'arrêter... </text>
-    <text> et si on jouait à des devinettes pour faire passer le temps plus vite ? </text>
-  </personnage>
-</dialogue>
-<dialogue name="nuage">
-  <personnage name="genie">
     <text> Oh ! Regarde, on voit l'auberge d'ici ! </text>
   </personnage>
   <personnage name="hero">
-    <text> J'ai envie de descendre, je crois que je vais vomir... </text>
+    <text> J'ai envie de descendre, ou je vais finir par vomir... </text>
   </personnage>
   <personnage name="cullen">
     <text> Tiens, tiens, tiens... des visiteurs. </text>
@@ -404,4 +398,5 @@
     <text> Viktor...?! </text>
   </personnage>
 </dialogue>
+
 </diag>

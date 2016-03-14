@@ -194,7 +194,7 @@ public class MenuPrincipal implements Screen {
         menuFont.dispose();
     }
 
-    private void play(){
+    private void play() {
         AlphaAction alphaAction = new AlphaAction();
         alphaAction.setAlpha(0);
         alphaAction.setDuration(0.5f);
@@ -262,3 +262,4 @@ public class MenuPrincipal implements Screen {
         }
     }
 }
+

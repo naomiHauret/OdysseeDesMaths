@@ -1,1 +1,2 @@
+include ':myapplication'
 include 'android', 'core'
