@@ -5,7 +5,7 @@ import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.dialogs.QuestionnaireDialog;
 import com.odysseedesmaths.menus.MenuPrincipal;
 
-public abstract class MiniGame implements Screen {
+public abstract class   MiniGame implements Screen {
 
     public enum State {RUNNING, PAUSED, GAME_OVER}
     protected State currentState;

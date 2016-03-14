@@ -25,6 +25,7 @@ public class Assets {
 
     @Asset(Texture.class)
     public static final String
+            VANNEBUTTON = "textures/CoffeePlumbing/vanneButton.png",
             HERO = "heros.png",
             HEART = "coeur.png",
             MAIN_MENU_BACKGROUND = "tower.png",

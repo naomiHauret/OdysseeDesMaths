@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.Tuyau;
@@ -22,12 +23,20 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
 
     @Override
     public void create() {
+        Assets.getManager().load(Assets.class);
+        Assets.getManager().finishLoading();
         width = Gdx.graphics.getWidth()/2;
         height = Gdx.graphics.getHeight()/2;
         camera = new OrthographicCamera();
         viewport = new StretchViewport(width,height,camera);
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
         level.buildLevel();
+
+        level.get_stage().setDebugAll(true);
+        level.get_stage().setViewport(viewport);
+        Gdx.input.setInputProcessor(level.get_stage());
+
+
         Iterator<Tuyau> test = level.get_canalisation().get_allPipes().iterator();
         Tuyau tuyauDebug = test.next();
         System.out.print(tuyauDebug.toString());
@@ -49,8 +58,12 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.input.setInputProcessor(level.get_stage());
         level.get_mapRenderer().setView(camera);
         level.get_mapRenderer().render();
+
+        level.get_stage().act();
+        level.get_stage().draw();
 
         reglerCamera();
         camera.update();

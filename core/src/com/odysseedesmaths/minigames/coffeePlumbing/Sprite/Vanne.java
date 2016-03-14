@@ -1,11 +1,21 @@
 package com.odysseedesmaths.minigames.coffeePlumbing.Sprite;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.Tuyau;
 
 /**
@@ -15,9 +25,9 @@ public class Vanne {
     private Tuyau tuyau;
     private Button diminuer;//moitié gauche de la vanne
     private Button augmenter;//moitié droite
-    private Stage test;
     private int x;
     private int y;
+    private Table table;
 
     public Vanne(int x, int y, Tuyau tuyau){
         this.x = x;
@@ -25,20 +35,24 @@ public class Vanne {
         this.tuyau = tuyau;
         this.diminuer = new Button();
         this.augmenter = new Button();
+        this.table = new Table();
         this.init();
     }
 
     public void init(){
+        Drawable imageButton = new NinePatchDrawable(new NinePatch(Assets.getManager().get(Assets.VANNEBUTTON, Texture.class)));
+        Button.ButtonStyle bts = new Button.ButtonStyle(imageButton,imageButton,imageButton);
+        augmenter.setStyle(bts);
+        augmenter.setSize(32, 64);
         augmenter.addListener(new VanneButton());
+        diminuer.setStyle(bts);
+        diminuer.setSize(32, 64);
         diminuer.addListener(new VanneButton());
-        test = new Stage();
 
-        Table table = new Table();
         table.add(diminuer);
         table.add(augmenter);
 
-        table.setPosition(x * 64, y * 64);
-        test.addActor(table);
+        table.setPosition(x*64+32,y*64+32); //les 2 (+32) sont la pour être bien aligné avec le centre de la vanne
     }
 
     /**
@@ -55,6 +69,22 @@ public class Vanne {
     */
     public void set_tuyau(Tuyau new_tuyau){
       this.tuyau = new_tuyau;
+    }
+
+    /**
+    * Getter of table
+    * @return the value of table
+    */
+    public Table get_table(){
+      return this.table;
+    }
+
+    /**
+    * Setter of table
+    * @param new_table: the new value of table
+    */
+    public void set_table(Table new_table){
+      this.table = new_table;
     }
 
     public class VanneButton extends InputListener{
