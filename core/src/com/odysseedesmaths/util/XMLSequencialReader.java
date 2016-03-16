@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,7 +20,6 @@ public abstract class XMLSequencialReader {
     protected Document document;
     protected Node currentNode;
 
-    //TODO: Valider le document avec une DTD
     public XMLSequencialReader(String xmlFilePath) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -48,6 +50,4 @@ public abstract class XMLSequencialReader {
 
     public abstract Node initCurrentNode();
     public abstract String process(Node node);
-    public abstract void next();
-    public abstract boolean hasNext();
 }

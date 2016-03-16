@@ -50,6 +50,9 @@ public class SaveSelection implements Screen {
     private Button save3;
     private Button deleteSave3;
 
+    private AudioButtons audioButtons;
+    private Button returnButton;
+
     public SaveSelection(OdysseeDesMaths game) {
         this.game = game;
 
@@ -77,6 +80,10 @@ public class SaveSelection implements Screen {
         buttonStyle = new ButtonStyle();
         buttonStyle.up = skin.getDrawable("cross");
         skin.add("deleteButton", buttonStyle);
+
+        ButtonStyle returnButtonStyle = new ButtonStyle();
+        returnButtonStyle.up = skin.getDrawable("return");
+        skin.add("returnButton", returnButtonStyle);
 
         gameTitle = new Label("L'Odyssée des Maths", skin, "title");
 
@@ -136,18 +143,23 @@ public class SaveSelection implements Screen {
         deleteSave1 = new Button(skin, "deleteButton");
         deleteSave2 = new Button(skin, "deleteButton");
         deleteSave3 = new Button(skin, "deleteButton");
+        audioButtons = new AudioButtons();
+        returnButton = new Button(skin, "returnButton");
 
         table.setBackground(skin.getDrawable("background"));
         table.padTop(HEIGHT / 13);
-        table.add(gameTitle).top().colspan(3).padBottom(HEIGHT / 7);
+        table.add(gameTitle).colspan(3).top().padBottom(HEIGHT / 9).expandX();
         table.row().width(WIDTH / 4).height(HEIGHT * 2 / 5);
-        table.add(save1).fill();
+        table.add(save1).fill().padLeft(40);
         table.add(save2).fill().padLeft(SPACE_BETWEEN_SAVES).padRight(SPACE_BETWEEN_SAVES);
-        table.add(save3).fill();
+        table.add(save3).fill().padRight(40);
         table.row().top().expandY();
-        table.add(deleteSave1);
+        table.add(deleteSave1).padLeft(40);
         table.add(deleteSave2);
-        table.add(deleteSave3);
+        table.add(deleteSave3).padRight(40);
+        table.row();
+        table.add(audioButtons).left();
+        table.add(returnButton).colspan(2).right();
 
         deleteSave1.setVisible(!game.getSavesManager().getSave1().isEmpty());
         deleteSave2.setVisible(!game.getSavesManager().getSave2().isEmpty());
@@ -160,6 +172,7 @@ public class SaveSelection implements Screen {
         deleteSave1.addListener(listener);
         deleteSave2.addListener(listener);
         deleteSave3.addListener(listener);
+        returnButton.addListener(listener);
     }
 
     @Override
@@ -227,6 +240,8 @@ public class SaveSelection implements Screen {
             } else if (source == deleteSave3) {
                 game.getSavesManager().getSave3().reset();
                 game.setScreen(new SaveSelection(game));
+            } else if (source == returnButton) {
+                game.setScreen(new MenuPrincipal(game));
             }
         }
     }

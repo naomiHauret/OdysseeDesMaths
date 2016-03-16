@@ -3,7 +3,6 @@ package com.odysseedesmaths.dialogs;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.odysseedesmaths.*;
@@ -14,21 +13,17 @@ import org.w3c.dom.Node;
 
 public class SimpleDialog extends DialogScreen {
 
-    private static final int DISPLAY_SPEED = 13;
-
     private SimpleDialogReader reader;
 
     private Label dialogChar;
     private Label dialogText;
-    private TemporalAction displayAction;
-    private boolean textIsDisplayed;
 
     public SimpleDialog(OdysseeDesMaths game, String dialogPath) {
         super(game);
 
-        dialogChar = new Label("", new Label.LabelStyle(FONT_15, Color.FIREBRICK));
+        dialogChar = new Label("", new Label.LabelStyle(FONT_16, Color.FIREBRICK));
         dialogChar.setAlignment(Align.left);
-        dialogText = new Label("", new Label.LabelStyle(FONT_12, Color.BLACK));
+        dialogText = new Label("", new Label.LabelStyle(FONT_14, Color.BLACK));
         dialogText.setWrap(true);
         dialogText.setAlignment(Align.topLeft);
 
@@ -40,7 +35,7 @@ public class SimpleDialog extends DialogScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (!textIsDisplayed) displayAction.finish();
+                if (!displayAction.isFinished()) displayAction.finish();
                 else if (reader.hasNext()) reader.next();
             }
         });
@@ -51,31 +46,15 @@ public class SimpleDialog extends DialogScreen {
     }
 
     public void setText(final String text) {
-        TemporalAction action = new TemporalAction(text.length()/DISPLAY_SPEED) {
-            @Override
-            protected void update(float percent) {
-                ((Label)actor).setText(text.substring(0, Math.round(text.length() * percent)));
-            }
-
-            @Override
-            protected void begin() {
-                super.begin();
-                textIsDisplayed = false;
-            }
-
-            @Override
-            protected void end() {
-                super.end();
-                textIsDisplayed = true;
-            }
-        };
-        displayAction = action;
-        dialogText.addAction(action);
+        displayAction.reset();
+        displayAction.setText(text);
+        displayAction.setDuration(text.length()/DISPLAY_SPEED);
+        dialogText.addAction(displayAction);
     }
 
     private class SimpleDialogReader extends XMLSequencialReader {
 
-        private static final String TEXT_NODE = "texte";
+        private static final String TEXT_NODE = "text";
         private static final String CHAR_NODE = "personnage";
         private static final String BACK_IMG_NODE = "background-image";
         private static final String MID_IMG_NODE = "middle-image";
@@ -91,7 +70,6 @@ public class SimpleDialog extends DialogScreen {
             do {
                 node = goToNextSibling(node, CHAR_NODE, true);
                 tmpNode = goToFirstChild(node, TEXT_NODE, true);
-                System.out.println("init: "+node.getNodeName());
             } while (tmpNode == null);
             return tmpNode;
         }
@@ -100,7 +78,6 @@ public class SimpleDialog extends DialogScreen {
         public String process(Node node) {
             short nodeType = node.getNodeType();
             String nodeName = node.getNodeName();
-            System.out.println("process: " + nodeName);
 
             switch (nodeType) {
                 case Node.ELEMENT_NODE:
@@ -114,8 +91,9 @@ public class SimpleDialog extends DialogScreen {
                             break;
                         case CHAR_NODE:
                             String perso = element.getAttribute("name");
-                            int position = Integer.valueOf(element.getAttribute("pos"));
-                            setChar(getAssetForChar(perso), position);
+                            if (!element.hasAttribute("noimage")) {
+                                setChar(getAssetForChar(perso), Integer.valueOf(element.getAttribute("pos")));
+                            }
                             if (perso.equals("hero")) {
                                 dialogChar.setText(game.getSavesManager().getCurrentSave().getName().toUpperCase());
                             } else {
@@ -132,13 +110,12 @@ public class SimpleDialog extends DialogScreen {
             }
         }
 
-        @Override
         public void next() {
             Node nextNode = goToNextSibling(currentNode, TEXT_NODE, true);
 
             if (nextNode == null) {
                 // Le personnage a fini de parler, on passe au personnage suivant
-                Node charNode =  currentNode.getParentNode();;
+                Node charNode =  currentNode.getParentNode();
                 do {
                     charNode = goToNextSibling(charNode, CHAR_NODE, true);
                     nextNode = goToFirstChild(charNode, TEXT_NODE, true);
@@ -148,7 +125,6 @@ public class SimpleDialog extends DialogScreen {
             currentNode = nextNode;
         }
 
-        @Override
         public boolean hasNext() {
             return goToNextSibling(currentNode, TEXT_NODE, false) != null
                     || goToNextSibling(currentNode.getParentNode(), CHAR_NODE, false) != null;

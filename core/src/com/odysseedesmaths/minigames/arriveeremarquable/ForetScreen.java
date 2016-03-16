@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -66,9 +67,9 @@ public class ForetScreen implements Screen {
         heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
         heroSprite.setPosition(minigame.hero.getCase().i * CELL_SIZE, minigame.hero.getCase().j * CELL_SIZE);
 
-        entitiesSprites = new HashMap<Entity, Sprite>();
+        entitiesSprites = new HashMap<>();
 
-        buffsSprites = new HashMap<Class<? extends Item>, Sprite>();
+        buffsSprites = new HashMap<>();
         buffsSprites.put(Shield.class, new Sprite(Assets.getManager().get(Assets.ARR_BUFF_SHIELD, Texture.class)));
 
         hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
@@ -76,7 +77,7 @@ public class ForetScreen implements Screen {
         ui = new MiniGameUI();
         ui.addHeroHp(minigame.hero);
         ui.addTimer(minigame.timer);
-        ui.addPad();
+        ui.addPad(MiniGameUI.PAD_TYPE.FULL);
         ui.addItems();
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
@@ -252,12 +253,15 @@ public class ForetScreen implements Screen {
 
         switch (minigame.getState()) {
             case RUNNING:
+                tint(Color.WHITE);
                 if (minigame.timer.isFinished()) minigame.gameOver();
                 break;
             case PAUSED:
+                tint(Color.GRAY);
                 menuPause.draw();
                 break;
             case GAME_OVER:
+                tint(Color.GRAY);
                 menuGameOver.render();
                 break;
             default:
@@ -296,6 +300,19 @@ public class ForetScreen implements Screen {
     public void gameOver() {
         Gdx.input.setInputProcessor(menuGameOver);
         menuGameOver.playMusic();
+    }
+
+    private void tint(Color color) {
+        minigame.terrain.renderer.getBatch().setColor(color);
+        heroSprite.setColor(color);
+        hordeSprite.setColor(color);
+        for (Sprite sprite : entitiesSprites.values()) {
+            sprite.setColor(color);
+        }
+        for (Sprite sprite : buffsSprites.values()) {
+            sprite.setColor(color);
+        }
+        ui.tint(color);
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {

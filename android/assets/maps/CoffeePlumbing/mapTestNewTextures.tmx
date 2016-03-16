@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="64" tileheight="64">
+ <properties>
+  <property name="end" value="9,5"/>
+  <property name="start" value="0,4"/>
+ </properties>
  <tileset firstgid="1" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
   <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
   <tile id="0">
@@ -19,7 +23,7 @@
   </tile>
   <tile id="3">
    <properties>
-    <property name="name" value="extrémité verticale"/>
+    <property name="name" value="extrémité_verticale"/>
    </properties>
   </tile>
   <tile id="4">
@@ -35,6 +39,11 @@
   <tile id="6">
    <properties>
     <property name="name" value="4way"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="capacity" value=""/>
    </properties>
   </tile>
   <tile id="9">
@@ -78,17 +87,20 @@
    </properties>
   </tile>
  </tileset>
- <layer name="background" width="10" height="7" opacity="0.9">
+ <layer name="background" width="10" height="7" opacity="0.79">
   <data encoding="base64" compression="zlib">
    eJzjYGBg4BjFGBgAN8cCMQ==
   </data>
  </layer>
  <layer name="liaisons" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOWIGYDYccCDDjkUMGLESqI8ZuQm6iJgAAG6AAKQ==
+   eJxjYMAOWIGYDYccCDATqYcFjxm4AC67CbmJmgAAJEwANA==
   </data>
  </layer>
  <layer name="tuyaux" width="10" height="7">
+  <properties>
+   <property name="bloque" value="2,2 9,3 5,4 5,6 8,5"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxjYEAFvEDMiMTnZiAO8CCxGaGYkF6YXVxQ/TB96HbzoIkzomEuIt1ICgAAU5gAfw==
   </data>
@@ -99,13 +111,12 @@
   </data>
  </layer>
  <layer name="koffeeMeters" width="10" height="7">
+  <properties>
+   <property name="capacites" value="8;6;7;8;9"/>
+   <property name="coordonnees" value="2,4;6,2;5,3;5,6;8,5"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
-  </data>
- </layer>
- <layer name="extremites" width="10" height="7">
-  <data encoding="base64" compression="zlib">
-   eJxjYKAeYAViNiqaN5AAAAnEAAw=
   </data>
  </layer>
 </map>

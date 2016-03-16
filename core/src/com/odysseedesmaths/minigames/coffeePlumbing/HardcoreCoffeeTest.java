@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.odysseedesmaths.Assets;
+import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.CoffeeLevel;
 import com.odysseedesmaths.minigames.coffeePlumbing.map.Tuyau;
 
-import java.util.HashSet;
 import java.util.Iterator;
 
 //Classe pour les test ...en bazard
@@ -22,16 +23,31 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
 
     @Override
     public void create() {
+        Assets.getManager().load(Assets.class);
+        Assets.getManager().finishLoading();
         width = Gdx.graphics.getWidth()/2;
         height = Gdx.graphics.getHeight()/2;
         camera = new OrthographicCamera();
         viewport = new StretchViewport(width,height,camera);
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
-        HashSet<Tuyau> cana= level.get_canalisation();
-        Iterator<Tuyau> test = cana.iterator();
-        while(test.hasNext()){
-            System.out.print(test.next().toString());
+        level.buildLevel();
+
+        level.get_stage().setDebugAll(true);
+        level.get_stage().setViewport(viewport);
+        Gdx.input.setInputProcessor(level.get_stage());
+
+
+        Iterator<Tuyau> test = level.get_canalisation().get_allPipes().iterator();
+        Tuyau tuyauDebug = test.next();
+        System.out.print(tuyauDebug.toString());
+        Iterator<Tuyau> successor = tuyauDebug.getAllSuccessor().iterator() ;
+
+        while(successor.hasNext()){
+            System.out.println(((Tuyau)successor.next()).toString());
         }
+
+        Musique.setCurrent("music/CoffeePlumbing/ambiant.ogg");
+        Musique.play();
     }
 
     @Override
@@ -42,8 +58,12 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.input.setInputProcessor(level.get_stage());
         level.get_mapRenderer().setView(camera);
         level.get_mapRenderer().render();
+
+        level.get_stage().act();
+        level.get_stage().draw();
 
         reglerCamera();
         camera.update();
