@@ -1,6 +1,9 @@
 package com.odysseedesmaths;
 
 import com.badlogic.gdx.audio.Music;
+/*
+        Classe type pour la mise en place de la musique
+ */
 
 public class Musique {
     private static Music currentMusic = null;

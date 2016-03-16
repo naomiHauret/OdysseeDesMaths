@@ -1,6 +1,9 @@
 package com.odysseedesmaths;
 
 import com.badlogic.gdx.Preferences;
+/*
+        Classe référence de sauvegarde
+ */
 
 public class Save {
 

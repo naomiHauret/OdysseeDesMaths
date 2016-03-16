@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="recupArtefact">
+    <personnage name="hero">
+        <text> Eh bah, tu m'étonnes que Vektor a pu s'emparer de tous les artefacts, avec un gardien aussi pourri... </text>
+    </personnage>
+</dialogue>

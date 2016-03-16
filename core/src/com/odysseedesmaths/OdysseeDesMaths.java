@@ -6,6 +6,9 @@ import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.menus.NewSave;
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+/*
+        Classe du jeu principal
+ */
 
 public class OdysseeDesMaths extends Game {
     public SpriteBatch batcher;

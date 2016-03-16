@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="recupArtefact2">
+    <personnage name="genie">
+        <text> Bravo ! Maintenant, il ne te reste plus qu'à faire tomber la tour de Viktor et tu pourras rentrer chez toi ! </text>
+    </personnage>
+</dialogue>
