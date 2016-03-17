@@ -24,13 +24,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
-<<<<<<< HEAD
-/*
-        Classe générale pour les différents dialogues
- */
-=======
 import com.odysseedesmaths.util.DisplayTextAction;
->>>>>>> 3619d6d01c9afbc29228ed74b5f7121d3f67eb41
 
 public abstract class DialogScreen implements Screen {
 

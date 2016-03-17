@@ -2,7 +2,7 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
 /*
-        Classe d'interface système des espaces sauvegardes
+        Classe d'interface systÃ¨me des espaces sauvegardes
  */
 
 public class SavesManager {

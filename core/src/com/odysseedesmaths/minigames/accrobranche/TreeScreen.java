@@ -35,8 +35,8 @@ import com.odysseedesmaths.minigames.MiniGameUI;
 
 public class TreeScreen implements Screen {
 
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 208;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
     public static final float PPM = 100;
 
     //Box2D Collision Bits
@@ -44,6 +44,7 @@ public class TreeScreen implements Screen {
     public static final short GROUND_BIT = 1;
     public static final short HERO_BIT = 2;
     public static final short HERO_HEAD_BIT = 4;
+
 
     private final Accrobranche minigame;
 
@@ -62,6 +63,7 @@ public class TreeScreen implements Screen {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    public float width_map;
 
     // Box2d variables
     private World world;
@@ -78,12 +80,12 @@ public class TreeScreen implements Screen {
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera();
-        port = new FitViewport(WIDTH / PPM, HEIGHT / PPM, cam);
+        port = new FitViewport(WIDTH / PPM / 2, HEIGHT / PPM / 2, cam);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("accrobranche/map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
-        cam.position.set(port.getWorldWidth() / 2, port.getWorldHeight() / 2, 0);
+        width_map = (int)map.getProperties().get("width") / PPM;
 
         // Elements relatifs à Box2d
         world = new World(new Vector2(0, -10), true);
@@ -114,7 +116,8 @@ public class TreeScreen implements Screen {
         // UI
         ui = new MiniGameUI();
         ui.addTimer(minigame.timer);
-        ui.addPad(MiniGameUI.PAD_TYPE.FULL);
+        ui.addPad(MiniGameUI.PAD_TYPE.HORIZONTAL);
+        ui.addButtonA();
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
             @Override
@@ -128,7 +131,7 @@ public class TreeScreen implements Screen {
                 }
 
                 // Jump
-                if (source == ui.getPadUp() && !(hero.getState() == Hero.State.JUMPING || hero.getState() == Hero.State.FALLING)) {
+                if (source == ui.getButtonA() && !(hero.getState() == Hero.State.JUMPING || hero.getState() == Hero.State.FALLING)) {
                     hero.jump();
                 }
 
@@ -209,27 +212,33 @@ public class TreeScreen implements Screen {
         // Positionnement de la caméra (sur le héros ou sur les bords)
         float posX, posY, minX, minY, maxX, maxY;
 
-        // Reglage de la position horizontale du héros
+        // Reglage de la position horizontale du viewport
         posX = hero.b2body.getPosition().x;
-        if (posX < port.getWorldWidth() / 2){
-            posX = port.getWorldWidth() / 2;
-        }
+        minX = port.getWorldWidth() / 2;
+        maxX = 6.3f - (port.getWorldWidth() / 2);
 
-        // Reglage de la position horizontale du héros
+        if (posX < minX) { posX = minX; }
+        if (posX < maxX) { posX = maxX; }
+        cam.position.x = posX;
+        /*cam.position.x = MathUtils.clamp(posX, minX, maxX);*/
+
+        // Reglage de la position verticale du viewport
+        float lerp = 0.1f;
         posY = port.getWorldHeight() / 2;
         if (hero.getState() != Hero.State.JUMPING && hero.getState() != Hero.State.FALLING) {
-            posY = hero.b2body.getPosition().y;
+            posY += (hero.b2body.getPosition().y - cam.position.y) * lerp * dt;
         }
-        if (posY < port.getWorldHeight() / 2) {
+        if (hero.b2body.getPosition().y < 0) {
             posY = port.getWorldHeight() / 2;
+            minigame.gameOver();
         }
+        cam.position.y = posY;
 
         //minX = WIDTH / 2;
         //minY = HEIGHT / 2;
         //maxX = (int) mp.get("tilewidth") * (int) mp.get("width") - minX;
         //maxY = (int) mp.get("tileheight") * (int) mp.get("height") - minY;
         //cam.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
-        cam.position.set(posX,posY,0);
 
         cam.update();
         renderer.setView(cam);

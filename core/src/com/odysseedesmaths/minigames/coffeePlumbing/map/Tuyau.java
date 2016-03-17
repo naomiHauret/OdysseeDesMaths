@@ -33,10 +33,17 @@ public class Tuyau {
             this.fluxCourant++;
             this.indicateurs.set_currentFlow(this.fluxCourant);
             System.out.println("Flux courant"+this.fluxCourant);
-            Iterator<Tuyau> it = new Iterator<Tuyau>();
+            /*
+            *
+            *   *****************************ATTENTION BOUT DE CODE QUI MARCHE PAS
+            *   *****************************COMMENTé !
+            *
+            * /
+             */
+            /*Iterator<Tuyau> it = Iterator<Tuyau>;
             while(it.hasNext()){
                 it.add_fluxEntrant(this.fluxCourant);
-            }
+            }*/
         }
     }
 
