@@ -8,11 +8,12 @@
         <reponse valide="true">Réponse C</reponse>
         <reponse valide="false">Réponse D</reponse>
         <bonne-reponse>
-            <text>blblablabal...</text>
+            <text>gg, blblablabal...</text>
         </bonne-reponse>
         <mauvaise-reponse>
-            <text>En effet, blabb blba lbablbal  ala b bla llabl  lbalab lbblalb</text>
+            <text>Eh non, blabb blba lbablbal  ala b bla llabl  lbalab lbblalb</text>
         </mauvaise-reponse>
+        <text>Question suivante !!</text>
     </question>
     <question intitule="Ceci est l'intitule de la question n°2, quelle est la réponse ?">
         <reponse valide="true">Réponse A</reponse>
@@ -36,4 +37,6 @@
             <text>Etant donné patati patata blabb blba lbablbal  ala b bla llabl  lbalab lbblalb omgom gomg o ggo m ogmg...</text>
         </mauvaise-reponse>
     </question>
+    <endbutton name="continue">Terminer</endbutton>
+    <endbutton name="restart">Recommencer</endbutton>
 </questionnaire>

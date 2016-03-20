@@ -27,4 +27,5 @@
     <personnage name="ennemis" noimage="">
         <text> Ecrasez-le !!</text>
     </personnage>
+    <endbutton name="continue">Partir en courant dans la forêt</endbutton>
 </dialogue>

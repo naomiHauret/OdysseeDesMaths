@@ -1,15 +1,21 @@
 package com.odysseedesmaths.dialogs;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.odysseedesmaths.*;
 import com.odysseedesmaths.util.XMLSequencialReader;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleDialog extends DialogScreen {
 
@@ -18,8 +24,8 @@ public class SimpleDialog extends DialogScreen {
     private Label dialogChar;
     private Label dialogText;
 
-    public SimpleDialog(OdysseeDesMaths game, String dialogPath) {
-        super(game);
+    public SimpleDialog(OdysseeDesMaths game, String dialogPath, final EndButtonsListener endButtonsListener) {
+        super(game, endButtonsListener);
 
         dialogChar = new Label("", new Label.LabelStyle(FONT_16, Color.FIREBRICK));
         dialogChar.setAlignment(Align.left);
@@ -35,8 +41,15 @@ public class SimpleDialog extends DialogScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (!displayAction.isFinished()) displayAction.finish();
-                else if (reader.hasNext()) reader.next();
+                if (!displayAction.isFinished()) {
+                    displayAction.finish();
+                } else if (reader.hasNext()) {
+                    reader.next();
+                } else {
+                    for (TextButton endButton : endButtonsList) {
+                        buttonsGroup.addActor(endButton);
+                    }
+                }
             }
         });
         dialogTable.add(dialogChar).fill().padBottom(10).row();
@@ -58,9 +71,32 @@ public class SimpleDialog extends DialogScreen {
         private static final String CHAR_NODE = "personnage";
         private static final String BACK_IMG_NODE = "background-image";
         private static final String MID_IMG_NODE = "middle-image";
+        private static final String END_BTN_NODE = "endbutton";
 
         public SimpleDialogReader(String dialogPath) {
             super(dialogPath);
+
+            // Création des boutons de fin
+            InputListener listener = new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    endButtonsListener.buttonPressed(event.getTarget().getName());
+                }
+            };
+
+            Element buttonNode = (Element)goToFirstChild(document.getDocumentElement(), END_BTN_NODE, false);
+            do {
+                TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
+                button.setName(buttonNode.getAttribute("name"));
+                button.addListener(listener);
+                endButtonsList.add(button);
+                buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
+            } while (buttonNode != null);
         }
 
         @Override
