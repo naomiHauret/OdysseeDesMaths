@@ -4,6 +4,10 @@ package com.odysseedesmaths.scenes;
 import com.badlogic.gdx.graphics.Texture;
 import com.odysseedesmaths.ModeSceneScreen;
 
+/*
+    Classe générale des scènes
+ */
+
 public abstract class Scene {
     private static ModeSceneScreen mss;
 

@@ -2,6 +2,8 @@ package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.odysseedesmaths.minigames.coffeePlumbing.CoffeePlumbing;
+import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.KoffeeMeter;
 import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.Vanne;
 
 import java.util.HashSet;
@@ -23,6 +25,7 @@ public class Canalisation{
     private boolean[][] securiteTuyau;
     private int mapWidthTiled;
     private int mapHeightTiled;
+    private int[][] posKoffeeMeters;
 
     public Canalisation(TiledMap map,int mapWidthTiled, int mapHeightTiled){
         //configuration des variables de tailles
@@ -50,6 +53,8 @@ public class Canalisation{
         this.liaisonsLayer = (TiledMapTileLayer) map.getLayers().get("liaisons");
 
         this.allPipes = new HashSet<Tuyau>();
+
+        this.posKoffeeMeters = this.get_koffeeMetersInfo();
     }
 
     public void createCanalisation() {
@@ -108,7 +113,12 @@ public class Canalisation{
                     System.out.println("x: " + posCourante[0] + " y: " + posCourante[1]);
                     String s = (String) tuyauxLayer.getCell(posCourante[0],posCourante[1]).getTile().getProperties().get("name");
                     if(vannesLayer.getCell(posCourante[0],posCourante[1])!=null){
-                        new Vanne(posCourante[0],posCourante[1],tuyauTmp);
+                        CoffeeLevel.addVanne(new Vanne(posCourante[0],posCourante[1],tuyauTmp));
+                    }else if(posKoffeeMeters[posCourante[0]][posCourante[1]]!=0){
+                        KoffeeMeter koffeeMeterTmp = new KoffeeMeter(posCourante[0],posCourante[1]);
+                        tuyauTmp.set_indicateurs(koffeeMeterTmp);
+                        tuyauTmp.set_capacite(posKoffeeMeters[posCourante[0]][posCourante[1]]);
+                        CoffeeLevel.addKoffeeMeter(koffeeMeterTmp);
                     }
 
                     if (s.equals("horizontal")) {
@@ -557,5 +567,19 @@ public class Canalisation{
     */
     public void set_securiteTuyau(boolean[][] new_securiteTuyau){
       this.securiteTuyau = new_securiteTuyau;
+    }
+
+    public int[][] get_koffeeMetersInfo(){
+        int[][] coordCapaKoffeeMeter = new int[mapWidthTiled][mapHeightTiled];
+        int x,y,c;
+        String[] coordTmp = ((String)koffeeMetersLayer.getProperties().get("coordonnees")).split(";");
+        String[] capaTmp = ((String)koffeeMetersLayer.getProperties().get("capacites")).split(";");
+        for(int i=0;i<coordTmp.length;i++){
+            x=Integer.parseInt((coordTmp[i].split(","))[0]);
+            y=Integer.parseInt((coordTmp[i].split(","))[1]);
+            c=Integer.parseInt(capaTmp[i]);
+            coordCapaKoffeeMeter[x][y]=c;
+        }
+        return coordCapaKoffeeMeter;
     }
 }

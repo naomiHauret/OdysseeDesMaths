@@ -28,6 +28,7 @@ public class Assets {
             HERO = "textures/common/heros.png",
             HEART = "textures/common/heart.png",
             HEART_EMPTY = "textures/common/heart_empty.png",
+            VANNEBUTTON = "textures/CoffeePlumbing/vanneButton.png",
             MAIN_MENU_BACKGROUND = "tower.png",
             // Icones des personnages
             ICON_HERO = ICONS_PATH+"hero.png",
@@ -58,7 +59,7 @@ public class Assets {
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
             GAME_OVER_MUSIC = "music/Game Over.ogg",
-            WIN_MUSIC = "music/Game Over.ogg";
+            GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
 
 
     public static final FileHandle

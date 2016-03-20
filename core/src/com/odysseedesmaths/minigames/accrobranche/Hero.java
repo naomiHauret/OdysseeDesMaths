@@ -1,5 +1,7 @@
 package com.odysseedesmaths.minigames.accrobranche;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.odysseedesmaths.Assets;
 
 public class Hero extends Sprite {
     public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD };
@@ -29,19 +32,13 @@ public class Hero extends Sprite {
     private TextureRegion heroDead;
 
     private float stateTimer;
-    private boolean runningRight;
     private boolean heroIsDead;
     private boolean timeToRedefineHero;
-    private TreeScreen screen;
 
     public Hero(World world, TreeScreen screen) {
         // initialize default vamues
-        this.screen = screen;
         this.world = world;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
         stateTimer = 0;
-        runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -69,6 +66,7 @@ public class Hero extends Sprite {
 
         setBounds(0, 0, 16 / TreeScreen.PPM, 16 / TreeScreen.PPM);
         //setRegion(heroStand);
+        setTexture(new Texture(Assets.ICON_HERO));
     }
 
     public void update(float dt) {
@@ -132,7 +130,7 @@ public class Hero extends Sprite {
         //if hero is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
         if(heroIsDead)
             return State.DEAD;
-        else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+        else if(b2body.getLinearVelocity().y > 0)
             return State.JUMPING;
             //if negative in Y-Axis hero is falling
         else if(b2body.getLinearVelocity().y < 0)
@@ -169,10 +167,17 @@ public class Hero extends Sprite {
     }
 
     public void jump(){
-        if ( currentState != State.JUMPING ) {
+        if ( getState() != State.JUMPING ) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
-            currentState = State.JUMPING;
         }
+    }
+
+    public void runRight(){
+        b2body.applyLinearImpulse(new Vector2(0.01f, 0), b2body.getWorldCenter(), true);
+    }
+
+    public void runLeft(){
+        b2body.applyLinearImpulse(new Vector2(-0.01f, 0), b2body.getWorldCenter(), true);
     }
 
     public void redefineHero(){
@@ -207,7 +212,7 @@ public class Hero extends Sprite {
 
     public void defineHero(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(64 / TreeScreen.PPM, 32 / TreeScreen.PPM);
+        bdef.position.set(32 / TreeScreen.PPM, 32 / TreeScreen.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

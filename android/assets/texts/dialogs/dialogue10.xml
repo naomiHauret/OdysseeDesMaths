@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="apresQCM">
+    <personnage name="hero">
+        <text> Euh... T'es sûr que c'était de la magie ça ? Ca ressemblait plutôt à de la sorcellerie... </text>
+    </personnage>
+    <personnage name="genie">
+        <text> C'était de la magie ! De la mathémagie noire ! </text>
+    </personnage>
+    <personnage name="mathrandir">
+        <text> Ma mathémagie a été vaincue... Je reconnais la puissance de ta logique, jeune inconnu. </text>
+        <text> L'artefact est à toi. </text>
+    </personnage>
+</dialogue>

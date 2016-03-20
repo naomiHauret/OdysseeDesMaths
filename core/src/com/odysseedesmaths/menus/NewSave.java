@@ -111,7 +111,7 @@ public class NewSave implements Screen {
 
     @Override
     public void show() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
@@ -127,17 +127,17 @@ public class NewSave implements Screen {
 
     @Override
     public void pause() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void resume() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void hide() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override

@@ -20,7 +20,7 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
-import com.odysseedesmaths.menus.MenuWin;
+import com.odysseedesmaths.menus.MenuGagner;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
@@ -53,7 +53,7 @@ public class ForetScreen implements Screen {
     private MiniGameUI ui;
     private MenuPause menuPause;
     private MenuGameOver menuGameOver;
-    private MenuWin menuWin;
+    private MenuGagner menuGagner;
 
     private Sprite heroSprite;
     private Map<Entity, Sprite> entitiesSprites;
@@ -159,8 +159,8 @@ public class ForetScreen implements Screen {
             }
         });
 
-        menuWin = new MenuWin();
-        menuWin.setListener(new InputListener() {
+        menuGagner = new MenuGagner();
+        menuGagner.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -170,9 +170,9 @@ public class ForetScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
 
-                if (source == menuWin.getContinuer().getLabel()) {
+                if (source == menuGagner.getContinuer().getLabel()) {
                     // TODO
-                } else if (source == menuWin.getReturnMainMenu().getLabel()) {
+                } else if (source == menuGagner.getReturnMainMenu().getLabel()) {
                     minigame.returnToMainMenu();
                 }
             }
@@ -290,7 +290,7 @@ public class ForetScreen implements Screen {
                 menuGameOver.render();
                 break;
             case WIN:
-                menuWin.render();
+                menuGagner.render();
                 break;
             default:
                 // Erreur état du jeu
@@ -323,7 +323,7 @@ public class ForetScreen implements Screen {
         ui.dispose();
         menuPause.dispose();
         menuGameOver.dispose();
-        menuWin.dispose();
+        menuGagner.dispose();
     }
 
     public void gameOver() {
@@ -332,8 +332,8 @@ public class ForetScreen implements Screen {
     }
 
     public void win() {
-        Gdx.input.setInputProcessor(menuWin);
-        menuWin.playMusic();
+        Gdx.input.setInputProcessor(menuGagner);
+        menuGagner.playMusic();
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {

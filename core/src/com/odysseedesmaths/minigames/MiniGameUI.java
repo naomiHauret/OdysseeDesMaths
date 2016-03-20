@@ -167,6 +167,10 @@ public class MiniGameUI extends Stage implements Observer {
         return padDown;
     }
 
+    public Button getButtonA() {
+        return buttonA;
+    }
+
     public void render() {
         act(Gdx.graphics.getDeltaTime());
         draw();
@@ -279,6 +283,7 @@ public class MiniGameUI extends Stage implements Observer {
             padGroup.add(padLeft).padRight(PAD_CENTER / 2);
             padGroup.add(padRight);
         }
+
 
         padContainer.setActor(padGroup);
     }

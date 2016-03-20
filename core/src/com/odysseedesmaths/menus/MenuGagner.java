@@ -18,12 +18,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 
-public class MenuWin extends Stage {
+public class MenuGagner extends Stage {
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
     private static final int SPACE_BETWEEN_BUTTONS = HEIGHT / 15;
-    private static final BitmapFont WIN;
+    private static final BitmapFont GAGNER;
     private static final BitmapFont BUTTON;
 
     private Table table;
@@ -33,7 +33,7 @@ public class MenuWin extends Stage {
     private TextButton continuer;
     private TextButton returnMainMenu;
 
-    public MenuWin() {
+    public MenuGagner() {
         super(new StretchViewport(WIDTH, HEIGHT));
 
         table = new Table();
@@ -43,7 +43,7 @@ public class MenuWin extends Stage {
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
         skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
-        skin.add("gagner", WIN);
+        skin.add("gagner", GAGNER);
         skin.add("button", BUTTON);
 
         LabelStyle titleStyle = new LabelStyle(skin.getFont("gagner"), null);
@@ -55,7 +55,7 @@ public class MenuWin extends Stage {
         buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("button", buttonStyle);
 
-        title = new Label("GAGNER", skin, "title");
+        title = new Label("GAGNÉ !", skin, "title");
         continuer = new TextButton("Continuer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
@@ -81,7 +81,7 @@ public class MenuWin extends Stage {
     }
 
     public void playMusic(){
-        Musique.setCurrent(Assets.WIN_MUSIC);
+        Musique.setCurrent(Assets.GAGNER_MUSIC);        // trouver la musique !!!!
         Musique.play();
     }
 
@@ -103,7 +103,7 @@ public class MenuWin extends Stage {
         parameter.color = Color.FOREST;
         parameter.borderWidth = 5;
         parameter.borderColor = Color.WHITE;
-        WIN = generator.generateFont(parameter);
+        GAGNER = generator.generateFont(parameter);
 
         parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 22;

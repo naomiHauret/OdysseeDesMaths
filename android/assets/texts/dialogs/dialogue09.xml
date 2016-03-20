@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="ile">
+    <personnage name="hero">
+        <text> Mais qui c'est encore ce guignol ? </text>
+        <text> Eh ! Tu bloques le passage papy ! </text>
+    </personnage>
+    <personnage name="mathrandir">
+        <text> Je suis un serviteur de la mathémagie, détenteur de la fonction inverse ! </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Mais qu'est-ce qu'il raconte ?! Eh ! Je comprends rien ! </text>
+    </personnage>
+    <personnage name="mathrandir">
+        <text> Dériver la conversation ne vous servira à rien ! Repartez dans l'ombre ! </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Je veux juste - </text>
+    </personnage>
+    <personnage name="mathrandir">
+        <text> VOUS - NE - PASSEREZ - PAS !</text>
+    </personnage>
+    <personnage name="hero">
+        <text> Mais c'est quoi ces co- </text>
+    </personnage>
+    <personnage name="genie">
+        <text> C'est Mathrandir, le mathémagicien gris ! On dirait qu'il veut t'empêcher de prendre l'artefact. </text>
+        <text> Tu vas devoir briser sa mathémagie en conjurant la fonction x² pour passer. </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Et je fais comment ? </text>
+    </personnage>
+</dialogue>

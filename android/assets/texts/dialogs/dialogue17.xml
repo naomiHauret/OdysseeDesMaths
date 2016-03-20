@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="recupCle">
+    <personnage name="hero">
+        <text> Où est-il ? Comment a t-il pu disparaître ? </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Il a rejoint les grands esprits mathémagiques. </text>
+    </personnage>
+</dialogue>

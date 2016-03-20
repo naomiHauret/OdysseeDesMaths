@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="towers">
+    <personnage name="hero">
+        <text> Waow ! </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Allez, qu'est-ce que tu attends pour détruire cette tour ? </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Ben... D'habitude tu me dis comment faut faire alors... </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Bon d'accord ! Faut vraiment tout t'expliquer à toi ! </text>
+    </personnage>
+</dialogue>

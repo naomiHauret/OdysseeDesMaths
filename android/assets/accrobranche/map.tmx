@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="200" tilewidth="16" tileheight="16" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="200" tilewidth="16" tileheight="16" nextobjectid="22">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
   <image source="tileset_gutter.png" width="594" height="504"/>
  </tileset>
@@ -10,7 +10,7 @@
  </layer>
  <layer name="graphics" width="40" height="200">
   <data encoding="base64" compression="zlib">
-   eJzt1tEJgDAMBcD6qaPo/vvZAUoLNpYod5D/RxJCSgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg67aggh57wwpuVB57bfqRuPFnzXZN5Ht7x2bzRWrNMlO+Vpa/53v6n0X9fKO6AZwEAtU=
+   eJzt1LENwCAMBEBSJqOQ/fcLA1hQkIAj3UluaHj5EaUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8HfHSwM93g0r+KPyONvSr8Hid/ZV2yX3RL6vM/fyrc4SdZkpX5QlOsvU5Wy+7PMADdsDDg==
   </data>
  </layer>
  <objectgroup name="ground">
@@ -20,6 +20,10 @@
   <object id="6" x="176" y="2992" width="96" height="16"/>
   <object id="7" x="80" y="3056" width="112" height="16"/>
   <object id="8" x="0" y="3120" width="80" height="16"/>
+  <object id="10" x="176" y="3184" width="48" height="16"/>
+  <object id="19" x="528" y="3088" width="112" height="96"/>
+  <object id="20" x="496" y="3120" width="32" height="64"/>
+  <object id="21" x="464" y="3152" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="pipes">
   <object id="3" x="304" y="3136" width="32" height="48"/>
