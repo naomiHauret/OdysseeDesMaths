@@ -6,6 +6,9 @@ import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.menus.NewSave;
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+/*
+        Classe du jeu principal
+ */
 
 public class OdysseeDesMaths extends Game {
     public SpriteBatch batcher;
@@ -46,6 +49,12 @@ public class OdysseeDesMaths extends Game {
     public void startGame() {
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
+        } else if (savesManager.getCurrentSave().isLevel3Finished()) {
+            setScreen(new ArriveeRemarquable(this));
+        } else if (savesManager.getCurrentSave().isLevel2Finished()) {
+            setScreen(new ArriveeRemarquable(this));
+        } else if (savesManager.getCurrentSave().isLevel1Finished()) {
+            setScreen(new Accrobranche(this));
         } else {
             setScreen(new ArriveeRemarquable(this));
         }

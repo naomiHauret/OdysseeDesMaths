@@ -159,7 +159,7 @@ public abstract class DialogScreen implements Screen {
 
     @Override
     public void show() {
-
+        // cette méthode n'est pas néessaire ici
     }
 
     @Override
@@ -178,17 +178,17 @@ public abstract class DialogScreen implements Screen {
 
     @Override
     public void pause() {
-
+        // cette méthode n'est pas néessaire ici
     }
 
     @Override
     public void resume() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void hide() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
@@ -203,7 +203,7 @@ public abstract class DialogScreen implements Screen {
 
     public void setChar(String assetPath, int position) {
         TextureRegion tr = new TextureRegion(Assets.getManager().get(assetPath, Texture.class));
-        // Pour les personnages à droites il faut retourner la texture horizantalement
+        // Pour les personnages à droites il faut retourner la texture horizontalement
         if (position >= MAX_CHARS/2) {
             tr.flip(true, false);
         }

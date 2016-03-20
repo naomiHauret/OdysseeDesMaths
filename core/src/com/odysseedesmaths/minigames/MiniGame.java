@@ -3,10 +3,13 @@ package com.odysseedesmaths.minigames;
 import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.menus.MenuPrincipal;
+/*
+    Classe générale des mini-jeux
+ */
 
-public abstract class MiniGame implements Screen {
+public abstract class   MiniGame implements Screen {
 
-    public enum State {RUNNING, PAUSED, GAME_OVER}
+    public enum State {RUNNING, PAUSED, GAME_OVER, WIN}
     protected State currentState;
 
     protected OdysseeDesMaths game;

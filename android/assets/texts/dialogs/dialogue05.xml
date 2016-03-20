@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="Village">
+    <personnage name="habitant1">
+        <text> Heureusement que les deux sages de l'auberge sont là pour répondre à nos questions ... </text>
+    </personnage>
+    <personnage name="habitant2">
+        <text> La vie est devenue plus difficile à cause des mathémaléfices de Vektor. </text>
+        <text> Mais j'ai l'impression que les deux sages de l'auberge ne sont pas affecté par ça. </text>
+    </personnage>
+    <personnage name="habitant3">
+        <text> Bienvenue au village, étranger ! Si tu as un problème, tu ferais mieux d'aller faire un tour à l'auberge et de parler aux sages. </text>
+    </personnage>
+    <personnage name="genie">
+        <text> T'écoutes ce qu'on te dit un peu ? Va voir les sages de l'auberge ! </text>
+    </personnage>
+</dialogue>

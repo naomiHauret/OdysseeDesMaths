@@ -21,6 +21,9 @@ import com.odysseedesmaths.scenes.Scene;
 import com.odysseedesmaths.scenes.Scene0;
 import com.odysseedesmaths.scenes.Scene1;
 import com.odysseedesmaths.scenes.Scene2;
+/*
+        Classe type de l'affichage écran de la scène
+ */
 
 public class ModeSceneScreen implements Screen {
 
@@ -114,7 +117,7 @@ public class ModeSceneScreen implements Screen {
 
     @Override
     public void show() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
@@ -136,27 +139,27 @@ public class ModeSceneScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void pause() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void resume() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void hide() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     @Override
     public void dispose() {
-
+        // cette méthode n'est pas nécessaire ici
     }
 
     public void returnToScene() {

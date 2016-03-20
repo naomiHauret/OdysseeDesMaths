@@ -6,12 +6,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.KoffeeMeter;
 import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.Vanne;
 
 import java.util.HashSet;
 import java.util.Iterator;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by trilunaire on 20/02/16.
@@ -36,10 +37,16 @@ public class CoffeeLevel {
     private int tileWidth;
     private int tileHeight;
     private Canalisation canalisation;
+    private static HashSet<Vanne> vannes;
+    private static HashSet<KoffeeMeter> indicateurs;
+    private Stage stage;
+    private Table valveButtons;
 
     public CoffeeLevel(String mapPath) {
         this.map = new TmxMapLoader().load(mapPath);
         this.mapRenderer = new OrthogonalTiledMapRenderer(map);
+
+        this.stage = new Stage();
 
         //configuration des variables de tailles
         this.tileWidth = ((Integer) this.map.getProperties().get("tilewidth"));
@@ -51,13 +58,27 @@ public class CoffeeLevel {
         this.mapWidthPixel = mapWidthTiled * tileWidth;
         this.mapHeightPixel = mapHeightTiled * tileHeight;
 
+        vannes = new HashSet<Vanne>();
+        indicateurs = new HashSet<KoffeeMeter>();
+
         this.canalisation = new Canalisation(map,mapWidthTiled,mapHeightTiled);
-
-
     }
 
     public void buildLevel(){
         canalisation.createCanalisation();
+        Iterator<Vanne> itVanne = vannes.iterator();
+
+        while(itVanne.hasNext()){
+            stage.addActor(itVanne.next().get_table());
+            System.out.println("Vannes ajoutées"); //debug
+        }
+
+        Iterator<KoffeeMeter> itKFM = indicateurs.iterator();
+
+        while(itKFM.hasNext()){
+            stage.addActor(itKFM.next().get_table());
+            System.out.println("Koffee Meter ajouté"); //debug
+        }
     }
 
     /**
@@ -179,5 +200,53 @@ public class CoffeeLevel {
 
     public void dispose() {
         map.dispose();
+    }
+
+    public static void addVanne(Vanne new_Vanne){
+        vannes.add(new_Vanne);
+    }
+
+    public static void delVanne(Vanne old_vanne){
+        vannes.remove(old_vanne);
+    }
+
+    /**
+    * Getter of stage
+    * @return the value of stage
+    */
+    public Stage get_stage(){
+      return this.stage;
+    }
+
+    /**
+    * Setter of stage
+    * @param new_stage: the new value of stage
+    */
+    public void set_stage(Stage new_stage){
+      this.stage = new_stage;
+    }
+
+    /**
+    * Getter of indicateurs
+    * @return the value of indicateurs
+    */
+    public HashSet<KoffeeMeter> get_indicateurs(){
+      return indicateurs;
+    }
+
+    /**
+    * Setter of indicateurs
+    * @param new_indicateurs: the new value of indicateurs
+    */
+    public void set_indicateurs(HashSet<KoffeeMeter> new_indicateurs){
+      indicateurs = new_indicateurs;
+    }
+
+    public static void addKoffeeMeter(KoffeeMeter newKFM){
+        indicateurs.add(newKFM);
+    }
+
+    public static void delKFM(KoffeeMeter oldKFM){
+        indicateurs.remove(oldKFM);
     }
 }

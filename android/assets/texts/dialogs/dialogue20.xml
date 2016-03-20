@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="salleCours">
+    <personnage name="prof">
+        <text> Eh, réveille-toi ! Le cours est fini, tu peux t'en aller.</text>
+    </personnage>
+    <personnage name="hero">
+        <text> Vektor...?! </text>
+    </personnage>
+</dialogue>

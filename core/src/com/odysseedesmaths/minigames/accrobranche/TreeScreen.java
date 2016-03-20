@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
+import com.odysseedesmaths.menus.MenuGagner;
 import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
 import com.odysseedesmaths.minigames.MiniGame;
@@ -34,8 +35,8 @@ import com.odysseedesmaths.minigames.MiniGameUI;
 
 public class TreeScreen implements Screen {
 
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 208;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
     public static final float PPM = 100;
 
     //Box2D Collision Bits
@@ -43,6 +44,7 @@ public class TreeScreen implements Screen {
     public static final short GROUND_BIT = 1;
     public static final short HERO_BIT = 2;
     public static final short HERO_HEAD_BIT = 4;
+
 
     private final Accrobranche minigame;
 
@@ -56,11 +58,13 @@ public class TreeScreen implements Screen {
     private MiniGameUI ui;
     private MenuPause menuPause;
     private MenuGameOver menuGameOver;
+    private MenuGagner menuGagner;
 
     // Tiled map variables
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    public float width_map;
 
     // Box2d variables
     private World world;
@@ -77,12 +81,12 @@ public class TreeScreen implements Screen {
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera();
-        port = new FitViewport(WIDTH / PPM, HEIGHT / PPM, cam);
+        port = new FitViewport(WIDTH / PPM / 2, HEIGHT / PPM / 2, cam);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("accrobranche/map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
-        cam.position.set(port.getWorldWidth() / 2, port.getWorldHeight() / 2, 0);
+        width_map = (int)map.getProperties().get("width") / PPM;
 
         // Elements relatifs à Box2d
         world = new World(new Vector2(0, -10), true);
@@ -113,28 +117,38 @@ public class TreeScreen implements Screen {
         // UI
         ui = new MiniGameUI();
         ui.addTimer(minigame.timer);
-        ui.addPad();
+        ui.addPad(MiniGameUI.PAD_TYPE.HORIZONTAL);
+        ui.addButtonA();
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                // Menu
+                if (source == ui.getPause()) {
+                    minigame.pauseGame();
+                    Gdx.input.setInputProcessor(menuPause);
+                }
+
+                // Jump
+                if (source == ui.getButtonA() && !(hero.getState() == Hero.State.JUMPING || hero.getState() == Hero.State.FALLING)) {
+                    hero.jump();
+                }
+
+                // Lateral movement
+                while (source == ui.getPadRight() && hero.b2body.getLinearVelocity().x <= 2) {
+                    hero.runRight();
+                }
+                while (source == ui.getPadLeft() && hero.b2body.getLinearVelocity().x >= -2) {
+                    hero.runLeft();
+                }
+
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Actor source = event.getTarget();
-
-                if (source == ui.getPadUp()) {
-                    hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(), true);
-                } else if (source == ui.getPadRight() && hero.b2body.getLinearVelocity().x <= 2) {
-                    hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
-                } else if (source == ui.getPadLeft() && hero.b2body.getLinearVelocity().x >= -2) {
-                    hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
-                } else if (source == ui.getPause()) {
-                    minigame.pauseGame();
-                    Gdx.input.setInputProcessor(menuPause);
-                }
             }
         });
 
@@ -179,6 +193,24 @@ public class TreeScreen implements Screen {
             }
         });
 
+        menuGagner = new MenuGagner();
+        menuGagner.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuGagner.getContinuer().getLabel()) {
+                    // TODO
+                } else if (source == menuGagner.getReturnMainMenu().getLabel()) {
+                    minigame.returnToMainMenu();
+                }
+            }
+        });
     }
 
     @Override
@@ -188,28 +220,44 @@ public class TreeScreen implements Screen {
         minigame.timer.start();
     }
 
-    /*
-    public void handleInput(float dt){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-            hero.b2body.applyLinearImpulse(new Vector2(0, 4f), hero.b2body.getWorldCenter(), true);
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && hero.b2body.getLinearVelocity().x <= 2)
-            hero.b2body.applyLinearImpulse(new Vector2(0.1f, 0), hero.b2body.getWorldCenter(), true);
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && hero.b2body.getLinearVelocity().x >= -2)
-            hero.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), hero.b2body.getWorldCenter(), true);
-    }
-    */
-
     public void update(float dt) {
-        //handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
 
         hero.update(dt);
 
-        //attach our gamecam to our players.y coordinate
-        if(hero.currentState != Hero.State.DEAD) {
-            cam.position.y = hero.b2body.getPosition().y;
+        MapProperties mp = map.getProperties();
+
+        // Positionnement de la caméra (sur le héros ou sur les bords)
+        float posX, posY, minX, minY, maxX, maxY;
+
+        // Reglage de la position horizontale du viewport
+        posX = hero.b2body.getPosition().x;
+        minX = port.getWorldWidth() / 2;
+        maxX = 6.3f - (port.getWorldWidth() / 2);
+
+        if (posX < minX) { posX = minX; }
+        if (posX < maxX) { posX = maxX; }
+        cam.position.x = posX;
+        /*cam.position.x = MathUtils.clamp(posX, minX, maxX);*/
+
+        // Reglage de la position verticale du viewport
+        float lerp = 0.1f;
+        posY = port.getWorldHeight() / 2;
+        if (hero.getState() != Hero.State.JUMPING && hero.getState() != Hero.State.FALLING) {
+            posY += (hero.b2body.getPosition().y - cam.position.y) * lerp * dt;
         }
+        if (hero.b2body.getPosition().y < 0) {
+            posY = port.getWorldHeight() / 2;
+            minigame.gameOver();
+        }
+        cam.position.y = posY;
+
+        //minX = WIDTH / 2;
+        //minY = HEIGHT / 2;
+        //maxX = (int) mp.get("tilewidth") * (int) mp.get("width") - minX;
+        //maxY = (int) mp.get("tileheight") * (int) mp.get("height") - minY;
+        //cam.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);
 
         cam.update();
         renderer.setView(cam);
@@ -232,18 +280,8 @@ public class TreeScreen implements Screen {
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        //hero.draw(batch);
+        hero.draw(batch);
         batch.end();
-
-        // Positionnement de la caméra (sur le héros ou sur les bords)
-        /*float posX, posY, minX, minY, maxX, maxY;
-        posX = hero.getX() + hero.getWidth() / 2f;
-        posY = hero.getY() + hero.getHeight() / 2f;
-        minX = WIDTH / 2f;
-        minY = HEIGHT / 2f;
-        maxX = port.getWorldWidth() - minX;
-        maxY = port.getWorldHeight() - minY;
-        cam.position.set(MathUtils.clamp(posX, minX, maxX), MathUtils.clamp(posY, minY, maxY), 0);*/
 
         ui.render();
 
@@ -298,5 +336,10 @@ public class TreeScreen implements Screen {
         hero.die();
         Gdx.input.setInputProcessor(menuGameOver);
         menuGameOver.playMusic();
+    }
+
+    public void win() {
+        Gdx.input.setInputProcessor(menuGagner);
+        menuGagner.playMusic();
     }
 }

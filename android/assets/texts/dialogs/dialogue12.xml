@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="enigme">
+    <personnage name="hero">
+        <text> Le ciel a l'ai bizarre de ce côté-là... Je devrais aller y jeter un oeil. </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Je sens qu'un puissant mathémaléfice est à l'oeuvre ici... </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Tu crois que je devrais y entrer ? </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Moi j'ai pas envie mais toi t'es un peu obligé, y'a rien après cette grotte, et faut bien suivre le scénario ! </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Quoi ? </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Rien, c'est de la mathémagie. </text>
+    </personnage>
+    <personnage name="hero">
+        <text> ... </text>
+    </personnage>
+</dialogue>

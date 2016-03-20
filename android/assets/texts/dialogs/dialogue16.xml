@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+
+<dialogue name="fin">
+    <personnage name="hero">
+        <text> Vektor ! </text>
+    </personnage>
+    <personnage name="vektor">
+        <text> Non... Ce n'est pas possible... Non ! Mon plan... était parfait...  Moi... Tout au long de ma vie... </text>
+        <text> J'ai vu des milliers et des milliers d'hommes et de femmes utiliser les mathématiques pour résoudre des problèmes. </text>
+        <text> Et tout cela sans même qu'ils s'inquiètent de l'impact de leur solution sur notre monde... ou sur le tien... </text>
+    </personnage>
+    <personnage name="hero">
+        <text> De quoi parlez-vous ? </text>
+    </personnage>
+    <personnage name="vektor">
+        <text> E...=mc²... Le monde a connu... tellement de malheurs... à cause d'elle... </text>
+        <text> Simplement... parce que quelqu'un a réussi à résoudre ce problème... avec cette solution... </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Et c'est à cause de ça que vous vouliez rendre impossible la résolution des problèmes ? </text>
+        <text> A cause d'Einstein et de la bombe atomique ? </text>
+    </personnage>
+    <personnage name="vektor">
+        <text> Pas la bombe atomique, idiot ! </text>
+        <text> Je parle de l'utilisation de cette formule dans les télécommunications et les téléphones ! </text>
+    </personnage>
+    <personnage name="hero">
+        <text> ... Et alors ? </text>
+    </personnage>
+    <personnage name="vektor">
+        <text> Ne comprends-tu donc pas ? C'est à cause de cette formule que Snapchat existe ! </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Quoi ?! </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Pour quelqu'un de mourrant il est plutôt tonique. </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Mais Vektor, sans cette formule... et sans les maths en général, un tas de trucs géniaux n'existeraient pas ! </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Comme les chips Pringles. </text>
+    </personnage>
+    <personnage name="hero">
+        <text> Sans les maths, il y a énormément de chose que l'on ne pourrait pas accomplir. </text>
+        <text> Comme prédire qui va mourrir dans la prochaine saison de Game of Thrones ! </text>
+    </personnage>
+    <personnage name="genie">
+        <text> Ou comme les chips Pringles ! </text>
+    </personnage>
+    <personnage name="vektor">
+        <text> C'est vrai, tu as raison... Vous avez tous les deux raisons... J'ai été stupide de vouloir compliquer les maths... </text>
+        <text> En plus, on ne pourrait plus faire de Pringles à cause de ça... Je suis désolé... </text>
+        <text> Tiens, voici la clé du portail. Utilise-la pour retourner dans ton monde. Adieu maintenant... </text>
+    </personnage>
+</dialogue>

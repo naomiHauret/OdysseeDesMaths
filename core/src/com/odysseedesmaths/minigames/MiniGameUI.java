@@ -2,6 +2,7 @@ package com.odysseedesmaths.minigames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -103,6 +104,8 @@ public class MiniGameUI extends Stage implements Observer {
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
         skin.addRegions(Assets.getManager().get(Assets.UI_ORANGE, TextureAtlas.class));
+        skin.add("heart", Assets.getManager().get(Assets.HEART, Texture.class));
+        skin.add("heart_empty", Assets.getManager().get(Assets.HEART_EMPTY, Texture.class));
         skin.add("timer", TIMER);
         skin.add("itemCounter", ITEM_COUNTER);
 
@@ -164,30 +167,13 @@ public class MiniGameUI extends Stage implements Observer {
         return padDown;
     }
 
+    public Button getButtonA() {
+        return buttonA;
+    }
+
     public void render() {
         act(Gdx.graphics.getDeltaTime());
         draw();
-    }
-
-    public void tint(Color color) {
-        if (heroHpContainer.hasChildren()) {
-            for (Image hp : heroHps) {
-                hp.setColor(color);
-            }
-        }
-        if (timerContainer.hasChildren()) timerLabel.setColor(color);
-        if (padContainer.hasChildren()) {
-            padLeft.setColor(color);
-            padRight.setColor(color);
-            if (padType == PAD_TYPE.FULL) {
-                padUp.setColor(color);
-                padDown.setColor(color);
-            }
-        }
-        if (buttonAContainer.hasChildren()) buttonA.setColor(color);
-        if (buttonBContainer.hasChildren()) buttonB.setColor(color);
-        pause.setColor(color);
-        pause.getImage().setColor(color);
     }
 
     @Override
@@ -204,7 +190,7 @@ public class MiniGameUI extends Stage implements Observer {
     public void addHeroHp(final Hero aHero) {
         heroHps = new Image[Hero.PDV_MAX];
         for (int i = 0; i < heroHps.length; i++) {
-            heroHps[i] = new Image(skin.getDrawable("heart_full"));
+            heroHps[i] = new Image(skin.getDrawable("heart"));
         }
 
         heroHpGroup = new Table();
@@ -216,7 +202,7 @@ public class MiniGameUI extends Stage implements Observer {
                 String sprite;
 
                 for (int i = 0; i < heroHps.length; i++) {
-                    sprite = i < aHero.getPdv() ? "heart_full" : "heart_empty";
+                    sprite = i < aHero.getPdv() ? "heart" : "heart_empty";
                     heroHps[i].setDrawable(skin.getDrawable(sprite));
                     heroHpGroup.add(heroHps[i]);
                 }
@@ -297,6 +283,7 @@ public class MiniGameUI extends Stage implements Observer {
             padGroup.add(padLeft).padRight(PAD_CENTER / 2);
             padGroup.add(padRight);
         }
+
 
         padContainer.setActor(padGroup);
     }

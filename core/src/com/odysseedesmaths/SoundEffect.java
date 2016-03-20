@@ -2,6 +2,9 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+/*
+        Classe type pour les bruitages
+ */
 
 public class SoundEffect {
     private Sound sE = null;

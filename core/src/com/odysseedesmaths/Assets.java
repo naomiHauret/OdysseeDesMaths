@@ -25,8 +25,10 @@ public class Assets {
 
     @Asset(Texture.class)
     public static final String
-            HERO = "heros.png",
-            HEART = "coeur.png",
+            HERO = "textures/common/heros.png",
+            HEART = "textures/common/heart.png",
+            HEART_EMPTY = "textures/common/heart_empty.png",
+            VANNEBUTTON = "textures/CoffeePlumbing/vanneButton.png",
             MAIN_MENU_BACKGROUND = "tower.png",
             // Icones des personnages
             ICON_HERO = ICONS_PATH+"hero.png",
@@ -44,6 +46,7 @@ public class Assets {
             ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
             ICON_VIKTOR = ICONS_PATH+"viktor.png";
 
+
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
@@ -55,7 +58,8 @@ public class Assets {
     public static final String
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
-            GAME_OVER_MUSIC = "music/Game Over.ogg";
+            GAME_OVER_MUSIC = "music/Game Over.ogg",
+            GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
 
 
     public static final FileHandle
@@ -68,16 +72,9 @@ public class Assets {
      **********************/
 
     // Arrivée remarquable
-    @Asset(Texture.class)
+    @Asset(TextureAtlas.class)
     public static final String
-            ARR_HORDE = "horde.png",
-            ARR_S_EGAL = "signeEgal.png",
-            ARR_S_ADD = "signeAdd.png",
-            ARR_S_SOUST = "signeSoust.png",
-            ARR_S_MULT = "signeMult.png",
-            ARR_S_DIV = "signeDiv.png",
-            ARR_BUFF_SHIELD = "bouclier.png",
-            ARR_SHIELD = "itemBouclier.png";
+            ARRIVEE = "arrivee_remarquable/arrivee.atlas";
 
     // Plongée au coeur du problème
     // Accrobranche

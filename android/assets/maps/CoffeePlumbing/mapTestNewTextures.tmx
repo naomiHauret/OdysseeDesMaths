@@ -41,6 +41,11 @@
     <property name="name" value="4way"/>
    </properties>
   </tile>
+  <tile id="8">
+   <properties>
+    <property name="capacity" value=""/>
+   </properties>
+  </tile>
   <tile id="9">
    <properties>
     <property name="name" value="left_top"/>
@@ -106,6 +111,10 @@
   </data>
  </layer>
  <layer name="koffeeMeters" width="10" height="7">
+  <properties>
+   <property name="capacites" value="8;6;7;8;9"/>
+   <property name="coordonnees" value="2,4;6,2;5,3;5,6;8,5"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
   </data>

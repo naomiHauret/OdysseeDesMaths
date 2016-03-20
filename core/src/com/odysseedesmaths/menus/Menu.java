@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
+/*
+        Classe générale des menus
+ */
 
 public class Menu extends Stage {
     public ImageButton musique;
