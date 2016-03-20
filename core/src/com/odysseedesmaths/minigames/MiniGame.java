@@ -6,7 +6,7 @@ import com.odysseedesmaths.menus.MenuPrincipal;
 
 public abstract class MiniGame implements Screen {
 
-    public enum State {RUNNING, PAUSED, GAME_OVER}
+    public enum State {RUNNING, PAUSED, GAME_OVER, WIN}
     protected State currentState;
 
     protected OdysseeDesMaths game;

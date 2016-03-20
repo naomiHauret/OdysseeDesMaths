@@ -46,6 +46,12 @@ public class OdysseeDesMaths extends Game {
     public void startGame() {
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
+        } else if (savesManager.getCurrentSave().isLevel3Finished()) {
+            setScreen(new ArriveeRemarquable(this));
+        } else if (savesManager.getCurrentSave().isLevel2Finished()) {
+            setScreen(new ArriveeRemarquable(this));
+        } else if (savesManager.getCurrentSave().isLevel1Finished()) {
+            setScreen(new Accrobranche(this));
         } else {
             setScreen(new ArriveeRemarquable(this));
         }

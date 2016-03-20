@@ -38,7 +38,6 @@ public class MenuGameOver extends Stage {
 
         table = new Table();
         table.setFillParent(true);
-        table.setY(HEIGHT / 35);
         addActor(table);
 
         skin = new Skin();
@@ -60,6 +59,7 @@ public class MenuGameOver extends Stage {
         retry = new TextButton("Recommencer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
+        table.setBackground(skin.getDrawable("dark_background"));
         table.add(title).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
         table.add(retry).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);

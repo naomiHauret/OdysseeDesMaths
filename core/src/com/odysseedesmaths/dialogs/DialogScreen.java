@@ -195,7 +195,7 @@ public abstract class DialogScreen implements Screen {
 
     public void setChar(String assetPath, int position) {
         TextureRegion tr = new TextureRegion(Assets.getManager().get(assetPath, Texture.class));
-        // Pour les personnages à droites il faut retourner la texture horizantalement
+        // Pour les personnages à droites il faut retourner la texture horizontalement
         if (position >= MAX_CHARS/2) {
             tr.flip(true, false);
         }

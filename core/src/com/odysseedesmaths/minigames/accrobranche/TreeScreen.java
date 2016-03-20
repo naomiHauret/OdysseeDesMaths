@@ -29,6 +29,7 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
+import com.odysseedesmaths.menus.MenuWin;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
 
@@ -56,6 +57,7 @@ public class TreeScreen implements Screen {
     private MiniGameUI ui;
     private MenuPause menuPause;
     private MenuGameOver menuGameOver;
+    private MenuWin menuWin;
 
     // Tiled map variables
     private TmxMapLoader mapLoader;
@@ -113,7 +115,7 @@ public class TreeScreen implements Screen {
         // UI
         ui = new MiniGameUI();
         ui.addTimer(minigame.timer);
-        ui.addPad();
+        ui.addPad(MiniGameUI.PAD_TYPE.HORIZONTAL);
         Gdx.input.setInputProcessor(ui);
         ui.setListener(new InputListener() {
             @Override
@@ -179,6 +181,24 @@ public class TreeScreen implements Screen {
             }
         });
 
+        menuWin = new MenuWin();
+        menuWin.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuWin.getContinuer().getLabel()) {
+                    // TODO
+                } else if (source == menuWin.getReturnMainMenu().getLabel()) {
+                    minigame.returnToMainMenu();
+                }
+            }
+        });
     }
 
     @Override
@@ -298,5 +318,10 @@ public class TreeScreen implements Screen {
         hero.die();
         Gdx.input.setInputProcessor(menuGameOver);
         menuGameOver.playMusic();
+    }
+
+    public void win() {
+        Gdx.input.setInputProcessor(menuWin);
+        menuWin.playMusic();
     }
 }

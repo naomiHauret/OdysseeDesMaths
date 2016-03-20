@@ -39,6 +39,7 @@ public class MenuPause extends Menu {
 
         Table tableau = new Table();
         tableau.setFillParent(true);
+        tableau.setBackground(skin.getDrawable("dark_background"));
         tableau.pad(10);
         tableau.add(retourJeu).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS).bottom().expand();
         tableau.row();

@@ -37,4 +37,11 @@ public class Accrobranche extends MiniGame {
         timer.stop();
         ((TreeScreen)currentScreen).gameOver();
     }
+
+    public void win() {
+        setState(State.WIN);
+        game.getSavesManager().getCurrentSave().setLevel2Finished(true);
+        timer.stop();
+        ((TreeScreen)currentScreen).win();
+    }
 }

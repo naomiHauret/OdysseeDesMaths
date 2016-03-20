@@ -38,7 +38,6 @@ public class MenuWin extends Stage {
 
         table = new Table();
         table.setFillParent(true);
-        table.setY(HEIGHT / 35);
         addActor(table);
 
         skin = new Skin();
@@ -60,9 +59,10 @@ public class MenuWin extends Stage {
         continuer = new TextButton("Continuer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
+        table.setBackground(skin.getDrawable("dark_background"));
         table.add(title).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
-        //table.add(retry).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
+        table.add(continuer).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
         table.add(returnMainMenu).size(256, 64);
     }
@@ -81,7 +81,7 @@ public class MenuWin extends Stage {
     }
 
     public void playMusic(){
-       // Musique.setCurrent(Assets.WIN_MUSIC);
+        Musique.setCurrent(Assets.WIN_MUSIC);
         Musique.play();
     }
 
@@ -92,7 +92,7 @@ public class MenuWin extends Stage {
     }
 
     public void setListener(InputListener listener) {
-        //retry.addListener(listener);
+        continuer.addListener(listener);
         returnMainMenu.addListener(listener);
     }
 
@@ -100,7 +100,7 @@ public class MenuWin extends Stage {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 9;
-        parameter.color = Color.RED;
+        parameter.color = Color.FOREST;
         parameter.borderWidth = 5;
         parameter.borderColor = Color.WHITE;
         WIN = generator.generateFont(parameter);
