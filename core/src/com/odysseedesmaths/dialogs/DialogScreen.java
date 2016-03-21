@@ -231,6 +231,15 @@ public abstract class DialogScreen implements Screen {
             case "audib": asset = Assets.ICON_AUDIB; break;
             case "viktor": asset = Assets.ICON_VIKTOR; break;
             case "phythagore": asset = Assets.ICON_PYTHAGORE; break;
+            case "gwendouille": asset = Assets.ICON_GWENDOUILLE; break;
+            case "dijkstra": asset = Assets.ICON_DIJKSTRA; break;
+            case "eddymalou": asset = Assets.ICON_EDDYMALOU; break;
+            case "markov": asset = Assets.ICON_MARKOV; break;
+            case "nicholas": asset = Assets.ICON_NICHOLAS; break;
+            case "robert": asset = Assets.ICON_ROBERT; break;
+            case "tartaglia": asset = Assets.ICON_TARTAGLIA; break;
+            case "thales": asset = Assets.ICON_THALES; break;
+            case "tifouille": asset = Assets.ICON_TIFOUILLE; break;
         }
         return asset;
     }

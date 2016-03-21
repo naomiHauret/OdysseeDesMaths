@@ -25,8 +25,8 @@ public class QuestionnaireDialog extends DialogScreen {
 
     private static final int MAX_ANSWERS = 4;
 
-    private float nbQuestions = 0;
-    private float nbGoodAnswers = 0;
+    private double nbQuestions = 0;
+    private double nbGoodAnswers = 0;
 
     private Label dialogTitle;
     private Label dialogText;
@@ -64,8 +64,9 @@ public class QuestionnaireDialog extends DialogScreen {
                     if (buttonsGroup.findActor("nextQuestionButton") == null) {
                         buttonsGroup.addActor(nextQuestionButton);
                     }
+                } else if (!reader.resultsProceeded()) {
+                    reader.results();
                 } else {
-                    // fin du questionnaire
                     for (TextButton endButton : endButtonsList) {
                         buttonsGroup.addActor(endButton);
                     }
@@ -161,7 +162,7 @@ public class QuestionnaireDialog extends DialogScreen {
         }
     }
 
-    public void setText(final String text) {
+    public void setText(String text) {
         displayAction.reset();
         displayAction.setText(text);
         displayAction.setDuration(text.length()/DISPLAY_SPEED);
@@ -192,34 +193,17 @@ public class QuestionnaireDialog extends DialogScreen {
         private static final String TEXT_NODE = "text";
         private static final String BACK_IMG_NODE = "background-image";
         private static final String MID_IMG_NODE = "middle-image";
+        private static final String CLEAR_NODE = "clear";
+        private static final String RESULTS_NODE = "results";
+        private static final String PASS_NODE = "pass";
+        private static final String FAIL_NODE = "fail";
         private static final String END_BTN_NODE = "endbutton";
 
         private Node currentTextNode;
+        private boolean resultsProceeded = false;
 
         public QuestionnaireDialogReader(String xmlFilePath) {
             super(xmlFilePath);
-
-            // Création des boutons de fin
-            InputListener listener = new InputListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
-
-                @Override
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    endButtonsListener.buttonPressed(event.getTarget().getName(), nbGoodAnswers/nbQuestions);
-                }
-            };
-
-            Element buttonNode = (Element)goToFirstChild(document.getDocumentElement(), END_BTN_NODE, false);
-            do {
-                TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
-                button.setName(buttonNode.getAttribute("name"));
-                button.addListener(listener);
-                endButtonsList.add(button);
-                buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
-            } while (buttonNode != null);
         }
 
         @Override
@@ -237,10 +221,10 @@ public class QuestionnaireDialog extends DialogScreen {
                     Element element = (Element)node;
                     switch (nodeName) {
                         case BACK_IMG_NODE:
-                            setBackgroundImage(getAssetFor(element.getTextContent()));
+                            setBackgroundImage(getAssetFor(element.getAttribute("name")));
                             break;
                         case MID_IMG_NODE:
-                            setMiddleImage(getAssetFor(element.getTextContent()));
+                            setMiddleImage(getAssetFor(element.getAttribute("name")));
                             break;
                         case QUESTION_NODE:
                             dialogTitle.setText(element.getAttribute("intitule"));
@@ -260,6 +244,12 @@ public class QuestionnaireDialog extends DialogScreen {
                         case TEXT_NODE:
                             setText(format(element.getTextContent()));
                             break;
+                        case CLEAR_NODE:
+                            switch (element.getAttribute("object")) {
+                                case "middle-image":
+                                    clearMiddleImage();
+                                    break;
+                            }
                     }
                     return nodeName;
                 default:
@@ -309,11 +299,56 @@ public class QuestionnaireDialog extends DialogScreen {
 
         public boolean hasNextText() {
             boolean hasNext = goToNextSibling(currentTextNode, TEXT_NODE, false) != null;
-            if (!hasNext) {
-                hasNext = currentTextNode.getParentNode().getNodeName().equals(QUESTION_NODE);
-                if (hasNext) hasNext = goToFirstChild(currentNode, TEXT_NODE, false) != null;
+            if (!hasNext && currentTextNode.getParentNode() != currentNode) {
+                hasNext = goToFirstChild(currentNode, TEXT_NODE, false) != null;
             }
             return hasNext;
+        }
+
+        public void results() {
+            resultsProceeded = true;
+            currentNode = goToNextSibling(currentNode, RESULTS_NODE, true);
+            double mark = Double.valueOf(((Element) currentNode).getAttribute("target"));
+            boolean pass = nbGoodAnswers/nbQuestions >= mark;
+            Node target_node = pass ? goToFirstChild(currentNode, PASS_NODE, false) : goToFirstChild(currentNode, FAIL_NODE, false);
+            currentTextNode = goToFirstChild(target_node, TEXT_NODE, true);
+
+            // Création des boutons de fin
+            InputListener listener = new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    endButtonsListener.buttonPressed(event.getTarget().getName(), nbGoodAnswers/nbQuestions);
+                }
+            };
+
+            // Ajout des boutons spécifiques (pass ou fail)
+            Element buttonNode = (Element)goToFirstChild(target_node, END_BTN_NODE, false);
+            while (buttonNode != null) {
+                TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
+                button.setName(buttonNode.getAttribute("name"));
+                button.addListener(listener);
+                endButtonsList.add(button);
+                buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
+            }
+
+            // Ajout des boutons généraux
+            buttonNode = (Element)goToFirstChild(currentNode, END_BTN_NODE, false);
+            while (buttonNode != null) {
+                TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
+                button.setName(buttonNode.getAttribute("name"));
+                button.addListener(listener);
+                endButtonsList.add(button);
+                buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
+            }
+        }
+
+        public boolean resultsProceeded() {
+            return resultsProceeded;
         }
     }
 

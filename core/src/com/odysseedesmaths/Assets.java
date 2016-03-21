@@ -21,7 +21,9 @@ public class Assets {
 
     // Raccourcis pratiques
     private static final String
-            ICONS_PATH = "textures/common/char_icons/";
+            ICONS_PATH = "textures/common/char_icons/",
+            DLG_PATH = "texts/dialogs/",
+            QST_PATH = "texts/questionnaires/";
 
     @Asset(Texture.class)
     public static final String
@@ -66,6 +68,13 @@ public class Assets {
             PRESS_START_2P = Gdx.files.internal("fonts/PressStart2P.ttf"),
             KENPIXEL_BLOCKS = Gdx.files.internal("fonts/kenpixel_blocks.ttf");
 
+    // Dialogues
+    public static final String
+            DLG_ARRIVEE1 = DLG_PATH + "arrivee1.xml";
+
+    // Questionnaires
+    public static final String
+            QST_ARRIVEE = QST_PATH + "arrivee.xml";
 
     /**********************
      * ASSETS SPECIFIQUES *

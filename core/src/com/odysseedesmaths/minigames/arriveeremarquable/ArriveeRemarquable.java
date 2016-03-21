@@ -33,7 +33,7 @@ public class ArriveeRemarquable extends MiniGame {
 	public Map<Class<? extends Item>, Integer> activeItems;
     public Timer timer;
 
-    public ArriveeRemarquable(OdysseeDesMaths game) {
+    public ArriveeRemarquable(final OdysseeDesMaths game) {
         super(game);
         init();
         setScreen(new ForetScreen(this));

@@ -1,7 +1,6 @@
 package com.odysseedesmaths.dialogs;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,10 +11,6 @@ import com.odysseedesmaths.util.XMLSequencialReader;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SimpleDialog extends DialogScreen {
 
@@ -71,6 +66,7 @@ public class SimpleDialog extends DialogScreen {
         private static final String CHAR_NODE = "personnage";
         private static final String BACK_IMG_NODE = "background-image";
         private static final String MID_IMG_NODE = "middle-image";
+        private static final String CLEAR_NODE = "clear";
         private static final String END_BTN_NODE = "endbutton";
 
         public SimpleDialogReader(String dialogPath) {
@@ -90,13 +86,13 @@ public class SimpleDialog extends DialogScreen {
             };
 
             Element buttonNode = (Element)goToFirstChild(document.getDocumentElement(), END_BTN_NODE, false);
-            do {
+            while (buttonNode != null) {
                 TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
                 button.setName(buttonNode.getAttribute("name"));
                 button.addListener(listener);
                 endButtonsList.add(button);
                 buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
-            } while (buttonNode != null);
+            }
         }
 
         @Override
@@ -120,10 +116,10 @@ public class SimpleDialog extends DialogScreen {
                     Element element = (Element)node;
                     switch (nodeName) {
                         case BACK_IMG_NODE:
-                            setBackgroundImage(getAssetFor(element.getTextContent()));
+                            setBackgroundImage(getAssetFor(element.getAttribute("name")));
                             break;
                         case MID_IMG_NODE:
-                            setMiddleImage(getAssetFor(element.getTextContent()));
+                            setMiddleImage(getAssetFor(element.getAttribute("name")));
                             break;
                         case CHAR_NODE:
                             String perso = element.getAttribute("name");
@@ -138,6 +134,16 @@ public class SimpleDialog extends DialogScreen {
                             break;
                         case TEXT_NODE:
                             setText(format(element.getTextContent()));
+                            break;
+                        case CLEAR_NODE:
+                            switch (element.getAttribute("object")) {
+                                case "middle-image":
+                                    clearMiddleImage();
+                                    break;
+                                case "char":
+                                    clearCharAt(Integer.valueOf(element.getAttribute("pos")));
+                                    break;
+                            }
                             break;
                     }
                     return nodeName;

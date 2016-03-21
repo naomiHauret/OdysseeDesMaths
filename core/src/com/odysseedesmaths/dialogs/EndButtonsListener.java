@@ -5,7 +5,7 @@ public class EndButtonsListener {
     public void buttonPressed(String buttonName) {
     }
 
-    public void buttonPressed(String buttonName, float value) {
+    public void buttonPressed(String buttonName, double value) {
     }
 
 }
