@@ -59,7 +59,7 @@ public class Assets {
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
             GAME_OVER_MUSIC = "music/Game Over.ogg",
-            GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
+            // GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
 
 
     public static final FileHandle
