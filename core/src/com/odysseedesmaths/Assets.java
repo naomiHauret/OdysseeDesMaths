@@ -53,7 +53,8 @@ public class Assets {
     public static final String
             UI_MAIN = "ui/main.atlas",
             UI_ORANGE = "ui/orange.atlas",
-            UI_SCROLL = "ui/scroll.atlas";
+            UI_SCROLL = "ui/scroll.atlas",
+	    KOFFEE = "textures/CoffeePlumbing/koffee.atlas";
 
 
     @Asset(Music.class)
@@ -61,7 +62,8 @@ public class Assets {
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
             GAME_OVER_MUSIC = "music/Game Over.ogg",
-            // GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
+            GAGNER_MUSIC = "music/Victory.ogg"; // A ajouter après avoir trouver la music
+
 
 
     public static final FileHandle
