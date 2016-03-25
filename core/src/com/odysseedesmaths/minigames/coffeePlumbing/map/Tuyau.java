@@ -42,6 +42,7 @@ public class Tuyau {
         if(fluxEntrant>0){
             this.fluxCourant++;
             this.indicateurs.set_currentFlow(this.fluxCourant);
+<<<<<<< HEAD
 
             System.out.println("Flux courant"+this.fluxCourant);
             Iterator<Tuyau> it = tuyauxSuivants.iterator();
@@ -49,6 +50,8 @@ public class Tuyau {
                 it.next().add_fluxEntrant(this.fluxCourant);
             }
 
+=======
+>>>>>>> 9445fd2067e853186d3c13b661dd82a9a67a0513
             System.out.println("Flux courant" + this.fluxCourant);
             if(sousPression()){
                 //TODO: mettre un compte à rebours de 3 secondes
