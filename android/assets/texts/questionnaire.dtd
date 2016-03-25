@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT questionnaire ((question | background-image | middle-image)*, results)>
+<!ELEMENT question (reponse, reponse, reponse?, reponse?, bonne-reponse, mauvaise-reponse, text*)>
+<!ATTLIST question
+    intitule CDATA #REQUIRED
+    >
+<!ELEMENT reponse (#PCDATA)>
+<!ATTLIST reponse
+    valide (true|false) #REQUIRED
+    >
+<!ELEMENT bonne-reponse (text)+>
+<!ELEMENT mauvaise-reponse (text)+>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT background-image EMPTY>
+<!ATTLIST background-image
+    name CDATA #REQUIRED
+    >
+<!ELEMENT middle-image EMPTY>
+<!ATTLIST middle-image
+    name CDATA #REQUIRED
+    >
+<!ELEMENT clear (#PCDATA)>
+<!ATTLIST clear
+    object (middle-image) #REQUIRED
+    >
+<!ELEMENT results (pass, fail, text*, endbutton*)>
+<!ATTLIST results
+    target (0.1|0.2|0.25|0.3|0.4|0.5|0.6|0.7|0.75|0.8|0.9|1) #REQUIRED
+    >
+<!ELEMENT pass (text+, endbutton*)>
+<!ELEMENT fail (text+, endbutton*)>
+<!ELEMENT endbutton (#PCDATA)>
+<!ATTLIST endbutton
+    name ID #REQUIRED
+    >

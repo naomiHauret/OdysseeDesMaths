@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
 <dialogue>
-    <background-image>menu principal</background-image>
+    <background-image name="menu principal"/>
     <personnage name="hero" pos="0">
         <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... </text>
         <text> Eh ! Il y a quelqu'un ?</text>
         <text> Qu'est-ce qui se passe ici... Aïe !</text>
         <text> Qu'est-ce que je fous avec cette m... </text>
     </personnage>
-    <background-image>menu principal</background-image>
     <personnage name="pyles" pos="3">
         <text> Eh bah, t'en as mis du temps à me sortir de là, %h ! </text>
     </personnage>
@@ -25,6 +24,13 @@
         <text> Nom de Zeus ! Les légions d'expressions mathémaléfiques de Viktor ! </text>
     </personnage>
     <personnage name="ennemis" noimage="">
-        <text> Ecrasez-le !!</text>
+        <text> Ecrasez-le ! ! !</text>
     </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Écoutes-moi bien ! Il faut absolument que ces expressions ne t'attrapent pas ! Cours à travers la forêt pour leur échapper. </text>
+        <text> Utilise les flèches pour te déplacer et surtout, ne laisse personne t'approcher ! </text>
+        <text> Si tu vois un objet par-terre, tu peux le prendre mais je ne garantis pas le résultat... </text>
+        <text> Aller je file, on se revoit de l'autre côté !</text>
+    </personnage>
+    <endbutton name="continue">Partir en courant dans la forêt</endbutton>
 </dialogue>

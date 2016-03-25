@@ -21,13 +21,16 @@ public class Assets {
 
     // Raccourcis pratiques
     private static final String
-            ICONS_PATH = "textures/common/char_icons/";
+            ICONS_PATH = "textures/common/char_icons/",
+            DLG_PATH = "texts/dialogs/",
+            QST_PATH = "texts/questionnaires/";
 
     @Asset(Texture.class)
     public static final String
+            HERO = "textures/common/heros.png",
+            HEART = "textures/common/heart.png",
+            HEART_EMPTY = "textures/common/heart_empty.png",
             VANNEBUTTON = "textures/CoffeePlumbing/vanneButton.png",
-            HERO = "heros.png",
-            HEART = "coeur.png",
             MAIN_MENU_BACKGROUND = "tower.png",
             // Icones des personnages
             ICON_HERO = ICONS_PATH+"hero.png",
@@ -45,11 +48,13 @@ public class Assets {
             ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
             ICON_VIKTOR = ICONS_PATH+"viktor.png";
 
+
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
             UI_ORANGE = "ui/orange.atlas",
-            UI_SCROLL = "ui/scroll.atlas";
+            UI_SCROLL = "ui/scroll.atlas",
+	    KOFFEE = "textures/CoffeePlumbing/koffee.atlas";
 
 
     @Asset(Music.class)
@@ -57,29 +62,30 @@ public class Assets {
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
             GAME_OVER_MUSIC = "music/Game Over.ogg",
-            GAGNER_MUSIC = "music/"; // A ajouter après avoir trouver la music
+            GAGNER_MUSIC = "music/Victory.ogg"; // A ajouter après avoir trouver la music
+
 
 
     public static final FileHandle
             PRESS_START_2P = Gdx.files.internal("fonts/PressStart2P.ttf"),
             KENPIXEL_BLOCKS = Gdx.files.internal("fonts/kenpixel_blocks.ttf");
 
+    // Dialogues
+    public static final String
+            DLG_ARRIVEE1 = DLG_PATH + "arrivee1.xml";
+
+    // Questionnaires
+    public static final String
+            QST_ARRIVEE = QST_PATH + "arrivee.xml";
 
     /**********************
      * ASSETS SPECIFIQUES *
      **********************/
 
     // Arrivée remarquable
-    @Asset(Texture.class)
+    @Asset(TextureAtlas.class)
     public static final String
-            ARR_HORDE = "horde.png",
-            ARR_S_EGAL = "signeEgal.png",
-            ARR_S_ADD = "signeAdd.png",
-            ARR_S_SOUST = "signeSoust.png",
-            ARR_S_MULT = "signeMult.png",
-            ARR_S_DIV = "signeDiv.png",
-            ARR_BUFF_SHIELD = "bouclier.png",
-            ARR_SHIELD = "itemBouclier.png";
+            ARRIVEE = "arrivee_remarquable/arrivee.atlas";
 
     // Plongée au coeur du problème
     // Accrobranche

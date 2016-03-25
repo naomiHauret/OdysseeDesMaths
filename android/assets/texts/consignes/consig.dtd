@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-    <!ELEMENT dialog (screen)+ >
-    <!ELEMENT screen (backgroundImg, char1, char2, middleImg, text) >
-    <!ELEMENT dialogue (personnage, text)>
-    <!ELEMENT personnage (text)>
-    <!ELEMENT text ()>

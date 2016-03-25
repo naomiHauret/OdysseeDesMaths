@@ -26,6 +26,9 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.util.DisplayTextAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class DialogScreen implements Screen {
 
     private static final int MAX_CHARS = 6;
@@ -59,6 +62,7 @@ public abstract class DialogScreen implements Screen {
     }
 
     protected OdysseeDesMaths game;
+    protected EndButtonsListener endButtonsListener;
     private Viewport viewport;
 
     private Drawable backgroundImage;
@@ -81,9 +85,11 @@ public abstract class DialogScreen implements Screen {
     protected DisplayTextAction displayAction;
     protected static final int DISPLAY_SPEED = 14;
 
-    //TODO: ajouter les SFX
-    public DialogScreen(OdysseeDesMaths game) {
+    protected List<TextButton> endButtonsList;
+
+    public DialogScreen(OdysseeDesMaths game, EndButtonsListener endButtonsListener) {
         this.game = game;
+        this.endButtonsListener = endButtonsListener;
 
         viewport = new StretchViewport(WIDTH, HEIGHT);
         stage = new Stage(viewport);
@@ -121,12 +127,14 @@ public abstract class DialogScreen implements Screen {
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.up = skin.getDrawable("button");
         buttonStyle.down = skin.getDrawable("button_pressed");
-        buttonStyle.font = FONT_11;
+        buttonStyle.font = FONT_12;
         buttonStyle.fontColor = Color.BLACK;
 
         buildGUI();
 
         displayAction = new DisplayTextAction();
+
+        endButtonsList = new ArrayList<>();
 
         //stage.setDebugAll(true);
     }
@@ -195,7 +203,7 @@ public abstract class DialogScreen implements Screen {
 
     public void setChar(String assetPath, int position) {
         TextureRegion tr = new TextureRegion(Assets.getManager().get(assetPath, Texture.class));
-        // Pour les personnages à droites il faut retourner la texture horizantalement
+        // Pour les personnages à droites il faut retourner la texture horizontalement
         if (position >= MAX_CHARS/2) {
             tr.flip(true, false);
         }
@@ -223,6 +231,15 @@ public abstract class DialogScreen implements Screen {
             case "audib": asset = Assets.ICON_AUDIB; break;
             case "viktor": asset = Assets.ICON_VIKTOR; break;
             case "phythagore": asset = Assets.ICON_PYTHAGORE; break;
+            case "gwendouille": asset = Assets.ICON_GWENDOUILLE; break;
+            case "dijkstra": asset = Assets.ICON_DIJKSTRA; break;
+            case "eddymalou": asset = Assets.ICON_EDDYMALOU; break;
+            case "markov": asset = Assets.ICON_MARKOV; break;
+            case "nicholas": asset = Assets.ICON_NICHOLAS; break;
+            case "robert": asset = Assets.ICON_ROBERT; break;
+            case "tartaglia": asset = Assets.ICON_TARTAGLIA; break;
+            case "thales": asset = Assets.ICON_THALES; break;
+            case "tifouille": asset = Assets.ICON_TIFOUILLE; break;
         }
         return asset;
     }

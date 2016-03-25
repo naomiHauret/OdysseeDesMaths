@@ -33,7 +33,7 @@ public class ArriveeRemarquable extends MiniGame {
 	public Map<Class<? extends Item>, Integer> activeItems;
     public Timer timer;
 
-    public ArriveeRemarquable(OdysseeDesMaths game) {
+    public ArriveeRemarquable(final OdysseeDesMaths game) {
         super(game);
         init();
         setScreen(new ForetScreen(this));
@@ -59,7 +59,8 @@ public class ArriveeRemarquable extends MiniGame {
         trySpawnItem();
         trySpawnEnemy();
         updateActiveItems();
-	}
+        if (hero.getCase().equals(terrain.getFin())) win();
+    }
 
     public void pauseGame() {
         setState(State.PAUSED);
@@ -79,6 +80,13 @@ public class ArriveeRemarquable extends MiniGame {
         setState(State.GAME_OVER);
         timer.stop();
         ((ForetScreen)currentScreen).gameOver();
+    }
+
+    public void win() {
+        setState(State.WIN);
+        game.getSavesManager().getCurrentSave().setLevel1Finished(true);
+        timer.stop();
+        ((ForetScreen)currentScreen).win();
     }
 
     public void destroy(Item aItem) {

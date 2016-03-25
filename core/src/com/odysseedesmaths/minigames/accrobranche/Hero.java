@@ -19,9 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.odysseedesmaths.Assets;
 
 public class Hero extends Sprite {
-    public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD };
-    public State currentState;
-    public State previousState;
+    public enum State { FALLING, JUMPING, STANDING, RUNNING };
 
     public World world;
     public Body b2body;
@@ -29,10 +27,8 @@ public class Hero extends Sprite {
     private TextureRegion heroStand;
     private Animation heroRun;
     private TextureRegion heroJump;
-    private TextureRegion heroDead;
 
     private float stateTimer;
-    private boolean heroIsDead;
     private boolean timeToRedefineHero;
 
     public Hero(World world, TreeScreen screen) {
@@ -43,7 +39,7 @@ public class Hero extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         /*
-        //get run animation frames and add them to marioRun Animation
+        //get run animation frames and add them to heroRun Animation
         for(int i = 1; i < 4; i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("hero"), i * 16, 0, 16, 16));
         heroRun = new Animation(0.1f, frames);
@@ -64,7 +60,7 @@ public class Hero extends Sprite {
 
         defineHero();
 
-        setBounds(0, 0, 16 / TreeScreen.PPM, 16 / TreeScreen.PPM);
+        //setBounds(0, 0, 16 / TreeScreen.PPM, 16 / TreeScreen.PPM);
         //setRegion(heroStand);
         setTexture(new Texture(Assets.ICON_HERO));
     }
@@ -128,9 +124,7 @@ public class Hero extends Sprite {
     public State getState(){
         //Test to Box2D for velocity on the X and Y-Axis
         //if hero is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
-        if(heroIsDead)
-            return State.DEAD;
-        else if(b2body.getLinearVelocity().y > 0)
+        if(b2body.getLinearVelocity().y > 0)
             return State.JUMPING;
             //if negative in Y-Axis hero is falling
         else if(b2body.getLinearVelocity().y < 0)
@@ -143,41 +137,40 @@ public class Hero extends Sprite {
             return State.STANDING;
     }
 
-    public void die() {
-
-        if (!isDead()) {
-            heroIsDead = true;
-            Filter filter = new Filter();
-            filter.maskBits = TreeScreen.NOTHING_BIT;
-
-            for (Fixture fixture : b2body.getFixtureList()) {
-                fixture.setFilterData(filter);
+    public void jump(TreeScreen.Ground ground){
+        if ( getState() != State.JUMPING ) {
+            switch (ground) {
+                case STANDARD :
+                    b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+                    break;
+                default :
+                    System.out.println("Erreur : type de sol inconnu.");
+                    break;
             }
 
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
         }
     }
 
-    public boolean isDead(){
-        return heroIsDead;
-    }
-
-    public float getStateTimer(){
-        return stateTimer;
-    }
-
-    public void jump(){
-        if ( getState() != State.JUMPING ) {
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+    public void runRight(TreeScreen.Ground ground){
+        switch (ground) {
+            case STANDARD :
+                b2body.applyLinearImpulse(new Vector2(0.1f, 0), b2body.getWorldCenter(), true);
+                break;
+            default :
+                System.out.println("Erreur : type de sol inconnu.");
+                break;
         }
     }
 
-    public void runRight(){
-        b2body.applyLinearImpulse(new Vector2(0.01f, 0), b2body.getWorldCenter(), true);
-    }
-
-    public void runLeft(){
-        b2body.applyLinearImpulse(new Vector2(-0.01f, 0), b2body.getWorldCenter(), true);
+    public void runLeft(TreeScreen.Ground ground){
+        switch (ground) {
+            case STANDARD :
+                b2body.applyLinearImpulse(new Vector2(-0.1f, 0), b2body.getWorldCenter(), true);
+                break;
+            default :
+                System.out.println("Erreur : type de sol inconnu.");
+                break;
+        }
     }
 
     public void redefineHero(){
@@ -212,7 +205,7 @@ public class Hero extends Sprite {
 
     public void defineHero(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / TreeScreen.PPM, 32 / TreeScreen.PPM);
+        bdef.position.set(256 / TreeScreen.PPM, 128 / TreeScreen.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
