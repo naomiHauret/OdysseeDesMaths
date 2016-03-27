@@ -46,7 +46,11 @@ public class Assets {
             ICON_TARTAGLIA = ICONS_PATH+"tartaglia.png",
             ICON_THALES = ICONS_PATH+"thales.png",
             ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
-            ICON_VIKTOR = ICONS_PATH+"viktor.png";
+            ICON_VIKTOR = ICONS_PATH+"viktor.png",
+            ARRIVEE_REMARAQUABLE_ARCADE_MACHINE = "textures/common/arcadeMachines/arriveRemarquableArcadeMachine.png",
+            ACCROBRANCHE_ARCADE_MACHINE = "textures/common/arcadeMachines/accrobrancheArcadeMachine.png",
+            COFFEE_PLUMBING_ARCADE_MACHINE = "textures/common/arcadeMachines/CoffeePlumbingArcadeMachine.png",
+            ARCADE_ROOM_BACKGROUND = "textures/common/arcadeMachines/background.png";
 
 
     @Asset(TextureAtlas.class)

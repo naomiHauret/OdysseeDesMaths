@@ -32,7 +32,6 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
         level.buildLevel();
 
-        level.get_stage().setDebugAll(true);
         level.get_stage().setViewport(viewport);
         Gdx.input.setInputProcessor(level.get_stage());
 
