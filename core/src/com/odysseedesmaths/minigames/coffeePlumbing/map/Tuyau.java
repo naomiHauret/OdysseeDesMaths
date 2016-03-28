@@ -1,49 +1,61 @@
 package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.KoffeeMeter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 
 /**
  * Created by trilunaire on 08/02/16.
  */
+
+// TODO: regarder pour mettre des alpha action sur les tuyaux
 public class Tuyau {
     private int capacite;
     private int fluxCourant;
-    private int fluxEntrant;
+    private int fluxEntrant; //TODO: réussir à partager le flux entrant entre les tuyaux
     /**
      * Le vecteur de tuyaux contient seulement les voisins les plus proches
      */
     private HashSet<Tuyau> tuyauxSuivants;
     private HashSet<int[]> cases;
     private KoffeeMeter indicateurs;
+    private List<Sprite> koffeeInPipe; //TODO: find a more realistic way to represent the level of coffee in the pipe.
 
 
     public Tuyau(int capacite){
         this.capacite = capacite;
         this.fluxCourant = 0; //si fermé rien dedans
+        this.fluxEntrant = 0;
         this.tuyauxSuivants = new HashSet<Tuyau>();
         this.cases = new HashSet<int[]>();
+        this.koffeeInPipe = new ArrayList<Sprite>();
     }
 
     public void augmenterFlux(){
-        if(fluxCourant<fluxEntrant){
+        if(fluxEntrant>0){
             this.fluxCourant++;
             this.indicateurs.set_currentFlow(this.fluxCourant);
-            System.out.println("Flux courant"+this.fluxCourant);
-            /*
-            *
-            *   *****************************ATTENTION BOUT DE CODE QUI MARCHE PAS
-            *   *****************************COMMENTé !
-            *
-            * /
-             */
-            /*Iterator<Tuyau> it = Iterator<Tuyau>;
-            while(it.hasNext()){
-                it.add_fluxEntrant(this.fluxCourant);
-            }*/
+            System.out.println("Flux courant" + this.fluxCourant);
+            if(sousPression()){
+                //TODO: mettre un compte à rebours de 3 secondes
+               // CoffeeLevel.compteARebours();
+            }
+            majFluxSortant(1);
+            fluxEntrant--;
+            if(fluxCourant==1){
+                for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
+                    CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+                }
+            }
         }
     }
 
@@ -51,7 +63,25 @@ public class Tuyau {
         if(fluxCourant>0){
             this.fluxCourant--;
             this.indicateurs.set_currentFlow(this.fluxCourant);
-            System.out.println("Flux courant"+this.fluxCourant);
+            System.out.println("Flux courant" + this.fluxCourant);
+            if(sousPression()){
+                //TODO: mettre un compte à rebours de 3 secondes
+                //CoffeeLevel.compteARebours();
+            }
+            majFluxSortant(-1);
+            fluxEntrant++;
+            if(fluxCourant==0){
+                for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
+                    CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+                }
+            }
+        }
+    }
+
+    public void majFluxSortant(int fluxToAdd){
+        Iterator<Tuyau> it = tuyauxSuivants.iterator();
+        while(it.hasNext()){
+            it.next().add_fluxEntrant(fluxToAdd);
         }
     }
 
@@ -81,11 +111,7 @@ public class Tuyau {
     }
 
     public boolean sousPression(){
-        boolean b = false;
-        if(fluxCourant-capacite > 0){
-            b = true;
-        }
-        return b;
+        return (fluxCourant-capacite>0) ? true : false;
     }
 
     public String toString(){
@@ -117,8 +143,11 @@ public class Tuyau {
       this.cases = new_cases;
     }
 
-    public void addCase(int[] new_case){
+    public void addCase(int[] new_case, String typeOfPipe){
         this.cases.add(new_case);
+        Sprite someKoffee = ((TextureAtlas)Assets.getManager().get(Assets.KOFFEE, TextureAtlas.class)).createSprite(typeOfPipe);
+        someKoffee.setPosition(new_case[0]*64,new_case[1]*64);
+        this.koffeeInPipe.add(someKoffee);
     }
 
     public void removeCase(int[] old_case){
@@ -176,6 +205,38 @@ public class Tuyau {
     }
 
     public void add_fluxEntrant(int fluxSupp){
-        this.fluxEntrant+=fluxSupp;
+        System.out.println("Flux supp: "+fluxSupp);
+        System.out.println("Flux entrant "+fluxEntrant);
+        this.fluxEntrant = this.fluxEntrant+fluxSupp;
+        System.out.println("Flux entrant "+fluxEntrant);
+        if(fluxEntrant<0){
+            this.diminuerFlux();
+        }
+    }
+
+    /**
+    * Getter of fluxCourant
+    * @return the value of fluxCourant
+    */
+    public int get_fluxCourant(){
+      return this.fluxCourant;
+    }
+
+    /**
+    * Setter of fluxCourant
+    * @param new_fluxCourant: the new value of fluxCourant
+    */
+    public void set_fluxCourant(int new_fluxCourant){
+      this.fluxCourant = new_fluxCourant;
+      this.indicateurs.set_currentFlow(new_fluxCourant);
+        if(fluxCourant>0){
+            for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
+                CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+            }
+        }else{
+            for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
+                CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+            }
+        }
     }
 }

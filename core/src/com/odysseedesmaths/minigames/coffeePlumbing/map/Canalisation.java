@@ -26,6 +26,8 @@ public class Canalisation{
     private int mapWidthTiled;
     private int mapHeightTiled;
     private int[][] posKoffeeMeters;
+    private int flotEntrantMap;
+
 
     public Canalisation(TiledMap map,int mapWidthTiled, int mapHeightTiled){
         //configuration des variables de tailles
@@ -55,6 +57,8 @@ public class Canalisation{
         this.allPipes = new HashSet<Tuyau>();
 
         this.posKoffeeMeters = this.get_koffeeMetersInfo();
+
+        this.flotEntrantMap = Integer.parseInt((String)this.map.getProperties().get("flotEntrant"));
     }
 
     public void createCanalisation() {
@@ -73,6 +77,10 @@ public class Canalisation{
     public Tuyau buildCanalisation(int[] posOrigine){
         int[] posCourante = new int[2];
         int[] posPrec = new int[2];
+        boolean tuyauDepart = false;
+
+        if(posOrigine[0]==mapStart[0] && posOrigine[1]==mapStart[1])
+             tuyauDepart = true;
 
         //System.out.println("x: "+posOrigine[0]+" y: "+posOrigine[1]);
 
@@ -108,10 +116,12 @@ public class Canalisation{
 
             if(!securiteTuyau[posCourante[0]][posCourante[1]]){
                 Tuyau tuyauTmp = new Tuyau(0);
+
                 do{//une fois qu'on a le tuyau, on le parcours
-                    tuyauTmp.addCase(posCourante.clone());
-                    System.out.println("x: " + posCourante[0] + " y: " + posCourante[1]);
                     String s = (String) tuyauxLayer.getCell(posCourante[0],posCourante[1]).getTile().getProperties().get("name");
+                    tuyauTmp.addCase(posCourante.clone(), s);
+                    System.out.println("x: " + posCourante[0] + " y: " + posCourante[1]);
+
                     if(vannesLayer.getCell(posCourante[0],posCourante[1])!=null){
                         CoffeeLevel.addVanne(new Vanne(posCourante[0],posCourante[1],tuyauTmp));
                     }else if(posKoffeeMeters[posCourante[0]][posCourante[1]]!=0){
@@ -211,6 +221,11 @@ public class Canalisation{
                     }
                 }
                 this.allPipes.add(tuyauTmp);
+
+                if(tuyauDepart){
+                    tuyauTmp.set_fluxCourant(this.flotEntrantMap);
+                    tuyauTmp.majFluxSortant(this.flotEntrantMap);
+                }
 
                 return tuyauTmp;
             }
@@ -582,4 +597,21 @@ public class Canalisation{
         }
         return coordCapaKoffeeMeter;
     }
+
+    /**
+    * Getter of flotEntrantMap
+    * @return the value of flotEntrantMap
+    */
+    public int get_flotEntrantMap(){
+      return this.flotEntrantMap;
+    }
+
+    /**
+    * Setter of flotEntrantMap
+    * @param new_flotEntrantMap: the new value of flotEntrantMap
+    */
+    public void set_flotEntrantMap(int new_flotEntrantMap){
+      this.flotEntrantMap = new_flotEntrantMap;
+    }
+
 }

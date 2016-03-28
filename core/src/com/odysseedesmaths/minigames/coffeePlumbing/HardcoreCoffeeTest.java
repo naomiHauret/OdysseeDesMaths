@@ -32,7 +32,6 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
         level = new CoffeeLevel("maps/CoffeePlumbing/mapTestNewTextures.tmx");
         level.buildLevel();
 
-        level.get_stage().setDebugAll(true);
         level.get_stage().setViewport(viewport);
         Gdx.input.setInputProcessor(level.get_stage());
 
@@ -59,8 +58,8 @@ public class HardcoreCoffeeTest extends ApplicationAdapter {
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.input.setInputProcessor(level.get_stage());
-        level.get_mapRenderer().setView(camera);
-        level.get_mapRenderer().render();
+        CoffeeLevel.get_mapRenderer().setView(camera);
+        CoffeeLevel.get_mapRenderer().render();
 
         level.get_stage().act();
         level.get_stage().draw();

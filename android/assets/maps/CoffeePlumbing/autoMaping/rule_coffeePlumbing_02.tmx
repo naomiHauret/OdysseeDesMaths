@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="64" tileheight="64">
- <properties>
-  <property name="end" value="9,5"/>
-  <property name="flotEntrant" value="6"/>
-  <property name="start" value="0,4"/>
- </properties>
- <tileset firstgid="1" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
-  <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="9" height="9" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="set_sprite" tilewidth="64" tileheight="64">
+  <image source="set_sprite.png" trans="ff00ff" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="capacites" value="empty"/>
+    <property name="coordonnees" value="empty"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="17" name="set_rules" tilewidth="64" tileheight="64">
+  <image source="set_rules.png" trans="ff00ff" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="21" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
+  <image source="coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
   <tile id="0">
    <properties>
     <property name="name" value="horizontal"/>
@@ -88,41 +95,41 @@
    </properties>
   </tile>
  </tileset>
- <layer name="background" width="10" height="7" opacity="0.79">
+ <layer name="Regions" width="9" height="9">
   <data encoding="base64" compression="zlib">
-   eJzjYGBg4BjFGBgAN8cCMQ==
+   eJxjYCAOCBKgiQXk6hvM7gEAj6QAzQ==
   </data>
  </layer>
- <layer name="liaisons" width="10" height="7">
+ <layer name="Input_set" width="9" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOWIGYDYccCDATqYcFjxm4AC67CbmJmgAAJEwANA==
+   eJxjYCAOMEJpJijNDKVZiNQPA6xQmo1EfeiAE0pzQWluKM1Dojm8UJqPArcAADA8AFs=
   </data>
  </layer>
- <layer name="tuyaux" width="10" height="7">
+ <layer name="Output_back" width="9" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAOyBCgiQXk6hvM7gEA68QBUQ==
+  </data>
+ </layer>
+ <layer name="Output_tuyaux" width="9" height="9">
   <properties>
-   <property name="bloque" value="2,2 9,3 5,4 5,6 8,5"/>
+   <property name="bloque" value="empty"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYEAFvEDMiMTnZiAO8CCxGaGYkF6YXVxQ/TB96HbzoIkzomEuIt1ICgAAU5gAfw==
+   eJxjYCAOiEJpMSitCKXlidQPA3JQWoFEfYPZPQDo/AFT
   </data>
  </layer>
- <layer name="koffee" width="10" height="7">
+ <layer name="Output_vannes" width="9" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF2AAAARgAAQ==
+   eJxjYCAOqBGgiQXk6hvMAADghADl
   </data>
  </layer>
- <layer name="vannes" width="10" height="7">
-  <data encoding="base64" compression="zlib">
-   eJxjYEAFQgT4tAbE2EcPNwEANbAASQ==
-  </data>
- </layer>
- <layer name="koffeeMeters" width="10" height="7">
+ <layer name="Output_koffeeMeters" width="9" height="9">
   <properties>
-   <property name="capacites" value="8;6;7;8;9"/>
-   <property name="coordonnees" value="2,4;6,2;5,3;5,6;8,5"/>
+   <property name="capacites" value="empty"/>
+   <property name="coordonnees" value="empty"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYMAEnFjECAF0PdQwg1pqyQEAIJgALg==
+   eJxjYBiaQJYATa455AAAScQArw==
   </data>
  </layer>
 </map>

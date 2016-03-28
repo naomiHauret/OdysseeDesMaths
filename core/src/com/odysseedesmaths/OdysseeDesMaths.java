@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.odysseedesmaths.dialogs.EndButtonsListener;
 import com.odysseedesmaths.dialogs.SimpleDialog;
+import com.odysseedesmaths.menus.GameChoiceMenu;
 import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.menus.NewSave;
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
@@ -25,7 +26,7 @@ public class OdysseeDesMaths extends Game {
         Assets.getManager().finishLoading();
 
         batcher = new SpriteBatch();
-        setScreen(new MenuPrincipal(this));
+        setScreen(new GameChoiceMenu(this));
     }
 
     public ModeSceneScreen getModeScene() {
