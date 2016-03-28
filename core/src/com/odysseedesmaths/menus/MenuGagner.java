@@ -55,7 +55,7 @@ public class MenuGagner extends Stage {
         buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("button", buttonStyle);
 
-        title = new Label("GAGNÉ !", skin, "title");
+        title = new Label("GAGNE!", skin, "title");
         continuer = new TextButton("Continuer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 

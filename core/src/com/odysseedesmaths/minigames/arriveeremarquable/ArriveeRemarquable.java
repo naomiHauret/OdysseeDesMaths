@@ -1,9 +1,13 @@
 package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.Timer;
+import com.odysseedesmaths.dialogs.EndButtonsListener;
+import com.odysseedesmaths.dialogs.SimpleDialog;
 import com.odysseedesmaths.minigames.MiniGame;
+import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
@@ -87,6 +91,20 @@ public class ArriveeRemarquable extends MiniGame {
         game.getSavesManager().getCurrentSave().setLevel1Finished(true);
         timer.stop();
         ((ForetScreen)currentScreen).win();
+    }
+
+    public void afterWin() {
+        final OdysseeDesMaths gameReference = game;
+        setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2, new EndButtonsListener() {
+            @Override
+            public void buttonPressed(String buttonName) {
+                switch (buttonName) {
+                    case "continue":
+                        gameReference.setScreen(new Accrobranche(gameReference));
+                        break;
+                }
+            }
+        }));
     }
 
     public void destroy(Item aItem) {

@@ -50,6 +50,7 @@ public class OdysseeDesMaths extends Game {
      */
 
     public void startGame() {
+        final OdysseeDesMaths gameReference = this; // patchwork un peu degueu pour le passage de référence ci-dessous
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
         } else if (savesManager.getCurrentSave().isLevel3Finished()) {
@@ -57,10 +58,9 @@ public class OdysseeDesMaths extends Game {
         } else if (savesManager.getCurrentSave().isLevel2Finished()) {
             setScreen(new ArriveeRemarquable(this));
         } else if (savesManager.getCurrentSave().isLevel1Finished()) {
-            setScreen(new Accrobranche(this));
+            setScreen(new Accrobranche(gameReference));
         } else {
-            final OdysseeDesMaths gameReference = this; // patchwork un peu degueu pour le passage de référence ci-dessous
-            setScreen(new SimpleDialog(this, Assets.DLG_ARRIVEE1, new EndButtonsListener() {
+            setScreen(new SimpleDialog(this, Assets.DLG_ARRIVEE_1, new EndButtonsListener() {
                 @Override
                 public void buttonPressed(String buttonName) {
                     switch (buttonName) {

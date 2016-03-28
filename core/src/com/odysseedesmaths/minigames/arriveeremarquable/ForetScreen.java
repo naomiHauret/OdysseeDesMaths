@@ -171,7 +171,7 @@ public class ForetScreen implements Screen {
                 Actor source = event.getTarget();
 
                 if (source == menuGagner.getContinuer().getLabel()) {
-                    // TODO
+                    minigame.afterWin();
                 } else if (source == menuGagner.getReturnMainMenu().getLabel()) {
                     minigame.returnToMainMenu();
                 }
