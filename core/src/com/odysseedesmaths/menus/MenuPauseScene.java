@@ -15,12 +15,14 @@ import com.odysseedesmaths.Assets;
 public class MenuPauseScene extends Menu {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 480;
+    private static final int SPACE_BETWEEN_BUTTONS = HEIGHT / 15;
 
     private TextButton retourJeu, inventaire, quitter;
     private TextButton.TextButtonStyle txtButtonStyle=null;
+    private AudioButtons audioButtons;
 
     public MenuPauseScene() {
-        super(10, new Color(255f, 255f, 255f, 1), "fonts/PressStart2P.ttf", new StretchViewport(WIDTH, HEIGHT));
+        super(22, new Color(255f, 255f, 255f, 1), "fonts/PressStart2P.ttf", new StretchViewport(WIDTH, HEIGHT));
 
         Skin skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
@@ -33,20 +35,21 @@ public class MenuPauseScene extends Menu {
         txtButtonStyle.down = skin.getDrawable("button_pressed");
 
         retourJeu = new TextButton("Retour",txtButtonStyle);
-        inventaire = new TextButton("Recommencer",txtButtonStyle);
+        inventaire = new TextButton("Inventaire",txtButtonStyle);
         quitter = new TextButton("Quitter",txtButtonStyle);
+        audioButtons = new AudioButtons();
 
         Table tableau = new Table();
         tableau.setFillParent(true);
-        //tableau.row().height(Gdx.graphics.getHeight() / 3);
-        tableau.add(retourJeu).width(WIDTH / 3).pad(10);
-        tableau.getCell(retourJeu).expand();
+        tableau.setBackground(skin.getDrawable("dark_background"));
+        tableau.pad(10);
+        tableau.add(retourJeu).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS).bottom().expand();
         tableau.row();
-        tableau.add(inventaire).width(WIDTH / 3).pad(10);
-        tableau.getCell(inventaire).expand();
+        tableau.add(inventaire).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
         tableau.row();
-        tableau.add(quitter).width(WIDTH / 3).pad(10);
-        tableau.getCell(quitter).expand();
+        tableau.add(quitter).size(256, 64);
+        tableau.row();
+        tableau.add(audioButtons).bottom().left().expand();
 
         addActor(tableau);
     }

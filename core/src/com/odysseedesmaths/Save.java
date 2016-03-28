@@ -10,6 +10,7 @@ public class Save {
     private Preferences save;
 
     private String name;
+    private boolean prologueFinished;   // Classe
     private boolean level1Finished;     // Arrivée remarquable
     private boolean level2Finished;     // Accrobranche
     private boolean level3Finished;     // CoffeePlumbing
@@ -22,6 +23,10 @@ public class Save {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isPrologueFinished() {
+        return prologueFinished;
     }
 
     public boolean isLevel1Finished() {
@@ -39,6 +44,12 @@ public class Save {
     public void setName(String name) {
         this.name = name;
         save.putString("name", name);
+        save.flush();
+    }
+
+    public void setPrologueFinished(boolean finished) {
+        this.prologueFinished = finished;
+        save.putBoolean("prologueFinished", finished);
         save.flush();
     }
 
@@ -82,6 +93,7 @@ public class Save {
 
     private void init() {
         save.putString("name", "");
+        save.putBoolean("prologueFinished", false);
         save.putBoolean("level1Finished", false);
         save.putBoolean("level2Finished", false);
         save.putBoolean("level3Finished", false);
@@ -90,6 +102,7 @@ public class Save {
 
     private void load() {
         name = save.getString("name");
+        prologueFinished = save.getBoolean("prologueFinished");
         level1Finished = save.getBoolean("level1Finished");
         level2Finished = save.getBoolean("level2Finished");
         level3Finished = save.getBoolean("level3Finished");

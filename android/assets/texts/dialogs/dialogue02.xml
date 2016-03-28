@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
 <dialogue>
-    <background-image name="menu principal"/>
+    <background-image name="caverne"/>
     <personnage name="hero" pos="0">
         <text> Pfiou, j'ai eu chaud ! Heureusement que - Aïe aïe aïe ! </text>
     </personnage>

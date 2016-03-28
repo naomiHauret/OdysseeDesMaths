@@ -7,14 +7,18 @@ import com.badlogic.gdx.audio.Sound;
  */
 
 public class SoundEffect {
+    private static int volume;
+
     private Sound sE = null;
     private long idSE = 0;
+
 
     public SoundEffect(String path){
         this.sE = Gdx.audio.newSound(Gdx.files.internal(path));
     }
 
-    public void play(){
+    public void play() {
+        setVolume(volume);
         this.idSE = this.sE.play();
     }
 
@@ -26,7 +30,8 @@ public class SoundEffect {
         if(volumePercent>100 || volumePercent<0){
             System.out.println("Valeur invalide");
         }else{
-            this.sE.setVolume(this.idSE,(float)volumePercent/100);
+            volume = volumePercent;
+            this.sE.setVolume(this.idSE, volume / 100f);
         }
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
 <dialogue>
-    <background-image name="menu principal"/>
+    <background-image name="paysage"/>
     <personnage name="hero" pos="0">
         <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... </text>
         <text> Eh ! Il y a quelqu'un ?</text>
