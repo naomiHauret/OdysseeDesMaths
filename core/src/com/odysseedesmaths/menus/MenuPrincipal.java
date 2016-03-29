@@ -205,7 +205,6 @@ public class MenuPrincipal implements Screen {
     private void encryptGameTitle() {
         char oldCharTmp;
         int indexTmp;
-        int number = (int)(Math.random() * 10);
 
         do {
             indexTmp = (int)(Math.random() * gameTitle.getText().length());
@@ -214,6 +213,7 @@ public class MenuPrincipal implements Screen {
 
         final char oldChar = oldCharTmp;
         final int index = indexTmp;
+        int number = (int)(Math.random() * 10);
 
         gameTitle.setText(gameTitle.getText().substring(0, index) + number + gameTitle.getText().substring(index + 1));
         Timer.schedule(new Timer.Task() {

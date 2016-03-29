@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT dialogue ((personnage | background-image | middle-image)*, personnage)>
-<!ELEMENT personnage (text | background-image | middle-image)*>
-    <!ATTLIST personnage name CDATA #REQUIRED>
-    <!ATTLIST personnage pos (0|1|2|3|4|5) #IMPLIED>
-    <!ATTLIST personnage noimage CDATA #IMPLIED>
-<!ELEMENT text (#PCDATA)>
-<!ELEMENT background-image (#PCDATA)>
-<!ELEMENT middle-image (#PCDATA)>

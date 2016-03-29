@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
+=======
+<!DOCTYPE questionnaire SYSTEM "dialog.dtd">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
 
 <dialogue>
     <personnage name="genie" pos="3">

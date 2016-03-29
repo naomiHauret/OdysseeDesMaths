@@ -2,23 +2,25 @@ package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 import com.odysseedesmaths.menus.MenuGameOver;
 import com.odysseedesmaths.menus.MenuPause;
+import com.odysseedesmaths.menus.MenuGagner;
 import com.odysseedesmaths.minigames.MiniGame;
 import com.odysseedesmaths.minigames.MiniGameUI;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
@@ -46,10 +48,12 @@ public class ForetScreen implements Screen {
     private Viewport viewport;
     private OrthographicCamera camera;
     private Batch batch;
+    private Skin skin;
 
     private MiniGameUI ui;
     private MenuPause menuPause;
     private MenuGameOver menuGameOver;
+    private MenuGagner menuGagner;
 
     private Sprite heroSprite;
     private Map<Entity, Sprite> entitiesSprites;
@@ -62,6 +66,8 @@ public class ForetScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         batch = new SpriteBatch();
+        skin = new Skin();
+        skin.addRegions(Assets.getManager().get(Assets.ARRIVEE, TextureAtlas.class));
 
         // Sprites
         heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));
@@ -70,9 +76,9 @@ public class ForetScreen implements Screen {
         entitiesSprites = new HashMap<>();
 
         buffsSprites = new HashMap<>();
-        buffsSprites.put(Shield.class, new Sprite(Assets.getManager().get(Assets.ARR_BUFF_SHIELD, Texture.class)));
+        buffsSprites.put(Shield.class, skin.getSprite("shield"));
 
-        hordeSprite = new Sprite(Assets.getManager().get(Assets.ARR_HORDE, Texture.class));
+        hordeSprite = skin.getSprite("horde");
 
         ui = new MiniGameUI();
         ui.addHeroHp(minigame.hero);
@@ -89,20 +95,23 @@ public class ForetScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Actor source = event.getTarget();
-                boolean isTurnPassed = true;
+                boolean isTurnPassed = false;
 
                 if (source == ui.getPadUp()) {
                     minigame.hero.moveUp();
+                    isTurnPassed = true;
                 } else if (source == ui.getPadRight()) {
                     minigame.hero.moveRight();
+                    isTurnPassed = true;
                 } else if (source == ui.getPadDown()) {
                     minigame.hero.moveDown();
+                    isTurnPassed = true;
                 } else if (source == ui.getPadLeft()) {
                     minigame.hero.moveLeft();
+                    isTurnPassed = true;
                 } else if (source == ui.getPause()) {
                     minigame.pauseGame();
                     Gdx.input.setInputProcessor(menuPause);
-                    isTurnPassed = false;
                 }
 
                 if (isTurnPassed) minigame.playTurn();
@@ -145,6 +154,25 @@ public class ForetScreen implements Screen {
                 if (source == menuGameOver.getRetry().getLabel()) {
                     minigame.restartGame();
                 } else if (source == menuGameOver.getReturnMainMenu().getLabel()) {
+                    minigame.returnToMainMenu();
+                }
+            }
+        });
+
+        menuGagner = new MenuGagner();
+        menuGagner.setListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Actor source = event.getTarget();
+
+                if (source == menuGagner.getContinuer().getLabel()) {
+                    minigame.afterWin();
+                } else if (source == menuGagner.getReturnMainMenu().getLabel()) {
                     minigame.returnToMainMenu();
                 }
             }
@@ -253,16 +281,16 @@ public class ForetScreen implements Screen {
 
         switch (minigame.getState()) {
             case RUNNING:
-                tint(Color.WHITE);
                 if (minigame.timer.isFinished()) minigame.gameOver();
                 break;
             case PAUSED:
-                tint(Color.GRAY);
                 menuPause.draw();
                 break;
             case GAME_OVER:
-                tint(Color.GRAY);
                 menuGameOver.render();
+                break;
+            case WIN:
+                menuGagner.render();
                 break;
             default:
                 // Erreur état du jeu
@@ -295,6 +323,7 @@ public class ForetScreen implements Screen {
         ui.dispose();
         menuPause.dispose();
         menuGameOver.dispose();
+        menuGagner.dispose();
     }
 
     public void gameOver() {
@@ -302,17 +331,9 @@ public class ForetScreen implements Screen {
         menuGameOver.playMusic();
     }
 
-    private void tint(Color color) {
-        minigame.terrain.renderer.getBatch().setColor(color);
-        heroSprite.setColor(color);
-        hordeSprite.setColor(color);
-        for (Sprite sprite : entitiesSprites.values()) {
-            sprite.setColor(color);
-        }
-        for (Sprite sprite : buffsSprites.values()) {
-            sprite.setColor(color);
-        }
-        ui.tint(color);
+    public void win() {
+        Gdx.input.setInputProcessor(menuGagner);
+        menuGagner.playMusic();
     }
 
     private boolean updatePos(Sprite aSprite, Entity aEntity) {
@@ -336,22 +357,20 @@ public class ForetScreen implements Screen {
         return (newX == targetX) && (newY == targetY);
     }
 
-    // Temporaire
     private Sprite getNewSpriteFor(Entity aEntity) {
-        String asset;
+        Sprite sprite;
 
         if (aEntity instanceof Enemy) {
-            if (aEntity instanceof Sticky) asset = Assets.ARR_S_EGAL;
-            else if (aEntity instanceof Smart) asset = Assets.ARR_S_ADD;
-            else if (aEntity instanceof Greed) asset = Assets.ARR_S_MULT;
-            else if (aEntity instanceof SuperSmart) asset = Assets.ARR_S_DIV;
-            else asset = Assets.ARR_S_SOUST;
+            if (aEntity instanceof Sticky) sprite = new Sprite(skin.getSprite("sticky"));
+            else if (aEntity instanceof Smart) sprite = new Sprite(skin.getSprite("smart"));
+            else if (aEntity instanceof Greed) sprite = new Sprite(skin.getSprite("greed"));
+            else if (aEntity instanceof SuperSmart) sprite = new Sprite(skin.getSprite("super_smart"));
+            else sprite = new Sprite(skin.getSprite("lost"));
         } else {// c'est un item, pas d'appel de cette méthode sur le héros
-            if (aEntity instanceof Shield) asset = Assets.ARR_SHIELD;
-            else asset = Assets.HEART;
+            if (aEntity instanceof Shield) sprite = new Sprite(skin.getSprite("shield_item"));
+            else sprite = new Sprite(Assets.getManager().get(Assets.HEART, Texture.class));
         }
 
-        Sprite sprite = new Sprite(Assets.getManager().get(asset, Texture.class));
         sprite.setPosition(aEntity.getCase().i * CELL_SIZE, aEntity.getCase().j * CELL_SIZE);
 
         return sprite;

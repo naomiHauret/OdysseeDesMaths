@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE questionnaire SYSTEM "questionnaire.dtd">
 <questionnaire>
-    <background-image>menu principal</background-image>
+    <background-image name="menu principal"/>
     <question intitule="Ceci est l'intitule de la question, quelle est la réponse ?">
         <reponse valide="false">Réponse A</reponse>
         <reponse valide="false">Réponse B</reponse>
         <reponse valide="true">Réponse C</reponse>
         <reponse valide="false">Réponse D</reponse>
         <bonne-reponse>
-            <text>blblablabal...</text>
+            <text>gg, blblablabal...</text>
         </bonne-reponse>
         <mauvaise-reponse>
-            <text>En effet, blabb blba lbablbal  ala b bla llabl  lbalab lbblalb</text>
+            <text>Eh non, blabb blba lbablbal  ala b bla llabl  lbalab lbblalb</text>
         </mauvaise-reponse>
+        <text>Question suivante !!</text>
     </question>
     <question intitule="Ceci est l'intitule de la question n°2, quelle est la réponse ?">
         <reponse valide="true">Réponse A</reponse>
@@ -36,4 +37,15 @@
             <text>Etant donné patati patata blabb blba lbablbal  ala b bla llabl  lbalab lbblalb omgom gomg o ggo m ogmg...</text>
         </mauvaise-reponse>
     </question>
+    <results target="0.5">
+        <pass>
+            <text>Bien joué</text>
+        </pass>
+        <fail>
+            <text>Nuuuuuullllllllllll</text>
+            <endbutton name="restart">Recommencer</endbutton>
+        </fail>
+        <text>Du coup tu veux faire quoi ?</text>
+        <endbutton name="continue">Terminer</endbutton>
+    </results>
 </questionnaire>

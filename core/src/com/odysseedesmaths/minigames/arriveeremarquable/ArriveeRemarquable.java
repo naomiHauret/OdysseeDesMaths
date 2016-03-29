@@ -1,9 +1,13 @@
 package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.Timer;
+import com.odysseedesmaths.dialogs.EndButtonsListener;
+import com.odysseedesmaths.dialogs.SimpleDialog;
 import com.odysseedesmaths.minigames.MiniGame;
+import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
@@ -33,7 +37,7 @@ public class ArriveeRemarquable extends MiniGame {
 	public Map<Class<? extends Item>, Integer> activeItems;
     public Timer timer;
 
-    public ArriveeRemarquable(OdysseeDesMaths game) {
+    public ArriveeRemarquable(final OdysseeDesMaths game) {
         super(game);
         init();
         setScreen(new ForetScreen(this));
@@ -59,7 +63,8 @@ public class ArriveeRemarquable extends MiniGame {
         trySpawnItem();
         trySpawnEnemy();
         updateActiveItems();
-	}
+        if (hero.getCase().equals(terrain.getFin())) win();
+    }
 
     public void pauseGame() {
         setState(State.PAUSED);
@@ -79,6 +84,27 @@ public class ArriveeRemarquable extends MiniGame {
         setState(State.GAME_OVER);
         timer.stop();
         ((ForetScreen)currentScreen).gameOver();
+    }
+
+    public void win() {
+        setState(State.WIN);
+        game.getSavesManager().getCurrentSave().setLevel1Finished(true);
+        timer.stop();
+        ((ForetScreen)currentScreen).win();
+    }
+
+    public void afterWin() {
+        final OdysseeDesMaths gameReference = game;
+        setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2, new EndButtonsListener() {
+            @Override
+            public void buttonPressed(String buttonName) {
+                switch (buttonName) {
+                    case "continue":
+                        gameReference.setScreen(new Accrobranche(gameReference));
+                        break;
+                }
+            }
+        }));
     }
 
     public void destroy(Item aItem) {

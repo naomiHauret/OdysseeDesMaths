@@ -2,27 +2,37 @@ package com.odysseedesmaths;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.odysseedesmaths.menus.MenuPrincipal;
+import com.odysseedesmaths.menus.GameChoiceMenu;
 import com.odysseedesmaths.menus.NewSave;
-import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
-import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+
 /*
         Classe du jeu principal
  */
 
 public class OdysseeDesMaths extends Game {
+    private static Settings settings;
+
     public SpriteBatch batcher;
 
     private ModeSceneScreen modeScene = null;
     private SavesManager savesManager;
+
+    public static Settings getSettings() {
+        if (settings == null) {
+            settings = new Settings();
+        }
+        return settings;
+    }
 
     @Override
     public void create() {
         Assets.getManager().load(Assets.class);
         Assets.getManager().finishLoading();
 
+        Musique.setVolume(getSettings().isMusicMuted() ? 0 : 100);
+
         batcher = new SpriteBatch();
-        setScreen(new MenuPrincipal(this));
+        setScreen(new GameChoiceMenu(this));
     }
 
     public ModeSceneScreen getModeScene() {
@@ -50,7 +60,7 @@ public class OdysseeDesMaths extends Game {
         if (savesManager.getCurrentSave().isEmpty()) {
             setScreen(new NewSave(this));
         } else {
-            setScreen(new Accrobranche(this));
+            setScreen(getModeScene());
         }
     }
 }

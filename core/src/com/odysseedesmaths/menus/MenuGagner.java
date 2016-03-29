@@ -42,7 +42,6 @@ public class MenuGagner extends Stage {
 
         table = new Table();
         table.setFillParent(true);
-        table.setY(HEIGHT / 35);
         addActor(table);
 
         skin = new Skin();
@@ -60,17 +59,14 @@ public class MenuGagner extends Stage {
         buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("button", buttonStyle);
 
-        title = new Label("GAGNER", skin, "title");
+        title = new Label("GAGNE!", skin, "title");
         continuer = new TextButton("Continuer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 
+        table.setBackground(skin.getDrawable("dark_background"));
         table.add(title).padBottom(SPACE_BETWEEN_BUTTONS);
         table.row();
-<<<<<<< HEAD:core/src/com/odysseedesmaths/menus/MenuGagner.java
         table.add(continuer).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
-=======
-        //table.add(retry).size(256, 64).padBottom(SPACE_BETWEEN_BUTTONS);
->>>>>>> 3619d6d01c9afbc29228ed74b5f7121d3f67eb41:core/src/com/odysseedesmaths/menus/MenuWin.java
         table.row();
         table.add(returnMainMenu).size(256, 64);
     }
@@ -89,11 +85,7 @@ public class MenuGagner extends Stage {
     }
 
     public void playMusic(){
-<<<<<<< HEAD:core/src/com/odysseedesmaths/menus/MenuGagner.java
         Musique.setCurrent(Assets.GAGNER_MUSIC);        // trouver la musique !!!!
-=======
-       // Musique.setCurrent(Assets.WIN_MUSIC);
->>>>>>> 3619d6d01c9afbc29228ed74b5f7121d3f67eb41:core/src/com/odysseedesmaths/menus/MenuWin.java
         Musique.play();
     }
 
@@ -104,11 +96,7 @@ public class MenuGagner extends Stage {
     }
 
     public void setListener(InputListener listener) {
-<<<<<<< HEAD:core/src/com/odysseedesmaths/menus/MenuGagner.java
         continuer.addListener(listener);
-=======
-        //retry.addListener(listener);
->>>>>>> 3619d6d01c9afbc29228ed74b5f7121d3f67eb41:core/src/com/odysseedesmaths/menus/MenuWin.java
         returnMainMenu.addListener(listener);
     }
 
@@ -116,7 +104,7 @@ public class MenuGagner extends Stage {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.PRESS_START_2P);
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = HEIGHT / 9;
-        parameter.color = Color.RED;
+        parameter.color = Color.FOREST;
         parameter.borderWidth = 5;
         parameter.borderColor = Color.WHITE;
         GAGNER = generator.generateFont(parameter);

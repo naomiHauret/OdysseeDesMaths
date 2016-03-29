@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT dialogue ((personnage | background-image | middle-image | clear)*, personnage, endbutton+)>
+<!ELEMENT personnage (text | background-image | middle-image)*>
+<!ATTLIST personnage
+    name CDATA #REQUIRED
+    pos (0|1|2|3|4|5) #IMPLIED
+    noimage CDATA #IMPLIED
+    >
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT background-image EMPTY>
+<!ATTLIST background-image
+    name CDATA #REQUIRED
+    >
+<!ELEMENT middle-image EMPTY>
+<!ATTLIST middle-image
+    name DATA #REQUIRED
+    >
+<!ELEMENT clear EMPTY>
+<!ATTLIST clear
+    object (middle-image|char) #REQUIRED
+    pos (0|1|2|3|4|5) #IMPLIED
+    >
+<!ELEMENT endbutton (#PCDATA)>
+<!ATTLIST endbutton
+    name ID #REQUIRED
+    >

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="23" height="16" tilewidth="64" tileheight="64">
+ <properties>
+  <property name="end" value="22,9"/>
+  <property name="flotEntrant" value="9"/>
+  <property name="start" value="0,8"/>
+ </properties>
+ <tileset firstgid="1" name="set_pipe" tilewidth="64" tileheight="64">
+  <image source="set_pipe.png" trans="ff00ff" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="17" name="set_sprite" tilewidth="64" tileheight="64">
+  <image source="set_sprite.png" trans="ff00ff" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="capacites" value="empty"/>
+    <property name="coordonnees" value="empty"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="33" name="coffeePlumbingTexture_v1_1" tilewidth="64" tileheight="64">
+  <image source="../../textures/CoffeePlumbing/coffeePlumbingTexture_v1_1.png" trans="ff00ff" width="576" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="name" value="horizontal"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="name" value="vertical"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="name" value="extrémité_verticale"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="name" value="extrémité_verticale"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="name" value="extrémité_horizontale"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="name" value="extrémité_horizontale"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="name" value="4way"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="capacity" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="name" value="left_top"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="name" value="left_bottom"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="name" value="top_right"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="name" value="bottom_right"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="name" value="3way_bottom"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="name" value="3way_left"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="name" value="3way_right"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="name" value="3way_top"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="set" width="23" height="16">
+  <data encoding="base64" compression="zlib">
+   eJztk0sOgCAMRCt+8JMo4goT7n9N6YKkQZuWha5cvDAxMA5tcQDgPqZNNJV0Ct8jEYkOSj+j8LaMfsJUeo+MlrylHMhA7rsmpsTM1JN6SznKc5bxoTnyvzei88r1xxRZzoo+STXE1ZPvXjinqUn2xvtG0OfSzAm3p2ZmpDlBAunLQvQO9zfVK7x/3uMC7tsTqw==
+  </data>
+ </layer>
+ <layer name="back" width="23" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzTYGBg0BjFo3gUj+JRPOQwANJrOYE=
+  </data>
+ </layer>
+ <layer name="liaisons" width="23" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFxABlHGxqABUcbEKAVHcYALEqEKsRoZYUdxDrFpjd6khsYtxDyzAhBZAaJshgsLoLF4DFiyED8WlmFNAfAABG4AP1
+  </data>
+ </layer>
+ <layer name="tuyaux" width="23" height="16">
+  <properties>
+   <property name="bloque" value="8,4 11,9 16,9 19,6 19,12"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKA/0AViRRKxNpHmahFpB7J5ShT5BhMo4WBT22xigA4D9vDDFp7kuhVdHzZzdAiYgSt+iDGbVKCERFM7rmBmgPyrhU8hDn2UqiFXHyydwDA2gC0fkeLHUUB9AADveAjv
+  </data>
+ </layer>
+ <layer name="koffee" width="23" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBQBAAXAAAE=
+  </data>
+ </layer>
+ <layer name="vannes" width="23" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg+wAgHexSMAlxgNM0QD0bDZ/ABAFJ1APs=
+  </data>
+ </layer>
+ <layer name="koffeeMeters" width="23" height="16">
+  <properties>
+   <property name="capacites" value="9;6;4;5;4;2"/>
+   <property name="coordonnees" value="8,4;11,8;15,4;8,6;6,13;9,13"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYBheQBMHexQMDzCU4nQouRUZ4HP3UPXTcAUA/QIA9w==
+  </data>
+ </layer>
+</map>

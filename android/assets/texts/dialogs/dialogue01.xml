@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<<<<<<< HEAD
 
 
 <dialogue>
@@ -11,16 +12,33 @@
     </personnage>
     <personnage name="genie" pos="3">
         <text> Eh bah, t'en as mis du temps à me sortir de là ! </text>
+=======
+<dialogue>
+    <background-image name="paysage"/>
+    <personnage name="hero" pos="0">
+        <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... </text>
+        <text> Eh ! Il y a quelqu'un ?</text>
+        <text> Qu'est-ce qui se passe ici... Aïe !</text>
+        <text> Qu'est-ce que je fous avec cette m... </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Eh bah, t'en as mis du temps à me sortir de là, %h ! </text>
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
     </personnage>
     <personnage name="hero" pos="0">
         <text> Mais qui êtes-vous ?! Et qu'est-ce que je fais là ? Et on est où d'abord ? </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
+=======
+    <personnage name="pyles" pos="3">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
         <text> Hola, hola ! Doucement, une question à la fois. Je suis Pylès, le génie des mathématiques. Et ici, nous sommes à - </text>
     </personnage>
     <personnage name="hero" pos="0">
         <text> Qu'est-ce qui se passe ?! </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
         <text> Nom de Zeus ! Les légions d'expressions mathémaéfiques de Vektor ! </text>
     </personnage>
@@ -28,3 +46,19 @@
         <text> Ecrasez-le ! </text>
     </personnage>
 </dialogue>
+=======
+    <personnage name="pyles" pos="3">
+        <text> Nom de Zeus ! Les légions d'expressions mathémaléfiques de Viktor ! </text>
+    </personnage>
+    <personnage name="ennemis" noimage="">
+        <text> Ecrasez-le ! ! !</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Écoutes-moi bien ! Il faut absolument que ces expressions ne t'attrapent pas ! Cours à travers la forêt pour leur échapper. </text>
+        <text> Utilise les flèches pour te déplacer et surtout, ne laisse personne t'approcher ! </text>
+        <text> Si tu vois un objet par-terre, tu peux le prendre mais je ne garantis pas le résultat... </text>
+        <text> Aller je file, on se revoit de l'autre côté !</text>
+    </personnage>
+    <endbutton name="continue">Partir en courant dans la forêt</endbutton>
+</dialogue>
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01

@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<<<<<<< HEAD
 
 <dialogue>
     <personnage name="hero" pos="0">
         <text> Pfiou, j'ai eu chaud ! Heureusement que - Aïe aïe aïe ! </text>
     </personnage>
     <personnage name="genie" pos="3">
+=======
+<dialogue>
+    <background-image name="caverne"/>
+    <personnage name="hero" pos="0">
+        <text> Pfiou, j'ai eu chaud ! Heureusement que - Aïe aïe aïe ! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
         <text> Heureusement que t'as la tête dur toi ! </text>
     </personnage>
     <personnage name="hero" pos="0">
         <text> Bon, qu'est-ce qui se passe ici ?! C'était quoi ça, là-haut ?! Et où est-ce que j'ai encore atteri ?! </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
+=======
+    <personnage name="pyles" pos="3">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
         <text> Bah, dans une caverne du monde des Maths ! C'est pourtant évident ! </text>
     </personnage>
     <personnage name="hero" pos="0">
         <text> Le monde des Maths ? Alors ça doit être pour ça que je comprends rien, je suis nul en maths... </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
+=======
+    <personnage name="pyles" pos="3">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
         <text> Avançons. Je t'expliquerai en chemin. </text>
         <text> Autrefois, le monde des Maths était paisible. Les hommes et les expressions mathématiques vivaient en harmonie.</text>
         <text> Nul problème n'était insovable. Et puis... Vektor est arrivé. </text>
@@ -25,7 +42,11 @@
     <personnage name="hero" pos="0">
         <text> Vektor ? </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
+=======
+    <personnage name="pyles" pos="3">
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01
         <text> L'homme que tu as aperçu tout à l'heure. C'est le seigneur des Mathémaléfices. </text>
         <text> C'est à cause de lui que le monde des maths est si obscure et que ces expressions t'ont attaqué. </text>
         <text> Son plan est de faire tendre la difficulté des maths vers l'infini... </text>
@@ -33,6 +54,7 @@
     <personnage name="hero" pos="0">
         <text> Ben il doit vraiment s'ennuyer... </text>
     </personnage>
+<<<<<<< HEAD
     <personnage name="genie" pos="3">
         <text> C'est très grave ! Si personne ne l'arrête, il - </text>
     </personnage>
@@ -43,3 +65,16 @@
         <text> Les sbires de Vektor ! Il y a une rivière pas loin, vite, cours et saute dedans !</text>
     </personnage>
 </dialogue>
+=======
+    <personnage name="pyles" pos="3">
+        <text> C'est très grave ! Si personne ne l'arrête, il - </text>
+    </personnage>
+    <personnage name="ennemi" noimage="">
+        <text> C'est lui ! Attrapez-le ! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Les sbires de Vektor ! Il y a une rivière pas loin, vite, cours et saute dedans !</text>
+    </personnage>
+    <endbutton name="continue">Courir et rater son plongeon</endbutton>
+</dialogue>
+>>>>>>> 45fb5196725771ea23c7f546bea79d9ee5310b01

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -50,6 +51,7 @@ public class NewSave implements Screen {
     private Label saveNameLabel;
     private TextField saveNameField;
     private TextButton submit;
+    private ColorAction noNameSubmitAction;
     private AudioButtons audioButtons;
     private Button returnButton;
 
@@ -111,6 +113,10 @@ public class NewSave implements Screen {
         NewSaveListener listener = new NewSaveListener();
         submit.addListener(listener);
         returnButton.addListener(listener);
+
+        noNameSubmitAction = new ColorAction();
+        noNameSubmitAction.setEndColor(Color.WHITE);
+        noNameSubmitAction.setDuration(0.5f);
     }
 
     @Override
@@ -121,6 +127,7 @@ public class NewSave implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
@@ -162,7 +169,9 @@ public class NewSave implements Screen {
 
             if (source == submit.getLabel()) {
                 if (saveNameField.getText().equals("")) {
-                    // TODO
+                    saveNameField.setColor(Color.RED);
+                    noNameSubmitAction.reset();
+                    saveNameField.addAction(noNameSubmitAction);
                 } else {
                     game.getSavesManager().getCurrentSave().setName(saveNameField.getText());
                     game.startGame();

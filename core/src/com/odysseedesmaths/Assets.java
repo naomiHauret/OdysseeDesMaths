@@ -25,13 +25,16 @@ public class Assets {
 
     // Raccourcis pratiques
     private static final String
-            ICONS_PATH = "textures/common/char_icons/";
+            ICONS_PATH = "textures/common/char_icons/",
+            DLG_PATH = "texts/dialogs/",
+            QST_PATH = "texts/questionnaires/";
 
     @Asset(Texture.class)
     public static final String
+            HERO = "textures/common/heros.png",
+            HEART = "textures/common/heart.png",
+            HEART_EMPTY = "textures/common/heart_empty.png",
             VANNEBUTTON = "textures/CoffeePlumbing/vanneButton.png",
-            HERO = "heros.png",
-            HEART = "coeur.png",
             MAIN_MENU_BACKGROUND = "tower.png",
             // Icones des personnages
             ICON_HERO = ICONS_PATH+"hero.png",
@@ -47,26 +50,53 @@ public class Assets {
             ICON_TARTAGLIA = ICONS_PATH+"tartaglia.png",
             ICON_THALES = ICONS_PATH+"thales.png",
             ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
-            ICON_VIKTOR = ICONS_PATH+"viktor.png";
+            ICON_VIKTOR = ICONS_PATH+"viktor.png",
+            ARRIVEE_REMARAQUABLE_ARCADE_MACHINE = "textures/common/arcadeMachines/arriveRemarquableArcadeMachine.png",
+            ACCROBRANCHE_ARCADE_MACHINE = "textures/common/arcadeMachines/accrobrancheArcadeMachine.png",
+            COFFEE_PLUMBING_ARCADE_MACHINE = "textures/common/arcadeMachines/CoffeePlumbingArcadeMachine.png",
+            ARCADE_ROOM_BACKGROUND = "textures/common/arcadeMachines/background.png";
+
 
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
             UI_ORANGE = "ui/orange.atlas",
-            UI_SCROLL = "ui/scroll.atlas";
+            UI_SCROLL = "ui/scroll.atlas",
+	        KOFFEE = "textures/CoffeePlumbing/koffee.atlas";
 
 
     @Asset(Music.class)
     public static final String
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
-            GAME_OVER_MUSIC = "music/Game Over.ogg";
-            GAGNER_MUSCIC = "music/"; // A ajouter après avoir trouver la music
+            GAME_OVER_MUSIC = "music/Game Over.ogg",
+            GAGNER_MUSIC = "music/Victory.ogg";
 
 
     public static final FileHandle
             PRESS_START_2P = Gdx.files.internal("fonts/PressStart2P.ttf"),
             KENPIXEL_BLOCKS = Gdx.files.internal("fonts/kenpixel_blocks.ttf");
+
+    // Dialogues
+    public static final String
+            DLG_ARRIVEE_1 = DLG_PATH + "dialogue01.xml",
+            DLG_ARRIVEE_2 = DLG_PATH + "dialogue02.xml";
+
+    // Questionnaires
+    public static final String
+            QST_ARRIVEE = QST_PATH + "arrivee.xml";
+
+    // Scènes
+    @Asset(Texture.class)
+    public static final String
+        S00_CLASSE = "scenes/classe.png",
+        S00_TABLEAU = "scenes/tableau.png",
+        S00_TABLEAU_PROF = "scenes/tableauProf.png",
+        S00_ELEVE = "scenes/eleveDormir.png",
+        S01_PAYSAGE = "scenes/paysage.png",
+        S01_FUITE = "scenes/fuite.png",
+        S02_CHUTE = "scenes/trou2.png",
+        S02_CAVERNE = "scenes/caverne.png";
 
 
     /**********************
@@ -74,16 +104,9 @@ public class Assets {
      **********************/
 
     // Arrivée remarquable
-    @Asset(Texture.class)
+    @Asset(TextureAtlas.class)
     public static final String
-            ARR_HORDE = "horde.png",
-            ARR_S_EGAL = "signeEgal.png",
-            ARR_S_ADD = "signeAdd.png",
-            ARR_S_SOUST = "signeSoust.png",
-            ARR_S_MULT = "signeMult.png",
-            ARR_S_DIV = "signeDiv.png",
-            ARR_BUFF_SHIELD = "bouclier.png",
-            ARR_SHIELD = "itemBouclier.png";
+            ARRIVEE = "arrivee_remarquable/arrivee.atlas";
 
     // Plongée au coeur du problème
     // Accrobranche

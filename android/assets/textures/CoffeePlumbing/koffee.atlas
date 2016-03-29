@@ -1,0 +1,83 @@
+
+koffee.png
+size: 384,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+horizontal
+    rotate: false
+    xy: 0, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+vertical
+    rotate: false
+    xy: 64, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+left_top
+    rotate: false
+    xy: 128, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+left_bottom
+    rotate: false
+    xy: 192, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+top_right
+    rotate: false
+    xy: 256, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+bottom_right
+    rotate: false
+    xy: 320, 0
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+3way_left
+    rotate: false
+    xy: 0, 64
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+3way_right
+    rotate: false
+    xy: 64, 64
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+3way_bottom
+    rotate: false
+    xy: 128, 64
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+3way_top
+    rotate: false
+    xy: 192, 64
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
+4way
+    rotate: false
+    xy: 256, 64
+    size: 64, 64
+    orig: 0, 0
+    offset: 0, 0
+    index: -1
