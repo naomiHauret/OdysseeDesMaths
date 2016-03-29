@@ -53,7 +53,7 @@ public class Tuyau {
             fluxEntrant--;
             if(fluxCourant==1){
                 for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                    CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+                    OrthogonalTiledMapRendererWithKoffee.addSomeKoffee(dropOfKoffee);
                 }
             }
         }
@@ -72,7 +72,7 @@ public class Tuyau {
             fluxEntrant++;
             if(fluxCourant==0){
                 for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                    CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+                    OrthogonalTiledMapRendererWithKoffee.removeSomeKoffee(dropOfKoffee);
                 }
             }
         }
@@ -231,11 +231,11 @@ public class Tuyau {
       this.indicateurs.set_currentFlow(new_fluxCourant);
         if(fluxCourant>0){
             for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+                OrthogonalTiledMapRendererWithKoffee.addSomeKoffee(dropOfKoffee);
             }
         }else{
             for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+                OrthogonalTiledMapRendererWithKoffee.removeSomeKoffee(dropOfKoffee);
             }
         }
     }

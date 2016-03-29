@@ -23,6 +23,7 @@ import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.ArriveeRemarquable;
+import com.odysseedesmaths.minigames.coffeePlumbing.CoffeePlumbing;
 
 
 //FIXME: doesn't take the good dimensions
@@ -43,13 +44,13 @@ public class GameChoiceMenu implements Screen {
 
     private Table tableau;
     private Button arrivee_remarquable_button, accrobranche_button, coffee_button;
-    //private Viewport viewport;
+    private Viewport viewport;
 
     public GameChoiceMenu(OdysseeDesMaths jeu){
         this.jeu = jeu;
 
-        //this.viewport = new StretchViewport(WIDTH, HEIGHT);
-        this.stage = new Stage();
+        this.viewport = new StretchViewport(WIDTH, HEIGHT);
+        this.stage = new Stage(viewport);
 
         this.ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
         this.font = new BitmapFont();
@@ -63,7 +64,7 @@ public class GameChoiceMenu implements Screen {
 
 
     public void createGUI(){
-        this.ftfp.size = HEIGHT / 5;
+        this.ftfp.size = (HEIGHT / 10);
         this.ftfp.color = new Color(0,123f,253f,1f);
         this.ftfg = new FreeTypeFontGenerator(Assets.KENPIXEL_BLOCKS);
         this.font = ftfg.generateFont(ftfp);
@@ -85,11 +86,11 @@ public class GameChoiceMenu implements Screen {
         this.tableau.setBackground(skin.getDrawable("background"));
 
 
-        this.tableau.add(chooseGame).colspan(3);
-        this.tableau.row().space(WIDTH / 10);
-        this.tableau.add(arrivee_remarquable_button);
-        this.tableau.add(accrobranche_button);
-        this.tableau.add(coffee_button);
+        this.tableau.add(chooseGame).colspan(3).width(WIDTH).height(HEIGHT/4).padTop(3*HEIGHT/40);
+        this.tableau.row();
+        this.tableau.add(arrivee_remarquable_button).width(WIDTH/4).height(3*(HEIGHT/4));
+        this.tableau.add(accrobranche_button).width(WIDTH/4).height(3 * (HEIGHT / 4));
+        this.tableau.add(coffee_button).width(WIDTH/4).height(3*(HEIGHT/4));
 
         this.stage.addActor(this.tableau);
     }
@@ -97,7 +98,7 @@ public class GameChoiceMenu implements Screen {
     public Button setArcadeButton(Drawable d){
         Button.ButtonStyle bts = new Button.ButtonStyle(d,d,d);
         Button arcadeButton = new Button(bts);
-        arcadeButton.setSize(WIDTH/4, (HEIGHT/4));
+        arcadeButton.setSize(WIDTH/4, 3*(HEIGHT/4));
         return arcadeButton;
     }
 
@@ -137,7 +138,7 @@ public class GameChoiceMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //viewport.update(width,height);
+        viewport.update(width,height);
     }
 
     @Override
@@ -172,7 +173,7 @@ public class GameChoiceMenu implements Screen {
                 jeu.setScreen(new Accrobranche(jeu));
 
             } else if (source.equals(coffee_button)) {
-                //jeu.setScreen(new CoffeePlumbing(jeu));
+                jeu.setScreen(new CoffeePlumbing(jeu));
 
             } else if (source.equals(chooseGame.getLabel())) {
                 jeu.setScreen(new MenuPrincipal(jeu));
