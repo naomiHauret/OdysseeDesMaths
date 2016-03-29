@@ -8,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.odysseedesmaths.Assets;
+
 /*
-        Classe type de l'affichage du menu pause durant une scène
+        Classe type de l'affichage du menu pause durant une scÃ¨ne
  */
 
 public class MenuPauseScene extends Menu {

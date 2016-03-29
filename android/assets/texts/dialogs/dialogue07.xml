@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="Information">
-    <personnage name="hero">
+<dialogue>
+    <personnage name="hero" pos="0">
         <text> Voilà, c'est réparé ! Maintenant, expliquez-moi comment affaiblir Vektor. </text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Affaiblir Viktor ? Ta question est bizarre mais on va quand même te répondre. </text>
     </personnage>
-    <personnage name="audib">
+    <personnage name="audib" pos="3">
         <text> Le pouvoir de Vektor repose sur le portail sur lequel est construit sa tour. </text>
         <text> Elle draine l'énergie du portail, et Vektor se sert de ça pour lancer ses mathémaléfices et rendre les maths encore plus compliquées. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Donc je dois détruire sa tour pour l'affaiblir ? </text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Ah ! Comme si c'était simple ! </text>
         <text> La Tour de Vektor a été construite à l'aide d'anciens outils mathémagiques qu'ont utilisé les dieux pour bâtir notre monde. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Des outils mathémagiques ? </text>
     </personnage>
-    <personnage name="audib">
+    <personnage name="audib" pos="3">
         <text> Oui. Quiconque possède ces artefacts peut construire et détruire à loisir. </text>
         <text> Malheureusement après les avoir utilisés pour ses noirs desseins, Vektor a caché ces artefacts dans 3 sanctuaires gardés par ses sbires. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Et où sont ces santuaires ? </text>
     </personnage>
-    <personnage name="audib">
+    <personnage name="audib" pos="3">
         <text> Personne ne le sait vraiment. Les gens parlent d'une forêt, d'un lac et des nuages... </text>
         <text> Tu les trouveras sans doutes aux alentours du village. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> D'accord. Merci ! </text>
     </personnage>
-    <personnage name="audib">
+    <personnage name="audib" pos="3">
         <text> N'hésites pas à revenir nous voir si tu as des questions. </text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Mais ramènes du café ! </text>
     </personnage>
 </dialogue>

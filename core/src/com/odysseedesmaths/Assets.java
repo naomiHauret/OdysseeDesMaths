@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import net.dermetfan.gdx.assets.AnnotationAssetManager;
 import net.dermetfan.gdx.assets.AnnotationAssetManager.Asset;
 
+/*
+    Classe récupérant tous les assets nécessaires durant le jeu
+*/
+
 public class Assets {
 
     private Assets() {}

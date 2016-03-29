@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="clePortail">
-    <personnage name="hero">
+<dialogue>
+    <personnage name="hero" pos="0">
         <text> Bon. Il est l'heure pour moi de partir... Merci Pylès. Merci pour tout. </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Oh tu sais... moi j'ai juste fait ça pour qu'ils recommencent à produire des Pringles. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Adieu Pylès ! </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Au revoir ! </text>
     </personnage>
 </dialogue>

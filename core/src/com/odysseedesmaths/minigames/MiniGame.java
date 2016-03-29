@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.menus.MenuPrincipal;
 /*
-    Classe générale des mini-jeux
+    Classe gÃ©nÃ©rale des mini-jeux
  */
 
 public abstract class   MiniGame implements Screen {

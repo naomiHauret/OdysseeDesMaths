@@ -144,6 +144,11 @@ public class MiniGameUI extends Stage implements Observer {
         addPause();
     }
 
+    /*
+      mise en action des boutons
+
+      @return bouton concerné par l'action
+    */
     public Button getPause() {
         return pause;
     }

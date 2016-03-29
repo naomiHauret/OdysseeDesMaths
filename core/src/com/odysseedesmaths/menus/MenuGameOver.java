@@ -18,6 +18,10 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 
+/*
+    Classe d'affichage à la fin lorsque le joueur gagne à un mini-jeu
+*/
+
 public class MenuGameOver extends Stage {
 
     private static final int WIDTH = 800;

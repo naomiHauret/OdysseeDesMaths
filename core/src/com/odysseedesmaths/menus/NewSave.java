@@ -28,6 +28,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 
+/*
+  classe de mise en place d'une nouvelle sauvegarde
+*/
+
 public class NewSave implements Screen {
 
     private static final int WIDTH = 800;

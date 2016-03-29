@@ -11,6 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 
+/*
+    Classe principale des boutons audio
+*/
+
 public class AudioButtons extends Table {
 
     private Skin skin;

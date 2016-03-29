@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="Accrobranche">
-    <personnage name="genie">
+<dialogue>
+    <personnage name="genie" pos="3">
         <text> Bravo, tu as réussis à les semer ! Heureusement que tu sais nager ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Tu parles ! J'ai cru que j'allais me noyer... Bon, comment on sort d'ici ? </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Commences déjà par avancer, ça serait pas mal. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> On dirait les racines d'un arbre... </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Pas des racines ! Des racines carrés ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> On est vraiment au pays des Maths ici... Je me demande si je peux atteindre la surface en les escaladant ? </text>
     </personnage>
 </dialogue>

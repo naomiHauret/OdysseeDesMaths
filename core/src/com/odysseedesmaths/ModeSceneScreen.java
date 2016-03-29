@@ -172,6 +172,9 @@ public class ModeSceneScreen implements Screen {
         setState(State.PAUSED);
     }
 
+    /*
+      permet le changement de scène durant l'avancement du jeu
+    */
     public void switchScene(Scene s) {
         sceneActive = s;
     }

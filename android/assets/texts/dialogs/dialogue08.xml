@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="bateau">
-    <personnage name="vektor">
+<dialogue>
+    <personnage name="vektor" pos="3">
         <text> Quiconque ose me défier sera défait ! </text>
     </personnage>
 </dialogue>

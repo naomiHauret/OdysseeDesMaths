@@ -14,6 +14,9 @@ public class SoundEffect {
         this.sE = Gdx.audio.newSound(Gdx.files.internal(path));
     }
 
+    /*
+      joue le son
+    */
     public void play(){
         this.idSE = this.sE.play();
     }
@@ -22,6 +25,9 @@ public class SoundEffect {
         this.sE.dispose();
     }
 
+    /*
+      permet de contrôler le volume
+    */
     public void setVolume(int volumePercent){
         if(volumePercent>100 || volumePercent<0){
             System.out.println("Valeur invalide");

@@ -21,16 +21,27 @@ public class Save {
         load();
     }
 
+    /*
+      récupère la sauvegarde avec le nom du joueur
+
+      @return le nom de la sauvegarde (nom du joueur)
+    */
     public String getName() {
         return name;
     }
 
+    /*
+      mise en place du nom de la sauvegarde avec le nom du joueur
+    */
     public void setName(String name) {
         this.name = name;
         save.putString("name", name);
         save.flush();
     }
 
+    /*
+      mise en place de sauvegardes automatiques
+    */
     public void setLevel1Finished(boolean level1Finished) {
         this.level1Finished = level1Finished;
         save.putBoolean("level1Finished", level1Finished);
@@ -85,6 +96,9 @@ public class Save {
         save.flush();
     }
 
+    /*
+      lance la sauvegarde sélectionnée selon l'avancement enregistré
+    */
     private void load() {
         name = save.getString("name");
         level1Finished = save.getBoolean("level1Finished");

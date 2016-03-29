@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="Coffee">
-    <personnage name="hero">
+<dialogue>
+    <personnage name="hero" pos="0">
         <text> C'est vous les sages du village ? J'ai des questions à vous poser !</text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Hein quoi ? tu vois pas qu'on a mieux que ça à faire ? La machine à café est cassée ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Mais je - </text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Qu'est-ce qu'on va faire sans notre café Audib ? </text>
     </personnage>
-    <personnage name="audib">
+    <personnage name="audib" pos="3">
         <text> J'en ai aucune idée Gwendouille ! Sans café au bout de 24 heures, j'ai des tremblements, des sueurs froides... </text>
         <text> Eh ! Et si il réparait notre machine ! </text>
     </personnage>
-    <personnage name="gwendouille">
+    <personnage name="gwendouille" pos="2">
         <text> Bonne idée Audib ! Allez toi, répare notre machine ! En échange, on  répondra à tes questions. </text>
         <text> Allez et que ça saute, je veux un arabica bien noir ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Hm... On dirait bien qu'il y a un problème dans la tuyauterie de leur machine... </text>
     </personnage>
 </dialogue>

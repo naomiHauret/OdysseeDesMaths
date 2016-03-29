@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 /*
-        Classe générale des menus
+        Classe gÃ©nÃ©rale des menus
  */
 
 public class Menu extends Stage {

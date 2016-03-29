@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
 
-<dialogue name="Arrivee">
-    <personnage name="hero">
+<dialogue>
+    <background-image>menu principal</background-image>
+    <personnage name="hero" pos="0">
         <text> Mais... Où suis-je ? J'étais en cours il n'y a même pas 5 minutes... Eh ! Il y a quelqu'un ? </text>
-        <text> Qu'est-ce qui se passe ici... Aïe !</text>
+        <text> Qu'est-ce qui se passe ici... Aïe ! </text>
         <text> Qu'est-ce que je fous avec cette m... </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Eh bah, t'en as mis du temps à me sortir de là ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Mais qui êtes-vous ?! Et qu'est-ce que je fais là ? Et on est où d'abord ? </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Hola, hola ! Doucement, une question à la fois. Je suis Pylès, le génie des mathématiques. Et ici, nous sommes à - </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Qu'est-ce qui se passe ?! </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Nom de Zeus ! Les légions d'expressions mathémaéfiques de Vektor ! </text>
     </personnage>
-    <personnage name="ennemi">
+    <personnage name="ennemis" noimage="">
         <text> Ecrasez-le ! </text>
     </personnage>
 </dialogue>

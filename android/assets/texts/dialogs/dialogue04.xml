@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="HorsVillage">
-    <personnage name="genie">
+<dialogue>
+    <personnage name="genie" pos="3">
         <text> Regarde ! Voici le monde des maths. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Mais comment vais-je faire pour sortir d'ici ? </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Tu vois la tour là-bas ? C'est l'antre de Vektor. On raconte qu'un protail vers un autre monde serait caché sous sa tour. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Alors j'ai juste à trouver ce portail pour m'échapper non ? </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Ha ha, ça serait beaucoup trop simple ! A cause de Vektor, tous les problèmes sont de plus en plus compliqués. </text>
         <text> Ca te concerne aussi ! Si tu arrivais à affaiblir les pouvoirs de Vektor, tu réussirais peut-être à sortir d'ici. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Et comment est-ce que je peux l'affaiblir ? </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="3">
         <text> Qu'est-ce que j'en sais moi ? Commence par aller au village, tu trouveras sûrement quelqu'un pour t'aider. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Mais ... </text>
         <text> Le village hein ... </text>
     </personnage>
