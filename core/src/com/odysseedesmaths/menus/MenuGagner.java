@@ -18,6 +18,10 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
 
+/*
+    Classe d'affichage à la fin lorsque le joueur gagne à un mini-jeu
+*/
+
 public class MenuGagner extends Stage {
 
     private static final int WIDTH = 800;
@@ -55,7 +59,7 @@ public class MenuGagner extends Stage {
         buttonStyle.down = skin.getDrawable("button_pressed");
         skin.add("button", buttonStyle);
 
-        title = new Label("GAGNÉ !", skin, "title");
+        title = new Label("GAGNE!", skin, "title");
         continuer = new TextButton("Continuer", skin, "button");
         returnMainMenu = new TextButton("Quitter", skin, "button");
 

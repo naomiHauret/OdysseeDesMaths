@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<dialogue>
+    <background-image name="caverne"/>
+    <personnage name="hero" pos="0">
+        <text> Un "monde des maths" tu disais ?</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+    <text> Oui, autrefois le monde des Maths était paisible. Les hommes et les expressions mathématiques vivaient en harmonie.</text>
+    <text> Nul problème n'était insolvable. Et puis... Vektor est arrivé. </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+    <text> Vektor ? C'était pas Viktor ?</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+    <text> Oh commence pas, je sais déjà même pas pourquoi je suis là à te parler ...</text>
+    <text> L'homme que tu as aperçu tout à l'heure. C'est le seigneur des Mathémaléfices. </text>
+    <text> C'est à cause de lui que le monde des maths est si obscure et que ces expressions t'ont attaqué. </text>
+    <text> Son plan est de faire tendre la difficulté des maths vers l'infini... </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+    <text> Ben il doit vraiment s'ennuyer... </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+    <text> C'est très grave ! Si personne ne l'arrête, il - </text>
+    </personnage>
+    <personnage name="ennemi" noimage="">
+    <text> C'est lui ! Attrapez-le ! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+    <text> Les sbires de Vektor ! Il y a une rivière pas loin, vite, cours et saute dedans !</text>
+    </personnage>
+    <endbutton name="continue">Courir et rater son plongeon</endbutton>
+</dialogue>

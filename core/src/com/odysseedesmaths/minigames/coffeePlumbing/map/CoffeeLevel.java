@@ -1,37 +1,28 @@
 package com.odysseedesmaths.minigames.coffeePlumbing.map;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.KoffeeMeter;
 import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.Vanne;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
-/**
- * Created by trilunaire on 20/02/16.
- */
-/*TODO: - Faire une fonction permettant de prendre tous les tuyaux (voir les layers de la carte, et les propriétés des objets) - Faire une fonction permettant de trouver les vannes
-* TODO: touver un moyen de rentrer toutes les positions dans les tuyau
-* TODO: Faire une classe pour la canalisation (parce qu'un fichier de 700 lignes c'est sympa, mais voilà quoi!)
-*/
 public class CoffeeLevel {
     private TiledMap map;
-    private TiledMapRenderer mapRenderer;
     /**
      * Représente la largeur en pixel de la map
      */
-    private int mapWidthPixel;
+    private static int mapWidthPixel;
     /**
      * Représente la hauteur en pixel de la map
      */
-    private int mapHeightPixel;
+    private static int mapHeightPixel;
     private int mapWidthTiled;
     private int mapHeightTiled;
     private int tileWidth;
@@ -39,21 +30,18 @@ public class CoffeeLevel {
     private Canalisation canalisation;
     private static HashSet<Vanne> vannes;
     private static HashSet<KoffeeMeter> indicateurs;
-    private Stage stage;
     private Table valveButtons;
+    private Label comptAR;
 
     public CoffeeLevel(String mapPath) {
         this.map = new TmxMapLoader().load(mapPath);
-        this.mapRenderer = new OrthogonalTiledMapRenderer(map);
-
-        this.stage = new Stage();
 
         //configuration des variables de tailles
         this.tileWidth = ((Integer) this.map.getProperties().get("tilewidth"));
         this.tileHeight = ((Integer) this.map.getProperties().get("tileheight"));
 
-        this.mapWidthTiled = (Integer) this.map.getProperties().get("width");
-        this.mapHeightTiled = (Integer) this.map.getProperties().get("height");
+        mapWidthTiled = (Integer) this.map.getProperties().get("width");
+        mapHeightTiled = (Integer) this.map.getProperties().get("height");
 
         this.mapWidthPixel = mapWidthTiled * tileWidth;
         this.mapHeightPixel = mapHeightTiled * tileHeight;
@@ -66,67 +54,57 @@ public class CoffeeLevel {
 
     public void buildLevel(){
         canalisation.createCanalisation();
-        Iterator<Vanne> itVanne = vannes.iterator();
-
-        while(itVanne.hasNext()){
-            stage.addActor(itVanne.next().get_table());
-            System.out.println("Vannes ajoutées"); //debug
-        }
-
-        Iterator<KoffeeMeter> itKFM = indicateurs.iterator();
-
-        while(itKFM.hasNext()){
-            stage.addActor(itKFM.next().get_table());
-            System.out.println("Koffee Meter ajouté"); //debug
-        }
     }
+
+    /*
+    public void compteARebours(){
+        if(this.comptAR==null){
+            FreeTypeFontGenerator ftfg = new FreeTypeFontGenerator(Assets.KENPIXEL_BLOCKS);
+            FreeTypeFontGenerator.FreeTypeFontParameter ftfp = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            ftfp.size = 24; //the size can be changed later
+            ftfp.color = new Color(0.42f,0.64f,0.62f,1);
+            BitmapFont font = ftfg.generateFont(ftfp);
+
+            Label.LabelStyle style = new Label.LabelStyle();
+            style.font=font;
+
+            this.comptAR = new Label("3",font);
+            //TODO: find the way to middle align the number in the middle of the screen
+        }else{
+            //TODO: do nothing or decrease the countDown
+        }
+    }*/
 
     /**
      * Getter of mapHeightPixel
      * @return the value of mapHeightPixel
      */
-    public int get_mapHeightPixel() {
-        return this.mapHeightPixel;
+    public static int get_mapHeightPixel() {
+        return mapHeightPixel;
     }
 
     /**
      * Setter of mapHeightPixel
      * @param new_mapHeightPixel: new value of mapHeightPixel
      */
-    public void set_mapHeightPixel(int new_mapHeightPixel) {
-        this.mapHeightPixel = new_mapHeightPixel;
+    public static void set_mapHeightPixel(int new_mapHeightPixel) {
+        mapHeightPixel = new_mapHeightPixel;
     }
 
     /**
      * Getter of mapWidthPixel
      * @return the value of mapWidthPixel
      */
-    public int get_mapWidthPixel() {
-        return this.mapWidthPixel;
+    public static int get_mapWidthPixel() {
+        return mapWidthPixel;
     }
 
     /**
      * Setter of mapWidthPixel
      * @param new_mapWidthPixel: new value of mapWidthPixel
      */
-    public void set_mapWidthPixel(int new_mapWidthPixel) {
-        this.mapWidthPixel = new_mapWidthPixel;
-    }
-
-    /**
-     * Getter of mapRenderer
-     * @return the value of mapRenderer
-     */
-    public TiledMapRenderer get_mapRenderer() {
-        return this.mapRenderer;
-    }
-
-    /**
-     * Setter of mapRenderer
-     * @param new_mapRenderer: new value of mapRenderer
-     */
-    public void set_mapRenderer(TiledMapRenderer new_mapRenderer) {
-        this.mapRenderer = new_mapRenderer;
+    public static void set_mapWidthPixel(int new_mapWidthPixel) {
+        mapWidthPixel = new_mapWidthPixel;
     }
 
     /**
@@ -202,28 +180,16 @@ public class CoffeeLevel {
         map.dispose();
     }
 
+    public HashSet<Vanne> get_vannes(){
+        return vannes;
+    }
+
     public static void addVanne(Vanne new_Vanne){
         vannes.add(new_Vanne);
     }
 
     public static void delVanne(Vanne old_vanne){
         vannes.remove(old_vanne);
-    }
-
-    /**
-    * Getter of stage
-    * @return the value of stage
-    */
-    public Stage get_stage(){
-      return this.stage;
-    }
-
-    /**
-    * Setter of stage
-    * @param new_stage: the new value of stage
-    */
-    public void set_stage(Stage new_stage){
-      this.stage = new_stage;
     }
 
     /**

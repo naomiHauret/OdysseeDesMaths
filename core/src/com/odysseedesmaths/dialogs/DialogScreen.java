@@ -128,7 +128,7 @@ public abstract class DialogScreen implements Screen {
         buttonStyle.up = skin.getDrawable("button");
         buttonStyle.down = skin.getDrawable("button_pressed");
         buttonStyle.font = FONT_12;
-        buttonStyle.fontColor = Color.BLACK;
+        buttonStyle.fontColor = Color.WHITE;
 
         buildGUI();
 
@@ -255,6 +255,8 @@ public abstract class DialogScreen implements Screen {
             case "arr_g5": asset = Assets.ARR_DLGIMG_G5; break;
             case "arr_g6": asset = Assets.ARR_DLGIMG_G6; break;
             case "arr_g7": asset = Assets.ARR_DLGIMG_G7; break;
+            case "paysage": asset = Assets.S01_PAYSAGE; break;
+            case "caverne": asset = Assets.S02_CAVERNE; break;
         }
         return asset;
     }

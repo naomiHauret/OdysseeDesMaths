@@ -10,6 +10,7 @@ public class Save {
     private Preferences save;
 
     private String name;
+    private boolean prologueFinished;   // Classe
     private boolean level1Finished;     // Arrivée remarquable
     private boolean level2Finished;     // Accrobranche
     private boolean level3Finished;     // CoffeePlumbing
@@ -20,8 +21,25 @@ public class Save {
         load();
     }
 
+    /*
+      récupère la sauvegarde avec le nom du joueur
+
+      @return le nom de la sauvegarde (nom du joueur)
+    */
     public String getName() {
         return name;
+    }
+
+    /*
+      mise en place du nom de la sauvegarde avec le nom du joueur
+    */
+    public void setName(String name) {
+        this.name = name;
+        save.putString("name", name);
+        save.flush();
+    }
+    public boolean isPrologueFinished() {
+        return prologueFinished;
     }
 
     public boolean isLevel1Finished() {
@@ -36,9 +54,13 @@ public class Save {
         return level3Finished;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        save.putString("name", name);
+
+    /*
+      mise en place de sauvegardes automatiques
+    */
+    public void setPrologueFinished(boolean finished) {
+        this.prologueFinished = finished;
+        save.putBoolean("prologueFinished", finished);
         save.flush();
     }
 
@@ -82,14 +104,19 @@ public class Save {
 
     private void init() {
         save.putString("name", "");
+        save.putBoolean("prologueFinished", false);
         save.putBoolean("level1Finished", false);
         save.putBoolean("level2Finished", false);
         save.putBoolean("level3Finished", false);
         save.flush();
     }
 
+    /*
+      lance la sauvegarde sélectionnée selon l'avancement enregistré
+    */
     private void load() {
         name = save.getString("name");
+        prologueFinished = save.getBoolean("prologueFinished");
         level1Finished = save.getBoolean("level1Finished");
         level2Finished = save.getBoolean("level2Finished");
         level3Finished = save.getBoolean("level3Finished");

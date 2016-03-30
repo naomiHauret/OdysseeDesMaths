@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import net.dermetfan.gdx.assets.AnnotationAssetManager;
 import net.dermetfan.gdx.assets.AnnotationAssetManager.Asset;
 
+/*
+    Classe récupérant tous les assets nécessaires durant le jeu
+*/
+
 public class Assets {
 
     private Assets() {}
@@ -22,7 +26,8 @@ public class Assets {
     // Raccourcis pratiques
     private static final String
             ICONS_PATH = "textures/common/char_icons/",
-            DLG_PATH = "texts/explanations/",
+            DLG_PATH = "texts/dialogs/",
+            EXP_PATH = "texts/explanations/",
             QST_PATH = "texts/questionnaires/";
 
     @Asset(Texture.class)
@@ -46,22 +51,27 @@ public class Assets {
             ICON_TARTAGLIA = ICONS_PATH+"tartaglia.png",
             ICON_THALES = ICONS_PATH+"thales.png",
             ICON_TIFOUILLE = ICONS_PATH+"tifouille.png",
-            ICON_VIKTOR = ICONS_PATH+"viktor.png";
+            ICON_VIKTOR = ICONS_PATH+"viktor.png",
+            ARRIVEE_REMARAQUABLE_ARCADE_MACHINE = "textures/common/arcadeMachines/arriveRemarquableArcadeMachine.png",
+            ACCROBRANCHE_ARCADE_MACHINE = "textures/common/arcadeMachines/accrobrancheArcadeMachine.png",
+            COFFEE_PLUMBING_ARCADE_MACHINE = "textures/common/arcadeMachines/CoffeePlumbingArcadeMachine.png",
+            ARCADE_ROOM_BACKGROUND = "textures/common/arcadeMachines/background.png";
 
 
     @Asset(TextureAtlas.class)
     public static final String
             UI_MAIN = "ui/main.atlas",
             UI_ORANGE = "ui/orange.atlas",
-            UI_SCROLL = "ui/scroll.atlas";
+            UI_SCROLL = "ui/scroll.atlas",
+	        KOFFEE = "textures/CoffeePlumbing/koffee.atlas";
 
 
     @Asset(Music.class)
     public static final String
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
-            GAME_OVER_MUSIC = "music/Game Over.ogg";
-            // GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
+            GAME_OVER_MUSIC = "music/Game Over.ogg",
+            GAGNER_MUSIC = "music/Victory.ogg";
 
 
     public static final FileHandle
@@ -70,11 +80,30 @@ public class Assets {
 
     // Dialogues
     public static final String
-            DLG_ARRIVEE1 = DLG_PATH + "arrivee1.xml";
+            DLG_ARRIVEE_1 = DLG_PATH + "dialogue01.xml",
+            DLG_ARRIVEE_2a = DLG_PATH + "dialogue02a.xml",
+            DLG_ARRIVEE_2b = DLG_PATH + "dialogue02b.xml";
+
+    // Explications
+    public static final String
+            EXP_ARRIVEE_1 = EXP_PATH + "arrivee1.xml";
 
     // Questionnaires
     public static final String
-            QST_ARRIVEE = QST_PATH + "arrivee.xml";
+            QST_ARRIVEE = QST_PATH + "arrivee1.xml";
+
+    // Scènes
+    @Asset(Texture.class)
+    public static final String
+            S00_CLASSE = "scenes/classe.png",
+            S00_TABLEAU = "scenes/tableau.png",
+            S00_TABLEAU_PROF = "scenes/tableauProf.png",
+            S00_ELEVE = "scenes/eleveDormir.png",
+            S01_PAYSAGE = "scenes/paysage.png",
+            S01_FUITE = "scenes/fuite.png",
+            S02_CHUTE = "scenes/trou2.png",
+            S02_CAVERNE = "scenes/caverne.png";
+
 
     /**********************
      * ASSETS SPECIFIQUES *

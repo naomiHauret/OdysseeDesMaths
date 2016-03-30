@@ -10,6 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.Musique;
+import com.odysseedesmaths.OdysseeDesMaths;
+import com.odysseedesmaths.Settings;
+
+/*
+    Classe principale des boutons audio
+*/
 
 public class AudioButtons extends Table {
 
@@ -22,11 +28,19 @@ public class AudioButtons extends Table {
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
 
         ButtonStyle musicButtonStyle = new ButtonStyle();
-        musicButtonStyle.up = skin.getDrawable("music_on");
+        if (OdysseeDesMaths.getSettings().isMusicMuted()) {
+            musicButtonStyle.up = skin.getDrawable("music_off");
+        } else {
+            musicButtonStyle.up = skin.getDrawable("music_on");
+        }
         skin.add("music", musicButtonStyle);
 
         ButtonStyle soundsButtonStyle = new ButtonStyle();
-        soundsButtonStyle.up = skin.getDrawable("sounds_on");
+        if (OdysseeDesMaths.getSettings().areEffectsMuted()) {
+            soundsButtonStyle.up = skin.getDrawable("sounds_off");
+        } else {
+            soundsButtonStyle.up = skin.getDrawable("sounds_on");
+        }
         skin.add("sounds", soundsButtonStyle);
 
         music = new Button(skin, "music");
@@ -46,20 +60,22 @@ public class AudioButtons extends Table {
             Actor source = event.getTarget();
 
             if (source == music) {
-                if (Musique.isPlaying()) {
-                    Musique.pause();
-                    music.getStyle().up = skin.getDrawable("music_off");
-                } else {
-                    Musique.play();
+                if (OdysseeDesMaths.getSettings().isMusicMuted()) {
+                    Musique.setVolume(100);
+                    OdysseeDesMaths.getSettings().setMusicMuted(false);
                     music.getStyle().up = skin.getDrawable("music_on");
+                } else {
+                    Musique.setVolume(0);
+                    OdysseeDesMaths.getSettings().setMusicMuted(true);
+                    music.getStyle().up = skin.getDrawable("music_off");
                 }
             } else if (source == sounds) {
-                if (Musique.isPlaying()) {
-                    Musique.pause();
-                    sounds.getStyle().up = skin.getDrawable("sounds_off");
-                } else {
-                    Musique.play();
+                if (OdysseeDesMaths.getSettings().areEffectsMuted()) {
+                    OdysseeDesMaths.getSettings().setEffectsMuted(false);
                     sounds.getStyle().up = skin.getDrawable("sounds_on");
+                } else {
+                    OdysseeDesMaths.getSettings().setEffectsMuted(true);
+                    sounds.getStyle().up = skin.getDrawable("sounds_off");
                 }
             }
 

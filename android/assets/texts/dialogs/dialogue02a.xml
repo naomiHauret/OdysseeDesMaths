@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<dialogue>
+    <background-image name="caverne"/>
+    <personnage name="hero" pos="0">
+        <text> Pfiou, j'ai eu chaud ! Heureusement que - Aïe aïe aïe ! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Heureusement que t'as la tête dur toi ! </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text> Bon, qu'est-ce qui se passe ici ?! C'était quoi ça, là-haut ?! Et où est-ce que j'ai encore atteri ?! </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Bah, dans une caverne du monde des Maths ! C'est pourtant évident ! </text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text> Le monde des Maths ? Alors ça doit être pour ça que je comprends rien, je suis nul en maths... </text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text> Avançons. Je t'expliquerai en chemin. </text>
+    </personnage>
+    <endbutton name="continue">Le suivre</endbutton>
+</dialogue>

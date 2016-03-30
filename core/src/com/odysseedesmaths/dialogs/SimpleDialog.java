@@ -12,6 +12,10 @@ import com.odysseedesmaths.util.XMLSequencialReader;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/*
+  classe d'affichage d'un dialogue à un acteur
+*/
+
 public class SimpleDialog extends DialogScreen {
 
     private SimpleDialogReader reader;

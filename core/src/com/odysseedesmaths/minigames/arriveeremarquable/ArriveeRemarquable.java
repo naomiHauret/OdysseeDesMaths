@@ -1,15 +1,20 @@
 package com.odysseedesmaths.minigames.arriveeremarquable;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.Timer;
+import com.odysseedesmaths.dialogs.EndButtonsListener;
+import com.odysseedesmaths.dialogs.SimpleDialog;
 import com.odysseedesmaths.minigames.MiniGame;
+import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Entity;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.Hero;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.ennemies.Enemy;
 import com.odysseedesmaths.minigames.arriveeremarquable.entities.items.Item;
 import com.odysseedesmaths.minigames.arriveeremarquable.map.Case;
 import com.odysseedesmaths.minigames.arriveeremarquable.map.Terrain;
+import com.odysseedesmaths.scenes.Scene2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +92,10 @@ public class ArriveeRemarquable extends MiniGame {
         game.getSavesManager().getCurrentSave().setLevel1Finished(true);
         timer.stop();
         ((ForetScreen)currentScreen).win();
+    }
+
+    public void afterWin() {
+        game.setScreen(game.getModeScene());
     }
 
     public void destroy(Item aItem) {

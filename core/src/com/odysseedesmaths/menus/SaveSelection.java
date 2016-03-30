@@ -25,6 +25,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 
+/*
+  classe de mise en place de sélection de sauvegarde
+*/
+
 public class SaveSelection implements Screen {
 
     private static final int WIDTH = 800;
