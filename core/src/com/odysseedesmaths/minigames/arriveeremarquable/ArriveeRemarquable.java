@@ -95,6 +95,7 @@ public class ArriveeRemarquable extends MiniGame {
     }
 
     public void afterWin() {
+        game.getModeScene().switchScene(game.getModeScene().getScene2());
         game.setScreen(game.getModeScene());
     }
 

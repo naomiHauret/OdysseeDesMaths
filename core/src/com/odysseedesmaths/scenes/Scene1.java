@@ -28,19 +28,15 @@ public class Scene1 extends Scene {
         getMss().getJeu().setScreen(new SimpleDialog(getMss().getJeu(), Assets.DLG_ARRIVEE_1, new EndButtonsListener() {
             @Override
             public void buttonPressed(String buttonName) {
-                switch (buttonName) {
-                    case "continue":
-                        background = Assets.getManager().get(Assets.S01_FUITE, Texture.class);
-                        getMss().updateBackground();
-                        Timer.schedule(new Timer.Task() {
-                            @Override
-                            public void run() {
-                                background = Assets.getManager().get(Assets.S01_PAYSAGE, Texture.class);
-                                gameReference.setScreen(new ArriveeRemarquable(gameReference));
-                            }
-                        }, 3f);
-                        break;
-                }
+                background = Assets.getManager().get(Assets.S01_FUITE, Texture.class);
+                getMss().updateBackground();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        background = Assets.getManager().get(Assets.S01_PAYSAGE, Texture.class);
+                        gameReference.setScreen(new ArriveeRemarquable(gameReference));
+                    }
+                }, 3f);
             }
         }));
     }

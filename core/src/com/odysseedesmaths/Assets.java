@@ -90,7 +90,7 @@ public class Assets {
 
     // Questionnaires
     public static final String
-            QST_ARRIVEE = QST_PATH + "arrivee1.xml";
+            QST_ARRIVEE1 = QST_PATH + "arrivee1.xml";
 
     // Scènes
     @Asset(Texture.class)

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE questionnaire SYSTEM "questionnaire.dtd">
+<questionnaire>
+    <background-image name="caverne"/>
+    <question intitule="Ok ! C'est quoi déjà un graphe ?">
+        <reponse valide="false">Un animal</reponse>
+        <reponse valide="false">Du fromage</reponse>
+        <reponse valide="true">Une figure mathématiques</reponse>
+        <reponse valide="false">La réponse D</reponse>
+        <bonne-reponse>
+            <text>Bravo ! Moi qui croyais ton cas désespéré, y a peut être de l'espoir finalement.</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>Bon là j'hésite. Soit tu veux jouer au plus malin, soit t'es encore plus bête que je le croyais. Dans les deux cas je sens qu'on va bien s'entendre !</text>
+        </mauvaise-reponse>
+        <text>Passons à la question suivante tu veux, avec un peu de vocabulaire ! Je sens que je vais adorer te poser des questions.</text>
+    </question>
+    <question intitule="Dans un graphe il y a des points reliés par des lignes. Les points s'appellent des ... ?">
+        <reponse valide="true">Sommets</reponse>
+        <reponse valide="false">Ronds</reponse>
+        <reponse valide="false">Cercles</reponse>
+        <bonne-reponse>
+            <text>Tu fais attention au sens des mots, c'est bien ! Crois moi par expérience, j'en ai vu des pires !</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>Les mots ont leur importance ! C'était un peu une question piège mais dans un graphe on parle bien de sommets et non de ronds ou de cercles.</text>
+            <text>Si j'ai peut-être employé ces termes avant c'était pour faciliter ta compréhension, mais maintenant on parlera bien de sommets !</text>
+        </mauvaise-reponse>
+        <text>Tu te doutes probablement sur quoi va porter la prochaine question...</text>
+    </question>
+    <question intitule="Et les lignes dans les graphes, elles s'appellent comment ?">
+        <reponse valide="false">Traits ou segments</reponse>
+        <reponse valide="true">Arêtes ou arcs</reponse>
+        <bonne-reponse>
+            <text>Et je dis oui ! Justement, à ce propos...</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>Le vocabulaire encore et toujours. Il est important de parler la même langue quand tu discutes avec quelqu'un, n'est-ce pas ?</text>
+            <text>Et bien en maths, quand on discute de graphes, on parle d'arêtes et d'arcs. De cette manière tout le monde cause de la même chose !</text>
+            <text>Et du coups, à propos d'arêtes et d'arcs...</text>
+        </mauvaise-reponse>
+    </question>
+    <question intitule="Quelle est la différence entre une arête et un arc ?">
+        <reponse valide="false">Un arc est courbé</reponse>
+        <reponse valide="false">Aucune</reponse>
+        <reponse valide="false">Pas le même poids</reponse>
+        <reponse valide="true">Un arc est orienté</reponse>
+        <bonne-reponse>
+            <text>Bonne mémoire !</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>Tu me déçois pour le coup ! Les arêtes et arcs peuvent avoir des poids identiques ou différents, on s'en fiche à vrai dire.</text>
+            <text>Et que ce soit une arête ou un arc, ce doit toujours être lié à un ou deux sommets, mais jamais zéro !</text>
+        </mauvaise-reponse>
+        <text>Quand une arête ou un arc est lié à un seul sommet, en fait ça fait une boucle qui pars du sommet puis revient sur lui.</text>
+        <text>Et pour rappel quand un graphe comporte des arcs, on dit qu'il est orienté. Sinon on dit qu'il est non-orienté.</text>
+        <text>Bon une question un peu plus intéressante !</text>
+    </question>
+    <middle-image name="arr_g7"/>
+    <question intitule="Quel est le chemin le plus court pour aller de 1 à 4 ?">
+        <reponse valide="false">1-4</reponse>
+        <reponse valide="true">1-2-3-4</reponse>
+        <reponse valide="false">1-3-4</reponse>
+        <reponse valide="false">1-5-4</reponse>
+        <bonne-reponse>
+            <text>Bravo ! Tu as bien compris les poids, ça me rassure...</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>Aïe, fait attention aux poids sur les arcs ! Je ne peux pas faire 1-4 déjà car les sommets 1 et 4 ne sont pas liés. Idem pour 1-5-4 car 5 n'est lié à personne.</text>
+            <text>Et 1-2-3-4 est bien plus court que 1-3-4 à cause des nombres sur les arcs. Si tu les additionnes tu verras que, même si on passe par un sommet en plus, ça reste moins coûteux.</text>
+        </mauvaise-reponse>
+        <text>Au fait, je ne sais pas si tu as remarqué, mais ce graphe est exactement le même que celui que je t'ai montré tout à l'heure ! Regarde-le bien, je vais te remontrer l'autre...</text>
+        <middle-image name="arr_g5"/>
+        <text>Tu vois ? Les mêmes chemins possibles qu'avant. En fait, un graphe est uniquement un ensemble de sommets et d'arêtes/arcs, peu importe la forme !</text>
+        <clear object="middle-image"/>
+        <text>Bon la dernière question. Je compte sur toi pour bien y répondre, c'est TRES important. Je sais que tu peux le faire.</text>
+    </question>
+    <question intitule="Qui est le plus intelligent de tous les mathématiciens de l'univers ?">
+        <reponse valide="true">Pylès</reponse>
+        <reponse valide="false">%h</reponse>
+        <reponse valide="false">Vektor</reponse>
+        <reponse valide="false">Viktor</reponse>
+        <bonne-reponse>
+            <text>Je vois que tu apprends vite et que tu as de la discipline ! C'est bien, fais pas le c** avec moi.</text>
+        </bonne-reponse>
+        <mauvaise-reponse>
+            <text>QUUUOOOOOIIIIIIIII ??!!! Bon je vais faire comme si j'avais rien entendu, mais y aura pas de deuxième fois !</text>
+        </mauvaise-reponse>
+        <text>Bon voyons un peu tes résultats...</text>
+    </question>
+    <results target="0.5">
+        <pass>
+            <text>Bien joué, %nga bonnes réponses c'est pas mal ! Rassures-toi ce n'est que le début, ce sera plus difficile plus tard.</text>
+        </pass>
+        <fail>
+            <text>Mouais, pas ouf hein ! La prochaine fois écoute un peu ou concentre toi plus ou je sais pas fais un truc...</text>
+            <text>C'est pas grave, mais tu sais quoi si je le veux je peux revenir en arrière dans le temps. Ouais on est comme ça nous les mathématiciens c'est normal.</text>
+            <text>Alors n'hésite pas à recommencer si tu veux t'améliorer, effet garanti !</text>
+            <endbutton name="restart">Recommencer</endbutton>
+        </fail>
+        <text>Au fait ça fait %gp% de bonnes réponses... Que veux-tu faire du coup ?</text>
+        <endbutton name="continue">Terminer</endbutton>
+    </results>
+</questionnaire>

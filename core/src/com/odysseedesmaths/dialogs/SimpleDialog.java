@@ -85,6 +85,7 @@ public class SimpleDialog extends DialogScreen {
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    System.out.println(event.getTarget().toString() + " | " + event.getTarget().getName());
                     endButtonsListener.buttonPressed(event.getTarget().getName());
                 }
             };
@@ -92,7 +93,9 @@ public class SimpleDialog extends DialogScreen {
             Element buttonNode = (Element)goToFirstChild(document.getDocumentElement(), END_BTN_NODE, false);
             while (buttonNode != null) {
                 TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
-                button.setName(buttonNode.getAttribute("name"));
+                String name = buttonNode.getAttribute("name");
+                button.setName(name);
+                button.getLabel().setName(name);
                 button.addListener(listener);
                 endButtonsList.add(button);
                 buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);

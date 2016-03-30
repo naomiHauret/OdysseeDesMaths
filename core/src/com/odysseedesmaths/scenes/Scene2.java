@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.odysseedesmaths.Assets;
 import com.odysseedesmaths.OdysseeDesMaths;
 import com.odysseedesmaths.dialogs.EndButtonsListener;
+import com.odysseedesmaths.dialogs.QuestionnaireDialog;
 import com.odysseedesmaths.dialogs.SimpleDialog;
 import com.odysseedesmaths.minigames.accrobranche.Accrobranche;
 
@@ -35,6 +36,7 @@ public class Scene2 extends Scene {
                 getMss().updateBackground();
                 break;
             case 2:
+                // ALL HAIL INDENTATION
                 background = Assets.getManager().get(Assets.S01_FUITE, Texture.class);
                 final OdysseeDesMaths game = getMss().getJeu();
                 game.setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2a, new EndButtonsListener() {
@@ -44,11 +46,20 @@ public class Scene2 extends Scene {
                             @Override
                             public void buttonPressed(String buttonName) {
                                 if (buttonName.equals("continue")) {
-                                    //TODO: Lancenement questionnaire 1
-                                    game.setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2b, new EndButtonsListener() {
+                                    game.setScreen(new QuestionnaireDialog(game, Assets.QST_ARRIVEE1, new EndButtonsListener() {
                                         @Override
                                         public void buttonPressed(String buttonName) {
-                                            game.setScreen(new Accrobranche(game));
+                                            System.out.println("qst 2 fini, name = " + buttonName);
+                                            if (buttonName.equals("continue")) {
+                                                game.setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2b, new EndButtonsListener() {
+                                                    @Override
+                                                    public void buttonPressed(String buttonName) {
+                                                        game.setScreen(new Accrobranche(game));
+                                                    }
+                                                }));
+                                            } else if (buttonName.equals("restart")) {
+                                                game.setScreen(game.getModeScene());
+                                            }
                                         }
                                     }));
                                 } else if (buttonName.equals("next_level")) {

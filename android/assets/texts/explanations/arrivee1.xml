@@ -51,7 +51,7 @@
         <text>Bonne question ! Bon ici je te l'avoue c'est surtout Viktor qui s'en sert pour traquer ses ennemis, c'est à dire à peu près tout le monde.</text>
         <text>Mais dans ton monde à toi... Dans les réseaux (internet ou même réseaux sociaux), pour aider les intelligences artificielles, gérer les transports en commun...</text>
         <text>J'peux même pas de te les décompter tellement y en a !</text>
-        <text>Du coup si tu veux en savoir plus sur comment les sbires utilisent les graphes, dis-le moi et peut être que je dirais oui.</text>
+        <text>Du coup si tu veux en savoir plus sur comment les sbires utilisent les graphes, dis-le moi et peut être que je dirais oui. Sinon j'aimerais te poser quelques questions.</text>
     </personnage>
     <endbutton name="next_level">En savoir + !</endbutton>
     <endbutton name="continue">Non merci</endbutton>

@@ -114,6 +114,7 @@ public class QuestionnaireDialog extends DialogScreen {
         answersContainers = new Container[MAX_ANSWERS];
         for (int i=0; i < MAX_ANSWERS; i++) {
             answersContainers[i] = new Container<>();
+            answersContainers[i].align(Align.left);
         }
 
         nextQuestionButton = new TextButton("Ok, question suivante !", buttonStyle);
@@ -146,10 +147,10 @@ public class QuestionnaireDialog extends DialogScreen {
         });
 
         answersTable = new Table();
-        answersTable.add(answersContainers[0]).expand();
-        answersTable.add(answersContainers[2]).expand().row();
-        answersTable.add(answersContainers[1]).expand();
-        answersTable.add(answersContainers[3]).expand();
+        answersTable.add(answersContainers[0]).expand().align(Align.left);
+        answersTable.add(answersContainers[2]).expand().align(Align.left).row();
+        answersTable.add(answersContainers[1]).expand().align(Align.left);
+        answersTable.add(answersContainers[3]).expand().align(Align.left);
 
         setScene(Scene.QUESTION_SCENE);
 
@@ -197,9 +198,9 @@ public class QuestionnaireDialog extends DialogScreen {
     @Override
     public String format(String text) {
         Double good_percent = Math.nextUp(nbGoodAnswers*100/nbQuestions);
-        String newText = text.replace("%ga", String.valueOf(nbGoodAnswers))
-                .replace("%nq", String.valueOf(nbQuestions))
-                .replace("%gp", String.valueOf(good_percent));
+        String newText = text.replace("%nga", ""+Math.round(nbGoodAnswers))
+                .replace("%nq", ""+Math.round(nbQuestions))
+                .replace("%gp", "" + Math.round(good_percent));
         return super.format(newText);
     }
 
@@ -255,7 +256,7 @@ public class QuestionnaireDialog extends DialogScreen {
                             for (int i=0; i<childs.getLength(); i++) {
                                 Node child = childs.item(i);
                                 if (child.getNodeName().equals(ANSWER_NODE)) {
-                                    answers[nbAnswer].setText(child.getTextContent());
+                                    answers[nbAnswer].setText(format(child.getTextContent()));
                                     nbAnswer++;
                                 }
                             }
@@ -352,7 +353,9 @@ public class QuestionnaireDialog extends DialogScreen {
             Element buttonNode = (Element)goToFirstChild(target_node, END_BTN_NODE, false);
             while (buttonNode != null) {
                 TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
-                button.setName(buttonNode.getAttribute("name"));
+                String name = buttonNode.getAttribute("name");
+                button.setName(name);
+                button.getLabel().setName(name);
                 button.addListener(listener);
                 endButtonsList.add(button);
                 buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
@@ -362,7 +365,9 @@ public class QuestionnaireDialog extends DialogScreen {
             buttonNode = (Element)goToFirstChild(currentNode, END_BTN_NODE, false);
             while (buttonNode != null) {
                 TextButton button = new TextButton(buttonNode.getTextContent(), buttonStyle);
-                button.setName(buttonNode.getAttribute("name"));
+                String name = buttonNode.getAttribute("name");
+                button.setName(name);
+                button.getLabel().setName(name);
                 button.addListener(listener);
                 endButtonsList.add(button);
                 buttonNode = (Element)goToNextSibling(buttonNode, END_BTN_NODE, false);
