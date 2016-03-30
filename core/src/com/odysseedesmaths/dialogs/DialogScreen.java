@@ -35,8 +35,8 @@ public abstract class DialogScreen implements Screen {
 
     protected static final int WIDTH = 560;
     protected static final int HEIGHT = 340;
-    private static final int DIALOG_HEIGHT = 125;
-    private static final int BUTTON_HEIGHT = 50;
+    private static final int DIALOG_HEIGHT = 130;
+    private static final int BUTTON_HEIGHT = 30;
 
     protected static final BitmapFont FONT_16;
     protected static final BitmapFont FONT_15;
@@ -140,11 +140,11 @@ public abstract class DialogScreen implements Screen {
     }
 
     public void buildGUI() {
-        mainTable.pad(50);
+        mainTable.pad(25);
 
         // Ajout des personnages et de l'image entre eux
         mainTable.add(leftCharGroup).top().left().align(Align.bottom).padLeft(10);
-        mainTable.add(middleImage).top().colspan(2).padBottom(20).expandX();
+        mainTable.add(middleImage).top().colspan(2).align(Align.bottom).expand().padBottom(20);
         mainTable.add(rightCharGroup).top().right().align(Align.bottom).padRight(10);
         mainTable.row();
 
@@ -248,6 +248,13 @@ public abstract class DialogScreen implements Screen {
         String asset = null;
         switch (name) {
             case "menu principal": asset = Assets.MAIN_MENU_BACKGROUND; break;
+            case "arr_g1": asset = Assets.ARR_DLGIMG_G1; break;
+            case "arr_g2": asset = Assets.ARR_DLGIMG_G2; break;
+            case "arr_g3": asset = Assets.ARR_DLGIMG_G3; break;
+            case "arr_g4": asset = Assets.ARR_DLGIMG_G4; break;
+            case "arr_g5": asset = Assets.ARR_DLGIMG_G5; break;
+            case "arr_g6": asset = Assets.ARR_DLGIMG_G6; break;
+            case "arr_g7": asset = Assets.ARR_DLGIMG_G7; break;
         }
         return asset;
     }

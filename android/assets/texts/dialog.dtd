@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ELEMENT dialogue ((personnage | background-image | middle-image | clear)*, personnage, endbutton+)>
-<!ELEMENT personnage (text | background-image | middle-image)*>
+<!ELEMENT personnage (text | background-image | middle-image | clear)*>
 <!ATTLIST personnage
     name CDATA #REQUIRED
     pos (0|1|2|3|4|5) #IMPLIED

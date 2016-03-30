@@ -184,6 +184,15 @@ public class QuestionnaireDialog extends DialogScreen {
         }
     }
 
+    @Override
+    public String format(String text) {
+        Double good_percent = Math.nextUp(nbGoodAnswers*100/nbQuestions);
+        String newText = text.replace("%ga", String.valueOf(nbGoodAnswers))
+                .replace("%nq", String.valueOf(nbQuestions))
+                .replace("%gp", String.valueOf(good_percent));
+        return super.format(newText);
+    }
+
     private class QuestionnaireDialogReader extends XMLSequencialReader {
 
         private static final String QUESTION_NODE = "question";

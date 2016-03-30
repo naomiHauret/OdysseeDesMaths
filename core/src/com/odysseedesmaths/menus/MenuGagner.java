@@ -81,7 +81,7 @@ public class MenuGagner extends Stage {
     }
 
     public void playMusic(){
-        Musique.setCurrent(Assets.GAGNER_MUSIC);        // trouver la musique !!!!
+        //Musique.setCurrent(Assets.GAGNER_MUSIC);        // trouver la musique !!!!
         Musique.play();
     }
 

@@ -39,13 +39,13 @@
     </question>
     <results target="0.5">
         <pass>
-            <text>Bien joué</text>
+            <text>Bien joué, %na bonnes réponses !</text>
         </pass>
         <fail>
             <text>Nuuuuuullllllllllll</text>
             <endbutton name="restart">Recommencer</endbutton>
         </fail>
-        <text>Du coup tu veux faire quoi ?</text>
+        <text>%gp% de bonnes réponses... bon du coup tu veux faire quoi ?</text>
         <endbutton name="continue">Terminer</endbutton>
     </results>
 </questionnaire>

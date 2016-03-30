@@ -22,7 +22,7 @@ public class Assets {
     // Raccourcis pratiques
     private static final String
             ICONS_PATH = "textures/common/char_icons/",
-            DLG_PATH = "texts/dialogs/",
+            DLG_PATH = "texts/explanations/",
             QST_PATH = "texts/questionnaires/";
 
     @Asset(Texture.class)
@@ -60,7 +60,7 @@ public class Assets {
     public static final String
             ARCADE = "music/Arcade_Machine.ogg",
             MENU_MUSIC = "music/Opening.ogg",
-            GAME_OVER_MUSIC = "music/Game Over.ogg",
+            GAME_OVER_MUSIC = "music/Game Over.ogg";
             // GAGNER_MUSIC = "music/Game Over.ogg"; // A ajouter après avoir trouvé la musique
 
 
@@ -81,9 +81,21 @@ public class Assets {
      **********************/
 
     // Arrivée remarquable
+    private static final String ARR_PATH = "arrivee_remarquable/";
+
     @Asset(TextureAtlas.class)
     public static final String
-            ARRIVEE = "arrivee_remarquable/arrivee.atlas";
+            ARR_ATLAS = ARR_PATH + "arrivee.atlas";
+
+    @Asset(Texture.class)
+    public static final String
+            ARR_DLGIMG_G1 = ARR_PATH + "dialogs_images/g1.png",
+            ARR_DLGIMG_G2 = ARR_PATH + "dialogs_images/g2.png",
+            ARR_DLGIMG_G3 = ARR_PATH + "dialogs_images/g3.png",
+            ARR_DLGIMG_G4 = ARR_PATH + "dialogs_images/g4.png",
+            ARR_DLGIMG_G5 = ARR_PATH + "dialogs_images/g5.png",
+            ARR_DLGIMG_G6 = ARR_PATH + "dialogs_images/g6.png",
+            ARR_DLGIMG_G7 = ARR_PATH + "dialogs_images/g7.png";
 
     // Plongée au coeur du problème
     // Accrobranche

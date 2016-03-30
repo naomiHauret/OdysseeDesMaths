@@ -67,7 +67,7 @@ public class ForetScreen implements Screen {
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         batch = new SpriteBatch();
         skin = new Skin();
-        skin.addRegions(Assets.getManager().get(Assets.ARRIVEE, TextureAtlas.class));
+        skin.addRegions(Assets.getManager().get(Assets.ARR_ATLAS, TextureAtlas.class));
 
         // Sprites
         heroSprite = new Sprite(Assets.getManager().get(Assets.HERO, Texture.class));

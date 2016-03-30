@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
+<dialogue>
+    <background-image name="menu principal"/>
+    <personnage name="hero" pos="0"/>
+    <personnage name="pyles" pos="3">
+        <text>Bon, ce qui s'est passé dans cette forêt... C'est à cause de la "théorie des graphes".</text>
+        <text>Ce mot un peu barbare désigne juste une manière parmi d'autres de faire des maths.</text>
+        <text>En géométrie par exemple on dessine des formes comme des carrés ou des triangles, puis on fais des choses avec.</text>
+        <text>Ici c'est pareil, sauf qu'on ne dessinera pas des triangles mais des graphes !</text>
+        <text>Car les sbires de Viktor ne voient pas la forêt comme toi et moi... Eux voient un graphe justement, et c'est comme ça qu'ils savaient où tu étais.</text>
+        <text>Au cas où je vais donc t'expliquer (vite fait j'ai pas que ça à faire non plus) comment ils ont fait.</text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text>Mais c'est quoi un graphe au juste ?</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text>J'y viens oui ! Mais avant si jamais t'avais la sombre idée de passer ce dialogue... Sache que je te poserai quelques questions après !</text>
+        <text>J'suis censé être un mathématicien tu comprends, faut que je te trouble un peu sinon ça fait pas crédible.</text>
+        <text>DONC un graphe c'est quoi ?? Tu peux voir ça comme des points reliés entre eux par des lignes. On appelle ces points des sommets et ces lignes des arêtes.</text>
+        <middle-image name="arr_g1"/>
+        <text>Voici un graphe ! Tu vois bien les sommets reliés entre eux par des arêtes ? Il y en a un tout seul mais c'est pas génant.</text>
+        <text>Histoire de savoir de qui on parle, rajoutons de quoi identifier nos sommets. Genre des numéros.</text>
+        <middle-image name="arr_g2"/>
+        <text>Voilà ! Maintenant je peux dire que pour aller de 1 à 4, il faut passer par 3 ! On pourrait aussi passer par 2 mais ce serait plus long. Quoique...</text>
+        <middle-image name="arr_g3"/>
+        <text>Encore des chiffres ! Bon cette fois ils sont pas sur les sommets mais sur les arêtes. On les appelle des poids. A quoi ça sert ?</text>
+        <middle-image name="arr_g4"/>
+        <text>Hé bien maintenant si tu regardes bien, pour aller de 1 à 4 je ferais mieux de passer par 2 au lieu d'aller sur 3 directement.</text>
+        <text>En fait ces "poids" on en fait ce que l'on veut. Si on dit que ce sont des distances, alors 1-2-3-4 est plus court que 1-3-4.</text>
+        <text>Mais on peut encore rajouter un petit quelque chose...</text>
+        <middle-image name="arr_g5"/>
+        <text>Des flèches sur les arêtes ! Histoire de compliquer un peu la chose. Si une arête a une flèche on dit que c'est un arc.</text>
+        <text>Du coup on ne peut plus se déplacer comme on veut. On doit respecter le sens des flèches, genre route à sens unique. Et là tu peux voir que ça coince...</text>
+        <middle-image name="arr_g6"/>
+        <text>Si on veut refaire notre chemin de 1 à 4, on va être obligé de faire 1-3-4, même si ça coûte cher. Car si on va sur 2, on sera bloqué dans une impasse !</text>
+        <clear object="middle-image"/>
+        <text>Enfin quand le graphe comporte des flèches, on dit qu'il est orienté. Sinon, comme avec les arêtes au début, on dit qu'il est non-orienté.</text>
+        <text>Voilà tu sais tout sur les graphes ! Bon peut-être pas TOUT je te l'accorde, mais c'est un bon début.</text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text>Points, lignes, sommets, arêtes, poids, arcs... j'suis pas sûr d'avoir tout saisi.</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text>Y a beaucoup de vocabulaire oui... Dis-toi qu'au moins on parlera la même langue si jamais on reparle de graphes par la suite !</text>
+    </personnage>
+    <personnage name="hero" pos="0">
+        <text>Ok mais à quoi ça sert au juste ces graphes ?</text>
+    </personnage>
+    <personnage name="pyles" pos="3">
+        <text>Bonne question ! Bon ici je te l'avoue c'est surtout Viktor qui s'en sert pour traquer ses ennemis, c'est à dire à peu près tout le monde.</text>
+        <text>Mais dans ton monde à toi... Dans les réseaux (internet ou même réseaux sociaux), pour aider les intelligences artificielles, gérer les transports en commun...</text>
+        <text>J'peux même pas de te les décompter tellement y en a !</text>
+        <text>Du coup si tu veux en savoir plus sur comment les sbires utilisent les graphes, dis-le moi et peut être que je dirais oui.</text>
+    </personnage>
+    <endbutton name="next_level">En savoir + !</endbutton>
+    <endbutton name="continue">Non merci</endbutton>
+</dialogue>

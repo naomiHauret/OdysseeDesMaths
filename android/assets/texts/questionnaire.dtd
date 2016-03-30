@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT questionnaire ((question | background-image | middle-image)*, results)>
-<!ELEMENT question (reponse, reponse, reponse?, reponse?, bonne-reponse, mauvaise-reponse, text*)>
+<!ELEMENT questionnaire ((question | background-image | middle-image | clear)*, results)>
+<!ELEMENT question (reponse, reponse, reponse?, reponse?, bonne-reponse, mauvaise-reponse, clear?, text*)>
 <!ATTLIST question
     intitule CDATA #REQUIRED
     >
