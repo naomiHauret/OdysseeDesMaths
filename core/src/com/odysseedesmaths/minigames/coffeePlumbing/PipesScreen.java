@@ -52,7 +52,7 @@ public class PipesScreen implements Screen {
             stage.addActor(itKFM.next().get_table());
             System.out.println("Koffee Meter ajouté"); //debug
         }
-        
+        Gdx.input.setInputProcessor(this.stage);
         Musique.setCurrent("music/CoffeePlumbing/ambiant.ogg");
         Musique.play();
     }
