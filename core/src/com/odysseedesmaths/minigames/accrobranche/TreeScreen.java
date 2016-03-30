@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.utils.Box2DBuild;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -71,6 +72,7 @@ public class TreeScreen implements Screen {
 
     // Box2d variables
     private World world;
+    //private Box2DBuild b2dr;
     private Box2DDebugRenderer b2dr;
 
     // Sprite
@@ -96,6 +98,7 @@ public class TreeScreen implements Screen {
 
         // Elements relatifs à Box2d
         world = new World(new Vector2(0, -10), true);
+        //b2dr = new Box2DBuild();
         b2dr = new Box2DDebugRenderer();
 
         BodyDef bdef = new BodyDef();
@@ -104,8 +107,10 @@ public class TreeScreen implements Screen {
         Body body;
 
         // Standard
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            RectangleMapObject rectMO = ((RectangleMapObject) object);
+            rectMO.setVisible(false);
+            Rectangle rect = rectMO.getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / PPM, (rect.getY() + rect.getHeight() / 2) / PPM);
@@ -118,8 +123,10 @@ public class TreeScreen implements Screen {
         }
 
         // Glissant
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            RectangleMapObject rectMO = ((RectangleMapObject) object);
+            rectMO.setVisible(false);
+            Rectangle rect = rectMO.getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / PPM, (rect.getY() + rect.getHeight() / 2) / PPM);
@@ -132,8 +139,10 @@ public class TreeScreen implements Screen {
         }
 
         // Accrochant
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+            RectangleMapObject rectMO = ((RectangleMapObject) object);
+            rectMO.setVisible(false);
+            Rectangle rect = rectMO.getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / PPM, (rect.getY() + rect.getHeight() / 2) / PPM);
@@ -259,7 +268,7 @@ public class TreeScreen implements Screen {
 
     @Override
     public void show() {
-        Musique.setCurrent(Assets.ARCADE);
+        Musique.setCurrent("accrobranche/theme.ogg");
         Musique.play();
         minigame.timer.start();
     }
@@ -286,8 +295,8 @@ public class TreeScreen implements Screen {
         // Reglage de la position horizontale de la camera
         if (posXHero < port.getWorldWidth() / 2){
             posXCam = port.getWorldWidth() / 2;
-        } else if (posXHero > 12.6f - (port.getWorldWidth() / 2)){
-            posXCam = 12.6f - (port.getWorldWidth() / 2);
+        } else if (posXHero > 6.3f - (port.getWorldWidth() / 2)){
+            posXCam = 6.3f - (port.getWorldWidth() / 2);
         }
 
         // Reglage de la position verticale de la caméra
@@ -314,13 +323,13 @@ public class TreeScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        update(delta);
         renderer.render();
 
-        b2dr.render(world, cam.combined);
+        //b2dr.render(world, cam.combined);
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
@@ -368,7 +377,7 @@ public class TreeScreen implements Screen {
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
+        //b2dr.dispose();
         ui.dispose();
         menuPause.dispose();
         menuGameOver.dispose();
