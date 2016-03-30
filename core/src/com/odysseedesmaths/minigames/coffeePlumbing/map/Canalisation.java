@@ -118,9 +118,10 @@ public class Canalisation{
                 Tuyau tuyauTmp = new Tuyau(0);
 
                 do{//une fois qu'on a le tuyau, on le parcours
-                    System.out.println("x: " + posCourante[0] + " y: " + posCourante[1]);
                     String s = (String) tuyauxLayer.getCell(posCourante[0],posCourante[1]).getTile().getProperties().get("name");
-                    tuyauTmp.addCase(posCourante.clone(),s);
+                    tuyauTmp.addCase(posCourante.clone(), s);
+                    System.out.println("x: " + posCourante[0] + " y: " + posCourante[1]);
+
                     if(vannesLayer.getCell(posCourante[0],posCourante[1])!=null){
                         CoffeeLevel.addVanne(new Vanne(posCourante[0],posCourante[1],tuyauTmp));
                     }else if(posKoffeeMeters[posCourante[0]][posCourante[1]]!=0){

@@ -3,7 +3,6 @@ package com.odysseedesmaths.minigames.coffeePlumbing.map;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -14,16 +13,8 @@ import com.odysseedesmaths.minigames.coffeePlumbing.Sprite.Vanne;
 import java.util.HashSet;
 import java.util.Iterator;
 
-/**
- * Created by trilunaire on 20/02/16.
- */
-/*TODO: - Faire une fonction permettant de prendre tous les tuyaux (voir les layers de la carte, et les propriétés des objets) - Faire une fonction permettant de trouver les vannes
-* TODO: touver un moyen de rentrer toutes les positions dans les tuyau
-* TODO: Faire une classe pour la canalisation (parce qu'un fichier de 700 lignes c'est sympa, mais voilà quoi!)
-*/
 public class CoffeeLevel {
     private TiledMap map;
-    private static OrthogonalTiledMapRendererWithKoffee mapRenderer;
     /**
      * Représente la largeur en pixel de la map
      */
@@ -39,15 +30,12 @@ public class CoffeeLevel {
     private Canalisation canalisation;
     private static HashSet<Vanne> vannes;
     private static HashSet<KoffeeMeter> indicateurs;
-    private Stage stage;
     private Table valveButtons;
     private Label comptAR;
 
     public CoffeeLevel(String mapPath) {
         this.map = new TmxMapLoader().load(mapPath);
-        mapRenderer = new OrthogonalTiledMapRendererWithKoffee(map);
 
-        this.stage = new Stage();
         //configuration des variables de tailles
         this.tileWidth = ((Integer) this.map.getProperties().get("tilewidth"));
         this.tileHeight = ((Integer) this.map.getProperties().get("tileheight"));
@@ -66,19 +54,6 @@ public class CoffeeLevel {
 
     public void buildLevel(){
         canalisation.createCanalisation();
-        Iterator<Vanne> itVanne = vannes.iterator();
-
-        while(itVanne.hasNext()){
-            stage.addActor(itVanne.next().get_table());
-            System.out.println("Vannes ajoutées"); //debug
-        }
-
-        Iterator<KoffeeMeter> itKFM = indicateurs.iterator();
-
-        while(itKFM.hasNext()){
-            stage.addActor(itKFM.next().get_table());
-            System.out.println("Koffee Meter ajouté"); //debug
-        }
     }
 
     /*
@@ -130,22 +105,6 @@ public class CoffeeLevel {
      */
     public static void set_mapWidthPixel(int new_mapWidthPixel) {
         mapWidthPixel = new_mapWidthPixel;
-    }
-
-    /**
-     * Getter of mapRenderer
-     * @return the value of mapRenderer
-     */
-    public static OrthogonalTiledMapRendererWithKoffee get_mapRenderer() {
-        return mapRenderer;
-    }
-
-    /**
-     * Setter of mapRenderer
-     * @param new_mapRenderer: new value of mapRenderer
-     */
-    public static void set_mapRenderer(OrthogonalTiledMapRendererWithKoffee new_mapRenderer) {
-        mapRenderer = new_mapRenderer;
     }
 
     /**
@@ -221,28 +180,16 @@ public class CoffeeLevel {
         map.dispose();
     }
 
+    public HashSet<Vanne> get_vannes(){
+        return vannes;
+    }
+
     public static void addVanne(Vanne new_Vanne){
         vannes.add(new_Vanne);
     }
 
     public static void delVanne(Vanne old_vanne){
         vannes.remove(old_vanne);
-    }
-
-    /**
-    * Getter of stage
-    * @return the value of stage
-    */
-    public Stage get_stage(){
-      return this.stage;
-    }
-
-    /**
-    * Setter of stage
-    * @param new_stage: the new value of stage
-    */
-    public void set_stage(Stage new_stage){
-      this.stage = new_stage;
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.odysseedesmaths;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,12 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.odysseedesmaths.menus.MenuPauseScene;
 import com.odysseedesmaths.menus.MenuPrincipal;
 import com.odysseedesmaths.scenes.Scene;
@@ -27,6 +31,9 @@ import com.odysseedesmaths.scenes.Scene2;
 
 public class ModeSceneScreen implements Screen {
 
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 480;
+
     private OdysseeDesMaths jeu;
 
     public enum State {RUNNING, PAUSED}
@@ -38,27 +45,37 @@ public class ModeSceneScreen implements Screen {
     private Scene2 scene2 = null;
 
     private Stage stage;
+    private Viewport viewport;
+    private InputMultiplexer multiplexer;
 
     private Table table;
     private Skin skin;
 
-    private Container<Actor> pauseContainer;
     private ImageButton pause;
     private MenuPauseScene menuPause;
 
     public ModeSceneScreen(OdysseeDesMaths game) {
         jeu = game;
         Scene.updateMss(this);
-        sceneActive = getScene1(); // selectionner la bonne plus tard dans le fichier de sauvegarde
-
+        if (game.getSavesManager().getCurrentSave().isLevel3Finished()) {
+            sceneActive = getScene2();
+        } else if (game.getSavesManager().getCurrentSave().isLevel2Finished()) {
+            sceneActive = getScene2();
+        } else if (game.getSavesManager().getCurrentSave().isLevel1Finished()) {
+            sceneActive = getScene2();
+        } else if (game.getSavesManager().getCurrentSave().isPrologueFinished()){
+            sceneActive = getScene1();
+        } else {
+            sceneActive = getScene0();
+        }
 
         setState(State.RUNNING);
         createUI();
-
     }
 
     public void createUI() {
-        stage = new Stage();
+        viewport = new StretchViewport(WIDTH, HEIGHT);
+        stage = new Stage(viewport);
         table = new Table();
         skin = new Skin();
         skin.addRegions(Assets.getManager().get(Assets.UI_MAIN, TextureAtlas.class));
@@ -66,13 +83,12 @@ public class ModeSceneScreen implements Screen {
 
         // Creation du bouton de pause
         ImageButtonStyle pauseStyle = new ImageButtonStyle();
-        pauseStyle.up = skin.getDrawable("pause");
-        pauseStyle.imageUp = skin.getDrawable("button");
-        pauseStyle.imageDown = skin.getDrawable("button_pressed");
+        pauseStyle.up = skin.getDrawable("button");
+        pauseStyle.imageUp = skin.getDrawable("pause");
+        pauseStyle.down = skin.getDrawable("button_pressed");
         skin.add("pause", pauseStyle);
 
         pause = new ImageButton(skin, "pause");
-
         pause.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -108,11 +124,27 @@ public class ModeSceneScreen implements Screen {
 
         // Création de la table
         table.setFillParent(true);
-        table.background(new SpriteDrawable(new Sprite(sceneActive.getBackground())));
-        table.add(pause).expand().right().top();
+        table.pad(10);
+        table.add(pause).expand().right().top().size(64, 64);
+        updateBackground();
 
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
+
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(new InputAdapter() {
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                return true;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                sceneActive.aventure();
+                return true;
+            }
+        });
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
@@ -139,7 +171,7 @@ public class ModeSceneScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        // cette méthode n'est pas nécessaire ici
+        viewport.update(width, height);
     }
 
     @Override
@@ -163,7 +195,7 @@ public class ModeSceneScreen implements Screen {
     }
 
     public void returnToScene() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(multiplexer);
         setState(State.RUNNING);
     }
 
@@ -172,8 +204,16 @@ public class ModeSceneScreen implements Screen {
         setState(State.PAUSED);
     }
 
+    /*
+      permet le changement de scène durant l'avancement du jeu
+    */
     public void switchScene(Scene s) {
         sceneActive = s;
+        updateBackground();
+    }
+
+    public void updateBackground() {
+        table.background(new SpriteDrawable(new Sprite(sceneActive.getBackground())));
     }
 
     public Scene0 getScene0() {

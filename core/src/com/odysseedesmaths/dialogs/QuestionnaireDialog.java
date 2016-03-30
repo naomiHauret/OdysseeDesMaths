@@ -17,6 +17,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/*
+  classe d'affichage des questionnaires avec mise en place de la sélection multiple
+*/
+
 public class QuestionnaireDialog extends DialogScreen {
 
     private enum Scene {QUESTION_SCENE, DIALOG_SCENE}
@@ -152,6 +156,9 @@ public class QuestionnaireDialog extends DialogScreen {
         reader = this.new QuestionnaireDialogReader(questionnairePath);
     }
 
+    /*
+      mise en place des réponses possibles
+    */
     public void setAnswers(int nbAnswer) {
         for (int i=0; i < MAX_ANSWERS; i++) {
             if (i < nbAnswer) {
@@ -162,7 +169,10 @@ public class QuestionnaireDialog extends DialogScreen {
         }
     }
 
-    public void setText(String text) {
+    /*
+      mise en place du texte
+    */
+    public void setText(final String text) {
         displayAction.reset();
         displayAction.setText(text);
         displayAction.setDuration(text.length()/DISPLAY_SPEED);
@@ -184,6 +194,9 @@ public class QuestionnaireDialog extends DialogScreen {
         }
     }
 
+    /*
+      * Classe permettant de lire les éléments du questionnaires à partir d'un fichier XML
+      */
     private class QuestionnaireDialogReader extends XMLSequencialReader {
 
         private static final String QUESTION_NODE = "question";

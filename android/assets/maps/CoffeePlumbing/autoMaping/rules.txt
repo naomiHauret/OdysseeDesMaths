@@ -1,0 +1,5 @@
+#stuf for pipe and links
+./rule_coffeePlumbing_01.tmx
+
+#stuf for koffee Meter and valves
+./rule_coffeePlumbing_02.tmx

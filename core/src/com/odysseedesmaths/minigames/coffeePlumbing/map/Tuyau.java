@@ -16,6 +16,8 @@ import java.util.SortedSet;
 /**
  * Created by trilunaire on 08/02/16.
  */
+
+// TODO: regarder pour mettre des alpha action sur les tuyaux
 public class Tuyau {
     private int capacite;
     private int fluxCourant;
@@ -42,16 +44,6 @@ public class Tuyau {
         if(fluxEntrant>0){
             this.fluxCourant++;
             this.indicateurs.set_currentFlow(this.fluxCourant);
-<<<<<<< HEAD
-
-            System.out.println("Flux courant"+this.fluxCourant);
-            Iterator<Tuyau> it = tuyauxSuivants.iterator();
-            while(it.hasNext()) {
-                it.next().add_fluxEntrant(this.fluxCourant);
-            }
-
-=======
->>>>>>> 9445fd2067e853186d3c13b661dd82a9a67a0513
             System.out.println("Flux courant" + this.fluxCourant);
             if(sousPression()){
                 //TODO: mettre un compte à rebours de 3 secondes
@@ -61,7 +53,7 @@ public class Tuyau {
             fluxEntrant--;
             if(fluxCourant==1){
                 for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                    CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+                    OrthogonalTiledMapRendererWithKoffee.addSomeKoffee(dropOfKoffee);
                 }
             }
         }
@@ -80,7 +72,7 @@ public class Tuyau {
             fluxEntrant++;
             if(fluxCourant==0){
                 for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                    CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+                    OrthogonalTiledMapRendererWithKoffee.removeSomeKoffee(dropOfKoffee);
                 }
             }
         }
@@ -239,11 +231,11 @@ public class Tuyau {
       this.indicateurs.set_currentFlow(new_fluxCourant);
         if(fluxCourant>0){
             for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                CoffeeLevel.get_mapRenderer().addSomeKoffee(dropOfKoffee);
+                OrthogonalTiledMapRendererWithKoffee.addSomeKoffee(dropOfKoffee);
             }
         }else{
             for(Sprite dropOfKoffee : koffeeInPipe){ //empty the pipe
-                CoffeeLevel.get_mapRenderer().removeSomeKoffee(dropOfKoffee);
+                OrthogonalTiledMapRendererWithKoffee.removeSomeKoffee(dropOfKoffee);
             }
         }
     }

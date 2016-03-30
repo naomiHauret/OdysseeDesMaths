@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrthogonalTiledMapRendererWithKoffee extends OrthogonalTiledMapRenderer {
-    private List<Sprite> superStrongKoffee;
+    private static List<Sprite> superStrongKoffee;
     private int numberOfSpriteLayer = 4;
 
     public OrthogonalTiledMapRendererWithKoffee(TiledMap map){
@@ -75,11 +75,11 @@ public class OrthogonalTiledMapRendererWithKoffee extends OrthogonalTiledMapRend
         endRender();
     }
 
-    public void addSomeKoffee(Sprite moreKoffeePlz){
-        this.superStrongKoffee.add(moreKoffeePlz);
+    public static void addSomeKoffee(Sprite moreKoffeePlz){
+        superStrongKoffee.add(moreKoffeePlz);
     }
 
-    public void removeSomeKoffee(Sprite pleaseDontDoThat){
-        this.superStrongKoffee.remove(pleaseDontDoThat); //NOOOOOOOOOO
+    public static void removeSomeKoffee(Sprite pleaseDontDoThat){
+        superStrongKoffee.remove(pleaseDontDoThat); //NOOOOOOOOOO
     }
 }

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="nuage">
-    <personnage name="hero">
+<dialogue>
+    <personnage name="hero" pos="0">
         <text> Gloups... Je crois que j'ai le vertige... </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="1">
         <text> Oh ! Regarde, on voit l'auberge d'ici ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> J'ai envie de descendre, ou je vais finir par vomir... </text>
     </personnage>
-    <personnage name="cullen">
+    <personnage name="cullen" pos="3">
         <text> Tiens, tiens, tiens... des visiteurs. </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Il n'y a personne de normal dans ce pays ? </text>
     </personnage>
-    <personnage name="cullen">
+    <personnage name="cullen" pos="3">
         <text> Silence, petit impertinent ! Je sais qui tu es et ce que tu essaies de faire ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Vous voudriez pas m'aider par hasard ? </text>
     </personnage>
-    <personnage name="cullen">
+    <personnage name="cullen" pos="3">
         <text> Imbécile ! Je suis Cullen ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Hein ? Comme Edward dans Twilight ? </text>
     </personnage>
-    <personnage name="cullen">
+    <personnage name="cullen" pos="3">
         <text> Mais non ! Comme les nombres, idiot ! Je suis le bras droit de Vektor ! </text>
     </personnage>
-    <personnage name="hero">
+    <personnage name="hero" pos="0">
         <text> Ah... donc j'imagine que c'est non pour l'aide... </text>
     </personnage>
-    <personnage name="genie">
+    <personnage name="genie" pos="1">
         <text> Regarde ! Dans sa main ! C'est un artefact ! </text>
     </personnage>
-    <personnage name="cullen">
+    <personnage name="cullen" pos="3">
         <text> Vous ne l'aurez jamais ! Il faudra me battre pour ça ! </text>
     </personnage>
 </dialogue>

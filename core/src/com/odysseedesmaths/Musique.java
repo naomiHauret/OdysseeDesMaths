@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 public class Musique {
     private static Music currentMusic = null;
     private static String currentFile = null;
+    private static int volume;
 
     private Musique() {}
 
@@ -29,6 +30,7 @@ public class Musique {
 
     public static void play() {
         currentMusic.setLooping(true);
+        setVolume(volume);
         currentMusic.play();
     }
 
@@ -49,7 +51,8 @@ public class Musique {
         if (volumePercent>100 || volumePercent<0) {
             throw new IllegalArgumentException("Pourcentage incorrect : " + volumePercent);
         } else {
-            currentMusic.setVolume(volumePercent / 100f);
+            volume = volumePercent;
+            if (currentMusic != null) currentMusic.setVolume(volume / 100f);
         }
     }
 }

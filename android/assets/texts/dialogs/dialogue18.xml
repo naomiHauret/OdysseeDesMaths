@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<!DOCTYPE questionnaire SYSTEM "dialog.dtd">-->
+<!DOCTYPE dialogue SYSTEM "dialog.dtd">
 
-<dialogue name="portail">
-    <personnage name="hero">
+<dialogue>
+    <personnage name="hero" pos="0">
         <text> Ca doit être le portail. </text>
     </personnage>
 </dialogue>

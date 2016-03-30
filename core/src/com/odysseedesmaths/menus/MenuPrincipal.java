@@ -32,6 +32,10 @@ import com.odysseedesmaths.OdysseeDesMaths;
 
 import java.lang.Character;
 
+/*
+        Classe type de l'affichage du menu principal au début du jeu
+ */
+
 public class MenuPrincipal implements Screen {
 
     private static final int WIDTH = 800;
@@ -233,4 +237,3 @@ public class MenuPrincipal implements Screen {
         }
     }
 }
-
