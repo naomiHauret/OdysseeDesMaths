@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="80" tilewidth="32" tileheight="32" nextobjectid="43">
  <tileset firstgid="1" name="caverne" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="435" columns="29">
   <image source="caverne.png" width="960" height="512"/>
-=======
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="200" tilewidth="16" tileheight="16" nextobjectid="22">
- <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
-  <image source="tileset_gutter.png" width="594" height="504"/>
->>>>>>> 9445fd2067e853186d3c13b661dd82a9a67a0513
  </tileset>
  <tileset firstgid="436" name="tree" tilewidth="32" tileheight="32" tilecount="120" columns="15">
   <image source="tree.png" width="480" height="270"/>
@@ -27,7 +21,6 @@
  </layer>
  <layer name="arbre" width="40" height="80">
   <data encoding="base64" compression="zlib">
-<<<<<<< HEAD
    eJztwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAB4NjIAAAE=
   </data>
  </layer>
@@ -74,22 +67,6 @@
   <object id="19" x="480" y="2208" width="96" height="128"/>
   <object id="20" x="576" y="2304" width="192" height="32"/>
   <object id="21" x="224" y="2208" width="258" height="16"/>
-=======
-   eJzt1LENwCAMBEBSJqOQ/fcLA1hQkIAj3UluaHj5EaUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8HfHSwM93g0r+KPyONvSr8Hid/ZV2yX3RL6vM/fyrc4SdZkpX5QlOsvU5Wy+7PMADdsDDg==
-  </data>
- </layer>
- <objectgroup name="ground">
-  <object id="1" x="0" y="3184" width="176" height="16"/>
-  <object id="2" x="224" y="3184" width="416" height="16"/>
-  <object id="5" x="272" y="2928" width="288" height="16"/>
-  <object id="6" x="176" y="2992" width="96" height="16"/>
-  <object id="7" x="80" y="3056" width="112" height="16"/>
-  <object id="8" x="0" y="3120" width="80" height="16"/>
-  <object id="10" x="176" y="3184" width="48" height="16"/>
-  <object id="19" x="528" y="3088" width="112" height="96"/>
-  <object id="20" x="496" y="3120" width="32" height="64"/>
-  <object id="21" x="464" y="3152" width="32" height="32"/>
->>>>>>> 9445fd2067e853186d3c13b661dd82a9a67a0513
  </objectgroup>
  <objectgroup name="accrochant">
   <object id="36" x="480" y="2144" width="64" height="32"/>
