@@ -48,7 +48,7 @@ public class Scene2 extends Scene {
                                 if (buttonName.equals("continue")) {
                                     game.setScreen(new QuestionnaireDialog(game, Assets.QST_ARRIVEE1, new EndButtonsListener() {
                                         @Override
-                                        public void buttonPressed(String buttonName) {
+                                        public void buttonPressed(String buttonName, double result) {
                                             System.out.println("qst 2 fini, name = " + buttonName);
                                             if (buttonName.equals("continue")) {
                                                 game.setScreen(new SimpleDialog(game, Assets.DLG_ARRIVEE_2b, new EndButtonsListener() {
